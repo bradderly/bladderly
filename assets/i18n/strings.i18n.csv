@@ -1,0 +1,344 @@
+key,en,ko
+Today Summary,Today’s Summary,오늘의 요약
+Voiding,Voiding,배뇨
+See more,See more,더보기
+Frequency,Frequency,빈도
+Total void,Total void,총 배뇨
+times,times,회
+Last record,Last record,마지막 기록
+ago,ago,전
+How to use,How to use,사용 방법
+Sound Input,Sound Input,소리 입력
+Manual Input,Manual Input,수동 입력
+Intake,Intake,섭취
+water,water,물
+caffeine,caffeine,카페인
+soda,soda,탄산
+juice,juice,주스
+alcohol,alcohol,주류
+others,others,기타
+Summary,Summary,요약
+Daytime,Daytime,주간
+Night-time,Night-time,야간
+Leakage,Leakage,요실금
+Voided volume,Voided volume,배뇨량
+Max,Max,최대
+Min,Min,최소
+Voiding interval,Voiding interval,배뇨 간격
+(hr:mins),(hr:mins),(시간:분)
+Mean,Mean,평균
+See less,See less,간단히 보기
+List Na Message,Looks like there’s nothing here yet.\nLet’s get started!,아직 기록이 없는 것 같아요.\n시작해볼까요!
+Time,Time,시간
+Amount,Amount,양
+Urge,Urge,요의
+Leak,Leak,누출
+Type,Type,유형
+Total amount,Total amount,총량
+Proportion,Proportion,비율
+List,List,목록
+S,S,소
+M,M,중
+L,L,대
+Pending Message,Processing your recording...,녹음 결과를 처리 중입니다...
+Refresh,Refresh,새로고침
+am,am,오전
+pm,pm,오후
+AM,AM,오전
+PM,PM,오후
+minutes,minutes,분
+hours,hours,시간
+minute,minute,분
+hour,hour,시간
+Beverage type,Beverage type,음료 유형
+Total amount Leakage,Total amount,전체 누출량
+Volume,Volume,배뇨량
+Urge Lv,Urge Lv,요의 수준
+Select urge level,Select urge level,마려웠던 정도를 선택해주세요
+No urge,No urge,요절박 증상 없음
+Urgent,Urgent,절박성 요실금
+Was it an urination during sleep?,Was it an urination during sleep?,수면 중 화장실에 가려고 깨셨나요?
+Did it leak?,Did it leak?,요실금이 발생했나요?
+Memo,Memo,메모
+Leakage Volume,Leakage Volume,누출량
+Small,Small,소
+Moderate,Moderate,중
+Large,Large,대
+Recording saved!,Recording saved!,녹음이 저장되었습니다!
+Recording save Message,Your recording is saved and ready for AI processing.,녹음이 저장되었으며 AI 처리를 위해 준비되었습니다.
+Yes,Yes,예
+No,No,아니오
+Add any notes or details here.,Add any notes or details here.,여기에 메모나 세부 사항을 추가하세요.
+Please record your urine output,Please record your urine output,소변 배출량을 기록해 주세요.
+In what situation did it occur?,In what situation did it occur?,어떤 상황에서 발생했나요?
+Medium,Medium,중
+More,More,더보기
+Type your beverage here,Type your beverage here,여기에 음료를 입력하세요
+Enter the amount here,Enter the amount here,여기에 양을 입력하세요
+How much did you drink?,How much did you drink?,얼마나 드셨나요?
+Today,Today,오늘
+Cancel,Cancel,취소
+Done,Done,완료
+Save,Save,저장하기
+Delete Message,Are you sure you want to delete the record?,기록을 삭제하시겠습니까?
+"Yes, Delete the record","Yes, Delete the record","네, 기록을 삭제합니다"
+"No, Keep the record","No, Keep the record","아니오, 기록을 유지합니다"
+Get Unlimited Access!,Get Unlimited Access!,모든 기능을 사용해보세요!
+Subscribe Message,Subscribe for the automatic voided volume measuring feature.,구독을 통해 배뇨량 자동 측정 기능을 무제한으로 이용해보세요.
+Annual,Annual,연간 요금제
+Monthly,Monthly,월간 요금제
+Enter Promo Code,Enter Promo Code,프로모션 코드 입력
+Enter Study Code,Enter Study Code,스터디 코드 입력
+Terms of Use,Terms of Use,이용약관
+Privacy Policy,Privacy Policy,개인정보보호 정책
+Study Code,Study Code,연구 코드
+Enter the study code,Enter the study code,연구 코드를 입력하세요.
+Study Message,"If you’re a study participant,\nenter your study code.",연구 참여자이신가요?\n안내 받은 연구 코드를 입력해 주세요.
+Having trouble finding the code?,Having trouble finding the code?,연구 코드를 찾는데 어려움이 있으신가요?
+Continue,Continue,다음
+"Leave us a message, and we’ll get back to you.","Leave us a message, and we’ll get back to you.",메시지를 남겨주시면 빠르게 답변 드리겠습니다.
+First Name,First Name,이름
+Last Name,Last Name,성
+Email Address,Email Address,이메일 주소
+Message,Message,메시지
+Submit,Submit,제출
+Preparing for the recording,Preparing for the recording,녹음을 준비 중입니다
+Recording started!,Recording started!,녹음이 시작되었습니다!
+Recording...,Recording...,녹음중...
+Tap to stop recording,Tap to stop recording,녹음을 중지하려면 탭하세요
+Are you sure you want to cancel the recording?,Are you sure you want to cancel the recording?,녹음을 취소하시겠습니까?
+"Yes, Cancel recording","Yes, Cancel recording","네, 녹음을 취소 하겠습니다."
+"No, Continue recording","No, Continue recording","아니요, 녹음을 계속 하겠습니다."
+We received your recording!,We received your recording!,녹음을 받았습니다!
+Analyzing Message,Your recording is being analyzed! The AI will process it and save the results automatically.,녹음을 분석 중입니다! AI가 처리한 후 결과를 자동으로 저장합니다.
+Go to Diary,Go to Diary,다이어리로 가기
+"Oops, we couldn’t analyze your results","Oops, we couldn’t analyze your results","죄송합니다, 결과를 분석할 수 없습니다."
+Issued records,Issued records,해당 시간 기록
+Add the void manually,Add the void manually,직접 배뇨량 기록 추가
+Keep the record without data,Keep the record without data,데이터 추가 없이 기록 유지
+Err_analyzing,There was an error during the analysis.\nPlease try again.,음향신호 분석 중에 오류가 있었습니다.\n다시 측정해 주세요.
+Err_length,Your recording was too short.\nPlease try again.,녹음이 너무 짧았습니다.\n다시 측정해 주세요.
+Err_highfreq_cut,Your hearing aids or audio devices may be interfering with your recording.\nPlease try again by disconnecting the devices.,보청기나 오디오 장치를 폰에 연결하여 사용하고 계신가요?\n외부 장치로 인해 측정 음향 신호에 왜곡이 있습니다.\n측정 시에는 연결을 해제하고 사용해 주세요.
+Err_no_void,We could not detect urination sounds.\nPlease try again.,녹음 중에 배뇨 소리를 감지하지 못했습니다.\n다시 측정해 주세요.
+Err_noisy_env,Your background noise is interfering with your recording.\nPlease try again.,배경 소음이 측정에 영향을 미칠 수 있습니다.\n다시 측정해 주세요.
+Err_VV,This recording does not meet our measurable criteria.,분석 범위를 벗어났습니다.\n다시 측정해 주세요.
+Hearing Message,Your hearing aids or audio devices may be interfering with your recording.\nPlease try again by disconnecting the devices.,보청기 또는 외부 음향 기기가 영향을주고 있습니다.\n연결 해제 후 다시 시도 해주세요.
+Menu,Menu,메뉴
+Profile,Profile,계정
+User Profile,User Profile,사용자 계정
+General,General,일반
+Plan,Plan,구독 플랜
+Symptom score,Symptom score,증상점수 설문지
+Contact us,Contact us,문의하기
+About,About,약관 및 정책
+Sign out,Sign out,로그아웃
+Unit setting,Unit setting,단위 설정
+User Profile,User Profile,사용자 계정
+Personal Detail,Personal Detail,개인 정보
+Sex,Sex,성별
+Year of Birth,Year of Birth,출생년도
+Height,Height,키
+Weight,Weight,몸무게
+Account,Account,계정 설정
+Email ID,Email ID,이메일 주소
+Password,Password,비밀번호
+Change Password,Change Password,비밀번호 변경
+Set Up Passcode,Set Up Passcode,암호 설정
+Delete Account,Delete Account,계정 삭제
+Old Password,Old Password,기존 비밀번호
+New Password,New Password,새로운 비밀번호
+Confirm New Password,Confirm New Password,비밀번호 확인
+Lock with Passcode,Lock with Passcode,암호를 사용하여 잠금
+Passcode Message,"If enabled, the app will be locked whenever you close the app and you will be prompted with Touch ID or your device’s passcode when relaunching.","앱이 실행될때마다, Touch ID 나 암호를 입력해야 합니다"
+Change passcode,Change passcode,암호 변경
+Type old password,Type old password,기존 비밀번호를 입력하세요
+Type new password,Type new password,새로운 비밀번호를 입력하세요
+Re-type new password,Re-type new password,새로운 비밀번호를 재입력 하세요
+Delete account Message,"Sorry to see you go, please tell us why you are deleting your account.",탈퇴하신다니 아쉽습니다.\n계정을 삭제하는 이유를 알려주세요.
+I am switching to different plans,I am switching to different plans,다른 요금제를 이용하려합니다.
+I achieved my goal,I achieved my goal,목표를 달성했습니다.
+I am not using enough,I am not using enough,서비스를 잘 이용하지 않습니다.
+"I wasn’t satisfied with or had issues with the features, including technical difficulties","I wasn’t satisfied with or had issues with the features, including technical difficulties",기능에 만족하지 못했거나 기술적인 문제를 포함한 불편함이 있었습니다.
+I found an alternative service,I found an alternative service,다른 서비스를 이용합니다.
+Other,Other,기타
+Delete account popup Message,Deleting your account will permanently remove all of your Bladderly information.\n\nAre you sure you want to delete your account?,계정을 삭제하실 경우 기존에 기록하신 모든 정보들이 사라집니다.\n\n그래도 계정을 삭제 하시겠습니까?
+"Yes, delete my account","Yes, delete my account","네, 계정을 삭제할게요"
+"No, keep my account","No, keep my account","아니요, 계정을 유지할게요"
+Next,Next,다음
+Restore,Restore,불러오기
+Member,Member,일반 회원
+Change Plan,Change Plan,플랜 변경하기
+Cancel Plan,Cancel Plan,플랜 취소하기
+NEXT BILLING DATE,NEXT BILLING DATE,다음 결제일
+"Sorry to see you go, please tell us why you are canceling your plan.","Sorry to see you go, please tell us why you are canceling your plan.",요금제를 해지하시는 이유가 무엇인가요?
+I think the service is too pricey,I think the service is too pricey,가격이 부담됩니다.
+I want to resume the subscription later on,I want to resume the subscription later on,나중에 재구독 할 예정입니다.
+I have technical difficulties,I have technical difficulties,기술적인 어려움이 있습니다.
+Terms of use,Terms of use,이용약관
+Privacy policy,Privacy policy,개인정보보호 정책
+Symptom Scores,Symptom Scores,증상점수 설문지
+References,References,출처
+(Urinary Health Test),(Urinary Health Test),국제전립선 증상점수
+(Overactive Bladder Test),(Overactive Bladder Test),과민성방광 증상점수
+No Symptom,No Symptom,증상 없음
+MILD,MILD,경증
+MODERATE,MODERATE,중등증
+SEVERE,SEVERE,중증
+Symptom Score,Symptom Score,국제전립선 증상점수
+IPSS,IPSS,국제전립선 증상점수
+OABSS,OABSS,과민성방광 증상점수
+IPSS Desc,This test is devised to help men determine how bothersome their symptoms are and check how effective their treatment is.\n\nTake the following 8-question quiz and get a personalized urinary health score.,이 검사는 전립선비대증과 관련된 배뇨의 저장과 배출 관련 증상들을 정량화하여 알려줍니다. 증상의 경중에 따라 치료방침을 결정하거나 약물이나 수술적 치료 후 경과 관찰에도 유용하게 사용될 수 있습니다.
+OABSS Desc,"This test quantifies four bladder symptoms such as frequency of day and night bathroom trips, urgency and incontinence. It is recommended for people taking bladder medication to assess treatment efficacy.","이 검사는 주간과 야간에 화장실에 가는 횟수, 절박도, 요실금 등 네가지 방광 증상을 정량화하여 알려줍니다. 방광 약을 복용하는 분들에게 치료 효과를 평가하기 위해 권장됩니다."
+Start,Start,시작하기
+Previous,Previous,이전
+IPSS Title 1,Incomplete emptying,잔뇨감
+IPSS Title 2,Frequency,빈뇨
+IPSS Title 3,Intermittency,끊어지는 배뇨
+IPSS Title 4,Urgency,요절박
+IPSS Title 5,Weak stream,약한 소변 줄기
+IPSS Title 6,Straining,복압배뇨
+IPSS Title 7,Nocturia,야간뇨
+IPSS Title 8,Quality of life due to urinary symptoms,삶의 질
+IPSS1,"Over the past month, how often have you had a sensation of not emptying your bladder completely after you finish urinating?",소변을 본 후에도 소변이 남아있는 느낌을 얼마나 자주 받습니까?
+IPSS2,"Over the past month, how often have you had to urinate again less than two hours after you finished urinating?",2시간 이내에 다시 소변을 보러 가는 경우가 얼마나 자주 있었습니까?
+IPSS3,"Over the past month, how often have you found you stopped and started again several times when you urinated?",한번 소변을 볼 때 소변 줄기가 여러번 끊어진 경우가 얼마나 자주 있었습니까?
+IPSS4,"Over the last month, how difficult have you found it to postpone urination?",소변이 마려울 때 참기 어려운 경우가 얼마나 자주 있었습니까?
+IPSS5,"Over the past month, how often have you had a weak urinary stream?",소변줄기가 약하다고 느낀 경우가 얼마나 자주 있었습니까?
+IPSS6,"Over the past month, how often have you had to push or strain to begin urination?",소변이 금방 나오지 않아 힘을 주는 경우가 얼마나 자주 있었습니까?
+IPSS7,"Over the past month, how many times did you most typically get up to urinate from the time you went to bed until the time you got up in the morning?",일반적으로 밤에 소변을 보기 위해 몇 번 일어났습니까?
+IPSS8,"If you were to spend the rest of your life with your urinary condition just the way it is now, how would you feel about that?",만약 지금 같은 배뇨 상태가 계속 지속된다면 어떤 느낌이 드시겠습니까?
+OABSS1,How many times do you typically urinate from waking in the morning until sleeping at night?,아침에 일어나서 밤에 자기 전까지 몇 회정도 소변을 보셨습니까?
+OABSS2,How many times do you typically wake up to urinate from sleeping at night until waking in the morning?,밤에 잠든 후부터 아침에 일어날 때까지 소변을 보기 위해 몇 회나 일어나셨습니까?
+OABSS3,"How often do you have a sudden desire to urinate, which is difficult to defer?",갑자기 소변이 마려워 참기 힘들었던 적이 있었습니까?
+OABSS4,How often do you leak urine because you cannot defer the sudden desire to urinate?,갑자기 소변이 마려워서 참지 못하고 소변을 지린 적이 있었습니까?
+Not at all,Not at all,전혀 없음
+Less than 1 in 5 Times,Less than 1 in 5 Times,5번 중 1번 이하
+Less than Half the Time,Less than Half the Time,2번 중 1번 이하
+About Half the Time,About Half the Time,절반 정도
+More than Half the Time,More than Half the Time,절반 이상
+Almost Always,Almost Always,거의 항상
+None,None,전혀 없음
+1 Time,1 Time,1번
+2 Times,2 Times,2번
+3 Times,3 Times,3번
+4 Times,4 Times,4번
+5 Times,5 Times,5번 이상
+Delighted,Delighted,매우 만족
+Pleased,Pleased,만족
+Mostly Satisfied,Mostly Satisfied,대체로 만족
+Mixed about equally satisfied and dissatisfied,Mixed about equally satisfied and dissatisfied,보통
+Mostly Dissatisfied,Mostly Dissatisfied,대체로 불만족
+Unhappy,Unhappy,불만족
+Terrible,Terrible,매우 불만족
+Less than 8,Less than 8,7회 이하
+Greater than 14,Greater than 14,15회 이상
+Greater than 2,Greater than 2,3회 이상
+Less than once a week,Less than once a week,일주일에 1회 보다는 적음
+Once a week or more,Once a week or more,일주일에 1회 또는 그 이상
+About once a day,About once a day,1일 1회 정도
+2 ~ 4 times a day,2 ~ 4 times a day,1일 2~4회
+5 times a day or more,5 times a day or more,1일 5회 또는 그 이상
+Mild,Mild,경증
+Moderate,Moderate,중등증
+Severe,Severe,중증
+Your score currently indicates no symptoms. Continue to take IPSS questionnaire monthly to monitor any changes.,Your score currently indicates no symptoms. Continue to take IPSS questionnaire monthly to monitor any changes.,전립선 증상이 없습니다. 달마다 주기적으로 응답하여 결과를 추적해보세요
+Your score indicates mild prostate symptoms. Ongoing observation or lifestyle changes may be necessary. Respond regularly each month to track results.,Your score indicates mild prostate symptoms. Ongoing observation or lifestyle changes may be necessary. Respond regularly each month to track results.,경미한 전립선 증상이 있습니다. 지속적인 관찰이나 생활습관 개선이 필요할 수 있습니다. 달마다 주기적으로 응답하여 결과를 추적해보세요.
+"Your score indicates moderate prostate symptoms that do not significantly impact your quality of life. If discomfort occurs, medication or procedures may be required.","Your score indicates moderate prostate symptoms that do not significantly impact your quality of life. If discomfort occurs, medication or procedures may be required.",중등의 전립선 증상이 있으나 삶의 질에 큰 영향을 미치지 않습니다. 불편함이 느껴지면 약을 복용하거나 시술이 필요할 수 있는 단계입니다.
+Your score indicates moderate prostate symptoms with noticeable discomfort. It is recommended to seek medical assistance. Medication or procedures may be necessary.,Your score indicates moderate prostate symptoms with noticeable discomfort. It is recommended to seek medical assistance. Medication or procedures may be necessary.,불편함이 느껴지는 중등의 전립선 증상이 있습니다. 의료진의 도움을 받아보시길 권고드립니다. 약을 복용하거나 시술이 필요할 수 있는 단계입니다.
+Your score indicates severe prostate symptoms with noticeable discomfort. It is recommended to seek medical assistance. Medication or procedures may be necessary.,Your score indicates severe prostate symptoms with noticeable discomfort. It is recommended to seek medical assistance. Medication or procedures may be necessary.,불편함이 느껴지는 중증의 전립선 증상이 있습니다. 의료진의 도움을 받아보시길 권고드립니다. 약을 복용하거나 시술이 필요할 수 있는 단계입니다.
+This is not a diagnosis. Consult with your doctor or medical professional if you have concerns about your condition.,This is not a diagnosis. Consult with your doctor or medical professional if you have concerns about your condition.,이 결과는 진단이 아니며 상태가 우려되시면 의료진과 상의하시기 바랍니다.
+Okay,Okay,확인
+Overactive Bladder Symptom Score,Overactive Bladder Symptom Score,과민성방광 증상점수
+Cancel plan Message,"Please try after your membership expires. If your subscription still exists, please cancel the subscription and try again after the membership period.",아직 구독 기간이 남아있습니다.\n구독 취소 후 기간이 만료되면 다시 시도해 주시기 바랍니다.
+Sign out Message,"Are you sure you want to sign out? Don’t worry, you can always log back in anytime!","로그아웃하시겠습니까?\n걱정 마세요, 언제든 다시 로그인하실 수 있어요!"
+"Yes, Sign Out","Yes, Sign Out","네, 로그아웃 할게요"
+"No, Keep Me Signed In","No, Keep Me Signed In","아니요, 로그인 상태를 유지할게요"
+A novel way to manage your bladder diary.,A novel way to manage\nyour bladder diary.,블래덜리로 작성하는\n깨끗하고 편리한 배뇨일지
+Create Account,Create Account,회원가입
+Sign In,Sign In,로그인
+Sign Up,Sign Up,회원가입
+Enter your email,Enter your email,이메일 주소를 입력해주세요
+Please enter a properly formatted email address.,Please enter a properly formatted email address.,이메일 주소 형식으로 입력해주세요.
+Set a password,Set a password,비밀번호를 입력해주세요
+Your password should have...,Your password should have...,비밀번호 설정 조건
+at least 8 characters,at least 8 characters,8글자 이상
+at least one digit,at least one digit,숫자 1개 이상
+at least one uppercase,at least one uppercase,대문자 1개 이상
+at least one special character,at least one special character,특수문자 1개 이상
+Enter your name,Enter your name,이름을 입력해주세요
+Enter your year of birth and sex,Enter your\nyear of birth and sex,출생년도와 성별을 입력해주세요
+Male,Male,남성
+Female,Female,여성
+Why is entering sex important?,Why is entering sex important?,성별 정보가 필요한 이유는 무엇인가요?
+Men and women make different urination sounds. Enter your sex to get the right results.,Men and women make different urination sounds. Enter your sex to get the right results.,남성과 여성은 신체 구조상 서로 다른 배뇨 소리가 나타납니다. 정확한 측정 결과를 위해 성별을입력해주세요.
+Congratulations!,Congratulations!,가입을 축하합니다!
+Welcome Message,You’re all set!\nLet’s check out Bladderly.,준비가 다 끝났습니다!\n블래덜리를 사용해보세요.
+Get Started,Get Started,시작하기
+Enter your email and password to sign in,Enter your email and password to sign in,이메일과 비밀번호를 입력해주세요
+Forgot Password?,Forgot Password?,비밀번호를 잊어버리셨나요?
+Your password is too short.,Your password is too short.,비밀번호는 6자 이상 입력해주세요.
+We will email you a verification code to reset your password,We will email you a verification code to reset your password,입력해주신 이메일 주소로 임시 코드를 발급해드리겠습니다.
+Enter verification code sent to your email and set a new password,Enter verification code sent to your email and set a new password,임시 코드 입력 후 새로운 비밀번호를 설정해 주세요.
+Verification Code,Verification Code,임시 코드
+Please enter 6-digit verification code.,Please enter 6-digit verification code.,6자리 임시코드를 입력해주세요.
+"Your password should have at least 8 characters including at least one digit, one uppercase, and one special character.","Your password should have at least 8 characters including at least one digit, one uppercase, and one special character.","비밀번호는 8글자 이상으로 영문 대문자, 숫자, 특수문자를 모두 사용하여 구성해주세요."
+Passwords do not match.,Passwords do not match.,비밀번호가 일치하지 않습니다.
+Quiet place makes accurate results.,Quiet place makes accurate results.,주변을 조용하게 합니다.
+Sit on the toilet and knees shoulder-width apart.,Sit on the toilet and knees shoulder-width apart.,변기에 앉아 무릎을 어깨 넓이 정도로 벌립니다.
+Check if you see the water in the toilet bowl.,Check if you see the water in the toilet bowl.,변기 안에 물이 보이도록 앉는 위치를 조정합니다.
+Press ‘Sound Input’ to begin measurement,Press ‘Sound Input’ to begin measurement,앱을 실행하여 ‘소리 입력' 버튼을 누릅니다.
+Hold your phone in your hand and put it on your lap. Check the direction of the microphone,Hold your phone in your hand and put it on your lap. Check the direction of the microphone,핸드폰을 손에 쥐고 무릎 위에 올려 놓습니다. 마이크 방향을 확인합니다.
+Place the phone 2-3 feet from the toilet water,Place the phone 2-3 feet from the toilet water,변기에서 90cm 거리에 변기를 향하도록 폰을 놓습니다.
+Press ‘Sound Input’ to begin recording,Press ‘Sound Input’ to begin recording,‘소리 입력' 버튼을 눌러 측정을 시작합니다.
+Aim at the center of the water while standing,Aim at the center of the water while standing,양변기의 물 가운데를 향해 편안하게 소변을 봅니다.
+Press ‘Stop Recording’ button before flushing,Press ‘Stop Recording’ button before flushing,‘녹음 마침’ 버튼을 눌러 측정을 마칩니다.
+Now flush the toilet,Now flush the toilet,측정을 마친 후 물을 내립니다.
+"For better accuracy, cut through the noise from the TV, chatter, vent fan, tap water, coughs, groaning, etc.","For better accuracy, cut through the noise from the TV, chatter, vent fan, tap water, coughs, groaning, etc.","TV 소리, 말소리, 환풍기, 수돗물, 기침, 한숨 소리 등이 섞이면 정확도가 떨어집니다."
+Sit back in a little bit than usual,Sit back in a little bit than usual,평소보다 약간 뒤로 앉게 됩니다.
+Subject,Subject,제목
+Required fields,Required fields,필수 입력 항목
+Home,Home,홈
+Diary,Diary,다이어리
+Live listen title,Detected: Hearing aid or\nLive Listen feature,보청기 또는 실시간 사용 기능 감지
+Live listen content,"Please disconnect or turn off your hearing aid or the Live Listen feature, as keeping them on can alter your results.",보청기 또는 실시간 듣기 기능이 감지 되었습니다. 측정값에 영향을 줄 수 있으므로 보청기 연결을 해제하거나 실시간 듣기 기능을 꺼 주세요.
+Model not supported,Model not supported,지원하지 않는 모델입니다.
+Not support message,"The device is not supported. All features are available, but measurement accuracy is not guaranteed. You can check the supported devices on the App Store Page or the website",현재 지원되지 않는 모델입니다. 측정은 가능하나 결과 정확도가 보증되지 않습니다. 지원모델은 앱스토어 페이지 또는 웹사이트에서 확인하실 수 있습니다.
+Recording available soon,Recording available soon,곧 지원 예정
+New model message,We're finalizing compatibility for the recording feature on the new iPhone series. Stay tuned!,새로운 아이폰 모델이어서 녹음 호환성 테스트 중입니다.
+Please check your internet connection,Please check your internet connection,인터넷 연결을 확인해주세요.
+OK,OK,확인
+Lock with Touch ID & Passcode,Lock with Touch ID & Passcode,Touch ID 및 암호 잠금
+Lock with Face ID & Passcode,Lock with Face ID & Passcode,Face ID 및 암호 잠금
+Passcode,Passcode,암호
+Set your passcode below,Set your passcode below,암호를 입력하세요
+Enter your old passcode,Enter your old passcode,기존 암호를 입력하세요
+Enter your new passcode,Enter your new passcode,새로운 암호를 입력하세요
+Confirm your passcode,Confirm your passcode,암호를 확인하세요
+Please enter the message,Please enter the message,메시지를 입력하세요
+Please enter the subject,Please enter the subject,제목을 입력하세요
+Confirm your new passcode,Confirm your new passcode,새로운 암호를 확인하세요
+Enter your passcode,Enter your passcode,암호를 입력하세요
+Times in the future cannot be set,Times in the future cannot be set,현재 시간 이후로는 설정할 수 없습니다
+International Prostate Symptom Score,International Prostate Symptom Score,국제전립선 증상점수
+Overactive Bladder Symptom Score,Overactive Bladder Symptom Score,과민성방광 증상점수
+Take,Take,시작
+time,time,회
+Passcode warning Message,The passcode you entered is incorrect.\nPlease try again.,입력하신 암호가 올바르지 않습니다.\n다시 시도해 주세요.
+What beverage did you have?,What beverage did you have?,어떤 음료를 마셨나요?
+Please specify the amount,Please specify the amount,양을 구체적으로 입력해주세요
+Select Date,Select Date,날짜를 선택하세요
+You can export up to 7 days,You can export up to 7 days,최대 7일까지 내보낼 수 있습니다.
+(up to 7 days),(up to 7 days),(최대 7일)
+Data report is sent to your email!,Data report is sent to your email!,기록 리포트가 메일로 발송되었습니다
+Your opinions matter the most. Please share with us the purpose of the data report.,Your opinions matter the most. Please share with us the purpose of the data report.,블래덜리팀은 서비스 개선을 위해 고객분들의 의견을 듣고자 합니다.
+What’s this report for?,What’s this report for?,리포트 사용 목적이 무엇인가요?
+For personal use only.,For personal use only.,스스로 관리하려고
+To share with a clinician.,To share with a clinician.,의사와 공유하려고
+Who are you planning to share this report with?,Who are you planning to share this report with?,누구와 공유하실 계획인가요?
+Selected data will be sent to,Selected data will be sent to,선택하신 데이터는 아래 이메일로 전송됩니다.
+Please check your inbox.,Please check your inbox.,메일함을 확인해주세요
+Share policy Message,"The current version of Bladderly export file has been specifically designed for Bladderly users. The Bladderly export file is compiled based on the voids recorded or measured by the user during the selected period. The information presented on the file is strictly limited to a compilation of data collected by the user and does not involve a higher level of statistical analysis. The accountability for completeness of all bladder event recordings and correct completion of recording for accurate voiding data capture lies with the user.\n\nDO NOT rely on the results provided here to assess your own health; consult your doctor. Bladderly is not intended to be, should not be taken to be, and it does not replace (I) professional medical advice, screening, diagnosis, or treatment, (II) the practice of medicine, or (III) the provision of medical care.","본 문서는 블래덜리 수집기록 문서입니다. 이 문서는 블래덜리 사용자에게만 제공됩니다. 본 문서의 수집기록은 사용자가 블래덜리 앱의 사운드 분석기술로 측정하거나 직접 입력한 기록이며, 사용자가 선택한 기간의 수집기록만 발췌하였습니다. 본 문서는 수집한 데이터의 편집물에 불과하며 더 높은 수준의 통계 분석을 포함하지 않습니다. 선택한 기간에 발생한 모든 배뇨/섭취 이벤트를 기록하는 책임은 사용자에게 있습니다. 사운드 분석 기술을 활용해 배뇨를 측정하는 경우, 정확한 녹음에 대한 책임은 사용자에게 있습니다.\n\n여기서 제공된 결과를 사용하여 건강을 평가하지 마십시오. 블래덜리는 전문 의학적 조언, 스크리닝, 진단 또는 치료를 대신하지 않으며 전문 의료진과 상담하시기 바랍니다."
+Agree and Export,Agree and Export,동의 후 내보내기
+Data Report,Data Report,기록 내보내기
+Dr. Name,Dr. Name,의사 이름
+Clinic Information,Clinic Information,병원 이름
