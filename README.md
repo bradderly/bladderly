@@ -51,3 +51,4 @@ fvm dart run build_runner build --delete-conflicting-outputs
 상태관리 BLOC  
 의존성관리 GetIt ( Injectable로 build runner 돌려서 의존성 주입 )
 라우트관리 GoRouter ( build runner 사용 typed safe route 사용중 )
+Domain Momain을 View에서도 사용 하되 필요에따라 View Model을 생성하여 사용한다.

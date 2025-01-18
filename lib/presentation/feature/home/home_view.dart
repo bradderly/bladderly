@@ -4,6 +4,7 @@ import 'package:bradderly/presentation/common/widget/primary_background.dart';
 import 'package:bradderly/presentation/feature/home/widget/home_app_bar.dart';
 import 'package:bradderly/presentation/feature/home/widget/home_intake_widget.dart';
 import 'package:bradderly/presentation/feature/home/widget/home_voiding_widget.dart';
+import 'package:bradderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -45,9 +46,11 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                   ],
                 ),
               ),
-              const Positioned.fill(
+              Positioned.fill(
                 bottom: null,
-                child: HomeAppBar(),
+                child: HomeAppBar(
+                  onTapMenu: () => const MenuRoute().go(context),
+                ),
               ),
             ],
           ),

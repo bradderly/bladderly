@@ -4,9 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class HomeAppBar extends StatelessWidget {
-  const HomeAppBar({super.key});
+  const HomeAppBar({
+    super.key,
+    required this.onTapMenu,
+  });
 
   static double get height => 66;
+
+  final VoidCallback onTapMenu;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +35,10 @@ class HomeAppBar extends StatelessWidget {
           const Gap(24),
           Assets.icon.icIntroLogo.svg(),
           const Spacer(),
-          IconButton(onPressed: () {}, icon: Assets.icon.icHomeMenu.svg()),
+          IconButton(
+            onPressed: onTapMenu,
+            icon: Assets.icon.icHomeMenu.svg(),
+          ),
           const Gap(8),
         ],
       ),
