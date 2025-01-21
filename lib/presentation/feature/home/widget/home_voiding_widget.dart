@@ -1,11 +1,16 @@
 import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bradderly/presentation/common/extension/string_extension.dart';
+import 'package:bradderly/presentation/feature/home/model/home_voiding_summary_model.dart';
 import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class HomeVoidingWidget extends StatelessWidget {
-  const HomeVoidingWidget({super.key});
+  const HomeVoidingWidget({
+    super.key,
+    required this.homeVoidingSummaryModel,
+  });
+  final HomeVoidingSummaryModel homeVoidingSummaryModel;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +74,11 @@ class HomeVoidingWidget extends StatelessWidget {
                 ),
                 const Gap(16),
                 Text(
-                  ['0', '0', 'N/A'][index ~/ 2],
+                  [
+                    '${homeVoidingSummaryModel.frequency}',
+                    '${homeVoidingSummaryModel.totalVoid}',
+                    homeVoidingSummaryModel.lastRecord,
+                  ][index ~/ 2],
                   style: context.textStyleTheme.b24Bold.copyWith(color: context.colorTheme.neutral.shade10),
                 ),
                 Text(

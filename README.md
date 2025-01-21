@@ -24,8 +24,8 @@ fvm dart run build_runner build --delete-conflicting-outputs
   - di
   - recorder
 - data
-  - api ( remote_data_source )
-  - isar ( local_data_source )
+  - api ( remote_data_source 생략 )
+  - isar ( local_data_source 생략 )
   - repository
 - domain
   - model

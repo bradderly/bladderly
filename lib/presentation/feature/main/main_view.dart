@@ -1,5 +1,5 @@
 import 'package:bradderly/presentation/feature/diary/diary/diary_view.dart';
-import 'package:bradderly/presentation/feature/home/home_view.dart';
+import 'package:bradderly/presentation/feature/home/home_builder.dart';
 import 'package:bradderly/presentation/feature/main/widget/main_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +31,7 @@ class _MainViewState extends State<MainView> {
             physics: const NeverScrollableScrollPhysics(),
             controller: pageController,
             children: const [
-              HomeView(),
+              HomeBuilder(),
               DiaryView(),
             ],
           ),

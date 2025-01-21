@@ -53,6 +53,7 @@ Thumbs.db
 *.g.dart
 *.gen.dart
 *.chopper.dart
+*.config.dart
 
 **/doc/api/
 **/ios/Flutter/.last_build_id
