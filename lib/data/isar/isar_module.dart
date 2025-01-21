@@ -1,4 +1,4 @@
-import 'package:bradderly/domain/model/urination.dart';
+import 'package:bradderly/data/isar/schema/history_entity.dart';
 import 'package:injectable/injectable.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
@@ -13,7 +13,7 @@ abstract class IsarModule {
 
     return Isar.open(
       [
-        UrinationSchema,
+        HistoryEntitySchema,
       ],
       directory: applicationDocumentsDirectory.path,
     );

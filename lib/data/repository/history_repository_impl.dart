@@ -1,0 +1,62 @@
+import 'package:bradderly/data/api/client/api_client.dart';
+import 'package:bradderly/data/isar/schema/history_entity.dart';
+import 'package:bradderly/data/mapper/history_entity_mapper.dart';
+import 'package:bradderly/data/mapper/history_mapper.dart';
+import 'package:bradderly/domain/model/histories.dart';
+import 'package:bradderly/domain/model/history.dart';
+import 'package:bradderly/domain/repository/history_repository.dart';
+import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
+import 'package:isar/isar.dart';
+
+@LazySingleton(as: HistoryRepository)
+class HistoryRepositoryImpl implements HistoryRepository {
+  const HistoryRepositoryImpl({
+    required this.isar,
+    required this.apiClient,
+  });
+
+  final Isar isar;
+  final ApiClient apiClient;
+
+  @override
+  Future<void> initializeHistories() {
+    return isar.writeTxn(Future.value);
+  }
+
+  @override
+  Future<void> removeHistoriesByHashId(String hashId) {
+    return isar.writeTxn(() => isar.historyEntitys.filter().hashIdEqualTo(hashId).deleteAll());
+  }
+
+  @override
+  Stream<Histories<History>> getHistoriesStream({
+    required String hashId,
+    required DateTime date,
+  }) {
+    final lowerDate = DateUtils.dateOnly(date);
+    final upperDate = lowerDate.add(const Duration(days: 1));
+    return isar.historyEntitys
+        .filter()
+        .hashIdEqualTo(hashId)
+        .recordTimeBetween(lowerDate, upperDate, includeUpper: false)
+        .watch(fireImmediately: true)
+        .map((entities) => Histories(list: entities.map(HistoryMapper.fromHistoryEntity).toList()));
+  }
+
+  @override
+  Future<VoidingHistory> saveManualVoidngHistory(VoidingHistory vodingHistory) {
+    return isar.writeTxn(() async {
+      final id = await isar.historyEntitys.put(HistoryEntityMapper.fromVoidingHistory(vodingHistory));
+      return vodingHistory.setId(id);
+    });
+  }
+
+  @override
+  Future<IntakeHistory> saveIntakeHistory(IntakeHistory intakeHistory) {
+    return isar.writeTxn(() async {
+      final id = await isar.historyEntitys.put(HistoryEntityMapper.fromIntakeHistory(intakeHistory));
+      return intakeHistory.setId(id);
+    });
+  }
+}

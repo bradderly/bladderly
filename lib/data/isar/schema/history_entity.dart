@@ -1,14 +1,16 @@
 import 'package:bradderly/domain/model/leakage_volume.dart';
-import 'package:equatable/equatable.dart';
 import 'package:isar/isar.dart';
 
-part 'urination.g.dart';
+part 'history_entity.g.dart';
 
-@Collection(ignore: {'props'})
-class Urination extends Equatable {
+@collection
+class HistoryEntity {
+  HistoryEntity();
+
   Id id = Isar.autoIncrement;
 
   @Name('hash_id')
+  @Index(composite: [CompositeIndex('recordTime')])
   late String hashId;
 
   @Name('record_time')
@@ -16,6 +18,9 @@ class Urination extends Equatable {
 
   @Name('is_intake')
   bool? isIntake;
+
+  @Name('record_urgency')
+  int? recordUrgency;
 
   @Name('is_manual')
   bool? isManual;
@@ -31,7 +36,7 @@ class Urination extends Equatable {
 
   @Name('leakage_volume')
   @Enumerated(EnumType.name)
-  late LeakageVolume leakageVolume;
+  LeakageVolume? leakageVolume;
 
   @Name('beverage_type')
   @Enumerated(EnumType.name)
@@ -39,18 +44,4 @@ class Urination extends Equatable {
 
   @Name('leakage_memo')
   String? leakageMemo;
-
-  @override
-  List<Object?> get props => [
-        hashId,
-        recordTime,
-        isIntake,
-        isManual,
-        recordVolume,
-        isNocutria,
-        isLeakage,
-        leakageVolume,
-        beverageType,
-        leakageMemo,
-      ];
 }
