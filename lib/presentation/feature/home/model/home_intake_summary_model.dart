@@ -12,7 +12,7 @@ class HomeIntakeSummaryModel extends Equatable {
     return HomeIntakeSummaryModel(totalVolume: intakeHistories.totalVolume);
   }
 
-  final double totalVolume;
+  final int totalVolume;
 
   @override
   List<Object?> get props => [

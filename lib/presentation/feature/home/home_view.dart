@@ -13,7 +13,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+  const HomeView({
+    super.key,
+    required this.onPressedMoreVoiding,
+    required this.onPressedMoreIntake,
+  });
+
+  final VoidCallback onPressedMoreVoiding;
+  final VoidCallback onPressedMoreIntake;
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -47,6 +54,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                     BlocSelector<HomeSummaryCubit, HomeSummaryState, HomeVoidingSummaryModel>(
                       selector: (state) => state.voidingSummaryModel,
                       builder: (context, homeVoidingSummaryModel) => HomeVoidingWidget(
+                        onTapMore: widget.onPressedMoreVoiding,
                         homeVoidingSummaryModel: homeVoidingSummaryModel,
                       ),
                     ),
@@ -54,6 +62,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                     BlocSelector<HomeSummaryCubit, HomeSummaryState, HomeIntakeSummaryModel>(
                       selector: (state) => state.intakeSummaryModel,
                       builder: (context, intakeSummaryModel) => HomeIntakeWidget(
+                        onTapMore: widget.onPressedMoreIntake,
                         homeIntakeSummaryModel: intakeSummaryModel,
                       ),
                     ),

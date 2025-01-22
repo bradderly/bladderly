@@ -9,9 +9,11 @@ import 'package:gap/gap.dart';
 class HomeIntakeWidget extends StatelessWidget {
   const HomeIntakeWidget({
     super.key,
+    required this.onTapMore,
     required this.homeIntakeSummaryModel,
   });
 
+  final VoidCallback onTapMore;
   final HomeIntakeSummaryModel homeIntakeSummaryModel;
 
   @override
@@ -61,9 +63,15 @@ class HomeIntakeWidget extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        Text(
-          'See more'.tr,
-          style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade7),
+        GestureDetector(
+          onTap: onTapMore,
+          child: ColoredBox(
+            color: Colors.transparent,
+            child: Text(
+              'See more'.tr,
+              style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade7),
+            ),
+          ),
         ),
       ],
     );

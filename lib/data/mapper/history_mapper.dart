@@ -11,7 +11,7 @@ class HistoryMapper {
         hashId: entity.hashId,
         recordTime: entity.recordTime,
         beverageType: entity.beverageType!,
-        recordVolume: entity.recordVolume,
+        recordVolume: entity.recordVolume.toInt(),
         memo: entity.leakageMemo,
       );
     }
@@ -30,7 +30,7 @@ class HistoryMapper {
       id: entity.id,
       hashId: entity.hashId,
       recordTime: entity.recordTime,
-      recordVolume: entity.recordVolume,
+      recordVolume: entity.recordVolume.toInt(),
       recordUrgency: entity.recordUrgency!,
       isManual: entity.isManual ?? false,
       isNocutria: entity.isNocutria ?? false,

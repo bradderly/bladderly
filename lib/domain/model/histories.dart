@@ -27,9 +27,9 @@ class Histories<T extends History> {
 }
 
 extension VodingHistoriesExtension on VodingHistories {
-  double get totalVolume => _list.fold(0, (previousValue, element) => previousValue + element.recordVolume);
+  int get totalVolume => _list.fold(0, (previousValue, element) => previousValue + element.recordVolume);
 }
 
 extension IntakeHistoriesExtension on IntakeHistories {
-  double get totalVolume => _list.fold(0, (previousValue, element) => previousValue + element.recordVolume);
+  int get totalVolume => _list.fold(0, (previousValue, element) => previousValue + element.recordVolume);
 }

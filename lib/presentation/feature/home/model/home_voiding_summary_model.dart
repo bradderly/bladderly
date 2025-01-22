@@ -26,7 +26,7 @@ class HomeVoidingSummaryModel extends Equatable {
   }
 
   final int frequency;
-  final double totalVoid;
+  final int totalVoid;
   final String lastRecord;
 
   @override

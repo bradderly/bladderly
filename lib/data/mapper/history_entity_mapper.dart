@@ -9,7 +9,7 @@ class HistoryEntityMapper {
       ..hashId = history.hashId
       ..recordTime = history.recordTime
       ..leakageMemo = history.memo
-      ..recordVolume = history.recordVolume
+      ..recordVolume = history.recordVolume.toDouble()
       ..recordUrgency = history.recordUrgency
       ..isManual = history.isManual
       ..isNocutria = history.isNocutria
@@ -23,7 +23,7 @@ class HistoryEntityMapper {
       ..recordTime = history.recordTime
       ..leakageMemo = history.memo
       ..beverageType = history.beverageType
-      ..recordVolume = history.recordVolume
+      ..recordVolume = history.recordVolume.toDouble()
       ..isIntake = true;
   }
 }

@@ -8,8 +8,11 @@ import 'package:gap/gap.dart';
 class HomeVoidingWidget extends StatelessWidget {
   const HomeVoidingWidget({
     super.key,
+    required this.onTapMore,
     required this.homeVoidingSummaryModel,
   });
+
+  final VoidCallback onTapMore;
   final HomeVoidingSummaryModel homeVoidingSummaryModel;
 
   @override
@@ -50,9 +53,15 @@ class HomeVoidingWidget extends StatelessWidget {
           style: context.textStyleTheme.b20Bold.copyWith(color: context.colorTheme.neutral.shade10),
         ),
         const Spacer(),
-        Text(
-          'See more'.tr,
-          style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade7),
+        GestureDetector(
+          onTap: onTapMore,
+          child: ColoredBox(
+            color: Colors.transparent,
+            child: Text(
+              'See more'.tr,
+              style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade7),
+            ),
+          ),
         ),
       ],
     );

@@ -45,7 +45,7 @@ class VoidingHistory extends History {
   });
 
   /// 배뇨량
-  final double recordVolume;
+  final int recordVolume;
 
   /// 마려웠던 정도
   final int recordUrgency;
@@ -104,7 +104,7 @@ class IntakeHistory extends History {
   final String beverageType;
 
   /// 섭취량
-  final double recordVolume;
+  final int recordVolume;
 
   @override
   IntakeHistory setId(int id) {
