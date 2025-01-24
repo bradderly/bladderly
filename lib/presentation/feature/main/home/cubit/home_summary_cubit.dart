@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bradderly/domain/model/histories.dart';
 import 'package:bradderly/domain/usecase/get_histories_stream_usecase.dart';
-import 'package:bradderly/presentation/feature/home/model/home_intake_summary_model.dart';
-import 'package:bradderly/presentation/feature/home/model/home_voiding_summary_model.dart';
+import 'package:bradderly/presentation/feature/main/home/model/home_intake_summary_model.dart';
+import 'package:bradderly/presentation/feature/main/home/model/home_voiding_summary_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

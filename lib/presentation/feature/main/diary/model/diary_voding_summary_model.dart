@@ -29,8 +29,8 @@ class DiaryVoidingSummaryModel extends Equatable {
   factory DiaryVoidingSummaryModel.fromDomain(VodingHistories vodingHistories) {
     return DiaryVoidingSummaryModel(
       totalVolume: vodingHistories.totalVolume,
-      daytimeFrequency: 0,
-      nighttimeFrequency: 0,
+      daytimeFrequency: vodingHistories.daytimeFrequency,
+      nighttimeFrequency: vodingHistories.nighttimeFrequency,
       leakageFrequency: vodingHistories.leakageFrequency,
       maxVolume: vodingHistories.maxVolume,
       minVolume: vodingHistories.minVolume,

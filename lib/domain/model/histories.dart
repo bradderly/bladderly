@@ -25,6 +25,10 @@ class Histories<T extends History> {
   bool get isEmpty => _list.isEmpty;
 
   DateTime? get lastRecordTime => _list.isEmpty ? null : _list.last.recordTime;
+
+  Iterable<A> map<A>(A Function(T e) toElement) {
+    return _list.map(toElement);
+  }
 }
 
 extension VodingHistoriesExtension on VodingHistories {
@@ -59,6 +63,14 @@ extension VodingHistoriesExtension on VodingHistories {
 
     return _list.sorted((a, b) => a.recordVolume.compareTo(b.recordVolume)).first.recordVolume;
   }
+
+  int get daytimeFrequency {
+    return _list.where((element) => !element.isNocutria).length;
+  }
+
+  int get nighttimeFrequency {
+    return _list.where((element) => element.isNocutria).length;
+  }
 }
 
 extension IntakeHistoriesExtension on IntakeHistories {
@@ -66,5 +78,11 @@ extension IntakeHistoriesExtension on IntakeHistories {
 
   IntakeHistories filterByBeverageType(String beverageType) {
     return IntakeHistories(list: _list.where((element) => element.beverageType == beverageType).toList());
+  }
+
+  double getVolumeRateByBeverageType(String beverageType) {
+    if (totalVolume <= 0) return 0;
+
+    return filterByBeverageType(beverageType).totalVolume / totalVolume;
   }
 }

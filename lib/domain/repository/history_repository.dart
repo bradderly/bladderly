@@ -14,4 +14,6 @@ abstract class HistoryRepository {
   Future<VoidingHistory> saveManualVoidngHistory(VoidingHistory vodingHistory);
 
   Future<IntakeHistory> saveIntakeHistory(IntakeHistory intakeHistory);
+
+  Stream<List<DateTime>> getHistoryDatesStream(String hashId);
 }

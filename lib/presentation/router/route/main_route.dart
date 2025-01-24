@@ -1,4 +1,4 @@
-import 'package:bradderly/presentation/feature/main/main_view.dart';
+import 'package:bradderly/presentation/feature/main/main_builder.dart';
 import 'package:bradderly/presentation/feature/menu/model/menu_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
@@ -22,7 +22,7 @@ class MainRoute extends GoRouteData {
   Page<void> buildPage(BuildContext context, GoRouterState state) {
     return CupertinoPage<void>(
       key: state.pageKey,
-      child: const MainView(),
+      child: const MainBuilder(),
     );
   }
 }

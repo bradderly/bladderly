@@ -59,4 +59,13 @@ class HistoryRepositoryImpl implements HistoryRepository {
       return intakeHistory.setId(id);
     });
   }
+
+  @override
+  Stream<List<DateTime>> getHistoryDatesStream(String hashId) {
+    return isar.historyEntitys
+        .filter()
+        .hashIdEqualTo(hashId)
+        .watch(fireImmediately: true)
+        .map((entities) => entities.map((e) => DateUtils.dateOnly(e.recordTime)).toSet().toList());
+  }
 }

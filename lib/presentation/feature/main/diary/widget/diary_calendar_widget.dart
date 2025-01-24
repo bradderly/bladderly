@@ -2,18 +2,22 @@ import 'dart:math' as math;
 
 import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bradderly/presentation/common/extension/datetime_extension.dart';
+import 'package:bradderly/presentation/feature/main/diary/cubit/diary_history_dates_cubit.dart';
 import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
 class DiaryCalendarWidget extends StatefulWidget implements PreferredSizeWidget {
   const DiaryCalendarWidget({
     super.key,
     required this.onChanged,
+    required this.today,
   });
 
   final void Function(DateTime) onChanged;
+  final DateTime today;
 
   @override
   State<DiaryCalendarWidget> createState() => _DiaryCalendarWidgetState();
@@ -23,13 +27,21 @@ class DiaryCalendarWidget extends StatefulWidget implements PreferredSizeWidget 
 }
 
 class _DiaryCalendarWidgetState extends State<DiaryCalendarWidget> {
-  final today = DateUtils.dateOnly(DateTime.now());
-
   late final scrollController = ScrollController();
 
-  late final DateTime maxDate = today.add(const Duration(days: 3));
+  late DateTime maxDate = widget.today.add(const Duration(days: 3));
 
-  late DateTime selectedDate = today;
+  late DateTime selectedDate = widget.today;
+
+  @override
+  void didUpdateWidget(covariant DiaryCalendarWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final dayDiff = widget.today.difference(oldWidget.today).inDays;
+    if (dayDiff != 0) {
+      setState(() => maxDate = widget.today.add(const Duration(days: 3)));
+      scrollController.jumpTo(scrollController.offset + dayDiff * 50);
+    }
+  }
 
   @override
   void dispose() {
@@ -41,7 +53,7 @@ class _DiaryCalendarWidgetState extends State<DiaryCalendarWidget> {
     required int index,
     required DateTime date,
   }) {
-    if (date.isAfter(today)) return;
+    if (date.isAfter(widget.today)) return;
 
     final offset = (index - 3) * 50.0;
 
@@ -102,6 +114,7 @@ class _DiaryCalendarWidgetState extends State<DiaryCalendarWidget> {
                       setState(() => selectedDate = date);
                       widget.onChanged(date);
                     }
+
                     return true;
                   },
                   child: ListView.builder(
@@ -111,7 +124,7 @@ class _DiaryCalendarWidgetState extends State<DiaryCalendarWidget> {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       final date = maxDate.subtract(Duration(days: index));
-                      final isOutdated = date.isAfter(today);
+                      final isOutdated = date.isAfter(widget.today);
 
                       return _buildDay(isOutdated, index, date, context);
                     },
@@ -127,6 +140,7 @@ class _DiaryCalendarWidgetState extends State<DiaryCalendarWidget> {
 
   Widget _buildDay(bool isOutdated, int index, DateTime date, BuildContext context) {
     return GestureDetector(
+      key: ValueKey(date),
       onTap: isOutdated ? null : () => onTap(index: index, date: date),
       child: Container(
         width: 50,
@@ -153,6 +167,29 @@ class _DiaryCalendarWidgetState extends State<DiaryCalendarWidget> {
                   ),
                 ],
               ),
+            ),
+            Builder(
+              builder: (context) {
+                final hasHistory =
+                    context.select<DiaryHistoryDatesCubit, bool>((cubit) => cubit.state.hasHistory(date));
+
+                if (!hasHistory) return const SizedBox.shrink();
+
+                return Positioned.fill(
+                  top: null,
+                  bottom: 7,
+                  child: Center(
+                    child: Container(
+                      width: 4,
+                      height: 4,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: context.colorTheme.vermilion.primary.shade50,
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
           ],
         ),

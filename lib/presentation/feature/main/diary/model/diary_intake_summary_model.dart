@@ -18,13 +18,13 @@ class DiaryIntakeSummaryModel extends Equatable {
     return DiaryIntakeSummaryModel(
       totalVolume: intakeHistories.totalVolume,
       frequency: intakeHistories.length,
-      beverageTypeRateMap: intakeHistories.totalVolume <= 0
-          ? {}
-          : {
-              for (final beverageType in BeverageTypeModel.values)
-                beverageType:
-                    intakeHistories.filterByBeverageType(beverageType.name).totalVolume / intakeHistories.totalVolume,
-            },
+      beverageTypeRateMap: BeverageTypeModel.values
+          .map((beverateType) => MapEntry(beverateType, intakeHistories.getVolumeRateByBeverageType(beverateType.name)))
+          .where((entry) => entry.value > 0)
+          .fold<Map<BeverageTypeModel, double>>(
+        {},
+        (previousValue, element) => previousValue..[element.key] = element.value,
+      ),
     );
   }
 

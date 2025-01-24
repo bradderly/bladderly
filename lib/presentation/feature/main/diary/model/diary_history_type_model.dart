@@ -1,5 +1,4 @@
 import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
 import 'package:flutter/material.dart';
 
 enum DiaryHistoryTypeModel {
@@ -10,9 +9,9 @@ enum DiaryHistoryTypeModel {
 
   String get text {
     return switch (this) {
-      voiding => 'Voiding'.tr,
-      intake => 'Intake'.tr,
-      leakage => 'Leakage'.tr,
+      voiding => 'Voiding',
+      intake => 'Intake',
+      leakage => 'Leakage',
     };
   }
 
