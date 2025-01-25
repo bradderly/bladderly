@@ -91,7 +91,11 @@ class HomeVoidingWidget extends StatelessWidget {
                   style: context.textStyleTheme.b24Bold.copyWith(color: context.colorTheme.neutral.shade10),
                 ),
                 Text(
-                  ['times', context.unit, 'ago'][index ~/ 2].tr,
+                  [
+                    if (homeVoidingSummaryModel.frequency < 2 && context.locale.isEn) 'time' else 'times'.tr,
+                    context.unit.tr,
+                    'ago'.tr,
+                  ][index ~/ 2],
                   style: context.textStyleTheme.b14SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
                 ),
               ],

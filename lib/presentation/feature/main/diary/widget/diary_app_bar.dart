@@ -6,27 +6,31 @@ import 'package:bradderly/presentation/feature/main/diary/cubit/diary_history_da
 import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
-class DiaryCalendarWidget extends StatefulWidget implements PreferredSizeWidget {
-  const DiaryCalendarWidget({
+class DiaryAppBar extends StatefulWidget implements PreferredSizeWidget {
+  const DiaryAppBar({
     super.key,
+    required this.onTapExport,
     required this.onChanged,
     required this.today,
   });
 
+  final VoidCallback onTapExport;
   final void Function(DateTime) onChanged;
   final DateTime today;
 
   @override
-  State<DiaryCalendarWidget> createState() => _DiaryCalendarWidgetState();
+  State<DiaryAppBar> createState() => _DiaryAppBarState();
 
   @override
   Size get preferredSize => const Size.fromHeight(170);
 }
 
-class _DiaryCalendarWidgetState extends State<DiaryCalendarWidget> {
+class _DiaryAppBarState extends State<DiaryAppBar> {
+  late final itemExtent = MediaQuery.sizeOf(context).width / 7;
   late final scrollController = ScrollController();
 
   late DateTime maxDate = widget.today.add(const Duration(days: 3));
@@ -34,12 +38,12 @@ class _DiaryCalendarWidgetState extends State<DiaryCalendarWidget> {
   late DateTime selectedDate = widget.today;
 
   @override
-  void didUpdateWidget(covariant DiaryCalendarWidget oldWidget) {
+  void didUpdateWidget(covariant DiaryAppBar oldWidget) {
     super.didUpdateWidget(oldWidget);
     final dayDiff = widget.today.difference(oldWidget.today).inDays;
     if (dayDiff != 0) {
       setState(() => maxDate = widget.today.add(const Duration(days: 3)));
-      scrollController.jumpTo(scrollController.offset + dayDiff * 50);
+      scrollController.jumpTo(scrollController.offset + dayDiff * itemExtent);
     }
   }
 
@@ -55,7 +59,7 @@ class _DiaryCalendarWidgetState extends State<DiaryCalendarWidget> {
   }) {
     if (date.isAfter(widget.today)) return;
 
-    final offset = (index - 3) * 50.0;
+    final offset = (index - 3) * itemExtent;
 
     if (offset >= 0) {
       scrollController.animateTo(
@@ -68,72 +72,77 @@ class _DiaryCalendarWidgetState extends State<DiaryCalendarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: context.colorTheme.neutral.shade0,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                Assets.icon.icDialryCalendar.svg(),
-                const Gap(8),
-                Text(
-                  selectedDate.calendarHeader,
-                  style: context.textStyleTheme.b20Bold.copyWith(
-                    color: context.colorTheme.neutral.shade10,
-                  ),
-                ),
-                const Spacer(),
-                Assets.icon.icDiaryExport.svg(),
-              ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 24),
-            height: 64,
-            padding: EdgeInsets.symmetric(horizontal: (MediaQuery.sizeOf(context).width - 350) / 2),
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                Center(
-                  child: Container(
-                    width: 50,
-                    decoration: BoxDecoration(
-                      color: context.colorTheme.neutral.shade3,
-                      borderRadius: BorderRadius.circular(8),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark,
+      child: ColoredBox(
+        color: context.colorTheme.neutral.shade0,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  Assets.icon.icDialryCalendar.svg(),
+                  const Gap(8),
+                  Text(
+                    selectedDate.getCalendarHeader(context),
+                    style: context.textStyleTheme.b20Bold.copyWith(
+                      color: context.colorTheme.neutral.shade10,
                     ),
                   ),
-                ),
-                NotificationListener<ScrollNotification>(
-                  onNotification: (notification) {
-                    if (notification is ScrollEndNotification) {
-                      final index = (scrollController.offset / 50).round();
-                      final date = maxDate.subtract(Duration(days: index + 3));
-                      setState(() => selectedDate = date);
-                      widget.onChanged(date);
-                    }
-
-                    return true;
-                  },
-                  child: ListView.builder(
-                    controller: scrollController,
-                    physics: const _SnapScrollPhysics(itemWidth: 50),
-                    reverse: true,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      final date = maxDate.subtract(Duration(days: index));
-                      final isOutdated = date.isAfter(widget.today);
-
-                      return _buildDay(isOutdated, index, date, context);
-                    },
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: widget.onTapExport,
+                    child: Assets.icon.icDiaryExport.svg(),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 24),
+              height: 64,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Center(
+                    child: Container(
+                      width: 50,
+                      decoration: BoxDecoration(
+                        color: context.colorTheme.neutral.shade3,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                  NotificationListener<ScrollNotification>(
+                    onNotification: (notification) {
+                      if (notification is ScrollEndNotification) {
+                        final index = (scrollController.offset / itemExtent).round();
+                        final date = maxDate.subtract(Duration(days: index + 3));
+                        setState(() => selectedDate = date);
+                        widget.onChanged(date);
+                      }
+
+                      return true;
+                    },
+                    child: ListView.builder(
+                      physics: _SnapScrollPhysics(itemWidth: itemExtent),
+                      controller: scrollController,
+                      reverse: true,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        final date = maxDate.subtract(Duration(days: index));
+                        final isOutdated = date.isAfter(widget.today);
+
+                        return _buildDay(isOutdated, index, date, context);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -143,7 +152,7 @@ class _DiaryCalendarWidgetState extends State<DiaryCalendarWidget> {
       key: ValueKey(date),
       onTap: isOutdated ? null : () => onTap(index: index, date: date),
       child: Container(
-        width: 50,
+        width: itemExtent,
         color: Colors.transparent,
         child: Stack(
           children: [
@@ -160,7 +169,7 @@ class _DiaryCalendarWidgetState extends State<DiaryCalendarWidget> {
                   ),
                   const Gap(2),
                   Text(
-                    date.dayOfweek,
+                    date.getDayOfweek(context),
                     style: context.textStyleTheme.b12Medium.copyWith(
                       color: isOutdated ? context.colorTheme.neutral.shade6 : context.colorTheme.neutral.shade10,
                     ),

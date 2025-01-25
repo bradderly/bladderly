@@ -1,3 +1,4 @@
+import 'package:bradderly/presentation/common/cubit/locale_cubit.dart';
 import 'package:bradderly/presentation/common/cubit/unit_cubit.dart';
 import 'package:bradderly/presentation/router/app_router.dart';
 import 'package:bradderly/presentation/theme/color/color_theme.dart';
@@ -20,8 +21,15 @@ class BladderlyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => UnitCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => UnitCubit(),
+        ),
+        BlocProvider<AppLocaleCubit>(
+          create: (_) => AppLocaleCubit(),
+        ),
+      ],
       child: MaterialApp.router(
         routeInformationParser: AppRouter.goRouter.routeInformationParser,
         routerDelegate: AppRouter.goRouter.routerDelegate,

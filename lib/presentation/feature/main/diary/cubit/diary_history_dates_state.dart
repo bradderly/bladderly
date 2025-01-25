@@ -2,15 +2,15 @@ part of 'diary_history_dates_cubit.dart';
 
 class DiaryHistoryDatesState extends Equatable {
   const DiaryHistoryDatesState({
-    List<DateTime> dates = const [],
-  }) : _dates = dates;
+    this.dates = const [],
+  });
 
-  final List<DateTime> _dates;
+  final List<DateTime> dates;
 
-  bool hasHistory(DateTime date) => _dates.contains(date);
+  bool hasHistory(DateTime date) => dates.contains(date);
 
   @override
   List<Object> get props => [
-        _dates,
+        dates,
       ];
 }

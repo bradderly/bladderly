@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'main_tab_state.dart';
 
 class MainTabCubit extends Cubit<MainTabState> {
-  MainTabCubit() : super(const MainTabHomeState());
+  MainTabCubit() : super(const MainTabHome());
 
   void showIndex(int index) {
     return switch (index) {
@@ -15,10 +15,10 @@ class MainTabCubit extends Cubit<MainTabState> {
   }
 
   void showHome() {
-    emit(const MainTabHomeState());
+    emit(const MainTabHome());
   }
 
   void showDiary({MainTabDiaryScrollScetion scrollSection = MainTabDiaryScrollScetion.none}) {
-    emit(MainTabDiaryState(scrollSection: scrollSection));
+    emit(MainTabDiary(scrollSection: scrollSection));
   }
 }

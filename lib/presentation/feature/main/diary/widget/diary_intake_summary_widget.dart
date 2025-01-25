@@ -207,7 +207,7 @@ class DiaryIntakeSummaryWidget extends StatelessWidget {
                     ),
                     const Gap(4),
                     SizedBox(
-                      width: switch (AppLocale.current) {
+                      width: switch (context.locale) {
                         AppLocale.en => columnIndex == 2 ? 62 : 44,
                         AppLocale.ko => columnIndex == 1 ? 62 : 44,
                       },

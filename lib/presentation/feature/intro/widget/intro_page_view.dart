@@ -52,7 +52,7 @@ class _FirstPage extends _Page {
       textAlign: TextAlign.center,
       text: TextSpan(
         style: context.textStyleTheme.b18SemiBold.copyWith(color: context.colorTheme.neutral.shade9),
-        children: switch (AppLocale.current) {
+        children: switch (context.locale) {
           AppLocale.en => [
               const TextSpan(text: 'Bladderly automatically tracks\n your '),
               TextSpan(
@@ -95,7 +95,7 @@ class _SecondPage extends _Page {
       textAlign: TextAlign.center,
       text: TextSpan(
         style: context.textStyleTheme.b18SemiBold.copyWith(color: context.colorTheme.neutral.shade9),
-        children: switch (AppLocale.current) {
+        children: switch (context.locale) {
           AppLocale.en => [
               const TextSpan(text: 'Simply by analyzing\n'),
               TextSpan(
@@ -137,7 +137,7 @@ class _ThirdPage extends _Page {
       textAlign: TextAlign.center,
       text: TextSpan(
         style: context.textStyleTheme.b18SemiBold.copyWith(color: context.colorTheme.neutral.shade9),
-        children: switch (AppLocale.current) {
+        children: switch (context.locale) {
           AppLocale.en => [
               TextSpan(
                 text: 'Get a full, true picture ',

@@ -1,8 +1,10 @@
 import 'package:bradderly/presentation/feature/main/cubit/main_tab_cubit.dart';
 import 'package:bradderly/presentation/feature/main/diary/cubit/diary_cubit.dart';
+import 'package:bradderly/presentation/feature/main/diary/cubit/diary_history_dates_cubit.dart';
 import 'package:bradderly/presentation/feature/main/diary/widget/dairy_histories_widget.dart';
-import 'package:bradderly/presentation/feature/main/diary/widget/diary_calendar_widget.dart';
+import 'package:bradderly/presentation/feature/main/diary/widget/diary_app_bar.dart';
 import 'package:bradderly/presentation/feature/main/diary/widget/diary_today_summary_widget.dart';
+import 'package:bradderly/presentation/router/route/main_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -67,10 +69,12 @@ class _DiaryViewState extends State<DiaryView> with AutomaticKeepAliveClientMixi
     super.build(context);
 
     return BlocListener<MainTabCubit, MainTabState>(
-      listenWhen: (_, curr) => curr is MainTabDiaryState,
-      listener: (_, __) => scrollToSection((context.read<MainTabCubit>().state as MainTabDiaryState).scrollSection),
+      listenWhen: (_, curr) => curr is MainTabDiary,
+      listener: (_, __) => scrollToSection((context.read<MainTabCubit>().state as MainTabDiary).scrollSection),
       child: Scaffold(
-        appBar: DiaryCalendarWidget(
+        appBar: DiaryAppBar(
+          onTapExport: () =>
+              ExportRoute(historyDates: context.read<DiaryHistoryDatesCubit>().state.dates).push<void>(context),
           onChanged: onDateChanged,
           today: DateUtils.dateOnly(DateTime.now().add(Duration.zero)),
         ),

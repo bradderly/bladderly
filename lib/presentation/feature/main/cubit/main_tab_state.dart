@@ -12,8 +12,8 @@ sealed class MainTabState extends Equatable {
 
   int get index {
     return switch (this) {
-      MainTabHomeState() => 0,
-      MainTabDiaryState() => 1,
+      MainTabHome() => 0,
+      MainTabDiary() => 1,
     };
   }
 
@@ -21,12 +21,12 @@ sealed class MainTabState extends Equatable {
   List<Object> get props => [];
 }
 
-final class MainTabHomeState extends MainTabState {
-  const MainTabHomeState();
+final class MainTabHome extends MainTabState {
+  const MainTabHome();
 }
 
-final class MainTabDiaryState extends MainTabState {
-  const MainTabDiaryState({
+final class MainTabDiary extends MainTabState {
+  const MainTabDiary({
     required this.scrollSection,
   });
 

@@ -9,6 +9,7 @@ import 'package:bradderly/presentation/feature/main/home/widget/home_intake_widg
 import 'package:bradderly/presentation/feature/main/home/widget/home_voiding_widget.dart';
 import 'package:bradderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
@@ -31,55 +32,58 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
   Widget build(BuildContext context) {
     super.build(context);
 
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        const PrimaryBackground(),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Stack(
-            fit: StackFit.expand,
-            children: [
-              SafeArea(
-                child: ListView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  children: [
-                    Gap(HomeAppBar.height),
-                    Text(
-                      'Today Summary'.tr,
-                      style: context.textStyleTheme.b24BoldOutfit.copyWith(color: context.colorTheme.neutral.shade0),
-                    ),
-                    const Gap(16),
-                    BlocSelector<HomeSummaryCubit, HomeSummaryState, HomeVoidingSummaryModel>(
-                      selector: (state) => state.voidingSummaryModel,
-                      builder: (context, homeVoidingSummaryModel) => HomeVoidingWidget(
-                        onTapMore: widget.onPressedMoreVoiding,
-                        homeVoidingSummaryModel: homeVoidingSummaryModel,
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          const PrimaryBackground(),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Stack(
+              fit: StackFit.expand,
+              children: [
+                SafeArea(
+                  child: ListView(
+                    physics: const ClampingScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    children: [
+                      Gap(HomeAppBar.height),
+                      Text(
+                        'Today Summary'.tr,
+                        style: context.textStyleTheme.b24BoldOutfit.copyWith(color: context.colorTheme.neutral.shade0),
                       ),
-                    ),
-                    const Gap(40),
-                    BlocSelector<HomeSummaryCubit, HomeSummaryState, HomeIntakeSummaryModel>(
-                      selector: (state) => state.intakeSummaryModel,
-                      builder: (context, intakeSummaryModel) => HomeIntakeWidget(
-                        onTapMore: widget.onPressedMoreIntake,
-                        homeIntakeSummaryModel: intakeSummaryModel,
+                      const Gap(16),
+                      BlocSelector<HomeSummaryCubit, HomeSummaryState, HomeVoidingSummaryModel>(
+                        selector: (state) => state.voidingSummaryModel,
+                        builder: (context, homeVoidingSummaryModel) => HomeVoidingWidget(
+                          onTapMore: widget.onPressedMoreVoiding,
+                          homeVoidingSummaryModel: homeVoidingSummaryModel,
+                        ),
                       ),
-                    ),
-                    const Gap(53),
-                  ],
+                      const Gap(40),
+                      BlocSelector<HomeSummaryCubit, HomeSummaryState, HomeIntakeSummaryModel>(
+                        selector: (state) => state.intakeSummaryModel,
+                        builder: (context, intakeSummaryModel) => HomeIntakeWidget(
+                          onTapMore: widget.onPressedMoreIntake,
+                          homeIntakeSummaryModel: intakeSummaryModel,
+                        ),
+                      ),
+                      const Gap(53),
+                    ],
+                  ),
                 ),
-              ),
-              Positioned.fill(
-                bottom: null,
-                child: HomeAppBar(
-                  onTapMenu: () => const MenuRoute().go(context),
+                Positioned.fill(
+                  bottom: null,
+                  child: HomeAppBar(
+                    onTapMenu: () => const MenuRoute().go(context),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

@@ -17,6 +17,15 @@ enum AppLocale {
   static AppLocale get current {
     return AppLocale.of(PlatformDispatcher.instance.locale.languageCode);
   }
+
+  String getDayOfWeek(int index) {
+    return switch (this) {
+      AppLocale.en => ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][index],
+      AppLocale.ko => ['월', '화', '수', '목', '금', '토', '일'][index],
+    };
+  }
+
+  bool get isEn => this == AppLocale.en;
 }
 
 class Translation {
