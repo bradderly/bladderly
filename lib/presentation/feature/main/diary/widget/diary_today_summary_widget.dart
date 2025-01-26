@@ -32,7 +32,7 @@ class DiaryTodaySummaryWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Summary'.tr,
+          'Summary'.tr(context),
           style: context.textStyleTheme.b20Bold.copyWith(
             color: context.colorTheme.neutral.shade10,
           ),

@@ -58,7 +58,7 @@ class DiaryIntakeSummaryWidget extends StatelessWidget {
                           child: Assets.icon.icDiaryDownArrow.svg(),
                         ),
                         Text(
-                          isExpanded ? 'See less'.tr : 'See more'.tr,
+                          isExpanded ? 'See less'.tr(context) : 'See more'.tr(context),
                           style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade7),
                         ),
                       ],
@@ -82,7 +82,7 @@ class DiaryIntakeSummaryWidget extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context) {
     return Text(
-      'Intake'.tr,
+      'Intake'.tr(context),
       style: context.textStyleTheme.b16SemiBold.copyWith(
         color: context.colorTheme.vermilion.primary.shade50,
       ),
@@ -93,7 +93,7 @@ class DiaryIntakeSummaryWidget extends StatelessWidget {
     return Row(
       children: [
         Text(
-          'Total amount'.tr,
+          'Total amount'.tr(context),
           style: context.textStyleTheme.b18SemiBold.copyWith(
             color: context.colorTheme.neutral.shade10,
           ),
@@ -120,7 +120,7 @@ class DiaryIntakeSummaryWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Frequency'.tr,
+          'Frequency'.tr(context),
           style: context.textStyleTheme.b16SemiBold.copyWith(
             color: context.colorTheme.neutral.shade10,
           ),
@@ -132,7 +132,7 @@ class DiaryIntakeSummaryWidget extends StatelessWidget {
             children: [
               TextSpan(text: '${diaryIntakeSummaryModel.frequency} '),
               TextSpan(
-                text: 'times'.tr,
+                text: 'times'.tr(context),
                 style: context.textStyleTheme.b16Medium,
               ),
             ],
@@ -148,7 +148,7 @@ class DiaryIntakeSummaryWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Proportion'.tr,
+          'Proportion'.tr(context),
           style: context.textStyleTheme.b16SemiBold.copyWith(
             color: context.colorTheme.neutral.shade10,
           ),
@@ -212,7 +212,7 @@ class DiaryIntakeSummaryWidget extends StatelessWidget {
                         AppLocale.ko => columnIndex == 1 ? 62 : 44,
                       },
                       child: Text(
-                        beverageType.name.tr,
+                        beverageType.name.tr(context),
                         style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
                       ),
                     ),

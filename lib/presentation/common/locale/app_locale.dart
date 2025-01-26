@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
 import 'package:collection/collection.dart';
 import 'package:csv2json/csv2json.dart';
@@ -12,10 +10,6 @@ enum AppLocale {
 
   factory AppLocale.of(String name) {
     return AppLocale.values.firstWhereOrNull((e) => e.name == name) ?? AppLocale.en;
-  }
-
-  static AppLocale get current {
-    return AppLocale.of(PlatformDispatcher.instance.locale.languageCode);
   }
 
   String getDayOfWeek(int index) {

@@ -14,7 +14,7 @@ class SignupView extends StatelessWidget {
       appBar: AppBar(
         leading: const CupertinoBackButton(),
         title: Text(
-          'Sign Up'.tr,
+          'Sign Up'.tr(context),
           style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
         ),
       ),
@@ -25,15 +25,15 @@ class SignupView extends StatelessWidget {
             const Gap(29),
             Center(
               child: Text(
-                'Enter your email'.tr,
+                'Enter your email'.tr(context),
                 style: context.textStyleTheme.b24BoldOutfit.copyWith(color: context.colorTheme.neutral.shade10),
                 textAlign: TextAlign.center,
               ),
             ),
             const Gap(77),
             ParimaryTextField(
-              errorText: 'Please enter a properly formatted email address.'.tr,
-              label: 'Email Address'.tr,
+              errorText: 'Please enter a properly formatted email address.'.tr(context),
+              label: 'Email Address'.tr(context),
             ),
           ],
         ),

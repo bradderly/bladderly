@@ -50,7 +50,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                     children: [
                       Gap(HomeAppBar.height),
                       Text(
-                        'Today Summary'.tr,
+                        'Today Summary'.tr(context),
                         style: context.textStyleTheme.b24BoldOutfit.copyWith(color: context.colorTheme.neutral.shade0),
                       ),
                       const Gap(16),

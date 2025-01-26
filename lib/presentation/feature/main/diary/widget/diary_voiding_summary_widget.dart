@@ -56,7 +56,7 @@ class DiaryVoidingSummaryWidget extends StatelessWidget {
                           child: Assets.icon.icDiaryDownArrow.svg(),
                         ),
                         Text(
-                          isExpanded ? 'See less'.tr : 'See more'.tr,
+                          isExpanded ? 'See less'.tr(context) : 'See more'.tr(context),
                           style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade7),
                         ),
                       ],
@@ -80,7 +80,7 @@ class DiaryVoidingSummaryWidget extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context) {
     return Text(
-      'Voiding'.tr,
+      'Voiding'.tr(context),
       style: context.textStyleTheme.b16SemiBold.copyWith(
         color: context.colorTheme.vermilion.primary.shade50,
       ),
@@ -91,7 +91,7 @@ class DiaryVoidingSummaryWidget extends StatelessWidget {
     return Row(
       children: [
         Text(
-          'Total amount'.tr,
+          'Total amount'.tr(context),
           style: context.textStyleTheme.b18SemiBold.copyWith(
             color: context.colorTheme.neutral.shade10,
           ),
@@ -118,7 +118,7 @@ class DiaryVoidingSummaryWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Frequency'.tr,
+          'Frequency'.tr(context),
           style: context.textStyleTheme.b16SemiBold.copyWith(
             color: context.colorTheme.neutral.shade10,
           ),
@@ -144,7 +144,7 @@ class DiaryVoidingSummaryWidget extends StatelessWidget {
                         icons[realIndex].svg(),
                         const Gap(4),
                         Text(
-                          texts[realIndex].tr,
+                          texts[realIndex].tr(context),
                           style: context.textStyleTheme.b14Medium.copyWith(
                             color: context.colorTheme.neutral.shade7,
                           ),
@@ -163,7 +163,7 @@ class DiaryVoidingSummaryWidget extends StatelessWidget {
                               style: context.textStyleTheme.b24Bold.copyWith(color: context.colorTheme.neutral.shade10),
                             ),
                             const TextSpan(text: ' '),
-                            TextSpan(text: 'times'.tr),
+                            TextSpan(text: 'times'.tr(context)),
                           ],
                         ),
                       ),
@@ -183,7 +183,7 @@ class DiaryVoidingSummaryWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Voided volume'.tr,
+          'Voided volume'.tr(context),
           style: context.textStyleTheme.b16SemiBold.copyWith(
             color: context.colorTheme.neutral.shade10,
           ),
@@ -204,7 +204,7 @@ class DiaryVoidingSummaryWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      ['Max', 'Min'][realIndex].tr,
+                      ['Max', 'Min'][realIndex].tr(context),
                       style: context.textStyleTheme.b14Medium
                           .copyWith(color: context.colorTheme.vermilion.primary.shade50),
                     ),
@@ -239,14 +239,14 @@ class DiaryVoidingSummaryWidget extends StatelessWidget {
         Row(
           children: [
             Text(
-              'Voiding interval'.tr,
+              'Voiding interval'.tr(context),
               style: context.textStyleTheme.b16SemiBold.copyWith(
                 color: context.colorTheme.neutral.shade10,
               ),
             ),
             const Gap(5),
             Text(
-              '(hr:mins)'.tr,
+              '(hr:mins)'.tr(context),
               style: context.textStyleTheme.b14SemiBold.copyWith(
                 color: context.colorTheme.neutral.shade6,
               ),
@@ -267,7 +267,7 @@ class DiaryVoidingSummaryWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      ['Max', 'Mean', 'Min'][realIndex].tr,
+                      ['Max', 'Mean', 'Min'][realIndex].tr(context),
                       style: context.textStyleTheme.b14Medium
                           .copyWith(color: context.colorTheme.vermilion.primary.shade50),
                     ),

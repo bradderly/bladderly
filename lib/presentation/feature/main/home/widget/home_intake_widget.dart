@@ -44,7 +44,7 @@ class HomeIntakeWidget extends StatelessWidget {
     return Row(
       children: [
         Text(
-          'Intake'.tr,
+          'Intake'.tr(context),
           style: context.textStyleTheme.b20Bold.copyWith(color: context.colorTheme.neutral.shade10),
         ),
         const Spacer(),
@@ -68,7 +68,7 @@ class HomeIntakeWidget extends StatelessWidget {
           child: ColoredBox(
             color: Colors.transparent,
             child: Text(
-              'See more'.tr,
+              'See more'.tr(context),
               style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade7),
             ),
           ),
@@ -145,7 +145,7 @@ class HomeIntakeWidget extends StatelessWidget {
                           ),
                           const Gap(8),
                           Text(
-                            baverageType.name.tr,
+                            baverageType.name.tr(context),
                             style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade10),
                           ),
                         ],

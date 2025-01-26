@@ -76,7 +76,7 @@ class _IntroViewState extends State<IntroView> {
                           borderRadius: 8,
                           backgroundColor: context.colorTheme.vermilion.primary.shade50,
                           shape: BoxShape.rectangle,
-                          text: 'Continue'.tr,
+                          text: 'Continue'.tr(context),
                           textColor: context.colorTheme.neutral.shade0,
                         ),
                       ),

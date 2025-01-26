@@ -14,7 +14,7 @@ fvm dart run build_runner build --delete-conflicting-outputs
 
 ### locale
 
-'text'.tr
+'text'.tr(context)
 
 ### 프로젝트 구조
 

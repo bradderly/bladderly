@@ -22,7 +22,7 @@ class DiaryHistoriesWidget extends StatelessWidget {
         Row(
           children: [
             Text(
-              'List'.tr,
+              'List'.tr(context),
               style: context.textStyleTheme.b20Bold.copyWith(
                 color: context.colorTheme.neutral.shade10,
               ),
@@ -41,7 +41,7 @@ class DiaryHistoriesWidget extends StatelessWidget {
                       color: context.colorTheme.neutral.shade2,
                     ),
                     child: Text(
-                      DiaryHistoryTypeModel.values[index ~/ 2].text.tr,
+                      DiaryHistoryTypeModel.values[index ~/ 2].text.tr(context),
                       style: context.textStyleTheme.b12SemiBold.copyWith(
                         color: DiaryHistoryTypeModel.values[index ~/ 2].getColor(context),
                       ),
@@ -58,7 +58,7 @@ class DiaryHistoriesWidget extends StatelessWidget {
             height: 138,
             alignment: Alignment.center,
             child: Text(
-              'List Na Message'.tr,
+              'List Na Message'.tr(context),
               style: context.textStyleTheme.b16Medium.copyWith(
                 color: context.colorTheme.neutral.shade6,
               ),
@@ -77,7 +77,7 @@ class DiaryHistoriesWidget extends StatelessWidget {
                       alignment: Alignment.center,
                       width: column.getWidth(context),
                       child: Text(
-                        column.text.tr,
+                        column.text.tr(context),
                         style: context.textStyleTheme.b12Medium.copyWith(
                           color: context.colorTheme.neutral.shade6,
                         ),
@@ -102,10 +102,10 @@ class DiaryHistoriesWidget extends StatelessWidget {
                             _DiaryHistoryColumn.time => diaryHistoryModel.recordTime,
                             _DiaryHistoryColumn.amount => diaryHistoryModel.recordVolume == null
                                 ? 'N/A'
-                                : '${context.unitValue(diaryHistoryModel.recordVolume!)}${context.unit.tr}',
+                                : '${context.unitValue(diaryHistoryModel.recordVolume!)}${context.unit.tr(context)}',
                             _DiaryHistoryColumn.urge => diaryHistoryModel.recordUrgency?.toString() ?? '',
-                            _DiaryHistoryColumn.leak => diaryHistoryModel.leakageVolume?.tr ?? '',
-                            _DiaryHistoryColumn.type => diaryHistoryModel.beverageType?.tr ?? '',
+                            _DiaryHistoryColumn.leak => diaryHistoryModel.leakageVolume?.tr(context) ?? '',
+                            _DiaryHistoryColumn.type => diaryHistoryModel.beverageType?.tr(context) ?? '',
                           },
                           style: context.textStyleTheme.b14Medium.copyWith(
                             color: switch (column) {

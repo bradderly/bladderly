@@ -49,7 +49,7 @@ class HomeVoidingWidget extends StatelessWidget {
     return Row(
       children: [
         Text(
-          'Voiding'.tr,
+          'Voiding'.tr(context),
           style: context.textStyleTheme.b20Bold.copyWith(color: context.colorTheme.neutral.shade10),
         ),
         const Spacer(),
@@ -58,7 +58,7 @@ class HomeVoidingWidget extends StatelessWidget {
           child: ColoredBox(
             color: Colors.transparent,
             child: Text(
-              'See more'.tr,
+              'See more'.tr(context),
               style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade7),
             ),
           ),
@@ -78,7 +78,7 @@ class HomeVoidingWidget extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  ['Frequency', 'Total void', 'Last record'][index ~/ 2].tr,
+                  ['Frequency', 'Total void', 'Last record'][index ~/ 2].tr(context),
                   style: context.textStyleTheme.b14SemiBold.copyWith(color: context.colorTheme.neutral.shade7),
                 ),
                 const Gap(16),
@@ -92,9 +92,9 @@ class HomeVoidingWidget extends StatelessWidget {
                 ),
                 Text(
                   [
-                    if (homeVoidingSummaryModel.frequency < 2 && context.locale.isEn) 'time' else 'times'.tr,
-                    context.unit.tr,
-                    'ago'.tr,
+                    if (homeVoidingSummaryModel.frequency < 2 && context.locale.isEn) 'time' else 'times'.tr(context),
+                    context.unit.tr(context),
+                    'ago'.tr(context),
                   ][index ~/ 2],
                   style: context.textStyleTheme.b14SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
                 ),
@@ -113,7 +113,7 @@ class HomeVoidingWidget extends StatelessWidget {
         Stack(
           children: [
             Text(
-              'How to use'.tr,
+              'How to use'.tr(context),
               style: context.textStyleTheme.b14SemiBold.copyWith(
                 color: context.colorTheme.neutral.shade7,
               ),
@@ -153,7 +153,7 @@ class HomeVoidingWidget extends StatelessWidget {
         child: Row(
           children: [
             Text(
-              'Sound Input'.tr,
+              'Sound Input'.tr(context),
               style: context.textStyleTheme.b20Bold.copyWith(color: context.colorTheme.neutral.shade10),
             ),
             const Spacer(),
@@ -180,7 +180,7 @@ class HomeVoidingWidget extends StatelessWidget {
         child: Row(
           children: [
             Text(
-              'Manual Input'.tr,
+              'Manual Input'.tr(context),
               style: context.textStyleTheme.b20Bold.copyWith(color: context.colorTheme.neutral.shade10),
             ),
             const Spacer(),

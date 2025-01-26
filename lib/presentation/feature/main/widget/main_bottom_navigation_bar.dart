@@ -41,7 +41,7 @@ class MainBottomNavigationBar extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        ['Home', 'Diary'][index].tr,
+                        ['Home', 'Diary'][index].tr(context),
                         style: context.textStyleTheme.b12Medium.copyWith(
                           color: isSelected ? context.colorTheme.neutral.shade10 : context.colorTheme.neutral.shade6,
                         ),

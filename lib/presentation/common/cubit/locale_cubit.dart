@@ -1,8 +1,10 @@
+import 'dart:ui';
+
 import 'package:bradderly/presentation/common/locale/app_locale.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 class AppLocaleCubit extends HydratedCubit<AppLocale> {
-  AppLocaleCubit() : super(AppLocale.current);
+  AppLocaleCubit() : super(AppLocale.of(PlatformDispatcher.instance.locale.languageCode));
 
   void changeLocale(AppLocale locale) {
     emit(locale);

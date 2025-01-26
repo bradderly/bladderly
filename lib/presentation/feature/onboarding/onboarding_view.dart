@@ -28,7 +28,7 @@ class OnboardingView extends StatelessWidget {
                     Assets.icon.icOnboardingLogo.svg(),
                     const Gap(46),
                     Text(
-                      'A novel way to manage your bladder diary.'.tr,
+                      'A novel way to manage your bladder diary.'.tr(context),
                       style: context.textStyleTheme.b20Bold.copyWith(color: context.colorTheme.neutral.shade0),
                       textAlign: TextAlign.center,
                     ),
@@ -47,7 +47,7 @@ class OnboardingView extends StatelessWidget {
                         onPressed: () => const SignupRoute().go(context),
                         size: const Size.fromHeight(56),
                         backgroundColor: context.colorTheme.neutral.shade0,
-                        text: 'Create Account'.tr,
+                        text: 'Create Account'.tr(context),
                         textColor: context.colorTheme.vermilion.primary.shade50,
                         borderRadius: 400,
                         shape: BoxShape.rectangle,
@@ -56,7 +56,7 @@ class OnboardingView extends StatelessWidget {
                       PrimaryButton.outlined(
                         onPressed: () => const SigninRoute().go(context),
                         size: const Size.fromHeight(56),
-                        text: 'Sign In'.tr,
+                        text: 'Sign In'.tr(context),
                         textColor: context.colorTheme.neutral.shade0,
                         borderRadius: 400,
                         backgroundColor: Colors.transparent,
