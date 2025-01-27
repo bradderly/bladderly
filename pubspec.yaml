@@ -8,7 +8,7 @@ version: 1.0.0+1
 environment:
   sdk: ">=3.4.3 <4.0.0"
 
-isar_version: &isar_version 3.1.0
+isar_version: &isar_version 3.1.0+1
 
 dependencies:
   flutter:
@@ -42,8 +42,7 @@ dependencies:
   http: 1.2.2
   rxdart: 0.28.0
   csv2json: 0.0.3
-  snapping_page_scroll: 3.1.0
-
+  cupertino_modal_sheet: 1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -59,7 +58,7 @@ dev_dependencies:
   injectable_generator: 2.4.2
   chopper_generator: 7.4.0
   json_serializable: 6.8.0
-  #  swagger_dart_code_generator: 2.15.2
+  swagger_dart_code_generator: 2.11.11
   import_sorter: 4.6.0
   isar_generator: *isar_version
   go_router_builder: 2.7.1

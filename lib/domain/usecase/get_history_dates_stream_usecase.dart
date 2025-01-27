@@ -1,4 +1,5 @@
 import 'package:bradderly/domain/repository/history_repository.dart';
+import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
@@ -8,9 +9,17 @@ class GetHistoryDatesStreamUsecase {
 
   final HistoryRepository _historyRepository;
 
-  Stream<List<DateTime>> call({
+  Either<Exception, Stream<List<DateTime>>> call({
     required String hashId,
   }) {
-    return _historyRepository.getHistoryDatesStream(hashId);
+    try {
+      final stream = _historyRepository.getHistoryDatesStream(hashId);
+
+      return Right(stream);
+    } on Exception catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(Exception(e));
+    }
   }
 }

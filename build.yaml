@@ -1,0 +1,28 @@
+targets:
+  $default:
+    sources:
+      include:
+        - pubspec.yaml
+        - lib/**
+        - swagger_input/**
+        - swaggers2/**
+        - input_folder/**
+        - swagger_examples/**
+        - $package$
+
+    builders:
+      swagger_dart_code_generator:
+        options:
+          input_folder: lib/data/api/model/
+          output_folder: lib/data/api/model/
+          # input_urls:
+            # - "http://localhost:8090/swagger-json"
+            # - "https://smart-booking.co.kr/pos/swagger-json"
+          with_base_url: true
+          with_converter: true
+          use_path_for_request_names: true
+          use_default_null_for_lists: false
+          override_equals_and_hashcode: true
+          build_only_models: true
+          separate_models: true
+          enums_case_sensitive: false
