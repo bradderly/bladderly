@@ -68,4 +68,16 @@ class HistoryRepositoryImpl implements HistoryRepository {
         .watch(fireImmediately: true)
         .map((entities) => entities.map((e) => DateUtils.dateOnly(e.recordTime)).toSet().toList());
   }
+
+  @override
+  Future<void> exportHistories({required String email, required List<DateTime> dates}) {
+    // TODO: implement exportHistories
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> sendHistoriesExportReason() {
+    // TODO: implement sendHistoriesExportReason
+    throw UnimplementedError();
+  }
 }

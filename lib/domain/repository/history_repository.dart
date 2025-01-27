@@ -16,4 +16,11 @@ abstract class HistoryRepository {
   Future<IntakeHistory> saveIntakeHistory(IntakeHistory intakeHistory);
 
   Stream<List<DateTime>> getHistoryDatesStream(String hashId);
+
+  Future<void> exportHistories({
+    required String email,
+    required List<DateTime> dates,
+  });
+
+  Future<void> sendHistoriesExportReason();
 }
