@@ -1,0 +1,1070 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Bladderly for Flutter",
+    "contact": {}
+  },
+  "host": "e9wd4zrpk5.execute-api.us-east-1.amazonaws.com",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "cognito"
+    },
+    {
+      "name": "payment"
+    },
+    {
+      "name": "file upload"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/dev/audio-upload": {
+      "post": {
+        "tags": [
+          "file upload"
+        ],
+        "summary": "audio-upload",
+        "description": "audio-upload",
+        "operationId": "audioUpload",
+        "consumes": [
+          "application/octet-stream"
+        ],
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "file_name",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "binary"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/change-pw": {
+      "post": {
+        "tags": [
+          "cognito"
+        ],
+        "summary": "change-pw",
+        "description": "change-pw",
+        "operationId": "changePw",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/body"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/check-offer": {
+      "get": {
+        "tags": [
+          "payment"
+        ],
+        "summary": "check-offer",
+        "description": "check-offer",
+        "operationId": "checkOffer",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/check-promo": {
+      "get": {
+        "tags": [
+          "payment"
+        ],
+        "summary": "check-promo",
+        "description": "check-promo",
+        "operationId": "checkPromo",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/check-study": {
+      "get": {
+        "tags": [
+          "payment"
+        ],
+        "summary": "check-study",
+        "description": "check-study",
+        "operationId": "checkStudy",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/confirm-pw": {
+      "post": {
+        "tags": [
+          "cognito"
+        ],
+        "summary": "confirm-pw",
+        "description": "confirm-pw",
+        "operationId": "confirmPw",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/body_1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/contact-us": {
+      "post": {
+        "summary": "contact-us",
+        "description": "contact-us",
+        "operationId": "contactUs",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/body_2"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/delete-account": {
+      "post": {
+        "tags": [
+          "cognito"
+        ],
+        "summary": "delete-account",
+        "description": "delete-account",
+        "operationId": "deleteAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/body_3"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/export-record": {
+      "post": {
+        "summary": "export-record",
+        "description": "export-record",
+        "operationId": "exportRecord",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/body_4"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/forgot-pw": {
+      "post": {
+        "tags": [
+          "cognito"
+        ],
+        "summary": "forgot-pw",
+        "description": "forgot-pw",
+        "operationId": "forgotPw",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/body_5"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/get-all-records": {
+      "get": {
+        "summary": "get-all-records",
+        "description": "get-all-records",
+        "operationId": "getAllRecords",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/get-pay-info": {
+      "get": {
+        "tags": [
+          "payment"
+        ],
+        "summary": "get-pay-info",
+        "description": "get-pay-info",
+        "operationId": "getPayInfo",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "device",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/get-result": {
+      "get": {
+        "summary": "get-result",
+        "description": "get-result",
+        "operationId": "getResult",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "rec_date",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/get-version": {
+      "get": {
+        "summary": "get-version",
+        "description": "get-version",
+        "operationId": "getVersion",
+        "parameters": [
+          {
+            "name": "device",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/log-in": {
+      "post": {
+        "tags": [
+          "cognito"
+        ],
+        "summary": "log-in",
+        "description": "log-in",
+        "operationId": "logIn",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/body_6"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/log-out": {
+      "post": {
+        "tags": [
+          "cognito"
+        ],
+        "summary": "log-out",
+        "description": "log-out",
+        "operationId": "logOut",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/body_7"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/migrate-record": {
+      "post": {
+        "summary": "migrate-record",
+        "description": "migrate-record",
+        "operationId": "migrateRecord",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/body_8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/post-pay-info": {
+      "post": {
+        "tags": [
+          "payment"
+        ],
+        "summary": "post-pay-info",
+        "description": "post-pay-info",
+        "operationId": "postPayInfo",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/body_9"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/refresh-token": {
+      "post": {
+        "tags": [
+          "cognito"
+        ],
+        "summary": "refresh-token",
+        "description": "refresh-token",
+        "operationId": "refreshToken",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/body_10"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/save-score": {
+      "post": {
+        "summary": "save-score",
+        "description": "save-score",
+        "operationId": "saveScore",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/body_11"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/sign-up": {
+      "post": {
+        "tags": [
+          "cognito"
+        ],
+        "summary": "sign-up",
+        "description": "sign-up",
+        "operationId": "signUp",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/body_12"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/update-record": {
+      "post": {
+        "summary": "update-record",
+        "description": "update-record",
+        "operationId": "updateRecord",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/body_13"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/dev/update-user-info": {
+      "post": {
+        "tags": [
+          "cognito"
+        ],
+        "summary": "update-user-info",
+        "description": "update-user-info",
+        "operationId": "updateUserInfo",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/body_14"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "body_14": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "tony.us@a.com"
+        },
+        "first_name": {
+          "type": "string",
+          "example": "Tony"
+        }
+      }
+    },
+    "body": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "onsub.kim@gmail.com"
+        },
+        "new_pw": {
+          "type": "string",
+          "example": "Qwer12#$"
+        },
+        "old_pw": {
+          "type": "string",
+          "example": "Qwer12!@"
+        }
+      }
+    },
+    "body_3": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "onsub.kim@gmail.com"
+        }
+      }
+    },
+    "body_4": {
+      "type": "object",
+      "properties": {
+        "export_date": {
+          "type": "array",
+          "example": [
+            "20250115-113243",
+            "20250115-134534",
+            "20250116-091010"
+          ],
+          "items": {
+            "type": "string",
+            "example": "20250115-113243"
+          }
+        },
+        "user_id": {
+          "type": "string",
+          "example": "f42a6f0da8d82e2d198b173fdaf1a0416a661e05"
+        }
+      }
+    },
+    "body_1": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "onsub.kim@gmail.com"
+        },
+        "new_pw": {
+          "type": "string",
+          "example": "Qwer12#$"
+        },
+        "verification_code": {
+          "type": "string",
+          "example": "098700"
+        }
+      }
+    },
+    "body_2": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "dev@soundable.health"
+        },
+        "first_name": {
+          "type": "string",
+          "example": "Tony"
+        },
+        "last_name": {
+          "type": "string",
+          "example": "Kim"
+        },
+        "message": {
+          "type": "string",
+          "example": "Please check my promo code. I got this code from conference. But it didn't work."
+        },
+        "subject": {
+          "type": "string",
+          "example": "promo code issue"
+        }
+      }
+    },
+    "body_12": {
+      "type": "object",
+      "properties": {
+        "birth": {
+          "type": "string",
+          "example": "2000"
+        },
+        "device": {
+          "type": "string",
+          "example": "iPhone"
+        },
+        "email": {
+          "type": "string",
+          "example": "test@a.com"
+        },
+        "first_name": {
+          "type": "string",
+          "example": "Test"
+        },
+        "gender": {
+          "type": "string",
+          "example": "male"
+        },
+        "height": {
+          "type": "string",
+          "example": ""
+        },
+        "last_name": {
+          "type": "string",
+          "example": "Soundable"
+        },
+        "locale": {
+          "type": "string",
+          "example": "US"
+        },
+        "pw": {
+          "type": "string",
+          "example": "Qwer12#$"
+        },
+        "weight": {
+          "type": "string",
+          "example": ""
+        }
+      }
+    },
+    "body_13": {
+      "type": "object",
+      "properties": {
+        "is_manual": {
+          "type": "boolean",
+          "example": true
+        },
+        "rec_date": {
+          "type": "string",
+          "example": "20220115-113243"
+        },
+        "record_urgency": {
+          "type": "string",
+          "example": "4"
+        },
+        "record_volume": {
+          "type": "string",
+          "example": "436"
+        },
+        "user_id": {
+          "type": "string",
+          "example": "f42a6f0da8d82e2d198b173fdaf1a0416a661e05"
+        }
+      }
+    },
+    "body_9": {
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "type": "string",
+          "example": "receipt_info"
+        },
+        "user_id": {
+          "type": "string",
+          "example": "f42a6f0da8d82e2d198b173fdaf1a0416a661e05"
+        }
+      }
+    },
+    "body_10": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "onsub.kim@gmail.com"
+        },
+        "refresh_token": {
+          "type": "string",
+          "example": "eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.uob4i9eCVd6uV7-5kfoCIFcqj_Duk_KLk3hqRwVwbdn98QvuDWDPDDaXAecmHAVuoqqjc5-xQl9jUeum_lAz6BnCra9p9F38H7yB2Q31VqaHdjjhliVt-ABDtRSI8BVN8id_NZ6W9klbXBLqBXr3rPrK4lPJB65uwML1MWDGGI1RIgYHhC1WM4wtHZd21SvrY2y6baFvMiq9acYhTCSkLyoOr1fYKC__anbmaRemri4pReSfeZjnOaFIpBeU3iXw8GitBE5dnMKHihXmlcyXWhWj0L-tqQ-IRjeTB6SeHu0dMJxcFXwrX5RjXSHC9WGboDQdjkqbqGA-yJWzGrro4w.wu6vYoUWcGWvFAEO.zgqummSCnmr9PjAX3Ti7GhlPAXN5aObzsQ_mkTBE_swlXOQbxvHp9NOyeR7VRwQ06E6XJspjyxPJ89jWBG5Es4vP-gHgGgio2W1BkILjgNV80O-BCqi_-TrA8rpkmYIbDtehsCfQeuxbnaJUa-KS_WaXsSlYW_VfFkI53tIS9UTPzZ1D0jyPuBIgTqDe01AJxdu1sYAPMLuaq_XKEDQa4UA_2xVN_aN2FJbACdDPTpIXTr8c7BOe0ddIh5mRYXxvzVwKHsCDIdcRwegNZwyYmDn48lMSUXBFOHM75RgC44TtuzQXugnpoWJ6d-OnJshZON0miq8rb6ufYaheZsZwwZ65aDktE7988T1u73GHTGTijhGULYpeB5e0f0sIrM07v6vzBLnbCRBOvtjvuuE_b2sIwwoixZV7FYLLNuaHZNEnfQ6d4KKVayzm668lrpHC0NjPghaFco9ed6op4bvgIZ0bkwecnyX8FGlKGK0eTZdsdHUBgRWPg5t8vH0kp56_e8ovIHCcMS4DnGuiY7pbuoQ5n-ZcP9XVOUqcx1hi64uPSpTXSjeKSIJejL7M9BCl8zLhKGbusHAwtTjN4cewRs-Q1t8IrK64oJgreSies1uG2u2Hv_gqklBEc92WwZDVQMfDhPzReY3G9lYXYrAY1mQxns6R81ZKP9Qqfd3RIVaTliPLO8xsvGvUfH7bKLFYXw8TvFC4UNhMrnutpjci725afdUGPQ9H8DhC0A1DcKN8C2nRtoETq5LKVOZuSz95AoK5Clr22j2eD-_jIqCowkqplZo8LYLaDG295E9qXTClujM_oIP4Tv1Ix3N805VzpQmJqRQbki5vrlgMIb28jhqsXdk111H7YjklDMSl8OLNvcOZj3fOUOuU92kFzMXir_-Z3PmSNJH8Yb8m5x_jbpcNJqG-y2BkmHE1c3fYgqdlMKThvE9mbmaoOsrgtIFaCu0fQBgLfBEGzePbyS4xOx8wxZuDl4L5SeRw6cZf-h8CrLtCloJWMo07SV7o33xc_4U2ZKaqIYIaH3w6MEQVhuKGnNKXGF7vH90frcWO9QZHjEq_8CaomWSvfy52mOUZD9f6pS7m641YTLsFLVO_T-DOI5f85ex7am7SptUFmO3LNkxHwwqM1XihgKCk9iT5OIHqS8LBajep78hhfLZ08I16OYkYJmJUVhwRXW55eb_lGTIey2Wuvf5caI8k6vugnc8JkG-XUdAupKPPqNE5Bm_dWb0iZDS77gTg2EEtwVyFnaFfvuBnBBoWwE2UC1Tw3u7CqAEoWbQiDvodgSgu-tFZt39286AHrf8Tb6y0cmoAVp7YF8_ookX5Qg.CpC4hWmPWI-dkuKVNUd74A"
+        }
+      }
+    },
+    "body_11": {
+      "type": "object",
+      "properties": {
+        "score_date": {
+          "type": "string",
+          "example": "20250101-121212"
+        },
+        "score_name": {
+          "type": "string",
+          "example": "IPSS"
+        },
+        "score_value": {
+          "type": "array",
+          "example": [
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2
+          ],
+          "items": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "user_id": {
+          "type": "string",
+          "example": "f42a6f0da8d82e2d198b173fdaf1a0416a661e05"
+        }
+      }
+    },
+    "body_7": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "onsub.kim@gmail.com"
+        }
+      }
+    },
+    "body_8": {
+      "type": "object",
+      "properties": {
+        "from_id": {
+          "type": "string",
+          "example": "f42a6f0da8d82e2d198b173fdaf1a0416a661e05"
+        },
+        "to_id": {
+          "type": "string",
+          "example": "d36bbf4c526a509740ee0e2a1bb3ab9b1da13ed6"
+        }
+      }
+    },
+    "body_5": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "onsub.kim@gmail.com"
+        }
+      }
+    },
+    "body_6": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "onsub.kim@gmail.com"
+        },
+        "pw": {
+          "type": "string",
+          "example": "Qwer12-/"
+        }
+      }
+    }
+  }
+}
