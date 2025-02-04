@@ -1,23 +1,30 @@
 part of '../recorder_module.dart';
 
 class _RecorderImpl extends Recorder {
-  _RecorderImpl({required this.recorder}) : super() {
-    recorder.onStateChanged().listen((state) => _subject.add(RecorderState.values.byName(state.name)));
+  _RecorderImpl({
+    required AudioRecorder recorder,
+    required Directory directory,
+  })  : _recorder = recorder,
+        _directory = directory,
+        super() {
+    _recorder.onStateChanged().listen(
+          (state) => _subject.add(
+            switch (state) {
+              RecordState.record => RecorderRecording(file: _subject.value.file!),
+              RecordState.stop => RecorderStopped(file: _subject.value.file!),
+              RecordState.pause => RecorderPaused(file: _subject.value.file!),
+            },
+          ),
+        );
   }
 
-  final AudioRecorder recorder;
-  late final _subject = BehaviorSubject<RecorderState>.seeded(RecorderState.idle);
-
-  Future<Directory> _getDirectory() {
-    return getApplicationDocumentsDirectory()
-        .then((directory) => directory.path)
-        .then((path) => Directory('$path/sound'))
-        .then((directory) => directory.existsSync() ? directory : (directory..createSync()));
-  }
+  final AudioRecorder _recorder;
+  final Directory _directory;
+  final _subject = BehaviorSubject<RecorderState>.seeded(const RecorderIdle());
 
   @override
   Future<bool> chekcPermission() {
-    return recorder.hasPermission();
+    return _recorder.hasPermission();
   }
 
   @override
@@ -26,33 +33,33 @@ class _RecorderImpl extends Recorder {
   }
 
   @override
-  Future<void> start({
-    required String fileName,
-    Duration maxDuration = const Duration(minutes: 3),
-  }) async {
-    final filePath = await getFile(fileName).then((file) => file.path);
+  Future<void> start({required String fileName}) async {
+    if (state is RecorderRecording || state is RecorderPaused) throw Exception('이미 녹음 중입니다.');
 
-    return recorder.start(
-      RecordConfig(bitRate: Platform.isAndroid ? 64000 : 128000),
-      path: filePath,
-    );
+    final filePath = join(_directory.path, fileName);
+
+    _subject.add(RecorderReady(file: RecorderFile(name: fileName)));
+
+    return _recorder.start(RecordConfig(bitRate: Platform.isAndroid ? 64000 : 128000), path: filePath);
   }
 
   @override
-  Future<void> stop() {
-    return recorder.stop();
+  Future<RecorderFile> stop() {
+    final state = _subject.value;
+
+    if (state is! RecorderRecording) throw Exception('녹음 중이 아닙니다.');
+
+    return _recorder.stop().then((_) => state.file);
   }
 
   @override
   Future<void> dispose() {
-    return recorder.dispose();
+    return _recorder.dispose();
   }
 
   @override
   RecorderState get state => _subject.value;
 
   @override
-  Future<File> getFile(String fileName) {
-    return _getDirectory().then((directory) => File(join(directory.path, fileName)));
-  }
+  Directory get directory => _directory;
 }
