@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:equatable/equatable.dart';
-import 'package:path/path.dart';
 
 class RecorderFile extends Equatable {
   const RecorderFile({required this.name});
@@ -19,18 +16,6 @@ class RecorderFile extends Equatable {
     final second = int.parse(dt.substring(12, 14));
 
     return DateTime(year, month, day, hour, minute, second);
-  }
-
-  bool exist(Directory directory) {
-    return File(join(directory.path, name)).existsSync();
-  }
-
-  void delete(Directory directory) {
-    final file = File(join(directory.path, name));
-
-    if (file.existsSync()) {
-      file.deleteSync();
-    }
   }
 
   @override

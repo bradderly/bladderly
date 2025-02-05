@@ -14,7 +14,8 @@ class HistoryEntityMapper {
       ..isManual = history.isManual
       ..isNocutria = history.isNocutria
       ..isLeakage = history.isLeakage
-      ..leakageVolume = history.leakageVolume;
+      ..leakageVolume = history.leakageVolume
+      ..status = history.status;
   }
 
   static HistoryEntity fromIntakeHistory(IntakeHistory history) {

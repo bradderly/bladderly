@@ -10,7 +10,7 @@ class ExportReportBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<ExportReportBloc>(
       create: (_) => ExportReportBloc(sendHistoriesExportReasonUsecase: getIt<SendHistoriesExportReasonUsecase>()),
       child: const ExportReportView(),
     );

@@ -70,5 +70,9 @@ abstract class Recorder {
 
   RecorderState get state;
 
-  Directory get directory;
+  bool exist(RecorderFile file);
+
+  File getFile(RecorderFile file);
+
+  void delete(RecorderFile file);
 }

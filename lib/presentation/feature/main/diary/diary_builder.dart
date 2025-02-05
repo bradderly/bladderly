@@ -17,11 +17,11 @@ class DiaryBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
+        BlocProvider<DiaryCubit>(
           create: (_) =>
               DiaryCubit(getHistoriesStreamUsecase: getIt<GetHistoriesStreamUsecase>())..subscribe(DateTime.now()),
         ),
-        BlocProvider(
+        BlocProvider<DiaryHistoryDatesCubit>(
           create: (_) =>
               DiaryHistoryDatesCubit(getHistoryDatesStreamUsecase: getIt<GetHistoryDatesStreamUsecase>())..subscribe(),
         ),

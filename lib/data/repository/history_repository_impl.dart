@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bradderly/data/api/client/api_client.dart';
 import 'package:bradderly/data/isar/schema/history_entity.dart';
 import 'package:bradderly/data/mapper/history_entity_mapper.dart';
@@ -45,7 +47,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
   }
 
   @override
-  Future<VoidingHistory> saveManualVoidngHistory(VoidingHistory vodingHistory) {
+  Future<VoidingHistory> saveVoidngHistory(VoidingHistory vodingHistory) {
     return isar.writeTxn(() async {
       final id = await isar.historyEntitys.put(HistoryEntityMapper.fromVoidingHistory(vodingHistory));
       return vodingHistory.setId(id);
@@ -80,4 +82,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
     // TODO: implement sendHistoriesExportReason
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> uploadVoidingSoundFile(File file) async {}
 }

@@ -1,3 +1,4 @@
+import 'package:bradderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bradderly/presentation/common/cubit/locale_cubit.dart';
 import 'package:bradderly/presentation/common/cubit/unit_cubit.dart';
 import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
@@ -15,6 +16,11 @@ class _ScrollBehavior extends ScrollBehavior {
   ScrollPhysics getScrollPhysics(BuildContext context) {
     return const ClampingScrollPhysics();
   }
+
+  @override
+  Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
+    return child;
+  }
 }
 
 class BladderlyApp extends StatelessWidget {
@@ -24,11 +30,14 @@ class BladderlyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
+        BlocProvider<UnitCubit>(
           create: (_) => UnitCubit(),
         ),
         BlocProvider<AppLocaleCubit>(
           create: (_) => AppLocaleCubit(),
+        ),
+        BlocProvider<UserBloc>(
+          create: (_) => UserBloc(),
         ),
       ],
       child: MaterialApp.router(

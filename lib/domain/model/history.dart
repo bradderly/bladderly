@@ -1,16 +1,14 @@
+import 'package:bradderly/domain/model/history_status.dart';
 import 'package:bradderly/domain/model/leakage_volume.dart';
 import 'package:equatable/equatable.dart';
 
 sealed class History extends Equatable {
   const History({
-    required this.id,
     required this.hashId,
     required this.recordTime,
     required this.memo,
+    required this.status,
   });
-
-  /// 기록 ID
-  final int? id;
 
   final String hashId;
 
@@ -20,22 +18,28 @@ sealed class History extends Equatable {
   /// 메모
   final String? memo;
 
+  final HistoryStatus status;
+
   History setId(int id);
+
+  String get id {
+    return '$hashId-${recordTime.millisecondsSinceEpoch}';
+  }
 
   @override
   List<Object?> get props => [
-        id,
         recordTime,
         memo,
+        status,
       ];
 }
 
 class VoidingHistory extends History {
   const VoidingHistory({
-    required super.id,
     required super.hashId,
     required super.recordTime,
     required super.memo,
+    required super.status,
     required this.recordVolume,
     required this.recordUrgency,
     required this.isManual,
@@ -65,10 +69,10 @@ class VoidingHistory extends History {
   @override
   VoidingHistory setId(int id) {
     return VoidingHistory(
-      id: id,
       hashId: hashId,
       recordTime: recordTime,
       memo: memo,
+      status: status,
       recordVolume: recordVolume,
       recordUrgency: recordUrgency,
       isManual: isManual,
@@ -92,10 +96,10 @@ class VoidingHistory extends History {
 
 class IntakeHistory extends History {
   const IntakeHistory({
-    required super.id,
     required super.hashId,
     required super.recordTime,
     required super.memo,
+    required super.status,
     required this.beverageType,
     required this.recordVolume,
   });
@@ -109,10 +113,10 @@ class IntakeHistory extends History {
   @override
   IntakeHistory setId(int id) {
     return IntakeHistory(
-      id: id,
       hashId: hashId,
       recordTime: recordTime,
       memo: memo,
+      status: status,
       beverageType: beverageType,
       recordVolume: recordVolume,
     );
@@ -128,10 +132,10 @@ class IntakeHistory extends History {
 
 class LeakageHistory extends History {
   const LeakageHistory({
-    required super.id,
     required super.hashId,
     required super.recordTime,
     required super.memo,
+    required super.status,
     required this.leakageVolume,
   });
 
@@ -140,10 +144,10 @@ class LeakageHistory extends History {
   @override
   LeakageHistory setId(int id) {
     return LeakageHistory(
-      id: id,
       hashId: hashId,
       recordTime: recordTime,
       memo: memo,
+      status: status,
       leakageVolume: leakageVolume,
     );
   }

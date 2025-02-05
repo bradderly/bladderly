@@ -1,4 +1,5 @@
 import 'package:bradderly/domain/model/history.dart';
+import 'package:bradderly/domain/model/history_status.dart';
 import 'package:bradderly/domain/model/leakage_volume.dart';
 import 'package:bradderly/presentation/common/extension/string_extension.dart';
 import 'package:bradderly/presentation/feature/main/diary/model/diary_history_type_model.dart';
@@ -15,12 +16,13 @@ class DiaryHistoryModel extends Equatable {
     required this.recordUrgency,
     required this.leakageVolume,
     required this.beverageType,
+    required this.isProcessing,
   }) : _recordTime = recordTime;
 
   factory DiaryHistoryModel.fromDomain(History history) {
     return switch (history) {
       VoidingHistory() => DiaryHistoryModel(
-          id: history.id!,
+          id: history.id,
           type: DiaryHistoryTypeModel.voiding,
           recordTime: history.recordTime,
           recordVolume: history.recordVolume,
@@ -33,9 +35,10 @@ class DiaryHistoryModel extends Equatable {
             null => '',
           },
           beverageType: null,
+          isProcessing: history.status == HistoryStatus.processing,
         ),
       IntakeHistory() => DiaryHistoryModel(
-          id: history.id!,
+          id: history.id,
           type: DiaryHistoryTypeModel.intake,
           recordTime: history.recordTime,
           isNocturia: false,
@@ -43,9 +46,10 @@ class DiaryHistoryModel extends Equatable {
           recordUrgency: null,
           leakageVolume: null,
           beverageType: history.beverageType,
+          isProcessing: false,
         ),
       LeakageHistory() => DiaryHistoryModel(
-          id: history.id!,
+          id: history.id,
           type: DiaryHistoryTypeModel.leakage,
           recordTime: history.recordTime,
           isNocturia: false,
@@ -57,11 +61,12 @@ class DiaryHistoryModel extends Equatable {
             LeakageVolume.Large => 'L',
           },
           beverageType: null,
+          isProcessing: false,
         ),
     };
   }
 
-  final int id;
+  final String id;
   final DiaryHistoryTypeModel type;
   final DateTime _recordTime;
   final bool isNocturia;
@@ -69,6 +74,7 @@ class DiaryHistoryModel extends Equatable {
   final int? recordUrgency;
   final String? leakageVolume;
   final String? beverageType;
+  final bool isProcessing;
 
   String get recordTime {
     final hourMinute = DateFormat('hh:mm').format(_recordTime);

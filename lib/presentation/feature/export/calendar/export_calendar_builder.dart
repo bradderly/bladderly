@@ -16,7 +16,7 @@ class ExportCalendarBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<ExportDatesCubit>(
       create: (_) => ExportDatesCubit(),
       child: ExportCalendarView(
         onTapNext: onTapNext,

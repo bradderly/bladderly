@@ -16,7 +16,7 @@ class HomeBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<HomeSummaryCubit>(
       create: (_) => HomeSummaryCubit(getHistoriesStreamUsecase: getIt())..subscribe(DateTime.now()),
       child: HomeView(
         onPressedMoreVoiding: onPressedMoreVoiding,

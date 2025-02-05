@@ -20,7 +20,7 @@ class ExportTermBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<ExportBloc>(
       create: (_) => ExportBloc(exportHistoriesUsecase: getIt<ExportHistoriesUsecase>()),
       child: ExportTermView(
         onExport: onExport,

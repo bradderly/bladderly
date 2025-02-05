@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bradderly/domain/model/histories.dart';
 import 'package:bradderly/domain/model/history.dart';
 
@@ -11,7 +13,7 @@ abstract class HistoryRepository {
     required DateTime date,
   });
 
-  Future<VoidingHistory> saveManualVoidngHistory(VoidingHistory vodingHistory);
+  Future<VoidingHistory> saveVoidngHistory(VoidingHistory vodingHistory);
 
   Future<IntakeHistory> saveIntakeHistory(IntakeHistory intakeHistory);
 
@@ -23,4 +25,6 @@ abstract class HistoryRepository {
   });
 
   Future<void> sendHistoriesExportReason();
+
+  Future<void> uploadVoidingSoundFile(File file);
 }

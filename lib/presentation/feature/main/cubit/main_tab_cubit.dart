@@ -21,4 +21,12 @@ class MainTabCubit extends Cubit<MainTabState> {
   void showDiary({MainTabDiaryScrollScetion scrollSection = MainTabDiaryScrollScetion.none}) {
     emit(MainTabDiary(scrollSection: scrollSection));
   }
+
+  void switchByTabName(String? tabName) {
+    return switch (tabName) {
+      'home' => showHome(),
+      'diary' => showDiary(),
+      _ => null,
+    };
+  }
 }

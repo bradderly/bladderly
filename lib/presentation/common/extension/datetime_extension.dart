@@ -18,6 +18,20 @@ extension DatetimeExtension on DateTime {
     };
   }
 
+  String getDayMonthDateTr(BuildContext context) {
+    return switch (context.locale) {
+      AppLocale.en => DateFormat('EEEE, MMM d').format(this),
+      AppLocale.ko => '${DateFormat('M월 d일').format(this)} ${getDayOfweek(context)}요일',
+    };
+  }
+
+  String getHourMinuteWithAmPm(BuildContext context) {
+    return switch (context.locale) {
+      AppLocale.en => DateFormat('hh:mm a').format(this),
+      AppLocale.ko => '${DateFormat('hh:mm').format(this)} ${hour < 12 ? '오전' : '오후'}',
+    };
+  }
+
   String getDayOfweek(BuildContext context) {
     return context.locale.getDayOfWeek(weekday - 1);
   }

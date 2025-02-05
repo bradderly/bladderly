@@ -2,6 +2,7 @@ import 'package:bradderly/presentation/common/extension/app_theme_extension.dart
 import 'package:bradderly/presentation/common/extension/string_extension.dart';
 import 'package:bradderly/presentation/feature/main/home/model/home_voiding_summary_model.dart';
 import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
+import 'package:bradderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -139,7 +140,7 @@ class HomeVoidingWidget extends StatelessWidget {
     required bool isActivated,
   }) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () => const SoundInputRecordingRoute().push<void>(context),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 38),
         clipBehavior: Clip.antiAlias,
@@ -166,7 +167,7 @@ class HomeVoidingWidget extends StatelessWidget {
 
   Widget _buildManualInput(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () => const SoundInputNoteRoute().push<void>(context),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
         clipBehavior: Clip.antiAlias,

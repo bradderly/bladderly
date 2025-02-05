@@ -7,27 +7,26 @@ class HistoryMapper {
   static History fromHistoryEntity(HistoryEntity entity) {
     if (entity.isIntake == true) {
       return IntakeHistory(
-        id: entity.id,
         hashId: entity.hashId,
         recordTime: entity.recordTime,
         beverageType: entity.beverageType!,
         recordVolume: entity.recordVolume.toInt(),
         memo: entity.leakageMemo,
+        status: entity.status,
       );
     }
 
     if (entity.recordUrgency == 0.1) {
       return LeakageHistory(
-        id: entity.id,
         hashId: entity.hashId,
         recordTime: entity.recordTime,
         leakageVolume: entity.leakageVolume!,
         memo: entity.leakageMemo,
+        status: entity.status,
       );
     }
 
     return VoidingHistory(
-      id: entity.id,
       hashId: entity.hashId,
       recordTime: entity.recordTime,
       recordVolume: entity.recordVolume.toInt(),
@@ -37,6 +36,7 @@ class HistoryMapper {
       isLeakage: entity.isLeakage ?? false,
       leakageVolume: entity.leakageVolume,
       memo: entity.leakageMemo,
+      status: entity.status,
     );
   }
 }

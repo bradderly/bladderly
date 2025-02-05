@@ -40,7 +40,10 @@ class _RecorderImpl extends Recorder {
 
     _subject.add(RecorderReady(file: RecorderFile(name: fileName)));
 
-    return _recorder.start(RecordConfig(bitRate: Platform.isAndroid ? 64000 : 128000), path: filePath);
+    return _recorder.start(
+      RecordConfig(bitRate: Platform.isAndroid ? 64000 : 128000, numChannels: 1),
+      path: filePath,
+    );
   }
 
   @override
@@ -61,5 +64,15 @@ class _RecorderImpl extends Recorder {
   RecorderState get state => _subject.value;
 
   @override
-  Directory get directory => _directory;
+  bool exist(RecorderFile file) => getFile(file).existsSync();
+
+  @override
+  File getFile(RecorderFile file) => File(join(_directory.path, file.name));
+
+  @override
+  void delete(RecorderFile file) {
+    if (exist(file)) {
+      getFile(file).deleteSync();
+    }
+  }
 }

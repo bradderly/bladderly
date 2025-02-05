@@ -1,3 +1,4 @@
+import 'package:bradderly/domain/model/history_status.dart';
 import 'package:bradderly/domain/model/leakage_volume.dart';
 import 'package:isar/isar.dart';
 
@@ -44,4 +45,8 @@ class HistoryEntity {
 
   @Name('leakage_memo')
   String? leakageMemo;
+
+  @Name('status')
+  @Enumerated(EnumType.name)
+  late HistoryStatus status;
 }
