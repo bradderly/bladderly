@@ -11,6 +11,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 58 / 42,
     fontWeight: FontWeight.bold,
     fontFamily: _outfit,
+    letterSpacing: 0,
   );
 
   late final bDisplay2Bold = TextStyle(
@@ -18,6 +19,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 40 / 32,
     fontWeight: FontWeight.bold,
     fontFamily: _outfit,
+    letterSpacing: 0,
   );
 
   late final b28Bold = TextStyle(
@@ -25,6 +27,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 36 / 28,
     fontWeight: FontWeight.bold,
     fontFamily: _outfit,
+    letterSpacing: 0,
   );
 
   late final b24BoldOutfit = TextStyle(
@@ -32,6 +35,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 1.2,
     fontWeight: FontWeight.bold,
     fontFamily: _outfit,
+    letterSpacing: 0,
   );
 
   late final b24Bold = TextStyle(
@@ -39,6 +43,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 1.2,
     fontWeight: FontWeight.bold,
     fontFamily: _inter,
+    letterSpacing: 0,
   );
 
   late final b24Medium = TextStyle(
@@ -46,6 +51,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 1.2,
     fontWeight: FontWeight.w500,
     fontFamily: _inter,
+    letterSpacing: 0,
   );
 
   late final b20Bold = TextStyle(
@@ -53,6 +59,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 24 / 20,
     fontWeight: FontWeight.bold,
     fontFamily: _inter,
+    letterSpacing: 0,
   );
 
   late final b20Medium = TextStyle(
@@ -60,6 +67,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 24 / 20,
     fontWeight: FontWeight.w500,
     fontFamily: _inter,
+    letterSpacing: 0,
   );
 
   late final b18Bold = TextStyle(
@@ -67,6 +75,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 22 / 18,
     fontWeight: FontWeight.bold,
     fontFamily: _inter,
+    letterSpacing: 0,
   );
 
   late final b18SemiBold = TextStyle(
@@ -74,6 +83,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 22 / 18,
     fontWeight: FontWeight.w600,
     fontFamily: _inter,
+    letterSpacing: 0,
   );
 
   late final b18Medium = TextStyle(
@@ -81,6 +91,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 22 / 18,
     fontWeight: FontWeight.w500,
     fontFamily: _inter,
+    letterSpacing: 0,
   );
 
   late final b18Regular = TextStyle(
@@ -88,6 +99,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 22 / 18,
     fontWeight: FontWeight.w400,
     fontFamily: _inter,
+    letterSpacing: 0,
   );
 
   late final b16SemiBold = TextStyle(
@@ -95,6 +107,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 1.2,
     fontWeight: FontWeight.w600,
     fontFamily: _inter,
+    letterSpacing: 0,
   );
 
   late final b16Medium = TextStyle(
@@ -102,6 +115,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 1.2,
     fontWeight: FontWeight.w500,
     fontFamily: _inter,
+    letterSpacing: 0,
   );
 
   late final b16Regular = TextStyle(
@@ -109,6 +123,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 1.2,
     fontWeight: FontWeight.w400,
     fontFamily: _inter,
+    letterSpacing: 0,
   );
 
   late final b14Regular = TextStyle(
@@ -116,6 +131,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 1.2,
     fontWeight: FontWeight.w400,
     fontFamily: _inter,
+    letterSpacing: 0,
   );
 
   late final b14Medium = TextStyle(
@@ -123,6 +139,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 1.2,
     fontWeight: FontWeight.w500,
     fontFamily: _inter,
+    letterSpacing: 0,
   );
 
   late final b14SemiBold = TextStyle(
@@ -130,6 +147,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 1.2,
     fontWeight: FontWeight.w600,
     fontFamily: _inter,
+    letterSpacing: 0,
   );
 
   late final b12Medium = TextStyle(
@@ -137,6 +155,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 1.2,
     fontWeight: FontWeight.w500,
     fontFamily: _inter,
+    letterSpacing: 0,
   );
 
   late final b12SemiBold = TextStyle(
@@ -144,6 +163,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 1.2,
     fontWeight: FontWeight.w600,
     fontFamily: _inter,
+    letterSpacing: 0,
   );
 
   late final actionButton14 = TextStyle(
@@ -151,6 +171,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 18 / 14,
     fontWeight: FontWeight.w500,
     fontFamily: _inter,
+    letterSpacing: 0,
   );
 
   late final actionLink14 = TextStyle(
@@ -158,6 +179,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 18 / 14,
     fontWeight: FontWeight.w600,
     fontFamily: _inter,
+    letterSpacing: 0,
   );
 
   late final actionButton12 = TextStyle(
@@ -165,6 +187,7 @@ class BladderlyTextStyleTheme extends ThemeExtension<BladderlyTextStyleTheme> {
     height: 16 / 12,
     fontWeight: FontWeight.w500,
     fontFamily: _inter,
+    letterSpacing: 0,
   );
 
   @override

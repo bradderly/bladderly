@@ -1,6 +1,5 @@
 import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/common/locale/app_locale.dart';
 import 'package:bradderly/presentation/common/model/beverage_type_model.dart';
 import 'package:bradderly/presentation/feature/main/diary/model/diary_intake_summary_model.dart';
 import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
@@ -207,10 +206,7 @@ class DiaryIntakeSummaryWidget extends StatelessWidget {
                     ),
                     const Gap(4),
                     SizedBox(
-                      width: switch (context.locale) {
-                        AppLocale.en => columnIndex == 2 ? 62 : 44,
-                        AppLocale.ko => columnIndex == 1 ? 62 : 44,
-                      },
+                      width: columnIndex == 1 ? 62 : 44,
                       child: Text(
                         beverageType.name.tr(context),
                         style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
