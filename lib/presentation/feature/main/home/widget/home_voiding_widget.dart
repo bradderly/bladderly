@@ -94,7 +94,7 @@ class HomeVoidingWidget extends StatelessWidget {
                 Text(
                   [
                     if (homeVoidingSummaryModel.frequency < 2 && context.locale.isEn) 'time' else 'times'.tr(context),
-                    context.unit.tr(context),
+                    context.unitName.tr(context),
                     'ago'.tr(context),
                   ][index ~/ 2],
                   style: context.textStyleTheme.b14SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
@@ -167,7 +167,7 @@ class HomeVoidingWidget extends StatelessWidget {
 
   Widget _buildManualInput(BuildContext context) {
     return GestureDetector(
-      onTap: () => const SoundInputNoteRoute().push<void>(context),
+      onTap: () => const ManualInputRoute().push<void>(context),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
         clipBehavior: Clip.antiAlias,

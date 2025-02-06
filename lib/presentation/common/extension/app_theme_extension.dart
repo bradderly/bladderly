@@ -1,3 +1,4 @@
+import 'package:bradderly/domain/model/unit.dart';
 import 'package:bradderly/presentation/common/cubit/locale_cubit.dart';
 import 'package:bradderly/presentation/common/cubit/unit_cubit.dart';
 import 'package:bradderly/presentation/common/locale/app_locale.dart';
@@ -12,7 +13,9 @@ extension BuildContextExtension on BuildContext {
 
   BladderlyTextStyleTheme get textStyleTheme => Theme.of(this).extension<BladderlyTextStyleTheme>()!;
 
-  String get unit => select<UnitCubit, String>((cubit) => cubit.state.name);
+  Unit get unit => select<UnitCubit, Unit>((cubit) => cubit.state);
+
+  String get unitName => select<UnitCubit, String>((cubit) => cubit.state.name);
 
   num unitValue(num value) => select<UnitCubit, num>((cubit) => cubit.state.parse(value));
 

@@ -105,7 +105,7 @@ class DiaryVoidingSummaryWidget extends StatelessWidget {
             children: [
               const TextSpan(text: '0'),
               const WidgetSpan(child: SizedBox(width: 4)),
-              TextSpan(text: context.unit),
+              TextSpan(text: context.unitName),
             ],
           ),
         ),
@@ -218,7 +218,7 @@ class DiaryVoidingSummaryWidget extends StatelessWidget {
                             style: context.textStyleTheme.b24Bold.copyWith(color: context.colorTheme.neutral.shade10),
                           ),
                           const TextSpan(text: ' '),
-                          TextSpan(text: context.unit),
+                          TextSpan(text: context.unitName),
                         ],
                       ),
                     ),

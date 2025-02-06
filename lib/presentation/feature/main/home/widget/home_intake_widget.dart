@@ -58,7 +58,7 @@ class HomeIntakeWidget extends StatelessWidget {
           ),
           alignment: Alignment.center,
           child: Text(
-            '${context.unitValue(homeIntakeSummaryModel.totalVolume)}${context.unit}',
+            '${context.unitValue(homeIntakeSummaryModel.totalVolume)}${context.unitName}',
             style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.paleLime.shade70),
           ),
         ),

@@ -28,7 +28,7 @@ extension DatetimeExtension on DateTime {
   String getHourMinuteWithAmPm(BuildContext context) {
     return switch (context.locale) {
       AppLocale.en => DateFormat('hh:mm a').format(this),
-      AppLocale.ko => '${DateFormat('hh:mm').format(this)} ${hour < 12 ? '오전' : '오후'}',
+      AppLocale.ko => '${hour < 12 ? '오전' : '오후'} ${DateFormat('hh:mm').format(this)}',
     };
   }
 

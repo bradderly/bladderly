@@ -107,7 +107,7 @@ class DiaryIntakeSummaryWidget extends StatelessWidget {
             children: [
               TextSpan(text: '${diaryIntakeSummaryModel.totalVolume}'),
               const WidgetSpan(child: SizedBox(width: 4)),
-              TextSpan(text: context.unit),
+              TextSpan(text: context.unitName),
             ],
           ),
         ),

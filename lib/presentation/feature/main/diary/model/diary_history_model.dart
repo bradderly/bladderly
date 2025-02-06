@@ -1,9 +1,11 @@
 import 'package:bradderly/domain/model/history.dart';
 import 'package:bradderly/domain/model/history_status.dart';
 import 'package:bradderly/domain/model/leakage_volume.dart';
+import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bradderly/presentation/common/extension/string_extension.dart';
 import 'package:bradderly/presentation/feature/main/diary/model/diary_history_type_model.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DiaryHistoryModel extends Equatable {
@@ -12,12 +14,13 @@ class DiaryHistoryModel extends Equatable {
     required this.type,
     required DateTime recordTime,
     required this.isNocturia,
-    required this.recordVolume,
+    required int? recordVolume,
     required this.recordUrgency,
     required this.leakageVolume,
     required this.beverageType,
     required this.isProcessing,
-  }) : _recordTime = recordTime;
+  })  : _recordTime = recordTime,
+        _recordVolume = recordVolume;
 
   factory DiaryHistoryModel.fromDomain(History history) {
     return switch (history) {
@@ -70,16 +73,20 @@ class DiaryHistoryModel extends Equatable {
   final DiaryHistoryTypeModel type;
   final DateTime _recordTime;
   final bool isNocturia;
-  final int? recordVolume;
+  final int? _recordVolume;
   final int? recordUrgency;
   final String? leakageVolume;
   final String? beverageType;
   final bool isProcessing;
 
-  String get recordTime {
+  String getRecordTime(BuildContext context) {
     final hourMinute = DateFormat('hh:mm').format(_recordTime);
     final meridiem = _recordTime.hour < 12 ? 'am' : 'pm';
-    return '$hourMinute ${meridiem.tr}';
+    return '$hourMinute ${meridiem.tr(context)}';
+  }
+
+  String getRecordVolume(BuildContext context) {
+    return _recordVolume == null ? 'N/A' : '${context.unitValue(_recordVolume)}${context.unitName}';
   }
 
   @override
@@ -87,7 +94,7 @@ class DiaryHistoryModel extends Equatable {
         id,
         type,
         _recordTime,
-        recordVolume,
+        _recordVolume,
         recordUrgency,
         leakageVolume,
         beverageType,

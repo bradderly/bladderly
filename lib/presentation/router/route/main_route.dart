@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bradderly/core/recorder/src/recorder_file.dart';
 import 'package:bradderly/presentation/feature/export/export_builder.dart';
+import 'package:bradderly/presentation/feature/input/manual_input/manual_input_builder.dart';
 import 'package:bradderly/presentation/feature/input/sound_input_note/sound_input_note_builder.dart';
 import 'package:bradderly/presentation/feature/input/sound_input_recording/sound_input_recording_builder.dart';
 import 'package:bradderly/presentation/feature/main/main_builder.dart';
@@ -33,11 +34,10 @@ part 'main_route.g.dart';
       name: 'sound_input_note',
       path: 'sound_input_note',
     ),
-
-    // TypedGoRoute<ManualInputRoute>(
-    //   name: 'manual_input',
-    //   path: 'manual_input',
-    // ),
+    TypedGoRoute<ManualInputRoute>(
+      name: 'manual_input',
+      path: 'manual_input',
+    ),
   ],
 )
 class MainRoute extends GoRouteData {
@@ -115,15 +115,6 @@ class SoundInputNoteRoute extends GoRouteData {
       ),
     );
   }
-
-  @override
-  FutureOr<String?> redirect(BuildContext context, GoRouterState state) {
-    if ($extra == null) {
-      return const MainRoute().location;
-    }
-
-    return super.redirect(context, state);
-  }
 }
 
 class SoundInputNoteRouteExtra extends Equatable {
@@ -137,4 +128,17 @@ class SoundInputNoteRouteExtra extends Equatable {
   List<Object> get props => [
         file.name,
       ];
+}
+
+class ManualInputRoute extends GoRouteData {
+  const ManualInputRoute();
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      fullscreenDialog: true,
+      child: const ManualInputBuilder(),
+    );
+  }
 }

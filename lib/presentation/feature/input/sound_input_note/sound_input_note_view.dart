@@ -3,7 +3,6 @@ import 'package:bradderly/core/recorder/src/recorder_file.dart';
 import 'package:bradderly/presentation/common/cubit/pending_upload_file_cubit.dart';
 import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/common/widget/primary_button.dart';
 import 'package:bradderly/presentation/feature/input/sound_input_note/bloc/sound_input_note_bloc.dart';
 import 'package:bradderly/presentation/feature/input/sound_input_note/cubit/sound_input_note_form_cubit.dart';
 import 'package:bradderly/presentation/feature/input/sound_input_note/modal/sound_input_note_upload_success_modal.dart';
@@ -11,6 +10,7 @@ import 'package:bradderly/presentation/feature/input/widget/input_choice_button.
 import 'package:bradderly/presentation/feature/input/widget/input_field_widget.dart';
 import 'package:bradderly/presentation/feature/input/widget/input_record_time_widget.dart';
 import 'package:bradderly/presentation/feature/input/widget/input_record_urgency_widget.dart';
+import 'package:bradderly/presentation/feature/input/widget/input_save_button.dart';
 import 'package:bradderly/presentation/feature/input/widget/input_text_area_widget.dart';
 import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bradderly/presentation/router/route/main_route.dart';
@@ -66,16 +66,14 @@ class SoundInputNoteView extends StatelessWidget {
         canPop: false,
         onPopInvokedWithResult: (didPop, result) {},
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             automaticallyImplyLeading: false,
-            toolbarHeight: 0,
+            toolbarHeight: 58,
             surfaceTintColor: Colors.white,
-            bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(58),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: InputRecordTimeWidget(dateTime: recorderFile.recordTime),
-              ),
+            title: Container(
+              margin: const EdgeInsets.only(top: 18),
+              child: InputRecordTimeWidget(dateTime: recorderFile.recordTime),
             ),
           ),
           body: SafeArea(
@@ -83,7 +81,7 @@ class SoundInputNoteView extends StatelessWidget {
               fit: StackFit.expand,
               children: [
                 ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 55, bottom: 132),
+                  padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 24, bottom: 132),
                   children: [
                     _buildVolume(context),
                     const Gap(48),
@@ -197,15 +195,8 @@ class SoundInputNoteView extends StatelessWidget {
       child: Center(
         child: BlocBuilder<SoundInputNoteFormCubit, SoundInputNoteFormState>(
           buildWhen: (prev, curr) => prev.isValid != curr.isValid,
-          builder: (context, state) => PrimaryButton.filled(
-            onPressed: !state.isValid ? null : () => _onSave(context, state),
-            borderRadius: 8,
-            text: 'Save'.tr(context),
-            backgroundColor:
-                state.isValid ? context.colorTheme.vermilion.primary.shade50 : context.colorTheme.neutral.shade6,
-            shape: BoxShape.rectangle,
-            textColor: context.colorTheme.neutral.shade0,
-            size: const Size(256, 43),
+          builder: (context, state) => InputSaveButton(
+            onPressed: state.isValid ? () => _onSave(context, state) : null,
           ),
         ),
       ),

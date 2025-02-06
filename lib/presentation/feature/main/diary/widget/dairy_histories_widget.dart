@@ -88,7 +88,10 @@ class DiaryHistoriesWidget extends StatelessWidget {
               ),
               const Gap(8),
               const Divider(color: Color(0xFFE6E6E6), height: 1),
-              for (final diaryHistoryModel in diaryHistoryModels) _HistoryWidget(diaryHistoryModel: diaryHistoryModel),
+              for (final diaryHistoryModel in diaryHistoryModels) ...[
+                _HistoryWidget(diaryHistoryModel: diaryHistoryModel),
+                const Divider(color: Color(0xFFE6E6E6), height: 1),
+              ],
             ],
           ),
       ],
@@ -136,36 +139,37 @@ class _HistoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: List.generate(
-        _DiaryHistoryColumn.values.length,
-        (index) {
-          final column = _DiaryHistoryColumn.values[index];
-          return Container(
-            alignment: Alignment.center,
-            width: column.getWidth(context),
-            child: Text(
-              switch (column) {
-                _DiaryHistoryColumn.time => diaryHistoryModel.recordTime,
-                _DiaryHistoryColumn.amount => diaryHistoryModel.recordVolume == null
-                    ? 'N/A'
-                    : '${context.unitValue(diaryHistoryModel.recordVolume!)}${context.unit.tr(context)}',
-                _DiaryHistoryColumn.urge => diaryHistoryModel.recordUrgency?.toString() ?? '',
-                _DiaryHistoryColumn.leak => diaryHistoryModel.leakageVolume?.tr(context) ?? '',
-                _DiaryHistoryColumn.type => diaryHistoryModel.beverageType?.tr(context) ?? '',
-              },
-              style: context.textStyleTheme.b14Medium.copyWith(
-                color: switch (column) {
-                  _DiaryHistoryColumn.time => context.colorTheme.neutral.shade10,
-                  _DiaryHistoryColumn.amount => diaryHistoryModel.type.getColor(context),
-                  _DiaryHistoryColumn.urge => context.colorTheme.neutral.shade8,
-                  _DiaryHistoryColumn.leak => context.colorTheme.neutral.shade8,
-                  _DiaryHistoryColumn.type => context.colorTheme.neutral.shade8,
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: Row(
+        children: List.generate(
+          _DiaryHistoryColumn.values.length,
+          (index) {
+            final column = _DiaryHistoryColumn.values[index];
+            return Container(
+              alignment: Alignment.center,
+              width: column.getWidth(context),
+              child: Text(
+                switch (column) {
+                  _DiaryHistoryColumn.time => diaryHistoryModel.getRecordTime(context),
+                  _DiaryHistoryColumn.amount => diaryHistoryModel.getRecordVolume(context),
+                  _DiaryHistoryColumn.urge => diaryHistoryModel.recordUrgency?.toString() ?? '',
+                  _DiaryHistoryColumn.leak => diaryHistoryModel.leakageVolume?.tr(context) ?? '',
+                  _DiaryHistoryColumn.type => diaryHistoryModel.beverageType?.tr(context) ?? '',
                 },
+                style: context.textStyleTheme.b14Medium.copyWith(
+                  color: switch (column) {
+                    _DiaryHistoryColumn.time => context.colorTheme.neutral.shade10,
+                    _DiaryHistoryColumn.amount => diaryHistoryModel.type.getColor(context),
+                    _DiaryHistoryColumn.urge => context.colorTheme.neutral.shade8,
+                    _DiaryHistoryColumn.leak => context.colorTheme.neutral.shade8,
+                    _DiaryHistoryColumn.type => context.colorTheme.neutral.shade8,
+                  },
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
