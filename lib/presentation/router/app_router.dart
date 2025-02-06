@@ -1,7 +1,9 @@
 // Flutter imports:
 import 'package:bradderly/presentation/router/route/main_route.dart';
+import 'package:bradderly/presentation/router/route/menu_tap_route.dart';
 import 'package:bradderly/presentation/router/route/onboarding_route.dart';
 import 'package:bradderly/presentation/router/route/intro_route.dart';
+import 'package:bradderly/presentation/router/route/paywall_route.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -19,6 +21,8 @@ class AppRouter {
       $introRoute,
       $onboardingRoute,
       $mainRoute,
+      //$paywallRoute,
+      //$menuTapRoute,
     ],
   );
 }

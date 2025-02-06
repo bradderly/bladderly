@@ -1,6 +1,7 @@
 import 'package:bradderly/presentation/feature/export/export_builder.dart';
 import 'package:bradderly/presentation/feature/main/main_builder.dart';
 import 'package:bradderly/presentation/feature/menu/model/menu_view.dart';
+import 'package:bradderly/presentation/feature/menu/plan/paywall_view.dart';
 import 'package:cupertino_modal_sheet/cupertino_modal_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
@@ -18,6 +19,10 @@ part 'main_route.g.dart';
     TypedGoRoute<MenuRoute>(
       name: 'menu',
       path: 'menu',
+    ),
+    TypedGoRoute<PaywallRoute>(
+      name: 'paywall',
+      path: 'paywall',
     ),
   ],
 )
@@ -60,4 +65,14 @@ class ExportRoute extends GoRouteData {
       child: ExportBuilder(historyDates: historyDates),
     );
   }
+}
+
+class PaywallRoute extends GoRouteData {
+  const PaywallRoute();
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) => CupertinoPage<void>(
+        key: state.pageKey,
+        child: const PaywallView(),
+      );
 }
