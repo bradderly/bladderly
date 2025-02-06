@@ -9,6 +9,7 @@ import 'package:bradderly/presentation/feature/input/sound_input_note/sound_inpu
 import 'package:bradderly/presentation/feature/input/sound_input_recording/sound_input_recording_builder.dart';
 import 'package:bradderly/presentation/feature/main/main_builder.dart';
 import 'package:bradderly/presentation/feature/menu/model/menu_view.dart';
+import 'package:bradderly/presentation/feature/menu/plan/paywall_view.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
@@ -52,7 +53,10 @@ enum MainRouteTab {
     TypedGoRoute<DetailedListRoute>(
       name: 'detailed_list',
       path: 'detailed_list',
-      routes: [],
+    ),
+    TypedGoRoute<PaywallRoute>(
+      name: 'paywall',
+      path: 'paywall',
     ),
   ],
 )
@@ -242,4 +246,14 @@ class DetailedListRoute extends GoRouteData {
       ),
     );
   }
+}
+
+class PaywallRoute extends GoRouteData {
+  const PaywallRoute();
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) => CupertinoPage<void>(
+        key: state.pageKey,
+        child: const PaywallView(),
+      );
 }
