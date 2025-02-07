@@ -181,42 +181,48 @@ class DiaryIntakeSummaryWidget extends StatelessWidget {
         ),
         const Gap(16),
         Column(
-          children: List.generate(3, (index) {
-            if (index.isOdd) return const Gap(4);
+          children: List.generate(
+            3,
+            (index) {
+              if (index.isOdd) return const Gap(4);
 
-            final rowIndex = index ~/ 2;
+              final rowIndex = index ~/ 2;
 
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(5, (index) {
-                if (index.isOdd) return const Gap(8);
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  5,
+                  (index) {
+                    if (index.isOdd) return const Gap(8);
 
-                final columnIndex = index ~/ 2;
-                final beverageType = BeverageTypeModel.values[rowIndex * 3 + columnIndex];
+                    final columnIndex = index ~/ 2;
+                    final beverageType = BeverageTypeModel.values[rowIndex * 3 + columnIndex];
 
-                return Row(
-                  children: [
-                    Container(
-                      width: 8,
-                      height: 8,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: beverageType.color,
-                      ),
-                    ),
-                    const Gap(4),
-                    SizedBox(
-                      width: columnIndex == 1 ? 62 : 44,
-                      child: Text(
-                        beverageType.name.tr(context),
-                        style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
-                      ),
-                    ),
-                  ],
-                );
-              }),
-            );
-          }),
+                    return Row(
+                      children: [
+                        Container(
+                          width: 8,
+                          height: 8,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: beverageType.color,
+                          ),
+                        ),
+                        const Gap(4),
+                        SizedBox(
+                          width: columnIndex == 1 ? 62 : 44,
+                          child: Text(
+                            beverageType.name.tr(context),
+                            style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         ),
       ],
     );

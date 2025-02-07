@@ -86,6 +86,8 @@ class DiaryHistoryModel extends Equatable {
   }
 
   String getRecordVolume(BuildContext context) {
+    if (type == DiaryHistoryTypeModel.leakage) return '';
+
     return _recordVolume == null ? 'N/A' : '${context.unitValue(_recordVolume)}${context.unitName}';
   }
 

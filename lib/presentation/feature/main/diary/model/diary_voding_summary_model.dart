@@ -36,7 +36,7 @@ class DiaryVoidingSummaryModel extends Equatable {
       minVolume: vodingHistories.minVolume,
       maxInterval: vodingHistories.maxInterval.formatHHMM(),
       minInterval: vodingHistories.minInterval.formatHHMM(),
-      meanInterval: '00:00',
+      meanInterval: vodingHistories.meanInterval.formatHHMM(),
     );
   }
 

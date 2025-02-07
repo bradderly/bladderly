@@ -119,8 +119,11 @@ class _DiaryAppBarState extends State<DiaryAppBar> {
                       if (notification is ScrollEndNotification) {
                         final index = (scrollController.offset / itemExtent).round();
                         final date = maxDate.subtract(Duration(days: index + 3));
-                        setState(() => selectedDate = date);
-                        widget.onChanged(date);
+
+                        if (selectedDate != date) {
+                          setState(() => selectedDate = date);
+                          widget.onChanged(date);
+                        }
                       }
 
                       return true;

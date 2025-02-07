@@ -5,6 +5,46 @@ import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
+enum _FrequencyType {
+  daytime(text: 'Daytime'),
+  nighttime(text: 'Night-time'),
+  leakage(text: 'Leakage'),
+  ;
+
+  const _FrequencyType({required this.text});
+
+  final String text;
+
+  SvgGenImage get icon {
+    return switch (this) {
+      _FrequencyType.daytime => Assets.icon.icDiaryDaytime,
+      _FrequencyType.nighttime => Assets.icon.icDiaryNighttime,
+      _FrequencyType.leakage => Assets.icon.icDiaryLeakage,
+    };
+  }
+}
+
+enum _VoidingVolumeType {
+  max(text: 'Max'),
+  min(text: 'Min'),
+  ;
+
+  const _VoidingVolumeType({required this.text});
+
+  final String text;
+}
+
+enum _VoidingIntervalType {
+  max(text: 'Max'),
+  mean(text: 'Mean'),
+  min(text: 'Min'),
+  ;
+
+  const _VoidingIntervalType({required this.text});
+
+  final String text;
+}
+
 class DiaryVoidingSummaryWidget extends StatelessWidget {
   const DiaryVoidingSummaryWidget({
     super.key,
@@ -103,7 +143,7 @@ class DiaryVoidingSummaryWidget extends StatelessWidget {
               color: context.colorTheme.neutral.shade10,
             ),
             children: [
-              const TextSpan(text: '0'),
+              TextSpan(text: '${context.unitValue(diaryVodingSummaryModel.totalVolume)}'),
               const WidgetSpan(child: SizedBox(width: 4)),
               TextSpan(text: context.unitName),
             ],
@@ -132,8 +172,7 @@ class DiaryVoidingSummaryWidget extends StatelessWidget {
 
               final realIndex = index ~/ 2;
 
-              final icons = [Assets.icon.icDiaryDaytime, Assets.icon.icDiaryNighttime, Assets.icon.icDiaryLeakage];
-              final texts = ['Daytime', 'Night-time', 'Leakage'];
+              final frequencyType = _FrequencyType.values[realIndex];
 
               return Expanded(
                 child: Column(
@@ -141,10 +180,10 @@ class DiaryVoidingSummaryWidget extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        icons[realIndex].svg(),
+                        frequencyType.icon.svg(),
                         const Gap(4),
                         Text(
-                          texts[realIndex].tr(context),
+                          frequencyType.text.tr(context),
                           style: context.textStyleTheme.b14Medium.copyWith(
                             color: context.colorTheme.neutral.shade7,
                           ),
@@ -159,7 +198,11 @@ class DiaryVoidingSummaryWidget extends StatelessWidget {
                           style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade10),
                           children: [
                             TextSpan(
-                              text: '0',
+                              text: switch (frequencyType) {
+                                _FrequencyType.daytime => '${diaryVodingSummaryModel.daytimeFrequency}',
+                                _FrequencyType.nighttime => '${diaryVodingSummaryModel.nighttimeFrequency}',
+                                _FrequencyType.leakage => '${diaryVodingSummaryModel.leakageFrequency}',
+                              },
                               style: context.textStyleTheme.b24Bold.copyWith(color: context.colorTheme.neutral.shade10),
                             ),
                             const TextSpan(text: ' '),
@@ -199,12 +242,14 @@ class DiaryVoidingSummaryWidget extends StatelessWidget {
 
               if (realIndex == 2) return const Spacer();
 
+              final voidingVolumeType = _VoidingVolumeType.values[realIndex];
+
               return Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      ['Max', 'Min'][realIndex].tr(context),
+                      voidingVolumeType.text.tr(context),
                       style: context.textStyleTheme.b14Medium
                           .copyWith(color: context.colorTheme.vermilion.primary.shade50),
                     ),
@@ -214,7 +259,10 @@ class DiaryVoidingSummaryWidget extends StatelessWidget {
                         style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade10),
                         children: [
                           TextSpan(
-                            text: '0',
+                            text: switch (voidingVolumeType) {
+                              _VoidingVolumeType.max => '${context.unitValue(diaryVodingSummaryModel.maxVolume)}',
+                              _VoidingVolumeType.min => '${context.unitValue(diaryVodingSummaryModel.minVolume)}',
+                            },
                             style: context.textStyleTheme.b24Bold.copyWith(color: context.colorTheme.neutral.shade10),
                           ),
                           const TextSpan(text: ' '),
@@ -261,19 +309,24 @@ class DiaryVoidingSummaryWidget extends StatelessWidget {
               if (index.isOdd) return const Gap(8);
 
               final realIndex = index ~/ 2;
+              final voidingIntervalType = _VoidingIntervalType.values[realIndex];
 
               return Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      ['Max', 'Mean', 'Min'][realIndex].tr(context),
+                      voidingIntervalType.text.tr(context),
                       style: context.textStyleTheme.b14Medium
                           .copyWith(color: context.colorTheme.vermilion.primary.shade50),
                     ),
                     const Gap(8),
                     Text(
-                      '00:00',
+                      switch (voidingIntervalType) {
+                        _VoidingIntervalType.max => diaryVodingSummaryModel.maxInterval,
+                        _VoidingIntervalType.mean => diaryVodingSummaryModel.meanInterval,
+                        _VoidingIntervalType.min => diaryVodingSummaryModel.minInterval,
+                      },
                       style: context.textStyleTheme.b24Bold.copyWith(color: context.colorTheme.neutral.shade10),
                     ),
                   ],
