@@ -41,8 +41,7 @@ dependencies:
   path: 1.9.0
   http: 1.2.2
   rxdart: 0.28.0
-  csv2json: 0.0.3
-  cupertino_modal_sheet: 1.1.0
+  csv2json: 0.0.3 
   device_info_plus: 11.2.2
   package_info_plus: 8.1.4
   crypto: 3.0.6

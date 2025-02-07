@@ -7,12 +7,17 @@ import 'package:bradderly/presentation/feature/input/sound_input_note/sound_inpu
 import 'package:bradderly/presentation/feature/input/sound_input_recording/sound_input_recording_builder.dart';
 import 'package:bradderly/presentation/feature/main/main_builder.dart';
 import 'package:bradderly/presentation/feature/menu/model/menu_view.dart';
-import 'package:cupertino_modal_sheet/cupertino_modal_sheet.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
 part 'main_route.g.dart';
+
+enum MainRouteTab {
+  home,
+  diary,
+  ;
+}
 
 @TypedGoRoute<MainRoute>(
   name: 'main',
@@ -45,11 +50,11 @@ class MainRoute extends GoRouteData {
     this.tab,
   });
 
-  final String? tab;
+  final MainRouteTab? tab;
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
-    return CupertinoModalSheetPage<void>(
+    return CupertinoPage<void>(
       key: state.pageKey,
       child: const MainBuilder(),
     );
@@ -78,8 +83,9 @@ class ExportRoute extends GoRouteData {
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
-    return CupertinoModalSheetPage<void>(
+    return CupertinoPage<void>(
       key: state.pageKey,
+      fullscreenDialog: true,
       child: ExportBuilder(historyDates: historyDates),
     );
   }

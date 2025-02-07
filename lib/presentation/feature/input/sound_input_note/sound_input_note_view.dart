@@ -47,7 +47,7 @@ class SoundInputNoteView extends StatelessWidget {
     recorder.delete(recorderFile);
     SoundInputNoteUploadSuccessModal.show(
       context,
-      onGoToDiary: () => const MainRoute(tab: 'diary').go(context),
+      onGoToDiary: () => const MainRoute(tab: MainRouteTab.diary).go(context),
     );
   }
 
