@@ -17,8 +17,8 @@ class ManualInputVoidingFormCubit extends Cubit<ManualInputVoidingFormState> {
     emit(state.copyWith(recordTime: recordTime));
   }
 
-  void setRecordAmount(String recordAmount) {
-    emit(state.copyWith(recordAmount: recordAmount));
+  void setrecordVolume(String recordVolume) {
+    emit(state.copyWith(recordVolume: recordVolume));
   }
 
   void setUnit(Unit unit) {

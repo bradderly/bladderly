@@ -1,4 +1,7 @@
+import 'package:bradderly/core/di/di.dart';
 import 'package:bradderly/domain/model/history.dart';
+import 'package:bradderly/domain/usecase/save_leakage_history_usecase.dart';
+import 'package:bradderly/presentation/feature/input/manual_input/leakage/bloc/manual_input_leakage_bloc.dart';
 import 'package:bradderly/presentation/feature/input/manual_input/leakage/cubit/manual_input_leakage_form_cubit.dart';
 import 'package:bradderly/presentation/feature/input/manual_input/leakage/manual_input_leakage_widget.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +19,18 @@ class ManualInputLeakageBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ManualInputLeakageFormCubit>(
-      create: (_) => ManualInputLeakageFormCubit(
-        recordTime: recordTime,
-        history: history,
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ManualInputLeakageFormCubit>(
+          create: (_) => ManualInputLeakageFormCubit(
+            recordTime: recordTime,
+            history: history,
+          ),
+        ),
+        BlocProvider<ManualInputLeakageBloc>(
+          create: (_) => ManualInputLeakageBloc(saveLeakageHistoryUsecase: getIt<SaveLeakageHistoryUsecase>()),
+        ),
+      ],
       child: ManualInputLeakageView(recordTime: recordTime),
     );
   }

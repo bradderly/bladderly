@@ -25,6 +25,18 @@ class HistoryEntityMapper {
       ..leakageMemo = history.memo
       ..beverageType = history.beverageType
       ..recordVolume = history.recordVolume.toDouble()
+      ..status = history.status
       ..isIntake = true;
+  }
+
+  static HistoryEntity fromLeakageHistory(LeakageHistory history) {
+    return HistoryEntity()
+      ..hashId = history.hashId
+      ..recordTime = history.recordTime
+      ..leakageMemo = history.memo
+      ..isLeakage = true
+      ..leakageVolume = history.leakageVolume
+      ..status = history.status
+      ..recordVolume = 0.1;
   }
 }

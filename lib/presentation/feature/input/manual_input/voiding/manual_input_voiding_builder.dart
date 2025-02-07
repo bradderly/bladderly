@@ -1,5 +1,8 @@
+import 'package:bradderly/core/di/di.dart';
 import 'package:bradderly/domain/model/history.dart';
+import 'package:bradderly/domain/usecase/save_voiding_history_usecase.dart';
 import 'package:bradderly/presentation/common/cubit/unit_cubit.dart';
+import 'package:bradderly/presentation/feature/input/manual_input/voiding/bloc/manual_input_voiding_bloc.dart';
 import 'package:bradderly/presentation/feature/input/manual_input/voiding/cubit/manual_input_voiding_form_cubit.dart';
 import 'package:bradderly/presentation/feature/input/manual_input/voiding/manual_input_voiding_widget.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +28,9 @@ class ManualInputVoidingBuilder extends StatelessWidget {
             recordTime: recordTime,
             history: history,
           ),
+        ),
+        BlocProvider<ManualInputVoidingBloc>(
+          create: (_) => ManualInputVoidingBloc(saveVoidingHistoryUsecase: getIt<SaveVoidingHistoryUsecase>()),
         ),
       ],
       child: ManualInputVoidingWidget(recordTime: recordTime),

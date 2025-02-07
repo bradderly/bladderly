@@ -36,20 +36,31 @@ extension VodingHistoriesExtension on VodingHistories {
 
   int get leakageFrequency => _list.where((element) => element.isLeakage).length;
 
+  List<Duration> get _intervals {
+    if (_list.isEmpty || _list.length == 1) return [];
+
+    return List.generate(length - 1, (index) => _list[index + 1].recordTime.difference(_list[index].recordTime));
+  }
+
   Duration get maxInterval {
     if (_list.isEmpty || _list.length == 1) return Duration.zero;
 
-    return List.generate(length - 1, (index) => _list[index + 1].recordTime.difference(_list[index].recordTime))
-        .sorted((a, b) => b.compareTo(a))
-        .last;
+    return _intervals.sorted((a, b) => b.compareTo(a)).last;
   }
 
   Duration get minInterval {
     if (_list.isEmpty || _list.length == 1) return Duration.zero;
 
-    return List.generate(length - 1, (index) => _list[index + 1].recordTime.difference(_list[index].recordTime))
-        .sorted((a, b) => a.compareTo(b))
-        .first;
+    return _intervals.sorted((a, b) => a.compareTo(b)).first;
+  }
+
+  Duration get meanInterval {
+    if (_list.isEmpty || _list.length == 1) return Duration.zero;
+
+    return Duration(
+      milliseconds:
+          _intervals.fold(0, (previousValue, element) => previousValue + element.inMilliseconds) ~/ (_intervals.length),
+    );
   }
 
   int get maxVolume {

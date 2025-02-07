@@ -85,4 +85,12 @@ class HistoryRepositoryImpl implements HistoryRepository {
 
   @override
   Future<void> uploadVoidingSoundFile(File file) async {}
+
+  @override
+  Future<LeakageHistory> saveLeakageHistory(LeakageHistory leakageHistory) {
+    return isar.writeTxn(() async {
+      final id = await isar.historyEntitys.put(HistoryEntityMapper.fromLeakageHistory(leakageHistory));
+      return leakageHistory.setId(id);
+    });
+  }
 }

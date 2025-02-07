@@ -4,7 +4,7 @@ class ManualInputVoidingFormState extends Equatable {
   const ManualInputVoidingFormState({
     required this.recordTime,
     required this.unit,
-    this.recordAmount = '',
+    this.recordVolume = '',
     this.recordUrgency,
     this.isNocutria,
     this.isLeakage,
@@ -16,7 +16,7 @@ class ManualInputVoidingFormState extends Equatable {
     required this.recordTime,
     required this.unit,
     VoidingHistory? history,
-  })  : recordAmount = history == null ? '' : '${unit.parse(history.recordVolume).floor()}',
+  })  : recordVolume = history == null ? '' : '${unit.parseFromMl(history.recordVolume)}',
         recordUrgency = history?.recordUrgency,
         isNocutria = history?.isNocutria,
         isLeakage = history?.isLeakage,
@@ -24,7 +24,7 @@ class ManualInputVoidingFormState extends Equatable {
         memo = history?.memo ?? '';
 
   final DateTime recordTime;
-  final String recordAmount;
+  final String recordVolume;
   final Unit unit;
   final int? recordUrgency;
   final bool? isNocutria;
@@ -33,7 +33,7 @@ class ManualInputVoidingFormState extends Equatable {
   final String memo;
 
   bool get isValid {
-    if (int.tryParse(recordAmount) == null) return false;
+    if (int.tryParse(recordVolume) == null) return false;
 
     if (recordUrgency == null) return false;
 
@@ -41,12 +41,14 @@ class ManualInputVoidingFormState extends Equatable {
 
     if (isLeakage == null) return false;
 
+    if (isLeakage == true && leakageVolume == null) return false;
+
     return true;
   }
 
   ManualInputVoidingFormState copyWith({
     DateTime? recordTime,
-    String? recordAmount,
+    String? recordVolume,
     Unit? unit,
     int? recordUrgency,
     bool? isNocutria,
@@ -56,7 +58,7 @@ class ManualInputVoidingFormState extends Equatable {
   }) {
     return ManualInputVoidingFormState(
       recordTime: recordTime ?? this.recordTime,
-      recordAmount: recordAmount ?? this.recordAmount,
+      recordVolume: recordVolume ?? this.recordVolume,
       unit: unit ?? this.unit,
       recordUrgency: recordUrgency ?? this.recordUrgency,
       isNocutria: isNocutria ?? this.isNocutria,
@@ -69,7 +71,7 @@ class ManualInputVoidingFormState extends Equatable {
   @override
   List<Object?> get props => [
         recordTime,
-        recordAmount,
+        recordVolume,
         unit,
         recordUrgency,
         isNocutria,

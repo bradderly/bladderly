@@ -17,7 +17,7 @@ extension BuildContextExtension on BuildContext {
 
   String get unitName => select<UnitCubit, String>((cubit) => cubit.state.name);
 
-  num unitValue(num value) => select<UnitCubit, num>((cubit) => cubit.state.parse(value));
+  int unitValue(int value) => select<UnitCubit, int>((cubit) => cubit.state.parseFromMl(value));
 
   BladderlyShadowTheme get shadowTheme => Theme.of(this).extension<BladderlyShadowTheme>()!;
 

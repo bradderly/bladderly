@@ -40,8 +40,13 @@ class ManualInputVoidingVolumeWidget extends StatelessWidget {
               hintText: 'Please record your urine output'.tr(context),
               hintStyle: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
               contentPadding: const EdgeInsets.symmetric(horizontal: 4).copyWith(bottom: 13),
+              counterText: '',
             ),
             style: context.textStyleTheme.b20Medium.copyWith(color: context.colorTheme.neutral.shade10),
+            maxLength: switch (unit) {
+              Unit.ml => 4,
+              Unit.oz => 2,
+            },
           ),
         ),
         const Gap(22),

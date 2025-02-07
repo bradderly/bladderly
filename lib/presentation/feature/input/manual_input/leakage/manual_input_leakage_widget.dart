@@ -1,10 +1,13 @@
 import 'package:bradderly/domain/model/leakage_volume.dart';
 import 'package:bradderly/presentation/common/extension/string_extension.dart';
+import 'package:bradderly/presentation/common/widget/progress_indicator_modal.dart';
+import 'package:bradderly/presentation/feature/input/manual_input/leakage/bloc/manual_input_leakage_bloc.dart';
 import 'package:bradderly/presentation/feature/input/manual_input/leakage/cubit/manual_input_leakage_form_cubit.dart';
 import 'package:bradderly/presentation/feature/input/manual_input/widget/manual_input_leakage_volume_widget.dart';
 import 'package:bradderly/presentation/feature/input/widget/input_field_widget.dart';
 import 'package:bradderly/presentation/feature/input/widget/input_save_button.dart';
 import 'package:bradderly/presentation/feature/input/widget/input_text_area_widget.dart';
+import 'package:bradderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -32,17 +35,14 @@ class _ManualInputLeakageViewState extends State<ManualInputLeakageView> with Au
   }
 
   void _onSave(BuildContext context, ManualInputLeakageFormState state) {
-    // final event = SoundInputNoteUpload(
-    //   hashId: 'ydu3328@naver.com',
-    //   file: recorder.getFile(recorderFile),
-    //   recordTime: recorderFile.recordTime,
-    //   isLeakage: state.isLeakage!,
-    //   isNocutria: state.isNocutria!,
-    //   recordUrgency: state.recordUrgency!,
-    //   memo: state.memo,
-    // );
+    final event = ManualInputLeakageSave(
+      hashId: 'ydu3328@naver.com',
+      recordTime: state.recordTime,
+      leakageVolume: state.leakageVolume!,
+      memo: state.memo,
+    );
 
-    // context.read<SoundInputNoteBloc>().add(event);
+    context.read<ManualInputLeakageBloc>().add(event);
   }
 
   @override
@@ -52,19 +52,28 @@ class _ManualInputLeakageViewState extends State<ManualInputLeakageView> with Au
   Widget build(BuildContext context) {
     super.build(context);
 
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 24, bottom: 132),
-          children: [
-            _buildLeakageVolume(context),
-            const Gap(48),
-            _buildMemo(context),
-          ],
-        ),
-        _buildSaveButton(),
-      ],
+    return BlocListener<ManualInputLeakageBloc, ManualInputLeakageState>(
+      listener: (context, state) => switch (state) {
+        ManualInputLeakageSaveInProgress() => ProgressIndicatorModal.show(context),
+        ManualInputLeakageSaveSuccess() ||
+        ManualInputLeakageSaveFailure() =>
+          const MainRoute(tab: MainRouteTab.diary).go(context),
+        _ => null,
+      },
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 24, bottom: 132),
+            children: [
+              _buildLeakageVolume(context),
+              const Gap(48),
+              _buildMemo(context),
+            ],
+          ),
+          _buildSaveButton(),
+        ],
+      ),
     );
   }
 

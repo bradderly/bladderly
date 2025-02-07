@@ -16,7 +16,7 @@ class HistoryMapper {
       );
     }
 
-    if (entity.recordUrgency == 0.1) {
+    if (entity.recordVolume == 0.1) {
       return LeakageHistory(
         hashId: entity.hashId,
         recordTime: entity.recordTime,
