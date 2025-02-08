@@ -1,15 +1,18 @@
 {
-  "swagger": "2.0",
+  "openapi": "3.0.0",
   "info": {
-    "version": "1.0.0",
     "title": "Bladderly for Flutter",
-    "contact": {}
+    "contact": {},
+    "version": "1.0.0-oas3"
   },
-  "host": "e9wd4zrpk5.execute-api.us-east-1.amazonaws.com",
-  "basePath": "/",
+  "servers": [
+    {
+      "url": "https://e9wd4zrpk5.execute-api.us-east-1.amazonaws.com"
+    }
+  ],
   "tags": [
     {
-      "name": "cognito"
+      "name": "register"
     },
     {
       "name": "payment"
@@ -18,1053 +21,1235 @@
       "name": "file upload"
     }
   ],
-  "schemes": [
-    "https"
-  ],
   "paths": {
     "/dev/audio-upload": {
       "post": {
-        "tags": [
-          "file upload"
-        ],
-        "summary": "audio-upload",
-        "description": "audio-upload",
+        "tags": ["file upload"],
+        "description": "m4a audio file upload",
         "operationId": "audioUpload",
-        "consumes": [
-          "application/octet-stream"
-        ],
         "parameters": [
           {
             "name": "x-api-key",
             "in": "header",
             "required": false,
-            "type": "string"
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "file_name",
             "in": "header",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
+            "required": true,
+            "style": "simple",
+            "explode": false,
             "schema": {
-              "type": "string",
-              "format": "binary"
+              "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     },
     "/dev/change-pw": {
       "post": {
-        "tags": [
-          "cognito"
-        ],
-        "summary": "change-pw",
-        "description": "change-pw",
+        "tags": ["register"],
+        "description": "change login passwoard",
         "operationId": "changePw",
-        "consumes": [
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "x-api-key",
             "in": "header",
             "required": false,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
+            "style": "simple",
+            "explode": false,
             "schema": {
-              "$ref": "#/definitions/body"
+              "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChagePwRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/dev/check-offer": {
-      "get": {
-        "tags": [
-          "payment"
-        ],
-        "summary": "check-offer",
-        "description": "check-offer",
-        "operationId": "checkOffer",
-        "parameters": [
-          {
-            "name": "code",
-            "in": "query",
-            "required": false,
-            "type": "string"
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleResponse"
+                }
+              }
+            }
           },
-          {
-            "name": "user_id",
-            "in": "query",
-            "required": false,
-            "type": "string"
+          "400": {
+            "description": "Bad Request"
           },
-          {
-            "name": "x-api-key",
-            "in": "header",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     },
     "/dev/check-promo": {
       "get": {
-        "tags": [
-          "payment"
-        ],
-        "summary": "check-promo",
-        "description": "check-promo",
+        "tags": ["payment"],
+        "description": "check promotion/redeem/study code",
         "operationId": "checkPromo",
         "parameters": [
           {
             "name": "user_id",
             "in": "query",
-            "required": false,
-            "type": "string"
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "code",
             "in": "query",
-            "required": false,
-            "type": "string"
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "x-api-key",
             "in": "header",
             "required": false,
-            "type": "string"
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/dev/check-study": {
-      "get": {
-        "tags": [
-          "payment"
-        ],
-        "summary": "check-study",
-        "description": "check-study",
-        "operationId": "checkStudy",
-        "parameters": [
-          {
-            "name": "user_id",
-            "in": "query",
-            "required": false,
-            "type": "string"
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResultResponse"
+                }
+              }
+            }
           },
-          {
-            "name": "code",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "x-api-key",
-            "in": "header",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
     "/dev/confirm-pw": {
       "post": {
-        "tags": [
-          "cognito"
-        ],
-        "summary": "confirm-pw",
-        "description": "confirm-pw",
+        "tags": ["register"],
+        "description": "confirm password with verification code",
         "operationId": "confirmPw",
-        "consumes": [
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "x-api-key",
             "in": "header",
             "required": false,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
+            "style": "simple",
+            "explode": false,
             "schema": {
-              "$ref": "#/definitions/body_1"
+              "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfirmPwRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
     "/dev/contact-us": {
       "post": {
-        "summary": "contact-us",
-        "description": "contact-us",
+        "description": "contact us via email",
         "operationId": "contactUs",
-        "consumes": [
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "x-api-key",
             "in": "header",
             "required": false,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
+            "style": "simple",
+            "explode": false,
             "schema": {
-              "$ref": "#/definitions/body_2"
+              "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactUsRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
     "/dev/delete-account": {
       "post": {
-        "tags": [
-          "cognito"
-        ],
-        "summary": "delete-account",
-        "description": "delete-account",
-        "operationId": "deleteAccount",
-        "consumes": [
-          "application/json"
-        ],
+        "tags": ["register"],
+        "description": "delete account",
         "parameters": [
           {
             "name": "x-api-key",
             "in": "header",
             "required": false,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
+            "style": "simple",
+            "explode": false,
             "schema": {
-              "$ref": "#/definitions/body_3"
+              "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmailRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
     "/dev/export-record": {
       "post": {
-        "summary": "export-record",
-        "description": "export-record",
+        "description": "export report request",
         "operationId": "exportRecord",
-        "consumes": [
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "x-api-key",
             "in": "header",
             "required": false,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
+            "style": "simple",
+            "explode": false,
             "schema": {
-              "$ref": "#/definitions/body_4"
+              "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExportReportRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
     "/dev/forgot-pw": {
       "post": {
-        "tags": [
-          "cognito"
-        ],
-        "summary": "forgot-pw",
-        "description": "forgot-pw",
+        "tags": ["register"],
+        "description": "request password reset when forgot password",
         "operationId": "forgotPw",
-        "consumes": [
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "x-api-key",
             "in": "header",
             "required": false,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
+            "style": "simple",
+            "explode": false,
             "schema": {
-              "$ref": "#/definitions/body_5"
+              "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmailRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
     "/dev/get-all-records": {
       "get": {
-        "summary": "get-all-records",
-        "description": "get-all-records",
+        "description": "get all records when sign in",
         "operationId": "getAllRecords",
         "parameters": [
           {
             "name": "user_id",
             "in": "query",
-            "required": false,
-            "type": "string"
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "x-api-key",
             "in": "header",
             "required": false,
-            "type": "string"
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllResultResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
     "/dev/get-pay-info": {
       "get": {
-        "tags": [
-          "payment"
-        ],
-        "summary": "get-pay-info",
-        "description": "get-pay-info",
+        "tags": ["payment"],
+        "description": "get payment information",
         "operationId": "getPayInfo",
         "parameters": [
           {
             "name": "user_id",
             "in": "query",
             "required": false,
-            "type": "string"
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "device",
             "in": "query",
             "required": false,
-            "type": "string"
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "x-api-key",
             "in": "header",
             "required": false,
-            "type": "string"
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
     "/dev/get-result": {
       "get": {
-        "summary": "get-result",
-        "description": "get-result",
+        "description": "get volume result",
         "operationId": "getResult",
         "parameters": [
           {
             "name": "user_id",
             "in": "query",
-            "required": false,
-            "type": "string"
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "rec_date",
             "in": "query",
-            "required": false,
-            "type": "string"
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "x-api-key",
             "in": "header",
             "required": false,
-            "type": "string"
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResultResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
     "/dev/get-version": {
       "get": {
-        "summary": "get-version",
-        "description": "get-version",
+        "description": "get app minimum and latest version for app updating",
         "operationId": "getVersion",
         "parameters": [
           {
             "name": "device",
             "in": "query",
-            "required": false,
-            "type": "string"
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "x-api-key",
             "in": "header",
             "required": false,
-            "type": "string"
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVersionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
     "/dev/log-in": {
       "post": {
-        "tags": [
-          "cognito"
-        ],
-        "summary": "log-in",
-        "description": "log-in",
+        "tags": ["register"],
+        "description": "log in using email and password",
         "operationId": "logIn",
-        "consumes": [
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "x-api-key",
             "in": "header",
             "required": false,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
+            "style": "simple",
+            "explode": false,
             "schema": {
-              "$ref": "#/definitions/body_6"
+              "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
     "/dev/log-out": {
       "post": {
-        "tags": [
-          "cognito"
-        ],
+        "tags": ["register"],
         "summary": "log-out",
         "description": "log-out",
         "operationId": "logOut",
-        "consumes": [
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "x-api-key",
             "in": "header",
             "required": false,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
+            "style": "simple",
+            "explode": false,
             "schema": {
-              "$ref": "#/definitions/body_7"
+              "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostEmailRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
     "/dev/migrate-record": {
       "post": {
-        "summary": "migrate-record",
-        "description": "migrate-record",
+        "description": "record migration request",
         "operationId": "migrateRecord",
-        "consumes": [
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "x-api-key",
             "in": "header",
             "required": false,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
+            "style": "simple",
+            "explode": false,
             "schema": {
-              "$ref": "#/definitions/body_8"
+              "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataMigrationRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
     "/dev/post-pay-info": {
       "post": {
-        "tags": [
-          "payment"
-        ],
+        "tags": ["payment"],
         "summary": "post-pay-info",
         "description": "post-pay-info",
         "operationId": "postPayInfo",
-        "consumes": [
-          "application/json"
-        ],
         "parameters": [
-          {
-            "name": "x",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
           {
             "name": "x-api-key",
             "in": "header",
             "required": false,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
+            "style": "simple",
+            "explode": false,
             "schema": {
-              "$ref": "#/definitions/body_9"
+              "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentCheckRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
-    "/dev/refresh-token": {
+    "/dev/report-purpose": {
       "post": {
-        "tags": [
-          "cognito"
-        ],
-        "summary": "refresh-token",
-        "description": "refresh-token",
-        "operationId": "refreshToken",
-        "consumes": [
-          "application/json"
-        ],
+        "description": "Data export survey result",
+        "operationId": "reportPurpose",
         "parameters": [
           {
             "name": "x-api-key",
             "in": "header",
             "required": false,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
+            "style": "simple",
+            "explode": false,
             "schema": {
-              "$ref": "#/definitions/body_10"
+              "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataExportSurveyRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
     "/dev/save-score": {
       "post": {
-        "summary": "save-score",
-        "description": "save-score",
+        "description": "save score",
         "operationId": "saveScore",
-        "consumes": [
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "x-api-key",
             "in": "header",
             "required": false,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
+            "style": "simple",
+            "explode": false,
             "schema": {
-              "$ref": "#/definitions/body_11"
+              "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveSurveyRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
     "/dev/sign-up": {
       "post": {
-        "tags": [
-          "cognito"
-        ],
-        "summary": "sign-up",
-        "description": "sign-up",
+        "tags": ["register"],
+        "description": "sign up",
         "operationId": "signUp",
-        "consumes": [
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "x-api-key",
             "in": "header",
             "required": false,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
+            "style": "simple",
+            "explode": false,
             "schema": {
-              "$ref": "#/definitions/body_12"
+              "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignUpRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
     "/dev/update-record": {
       "post": {
-        "summary": "update-record",
-        "description": "update-record",
+        "description": "update record",
         "operationId": "updateRecord",
-        "consumes": [
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "x-api-key",
             "in": "header",
             "required": false,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
+            "style": "simple",
+            "explode": false,
             "schema": {
-              "$ref": "#/definitions/body_13"
+              "type": "string"
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/dev/update-user-info": {
-      "post": {
-        "tags": [
-          "cognito"
-        ],
-        "summary": "update-user-info",
-        "description": "update-user-info",
-        "operationId": "updateUserInfo",
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "x-api-key",
-            "in": "header",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/body_14"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecordUpdateRequest"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     }
   },
-  "definitions": {
-    "body_14": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string",
-          "example": "tony.us@a.com"
-        },
-        "first_name": {
-          "type": "string",
-          "example": "Tony"
-        }
-      }
-    },
-    "body": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string",
-          "example": "onsub.kim@gmail.com"
-        },
-        "new_pw": {
-          "type": "string",
-          "example": "Qwer12#$"
-        },
-        "old_pw": {
-          "type": "string",
-          "example": "Qwer12!@"
-        }
-      }
-    },
-    "body_3": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string",
-          "example": "onsub.kim@gmail.com"
-        }
-      }
-    },
-    "body_4": {
-      "type": "object",
-      "properties": {
-        "export_date": {
-          "type": "array",
-          "example": [
-            "20250115-113243",
-            "20250115-134534",
-            "20250116-091010"
-          ],
-          "items": {
+  "components": {
+    "schemas": {
+      "SimpleResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
             "type": "string",
-            "example": "20250115-113243"
+            "description": "success or fail"
           }
-        },
-        "user_id": {
-          "type": "string",
-          "example": "f42a6f0da8d82e2d198b173fdaf1a0416a661e05"
         }
-      }
-    },
-    "body_1": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string",
-          "example": "onsub.kim@gmail.com"
-        },
-        "new_pw": {
-          "type": "string",
-          "example": "Qwer12#$"
-        },
-        "verification_code": {
-          "type": "string",
-          "example": "098700"
+      },
+      "ResultResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "success or fail"
+          },
+          "result": {
+            "type": "string",
+            "description": "return value"
+          }
         }
-      }
-    },
-    "body_2": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string",
-          "example": "dev@soundable.health"
-        },
-        "first_name": {
-          "type": "string",
-          "example": "Tony"
-        },
-        "last_name": {
-          "type": "string",
-          "example": "Kim"
-        },
-        "message": {
-          "type": "string",
-          "example": "Please check my promo code. I got this code from conference. But it didn't work."
-        },
-        "subject": {
-          "type": "string",
-          "example": "promo code issue"
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "success or invalid email/password"
+          },
+          "user_info": {
+            "type": "object",
+            "description": "user profile"
+          }
         }
-      }
-    },
-    "body_12": {
-      "type": "object",
-      "properties": {
-        "birth": {
-          "type": "string",
-          "example": "2000"
-        },
-        "device": {
-          "type": "string",
-          "example": "iPhone"
-        },
-        "email": {
-          "type": "string",
-          "example": "test@a.com"
-        },
-        "first_name": {
-          "type": "string",
-          "example": "Test"
-        },
-        "gender": {
-          "type": "string",
-          "example": "male"
-        },
-        "height": {
-          "type": "string",
-          "example": ""
-        },
-        "last_name": {
-          "type": "string",
-          "example": "Soundable"
-        },
-        "locale": {
-          "type": "string",
-          "example": "US"
-        },
-        "pw": {
-          "type": "string",
-          "example": "Qwer12#$"
-        },
-        "weight": {
-          "type": "string",
-          "example": ""
+      },
+      "GetVersionResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "success or fail"
+          },
+          "min_ver": {
+            "type": "string",
+            "description": "support minimum app version"
+          },
+          "latest_ver": {
+            "type": "string",
+            "description": "latest app version"
+          }
         }
-      }
-    },
-    "body_13": {
-      "type": "object",
-      "properties": {
-        "is_manual": {
-          "type": "boolean",
-          "example": true
-        },
-        "rec_date": {
-          "type": "string",
-          "example": "20220115-113243"
-        },
-        "record_urgency": {
-          "type": "string",
-          "example": "4"
-        },
-        "record_volume": {
-          "type": "string",
-          "example": "436"
-        },
-        "user_id": {
-          "type": "string",
-          "example": "f42a6f0da8d82e2d198b173fdaf1a0416a661e05"
+      },
+      "GetAllResultResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "success or fail"
+          },
+          "records": {
+            "type": "array",
+            "description": "all records",
+            "items": {
+              "type": "object",
+              "description": "dictionary item"
+            }
+          }
         }
-      }
-    },
-    "body_9": {
-      "type": "object",
-      "properties": {
-        "receipt": {
-          "type": "string",
-          "example": "receipt_info"
-        },
-        "user_id": {
-          "type": "string",
-          "example": "f42a6f0da8d82e2d198b173fdaf1a0416a661e05"
+      },
+      "PaymentResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "success or fail"
+          },
+          "pay_info": {
+            "type": "object",
+            "description": "payment information"
+          }
         }
-      }
-    },
-    "body_10": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string",
-          "example": "onsub.kim@gmail.com"
-        },
-        "refresh_token": {
-          "type": "string",
-          "example": "eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.uob4i9eCVd6uV7-5kfoCIFcqj_Duk_KLk3hqRwVwbdn98QvuDWDPDDaXAecmHAVuoqqjc5-xQl9jUeum_lAz6BnCra9p9F38H7yB2Q31VqaHdjjhliVt-ABDtRSI8BVN8id_NZ6W9klbXBLqBXr3rPrK4lPJB65uwML1MWDGGI1RIgYHhC1WM4wtHZd21SvrY2y6baFvMiq9acYhTCSkLyoOr1fYKC__anbmaRemri4pReSfeZjnOaFIpBeU3iXw8GitBE5dnMKHihXmlcyXWhWj0L-tqQ-IRjeTB6SeHu0dMJxcFXwrX5RjXSHC9WGboDQdjkqbqGA-yJWzGrro4w.wu6vYoUWcGWvFAEO.zgqummSCnmr9PjAX3Ti7GhlPAXN5aObzsQ_mkTBE_swlXOQbxvHp9NOyeR7VRwQ06E6XJspjyxPJ89jWBG5Es4vP-gHgGgio2W1BkILjgNV80O-BCqi_-TrA8rpkmYIbDtehsCfQeuxbnaJUa-KS_WaXsSlYW_VfFkI53tIS9UTPzZ1D0jyPuBIgTqDe01AJxdu1sYAPMLuaq_XKEDQa4UA_2xVN_aN2FJbACdDPTpIXTr8c7BOe0ddIh5mRYXxvzVwKHsCDIdcRwegNZwyYmDn48lMSUXBFOHM75RgC44TtuzQXugnpoWJ6d-OnJshZON0miq8rb6ufYaheZsZwwZ65aDktE7988T1u73GHTGTijhGULYpeB5e0f0sIrM07v6vzBLnbCRBOvtjvuuE_b2sIwwoixZV7FYLLNuaHZNEnfQ6d4KKVayzm668lrpHC0NjPghaFco9ed6op4bvgIZ0bkwecnyX8FGlKGK0eTZdsdHUBgRWPg5t8vH0kp56_e8ovIHCcMS4DnGuiY7pbuoQ5n-ZcP9XVOUqcx1hi64uPSpTXSjeKSIJejL7M9BCl8zLhKGbusHAwtTjN4cewRs-Q1t8IrK64oJgreSies1uG2u2Hv_gqklBEc92WwZDVQMfDhPzReY3G9lYXYrAY1mQxns6R81ZKP9Qqfd3RIVaTliPLO8xsvGvUfH7bKLFYXw8TvFC4UNhMrnutpjci725afdUGPQ9H8DhC0A1DcKN8C2nRtoETq5LKVOZuSz95AoK5Clr22j2eD-_jIqCowkqplZo8LYLaDG295E9qXTClujM_oIP4Tv1Ix3N805VzpQmJqRQbki5vrlgMIb28jhqsXdk111H7YjklDMSl8OLNvcOZj3fOUOuU92kFzMXir_-Z3PmSNJH8Yb8m5x_jbpcNJqG-y2BkmHE1c3fYgqdlMKThvE9mbmaoOsrgtIFaCu0fQBgLfBEGzePbyS4xOx8wxZuDl4L5SeRw6cZf-h8CrLtCloJWMo07SV7o33xc_4U2ZKaqIYIaH3w6MEQVhuKGnNKXGF7vH90frcWO9QZHjEq_8CaomWSvfy52mOUZD9f6pS7m641YTLsFLVO_T-DOI5f85ex7am7SptUFmO3LNkxHwwqM1XihgKCk9iT5OIHqS8LBajep78hhfLZ08I16OYkYJmJUVhwRXW55eb_lGTIey2Wuvf5caI8k6vugnc8JkG-XUdAupKPPqNE5Bm_dWb0iZDS77gTg2EEtwVyFnaFfvuBnBBoWwE2UC1Tw3u7CqAEoWbQiDvodgSgu-tFZt39286AHrf8Tb6y0cmoAVp7YF8_ookX5Qg.CpC4hWmPWI-dkuKVNUd74A"
+      },
+      "LoginRequest": {
+        "required": ["email", "pw"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "pw": {
+            "type": "string"
+          }
         }
-      }
-    },
-    "body_11": {
-      "type": "object",
-      "properties": {
-        "score_date": {
-          "type": "string",
-          "example": "20250101-121212"
-        },
-        "score_name": {
-          "type": "string",
-          "example": "IPSS"
-        },
-        "score_value": {
-          "type": "array",
-          "example": [
-            1,
-            2,
-            1,
-            2,
-            1,
-            2,
-            1,
-            2
-          ],
-          "items": {
+      },
+      "ChagePwRequest": {
+        "required": ["email", "new_pw", "old_pw"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "new_pw": {
+            "type": "string"
+          },
+          "old_pw": {
+            "type": "string"
+          }
+        }
+      },
+      "ConfirmPwRequest": {
+        "required": ["email", "new_pw", "verification_code"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "new_pw": {
+            "type": "string"
+          },
+          "verification_code": {
+            "type": "string"
+          }
+        }
+      },
+      "ContactUsRequest": {
+        "required": ["email", "message", "subject"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          }
+        }
+      },
+      "PostEmailRequest": {
+        "required": ["email"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "ExportReportRequest": {
+        "required": ["export_date", "user_id"],
+        "type": "object",
+        "properties": {
+          "export_date": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "user_id": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        }
+      },
+      "DataMigrationRequest": {
+        "required": ["from_id", "to_id"],
+        "type": "object",
+        "properties": {
+          "from_id": {
+            "type": "string",
+            "description": "old user_id"
+          },
+          "to_id": {
+            "type": "string",
+            "description": "new user_id"
+          }
+        }
+      },
+      "PaymentCheckRequest": {
+        "required": ["user_id"],
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "description": "user_id"
+          },
+          "receipt": {
+            "type": "string",
+            "description": "iOS payment receipt for verification"
+          }
+        }
+      },
+      "DataExportSurveyRequest": {
+        "required": ["select", "user_id"],
+        "type": "object",
+        "properties": {
+          "clinic": {
+            "type": "string",
+            "description": "clinic name (optional)"
+          },
+          "doctor": {
+            "type": "string",
+            "description": "doctor name (optional)"
+          },
+          "select": {
             "type": "number",
-            "example": 1
+            "description": "survey select value"
+          },
+          "user_id": {
+            "type": "string"
+          }
+        }
+      },
+      "SaveSurveyRequest": {
+        "required": ["score_date", "score_name", "score_value", "user_id"],
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "description": "user id"
+          },
+          "score_name": {
+            "type": "string",
+            "description": "IPSS or OABSS"
+          },
+          "score_date": {
+            "type": "string",
+            "description": "yyyymmdd-hhmmss"
+          },
+          "score_value": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "description": "score selection value"
+            }
+          }
+        }
+      },
+      "SignUpRequest": {
+        "required": ["email", "gender", "pw"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "email address"
+          },
+          "pw": {
+            "type": "string",
+            "description": "password"
+          },
+          "gender": {
+            "type": "string",
+            "description": "male or female"
+          }
+        }
+      },
+      "RecordUpdateRequest": {
+        "required": ["rec_date", "user_id"],
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string"
+          },
+          "rec_date": {
+            "type": "string",
+            "description": "record date (yyyymmdd-hhmms)"
+          },
+          "record": {
+            "$ref": "#/components/schemas/RecordUpdateRequest_record"
+          }
+        }
+      },
+      "RecordUpdateRequest_record": {
+        "type": "object",
+        "properties": {
+          "record_urgency": {
+            "type": "string"
+          },
+          "is_nocturia": {
+            "type": "boolean"
+          },
+          "is_intake": {
+            "type": "boolean"
+          },
+          "is_manual": {
+            "type": "boolean"
+          },
+          "is_leakage": {
+            "type": "boolean"
+          },
+          "leakage_memo": {
+            "type": "string"
+          },
+          "record_volume": {
+            "type": "string"
+          },
+          "beverage_type": {
+            "type": "string"
+          },
+          "leakage_volume": {
+            "type": "string"
+          },
+          "delete_time": {
+            "type": "string",
+            "description": "when delete record (yyyymmdd-hhmmss)"
           }
         },
-        "user_id": {
-          "type": "string",
-          "example": "f42a6f0da8d82e2d198b173fdaf1a0416a661e05"
-        }
+        "description": "record item"
       }
     },
-    "body_7": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string",
-          "example": "onsub.kim@gmail.com"
-        }
-      }
-    },
-    "body_8": {
-      "type": "object",
-      "properties": {
-        "from_id": {
-          "type": "string",
-          "example": "f42a6f0da8d82e2d198b173fdaf1a0416a661e05"
-        },
-        "to_id": {
-          "type": "string",
-          "example": "d36bbf4c526a509740ee0e2a1bb3ab9b1da13ed6"
-        }
-      }
-    },
-    "body_5": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string",
-          "example": "onsub.kim@gmail.com"
-        }
-      }
-    },
-    "body_6": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string",
-          "example": "onsub.kim@gmail.com"
-        },
-        "pw": {
-          "type": "string",
-          "example": "Qwer12-/"
-        }
-      }
-    }
+    "securitySchemes": {}
   }
 }
