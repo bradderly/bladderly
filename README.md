@@ -52,3 +52,27 @@ fvm dart run build_runner build --delete-conflicting-outputs
 의존성관리 GetIt ( Injectable로 build runner 돌려서 의존성 주입 )
 라우트관리 GoRouter ( build runner 사용 typed safe route 사용중 )
 Domain Momain을 View에서도 사용 하되 필요에따라 View Model을 생성하여 사용한다.
+
+### Feature 구조
+
+- input
+  - intake_input
+    - widget
+      - intake_input_beverage_type_widget.dart
+    - intake_input_view.dart
+    - intake_input_builder.dart
+  - manual_input
+    ...
+  - sound_input_note
+    ...
+  - sound_input_record
+    ...
+  - widget
+    - input_field_widget.dart
+  - formatter
+    ...
+
+공통적으로 사용해야하는 항목은 feature 루트 폴더
+피쳐 내부에서만 사용해야하는 경우 해당 피쳐 내부 폴더
+builder파일은 view파일의 의존성 정의 및 주입을 위해 존재함
+파일 및 클래스명은 되도록 피쳐 이름을 따르도록함 ( ex: input_field_widget.dart, intake_input_beverage_type_widget.dart )

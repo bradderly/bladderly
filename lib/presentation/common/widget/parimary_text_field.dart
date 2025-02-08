@@ -27,6 +27,8 @@ class ParimaryTextField extends StatelessWidget {
           ),
         TextField(
           style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade10),
+          autocorrect: false,
+          enableSuggestions: false,
           obscureText: obscureText,
           decoration: InputDecoration(
             border: OutlineInputBorder(

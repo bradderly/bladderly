@@ -95,6 +95,7 @@ class _ManualInputLeakageViewState extends State<ManualInputLeakageView> with Au
       label: 'Memo'.tr(context),
       child: InputTextAreaWidget(
         onChanged: context.read<ManualInputLeakageFormCubit>().setMemo,
+        initialValue: context.read<ManualInputLeakageFormCubit>().state.memo,
       ),
     );
   }

@@ -34,13 +34,12 @@ class _ManualInputViewState extends State<ManualInputView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         toolbarHeight: 58,
         centerTitle: true,
-        title: Container(
-          margin: const EdgeInsets.only(left: 26, top: 18),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 26, top: 18),
           child: InputRecordTimeWidget(
             onChanged: (dt) => setState(() => recordTime = dt),
             dateTime: recordTime,

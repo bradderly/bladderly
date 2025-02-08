@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:bradderly/core/recorder/src/recorder_file.dart';
+import 'package:bradderly/domain/model/history.dart';
+import 'package:bradderly/presentation/common/model/beverage_type_model.dart';
 import 'package:bradderly/presentation/feature/export/export_builder.dart';
+import 'package:bradderly/presentation/feature/input/intake_input/intake_input_builder.dart';
 import 'package:bradderly/presentation/feature/input/manual_input/manual_input_builder.dart';
 import 'package:bradderly/presentation/feature/input/sound_input_note/sound_input_note_builder.dart';
 import 'package:bradderly/presentation/feature/input/sound_input_recording/sound_input_recording_builder.dart';
@@ -42,6 +45,10 @@ enum MainRouteTab {
     TypedGoRoute<ManualInputRoute>(
       name: 'manual_input',
       path: 'manual_input',
+    ),
+    TypedGoRoute<IntakeInputRoute>(
+      name: 'intake_input',
+      path: 'intake_input',
     ),
   ],
 )
@@ -145,6 +152,41 @@ class ManualInputRoute extends GoRouteData {
       key: state.pageKey,
       fullscreenDialog: true,
       child: const ManualInputBuilder(),
+    );
+  }
+}
+
+class IntakeInputRouteExtra extends Equatable {
+  const IntakeInputRouteExtra({
+    required this.intakeHistory,
+  });
+
+  final IntakeHistory intakeHistory;
+
+  @override
+  List<Object> get props => [
+        intakeHistory,
+      ];
+}
+
+class IntakeInputRoute extends GoRouteData {
+  const IntakeInputRoute({
+    required this.beverageType,
+    this.$extra,
+  });
+
+  final BeverageTypeModel? beverageType;
+  final IntakeInputRouteExtra? $extra;
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      fullscreenDialog: true,
+      child: IntakeInputBuilder(
+        beverageTypeModel: beverageType,
+        intakeHistory: $extra?.intakeHistory,
+      ),
     );
   }
 }

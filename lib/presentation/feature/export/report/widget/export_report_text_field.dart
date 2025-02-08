@@ -22,6 +22,8 @@ class ExportReportTextField extends StatelessWidget {
       onSubmitted: onSubmitted,
       focusNode: focusNode,
       scrollPadding: const EdgeInsets.only(bottom: 120),
+      autocorrect: false,
+      enableSuggestions: false,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),

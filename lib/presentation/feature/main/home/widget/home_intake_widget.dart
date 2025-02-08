@@ -3,6 +3,7 @@ import 'package:bradderly/presentation/common/extension/string_extension.dart';
 import 'package:bradderly/presentation/common/model/beverage_type_model.dart';
 import 'package:bradderly/presentation/feature/main/home/model/home_intake_summary_model.dart';
 import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
+import 'package:bradderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -97,58 +98,62 @@ class HomeIntakeWidget extends StatelessWidget {
                       final index = (row ~/ 2 * 3) + column;
                       final baverageType = BeverageTypeModel.values[index];
 
-                      return Column(
-                        children: [
-                          Container(
-                            width: 100,
-                            height: 100,
-                            clipBehavior: Clip.antiAlias,
-                            decoration: ShapeDecoration(
-                              color: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(23.54),
+                      return GestureDetector(
+                        onTap: () => IntakeInputRoute(beverageType: baverageType).push<void>(context),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 100,
+                              height: 100,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: ShapeDecoration(
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(23.54),
+                                ),
+                                shadows: const [
+                                  BoxShadow(
+                                    color: Color(0x1EB2B78C),
+                                    blurRadius: 7.36,
+                                    offset: Offset(0, 2.94),
+                                  ),
+                                  BoxShadow(
+                                    color: Color(0x26B1B68B),
+                                    blurRadius: 11.77,
+                                    offset: Offset(0, 5.89),
+                                    spreadRadius: 4.41,
+                                  ),
+                                ],
                               ),
-                              shadows: const [
-                                BoxShadow(
-                                  color: Color(0x1EB2B78C),
-                                  blurRadius: 7.36,
-                                  offset: Offset(0, 2.94),
-                                ),
-                                BoxShadow(
-                                  color: Color(0x26B1B68B),
-                                  blurRadius: 11.77,
-                                  offset: Offset(0, 5.89),
-                                  spreadRadius: 4.41,
-                                ),
-                              ],
+                              child: Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  Center(
+                                    child: switch (baverageType) {
+                                      BeverageTypeModel.water => Assets.icon.icHomeWater.svg(),
+                                      BeverageTypeModel.caffeine => Assets.icon.icHomeCaffeine.svg(),
+                                      BeverageTypeModel.soda => Assets.icon.icHomeSoda.svg(),
+                                      BeverageTypeModel.juice => Assets.icon.icHomeJuice.svg(),
+                                      BeverageTypeModel.alcohol => Assets.icon.icHomeAlcohol.svg(),
+                                      BeverageTypeModel.others => Assets.icon.icHomeOthers.svg(),
+                                    },
+                                  ),
+                                  Positioned(
+                                    top: 5.89,
+                                    right: 2.89,
+                                    child: Assets.icon.icHomeAdd.svg(),
+                                  ),
+                                ],
+                              ),
                             ),
-                            child: Stack(
-                              fit: StackFit.expand,
-                              children: [
-                                Center(
-                                  child: switch (baverageType) {
-                                    BeverageTypeModel.water => Assets.icon.icHomeWater.svg(),
-                                    BeverageTypeModel.caffeine => Assets.icon.icHomeCaffeine.svg(),
-                                    BeverageTypeModel.soda => Assets.icon.icHomeSoda.svg(),
-                                    BeverageTypeModel.juice => Assets.icon.icHomeJuice.svg(),
-                                    BeverageTypeModel.alcohol => Assets.icon.icHomeAlcohol.svg(),
-                                    BeverageTypeModel.others => Assets.icon.icHomeOthers.svg(),
-                                  },
-                                ),
-                                Positioned(
-                                  top: 5.89,
-                                  right: 2.89,
-                                  child: Assets.icon.icHomeAdd.svg(),
-                                ),
-                              ],
+                            const Gap(8),
+                            Text(
+                              baverageType.name.tr(context),
+                              style:
+                                  context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade10),
                             ),
-                          ),
-                          const Gap(8),
-                          Text(
-                            baverageType.name.tr(context),
-                            style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade10),
-                          ),
-                        ],
+                          ],
+                        ),
                       );
                     }),
                   ),

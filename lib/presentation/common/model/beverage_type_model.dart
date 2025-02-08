@@ -9,6 +9,10 @@ enum BeverageTypeModel {
   others,
   ;
 
+  factory BeverageTypeModel.of(String name) {
+    return BeverageTypeModel.values.firstWhere((e) => e.name == name, orElse: () => others);
+  }
+
   Color get color {
     return switch (this) {
       water => const Color(0xFF6FE7E7),

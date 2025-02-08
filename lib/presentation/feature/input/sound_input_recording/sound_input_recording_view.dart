@@ -157,7 +157,6 @@ class _SoundInputRecordingViewState extends State<SoundInputRecordingView> with 
           onPop();
         },
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
           backgroundColor: context.colorTheme.paleLime.shade20,
           body: SafeArea(
             child: Stack(

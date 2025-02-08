@@ -15,9 +15,6 @@ targets:
         options:
           input_folder: lib/data/api/model/
           output_folder: lib/data/api/model/
-          # input_urls:
-            # - "http://localhost:8090/swagger-json"
-            # - "https://smart-booking.co.kr/pos/swagger-json"
           with_base_url: true
           with_converter: true
           use_path_for_request_names: true

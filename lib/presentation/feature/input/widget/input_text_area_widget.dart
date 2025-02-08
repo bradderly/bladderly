@@ -24,7 +24,8 @@ class InputTextAreaWidget extends StatelessWidget {
       child: TextFormField(
         initialValue: initialValue,
         textInputAction: TextInputAction.done,
-        scrollPadding: const EdgeInsets.only(bottom: 168),
+        scrollPadding: const EdgeInsets.only(bottom: 112),
+        onFieldSubmitted: (value) => FocusScope.of(context).unfocus(),
         maxLines: null,
         decoration: InputDecoration(
           border: InputBorder.none,

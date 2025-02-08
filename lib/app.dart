@@ -90,6 +90,8 @@ class _BladderlyAppState extends State<BladderlyApp> {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             appBarTheme: const AppBarTheme(
               backgroundColor: Colors.white,
+              surfaceTintColor: Colors.white,
+              elevation: 0,
             ),
             scaffoldBackgroundColor: Colors.white,
             useMaterial3: true,

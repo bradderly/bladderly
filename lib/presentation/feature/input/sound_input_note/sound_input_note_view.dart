@@ -66,13 +66,11 @@ class SoundInputNoteView extends StatelessWidget {
         canPop: false,
         onPopInvokedWithResult: (didPop, result) {},
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             automaticallyImplyLeading: false,
             toolbarHeight: 58,
-            surfaceTintColor: Colors.white,
-            title: Container(
-              margin: const EdgeInsets.only(top: 18),
+            title: Padding(
+              padding: const EdgeInsets.only(top: 18),
               child: InputRecordTimeWidget(dateTime: recorderFile.recordTime),
             ),
           ),
@@ -184,6 +182,7 @@ class SoundInputNoteView extends StatelessWidget {
       label: 'Memo'.tr(context),
       child: InputTextAreaWidget(
         onChanged: context.read<SoundInputNoteFormCubit>().setMemo,
+        initialValue: context.read<SoundInputNoteFormCubit>().state.memo,
       ),
     );
   }

@@ -1,5 +1,4 @@
 import 'package:bradderly/domain/model/leakage_volume.dart';
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bradderly/presentation/common/extension/string_extension.dart';
 import 'package:bradderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bradderly/presentation/feature/input/manual_input/voiding/bloc/manual_input_voiding_bloc.dart';
@@ -8,6 +7,7 @@ import 'package:bradderly/presentation/feature/input/manual_input/voiding/widget
 import 'package:bradderly/presentation/feature/input/manual_input/widget/manual_input_leakage_volume_widget.dart';
 import 'package:bradderly/presentation/feature/input/widget/input_choice_button.dart';
 import 'package:bradderly/presentation/feature/input/widget/input_field_widget.dart';
+import 'package:bradderly/presentation/feature/input/widget/input_keyboard_actions.dart';
 import 'package:bradderly/presentation/feature/input/widget/input_record_urgency_widget.dart';
 import 'package:bradderly/presentation/feature/input/widget/input_save_button.dart';
 import 'package:bradderly/presentation/feature/input/widget/input_text_area_widget.dart';
@@ -15,7 +15,6 @@ import 'package:bradderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:keyboard_actions/keyboard_actions.dart';
 
 class ManualInputVoidingWidget extends StatefulWidget {
   const ManualInputVoidingWidget({
@@ -79,35 +78,8 @@ class _ManualInputVoidingWidgetState extends State<ManualInputVoidingWidget> wit
       child: Stack(
         fit: StackFit.expand,
         children: [
-          KeyboardActions(
-            config: KeyboardActionsConfig(
-              keyboardBarColor: const Color(0xFFD1D5DB),
-              keyboardActionsPlatform: KeyboardActionsPlatform.IOS,
-              nextFocus: false,
-              actions: [
-                KeyboardActionsItem(
-                  focusNode: recordVolumeFocusNode,
-                  displayDoneButton: false,
-                  displayActionBar: false,
-                  footerBuilder: (context) => PreferredSize(
-                    preferredSize: const Size.fromHeight(51),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            'Done'.tr(context),
-                            style: context.textStyleTheme.b16SemiBold
-                                .copyWith(color: context.colorTheme.vermilion.primary.shade50),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          InputKeyboardActions(
+            focusNode: recordVolumeFocusNode,
             child: ListView(
               controller: scrollController,
               padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 24, bottom: 132),
@@ -214,6 +186,7 @@ class _ManualInputVoidingWidgetState extends State<ManualInputVoidingWidget> wit
       label: 'Memo'.tr(context),
       child: InputTextAreaWidget(
         onChanged: context.read<ManualInputVoidingFormCubit>().setMemo,
+        initialValue: context.read<ManualInputVoidingFormCubit>().state.memo,
       ),
     );
   }
@@ -232,4 +205,23 @@ class _ManualInputVoidingWidgetState extends State<ManualInputVoidingWidget> wit
       ),
     );
   }
+
+  //   Widget _buildSaveButton() {
+  //   return ListenableBuilder(
+  //     listenable: recordVolumeFocusNode,
+  //     builder: (context, child) => Positioned.fill(
+  //       top: null,
+  //       bottom: 28 + (recordVolumeFocusNode.hasFocus ? 51 : 0),
+  //       child: child!,
+  //     ),
+  //     child: Center(
+  //       child: BlocBuilder<ManualInputVoidingFormCubit, ManualInputVoidingFormState>(
+  //         buildWhen: (prev, curr) => prev.isValid != curr.isValid,
+  //         builder: (context, state) => InputSaveButton(
+  //           onPressed: state.isValid ? () => _onSave(context, state) : null,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }
