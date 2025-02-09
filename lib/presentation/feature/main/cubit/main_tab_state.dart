@@ -1,12 +1,5 @@
 part of 'main_tab_cubit.dart';
 
-enum MainTabDiaryScrollScetion {
-  voiding,
-  intake,
-  none,
-  ;
-}
-
 sealed class MainTabState extends Equatable {
   const MainTabState();
 
@@ -27,14 +20,14 @@ final class MainTabHome extends MainTabState {
 
 final class MainTabDiary extends MainTabState {
   const MainTabDiary({
-    required this.scrollSection,
+    required this.diaryTabScrollSectionModel,
   });
 
-  final MainTabDiaryScrollScetion scrollSection;
+  final DiaryTabScrollSectionModel diaryTabScrollSectionModel;
 
   @override
   List<Object> get props => [
         ...super.props,
-        scrollSection,
+        diaryTabScrollSectionModel,
       ];
 }

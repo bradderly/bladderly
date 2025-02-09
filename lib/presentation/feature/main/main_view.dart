@@ -1,8 +1,9 @@
 import 'package:bradderly/core/recorder/recorder_module.dart';
 import 'package:bradderly/core/recorder/src/recorder_file.dart';
 import 'package:bradderly/presentation/common/cubit/pending_upload_file_cubit.dart';
+import 'package:bradderly/presentation/feature/diary/diary/diary_builder.dart';
+import 'package:bradderly/presentation/feature/diary/diary/model/diary_tab_scroll_section_model.dart';
 import 'package:bradderly/presentation/feature/main/cubit/main_tab_cubit.dart';
-import 'package:bradderly/presentation/feature/main/diary/diary_builder.dart';
 import 'package:bradderly/presentation/feature/main/home/home_builder.dart';
 import 'package:bradderly/presentation/feature/main/widget/main_bottom_navigation_bar.dart';
 import 'package:bradderly/presentation/router/route/main_route.dart';
@@ -76,11 +77,15 @@ class _MainViewState extends State<MainView> {
               children: [
                 HomeBuilder(
                   onPressedMoreVoiding: () =>
-                      context.read<MainTabCubit>().showDiary(scrollSection: MainTabDiaryScrollScetion.voiding),
+                      context.read<MainTabCubit>().showDiary(scrollSection: DiaryTabScrollSectionModel.voiding),
                   onPressedMoreIntake: () =>
-                      context.read<MainTabCubit>().showDiary(scrollSection: MainTabDiaryScrollScetion.intake),
+                      context.read<MainTabCubit>().showDiary(scrollSection: DiaryTabScrollSectionModel.intake),
                 ),
-                const DiaryBuilder(),
+                BlocSelector<MainTabCubit, MainTabState, DiaryTabScrollSectionModel?>(
+                  selector: (state) => state is MainTabDiary ? state.diaryTabScrollSectionModel : null,
+                  builder: (context, diaryTabScrollSectionModel) =>
+                      DiaryBuilder(diaryTabScrollSectionModel: diaryTabScrollSectionModel),
+                ),
               ],
             ),
             bottomNavigationBar: BlocBuilder<MainTabCubit, MainTabState>(

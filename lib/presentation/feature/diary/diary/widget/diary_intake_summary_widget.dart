@@ -1,7 +1,7 @@
 import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bradderly/presentation/common/extension/string_extension.dart';
 import 'package:bradderly/presentation/common/model/beverage_type_model.dart';
-import 'package:bradderly/presentation/feature/main/diary/model/diary_intake_summary_model.dart';
+import 'package:bradderly/presentation/feature/diary/diary/model/diary_intake_summary_model.dart';
 import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';

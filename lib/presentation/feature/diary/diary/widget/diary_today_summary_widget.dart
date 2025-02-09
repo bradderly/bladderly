@@ -1,9 +1,9 @@
 import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/main/diary/model/diary_intake_summary_model.dart';
-import 'package:bradderly/presentation/feature/main/diary/model/diary_voding_summary_model.dart';
-import 'package:bradderly/presentation/feature/main/diary/widget/diary_intake_summary_widget.dart';
-import 'package:bradderly/presentation/feature/main/diary/widget/diary_voiding_summary_widget.dart';
+import 'package:bradderly/presentation/feature/diary/diary/model/diary_intake_summary_model.dart';
+import 'package:bradderly/presentation/feature/diary/diary/model/diary_voding_summary_model.dart';
+import 'package:bradderly/presentation/feature/diary/diary/widget/diary_intake_summary_widget.dart';
+import 'package:bradderly/presentation/feature/diary/diary/widget/diary_voiding_summary_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 

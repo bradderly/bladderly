@@ -2,8 +2,9 @@ import 'dart:math';
 
 import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/main/diary/model/diary_history_model.dart';
-import 'package:bradderly/presentation/feature/main/diary/model/diary_history_type_model.dart';
+import 'package:bradderly/presentation/feature/diary/diary/model/diary_history_model.dart';
+import 'package:bradderly/presentation/feature/diary/diary/model/diary_history_type_model.dart';
+import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bradderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -150,7 +151,7 @@ class _HistoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
         children: List.generate(
           _DiaryHistoryColumn.values.length,
@@ -159,24 +160,55 @@ class _HistoryWidget extends StatelessWidget {
             return Container(
               alignment: Alignment.center,
               width: column.getWidth(context),
-              child: Text(
-                switch (column) {
-                  _DiaryHistoryColumn.time => diaryHistoryModel.getRecordTime(context),
-                  _DiaryHistoryColumn.amount => diaryHistoryModel.getRecordVolume(context),
-                  _DiaryHistoryColumn.urge => diaryHistoryModel.recordUrgency?.toString() ?? '',
-                  _DiaryHistoryColumn.leak => diaryHistoryModel.leakageVolume?.tr(context) ?? '',
-                  _DiaryHistoryColumn.type => diaryHistoryModel.beverageType?.tr(context) ?? '',
-                },
-                style: context.textStyleTheme.b14Medium.copyWith(
-                  color: switch (column) {
-                    _DiaryHistoryColumn.time => context.colorTheme.neutral.shade10,
-                    _DiaryHistoryColumn.amount => diaryHistoryModel.type.getColor(context),
-                    _DiaryHistoryColumn.urge => context.colorTheme.neutral.shade8,
-                    _DiaryHistoryColumn.leak => context.colorTheme.neutral.shade8,
-                    _DiaryHistoryColumn.type => context.colorTheme.neutral.shade8,
-                  },
-                ),
-              ),
+              child: switch (column) {
+                _DiaryHistoryColumn.time => Row(
+                    children: [
+                      Container(
+                        width: 4,
+                        height: 4,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: diaryHistoryModel.type.getColor(context),
+                        ),
+                      ),
+                      const Gap(4),
+                      Text(
+                        diaryHistoryModel.getRecordTime(context),
+                        style: context.textStyleTheme.b14Medium.copyWith(
+                          color: context.colorTheme.neutral.shade10,
+                        ),
+                      ),
+                      const Gap(8),
+                      if (diaryHistoryModel.isNocturia)
+                        Assets.icon.icDiaryNighttime
+                            .svg(colorFilter: ColorFilter.mode(context.colorTheme.neutral.shade6, BlendMode.srcIn)),
+                    ],
+                  ),
+                _DiaryHistoryColumn.amount => Text(
+                    diaryHistoryModel.getRecordVolume(context),
+                    style: context.textStyleTheme.b14Medium.copyWith(
+                      color: diaryHistoryModel.type.getColor(context),
+                    ),
+                  ),
+                _DiaryHistoryColumn.urge => Text(
+                    diaryHistoryModel.recordUrgency?.toString() ?? '',
+                    style: context.textStyleTheme.b14Medium.copyWith(
+                      color: context.colorTheme.neutral.shade8,
+                    ),
+                  ),
+                _DiaryHistoryColumn.leak => Text(
+                    diaryHistoryModel.leakageVolume?.tr(context) ?? '',
+                    style: context.textStyleTheme.b14Medium.copyWith(
+                      color: context.colorTheme.neutral.shade8,
+                    ),
+                  ),
+                _DiaryHistoryColumn.type => Text(
+                    diaryHistoryModel.beverageType?.tr(context) ?? '',
+                    style: context.textStyleTheme.b14Medium.copyWith(
+                      color: context.colorTheme.neutral.shade8,
+                    ),
+                  ),
+              },
             );
           },
         ),

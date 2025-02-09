@@ -1,3 +1,4 @@
+import 'package:bradderly/presentation/feature/diary/diary/model/diary_tab_scroll_section_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,8 +19,8 @@ class MainTabCubit extends Cubit<MainTabState> {
     emit(const MainTabHome());
   }
 
-  void showDiary({MainTabDiaryScrollScetion scrollSection = MainTabDiaryScrollScetion.none}) {
-    emit(MainTabDiary(scrollSection: scrollSection));
+  void showDiary({DiaryTabScrollSectionModel scrollSection = DiaryTabScrollSectionModel.none}) {
+    emit(MainTabDiary(diaryTabScrollSectionModel: scrollSection));
   }
 
   void switchByTabName(String? tabName) {

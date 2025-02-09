@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bradderly/presentation/common/extension/datetime_extension.dart';
-import 'package:bradderly/presentation/feature/main/diary/cubit/diary_history_dates_cubit.dart';
+import 'package:bradderly/presentation/feature/diary/diary/cubit/diary_history_dates_cubit.dart';
 import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
