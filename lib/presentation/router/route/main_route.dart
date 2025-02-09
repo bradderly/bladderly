@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bradderly/core/recorder/src/recorder_file.dart';
 import 'package:bradderly/domain/model/history.dart';
 import 'package:bradderly/presentation/common/model/beverage_type_model.dart';
@@ -143,15 +141,34 @@ class SoundInputNoteRouteExtra extends Equatable {
       ];
 }
 
+class ManualInputRouteExtra extends Equatable {
+  const ManualInputRouteExtra({
+    required this.history,
+  });
+
+  final History history;
+
+  @override
+  List<Object> get props => [
+        history,
+      ];
+}
+
 class ManualInputRoute extends GoRouteData {
-  const ManualInputRoute();
+  const ManualInputRoute({
+    this.historyId,
+  });
+
+  final int? historyId;
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
     return CupertinoPage<void>(
       key: state.pageKey,
       fullscreenDialog: true,
-      child: const ManualInputBuilder(),
+      child: ManualInputBuilder(
+        historyId: historyId,
+      ),
     );
   }
 }
@@ -172,11 +189,19 @@ class IntakeInputRouteExtra extends Equatable {
 class IntakeInputRoute extends GoRouteData {
   const IntakeInputRoute({
     required this.beverageType,
-    this.$extra,
+    required this.historyId,
   });
 
+  const IntakeInputRoute.fromBeverageType({
+    required BeverageTypeModel beverageType,
+  }) : this(beverageType: beverageType, historyId: null);
+
+  const IntakeInputRoute.fromHistoryId({
+    required int historyId,
+  }) : this(beverageType: null, historyId: historyId);
+
   final BeverageTypeModel? beverageType;
-  final IntakeInputRouteExtra? $extra;
+  final int? historyId;
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
@@ -185,7 +210,7 @@ class IntakeInputRoute extends GoRouteData {
       fullscreenDialog: true,
       child: IntakeInputBuilder(
         beverageTypeModel: beverageType,
-        intakeHistory: $extra?.intakeHistory,
+        historyId: historyId,
       ),
     );
   }

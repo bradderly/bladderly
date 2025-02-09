@@ -8,8 +8,12 @@ part 'manual_input_leakage_form_state.dart';
 class ManualInputLeakageFormCubit extends Cubit<ManualInputLeakageFormState> {
   ManualInputLeakageFormCubit({
     required DateTime recordTime,
-    LeakageHistory? history,
-  }) : super(ManualInputLeakageFormState.fromHistory(recordTime: recordTime, history: history));
+    History? history,
+  }) : super(
+          history == null
+              ? ManualInputLeakageFormState(recordTime: recordTime)
+              : ManualInputLeakageFormState.fromHistory(history: history),
+        );
 
   void setRecordTime(DateTime recordTime) {
     emit(state.copyWith(recordTime: recordTime));

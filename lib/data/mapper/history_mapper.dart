@@ -7,6 +7,7 @@ class HistoryMapper {
   static History fromHistoryEntity(HistoryEntity entity) {
     if (entity.isIntake == true) {
       return IntakeHistory(
+        id: entity.id,
         hashId: entity.hashId,
         recordTime: entity.recordTime,
         beverageType: entity.beverageType!,
@@ -18,6 +19,7 @@ class HistoryMapper {
 
     if (entity.recordVolume == 0.1) {
       return LeakageHistory(
+        id: entity.id,
         hashId: entity.hashId,
         recordTime: entity.recordTime,
         leakageVolume: entity.leakageVolume!,
@@ -27,6 +29,7 @@ class HistoryMapper {
     }
 
     return VoidingHistory(
+      id: entity.id,
       hashId: entity.hashId,
       recordTime: entity.recordTime,
       recordVolume: entity.recordVolume.toInt(),

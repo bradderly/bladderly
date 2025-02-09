@@ -99,7 +99,7 @@ class HomeIntakeWidget extends StatelessWidget {
                       final baverageType = BeverageTypeModel.values[index];
 
                       return GestureDetector(
-                        onTap: () => IntakeInputRoute(beverageType: baverageType).push<void>(context),
+                        onTap: () => IntakeInputRoute.fromBeverageType(beverageType: baverageType).push<void>(context),
                         child: Column(
                           children: [
                             Container(

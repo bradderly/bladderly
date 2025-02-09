@@ -30,7 +30,6 @@ class ManualInputVoidingWidget extends StatefulWidget {
 
 class _ManualInputVoidingWidgetState extends State<ManualInputVoidingWidget> with AutomaticKeepAliveClientMixin {
   final recordVolumeFocusNode = FocusNode(debugLabel: 'recordVolume');
-  final scrollController = ScrollController();
 
   @override
   void initState() {
@@ -40,7 +39,6 @@ class _ManualInputVoidingWidgetState extends State<ManualInputVoidingWidget> wit
 
   @override
   void dispose() {
-    scrollController.dispose();
     recordVolumeFocusNode.dispose();
     super.dispose();
   }
@@ -50,6 +48,7 @@ class _ManualInputVoidingWidgetState extends State<ManualInputVoidingWidget> wit
 
   void _onSave(BuildContext context, ManualInputVoidingFormState state) {
     final event = ManualInputVoidingSave(
+      id: state.id,
       hashId: 'ydu3328@naver.com',
       recordTime: widget.recordTime,
       recordVolume: state.unit.parseToMl(int.parse(state.recordVolume)),
@@ -81,7 +80,6 @@ class _ManualInputVoidingWidgetState extends State<ManualInputVoidingWidget> wit
           InputKeyboardActions(
             focusNode: recordVolumeFocusNode,
             child: ListView(
-              controller: scrollController,
               padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 24, bottom: 132),
               children: [
                 _buildVolume(context),
@@ -197,7 +195,6 @@ class _ManualInputVoidingWidgetState extends State<ManualInputVoidingWidget> wit
       bottom: 28,
       child: Center(
         child: BlocBuilder<ManualInputVoidingFormCubit, ManualInputVoidingFormState>(
-          buildWhen: (prev, curr) => prev.isValid != curr.isValid,
           builder: (context, state) => InputSaveButton(
             onPressed: state.isValid ? () => _onSave(context, state) : null,
           ),

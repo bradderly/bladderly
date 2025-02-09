@@ -4,6 +4,7 @@ class ManualInputVoidingFormState extends Equatable {
   const ManualInputVoidingFormState({
     required this.recordTime,
     required this.unit,
+    this.id,
     this.recordVolume = '',
     this.recordUrgency,
     this.isNocutria,
@@ -12,17 +13,32 @@ class ManualInputVoidingFormState extends Equatable {
     this.memo = '',
   });
 
-  ManualInputVoidingFormState.fromHistory({
-    required this.recordTime,
-    required this.unit,
-    VoidingHistory? history,
-  })  : recordVolume = history == null ? '' : '${unit.parseFromMl(history.recordVolume)}',
-        recordUrgency = history?.recordUrgency,
-        isNocutria = history?.isNocutria,
-        isLeakage = history?.isLeakage,
-        leakageVolume = history?.leakageVolume,
-        memo = history?.memo ?? '';
+  factory ManualInputVoidingFormState.fromHistory({
+    required History history,
+    required Unit unit,
+  }) {
+    if (history is! VoidingHistory) {
+      return ManualInputVoidingFormState(
+        id: history.id,
+        recordTime: history.recordTime,
+        unit: unit,
+      );
+    }
 
+    return ManualInputVoidingFormState(
+      id: history.id,
+      recordTime: history.recordTime,
+      recordVolume: '${unit.parseFromMl(history.recordVolume)}',
+      unit: unit,
+      recordUrgency: history.recordUrgency,
+      isNocutria: history.isNocutria,
+      isLeakage: history.isLeakage,
+      leakageVolume: history.leakageVolume,
+      memo: history.memo ?? '',
+    );
+  }
+
+  final int? id;
   final DateTime recordTime;
   final String recordVolume;
   final Unit unit;
@@ -57,6 +73,7 @@ class ManualInputVoidingFormState extends Equatable {
     String? memo,
   }) {
     return ManualInputVoidingFormState(
+      id: id,
       recordTime: recordTime ?? this.recordTime,
       recordVolume: recordVolume ?? this.recordVolume,
       unit: unit ?? this.unit,
@@ -70,6 +87,7 @@ class ManualInputVoidingFormState extends Equatable {
 
   @override
   List<Object?> get props => [
+        id,
         recordTime,
         recordVolume,
         unit,

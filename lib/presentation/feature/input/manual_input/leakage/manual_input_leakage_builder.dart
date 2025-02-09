@@ -15,7 +15,7 @@ class ManualInputLeakageBuilder extends StatelessWidget {
   });
 
   final DateTime recordTime;
-  final LeakageHistory? history;
+  final History? history;
 
   @override
   Widget build(BuildContext context) {

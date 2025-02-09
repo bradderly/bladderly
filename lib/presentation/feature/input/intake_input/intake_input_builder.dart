@@ -1,5 +1,6 @@
 import 'package:bradderly/core/di/di.dart';
 import 'package:bradderly/domain/model/history.dart';
+import 'package:bradderly/domain/usecase/get_history_usecase.dart';
 import 'package:bradderly/domain/usecase/save_intake_history_usecase.dart';
 import 'package:bradderly/presentation/common/cubit/unit_cubit.dart';
 import 'package:bradderly/presentation/common/model/beverage_type_model.dart';
@@ -9,15 +10,26 @@ import 'package:bradderly/presentation/feature/input/intake_input/intake_input_v
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class IntakeInputBuilder extends StatelessWidget {
+class IntakeInputBuilder extends StatefulWidget {
   const IntakeInputBuilder({
     super.key,
     required this.beverageTypeModel,
-    required this.intakeHistory,
+    required this.historyId,
   });
 
   final BeverageTypeModel? beverageTypeModel;
-  final IntakeHistory? intakeHistory;
+  final int? historyId;
+
+  @override
+  State<IntakeInputBuilder> createState() => _IntakeInputBuilderState();
+}
+
+class _IntakeInputBuilderState extends State<IntakeInputBuilder> {
+  late final intakeHistory = switch (widget.historyId) {
+    final int historyId =>
+      getIt<GetHistoryUsecase>().call(historyId: historyId).fold((l) => null, (r) => r is IntakeHistory ? r : null),
+    _ => null,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +39,7 @@ class IntakeInputBuilder extends StatelessWidget {
           create: (_) => IntakeInputFormCubit(
             unit: context.read<UnitCubit>().state,
             recordTime: DateTime.now(),
-            beverageTypeModel: beverageTypeModel,
+            beverageTypeModel: widget.beverageTypeModel,
             intakeHistory: intakeHistory,
           ),
         ),

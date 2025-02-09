@@ -8,7 +8,7 @@ abstract class HistoryRepository {
 
   Future<void> removeHistoriesByHashId(String hashId);
 
-  Stream<Histories<History>> getHistoriesStream({
+  Stream<Histories> getHistoriesStream({
     required String hashId,
     required DateTime date,
   });
@@ -29,4 +29,6 @@ abstract class HistoryRepository {
   Future<void> sendHistoriesExportReason();
 
   Future<void> uploadVoidingSoundFile(File file);
+
+  History? getHistoryById(int id);
 }

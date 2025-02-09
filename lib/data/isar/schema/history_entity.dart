@@ -49,4 +49,6 @@ class HistoryEntity {
   @Name('status')
   @Enumerated(EnumType.name)
   late HistoryStatus status;
+
+  void setId(int? id) => this.id = id ?? this.id;
 }

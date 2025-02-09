@@ -21,6 +21,7 @@ class ManualInputVoidingBloc extends Bloc<ManualInputVoidingEvent, ManualInputVo
     emit(ManualInputVoidingSaveInProgress());
 
     final result = await _saveVoidingHistoryUsecase(
+      id: event.id,
       hashId: event.hashId,
       recordTime: event.recordTime,
       recordVolume: event.recordVolume,

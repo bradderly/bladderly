@@ -3,16 +3,30 @@ part of 'manual_input_leakage_form_cubit.dart';
 class ManualInputLeakageFormState extends Equatable {
   const ManualInputLeakageFormState({
     required this.recordTime,
-    required this.leakageVolume,
-    required this.memo,
+    this.memo = '',
+    this.id,
+    this.leakageVolume,
   });
 
-  ManualInputLeakageFormState.fromHistory({
-    required this.recordTime,
-    LeakageHistory? history,
-  })  : leakageVolume = history?.leakageVolume,
-        memo = history?.memo ?? '';
+  factory ManualInputLeakageFormState.fromHistory({
+    required History history,
+  }) {
+    if (history is! LeakageHistory) {
+      return ManualInputLeakageFormState(
+        id: history.id,
+        recordTime: history.recordTime,
+      );
+    }
 
+    return ManualInputLeakageFormState(
+      id: history.id,
+      recordTime: history.recordTime,
+      leakageVolume: history.leakageVolume,
+      memo: history.memo ?? '',
+    );
+  }
+
+  final int? id;
   final LeakageVolume? leakageVolume;
   final DateTime recordTime;
   final String memo;
@@ -23,6 +37,7 @@ class ManualInputLeakageFormState extends Equatable {
     String? memo,
   }) {
     return ManualInputLeakageFormState(
+      id: id,
       recordTime: recordTime ?? this.recordTime,
       leakageVolume: leakageVolume ?? this.leakageVolume,
       memo: memo ?? this.memo,
@@ -33,6 +48,7 @@ class ManualInputLeakageFormState extends Equatable {
 
   @override
   List<Object?> get props => [
+        id,
         recordTime,
         leakageVolume,
         memo,

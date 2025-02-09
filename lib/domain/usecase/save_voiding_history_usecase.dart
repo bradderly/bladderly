@@ -14,6 +14,7 @@ class SaveVoidingHistoryUsecase {
   final HistoryRepository _historyRepository;
 
   Future<Either<Exception, VoidingHistory>> call({
+    required int? id,
     required String hashId,
     required DateTime recordTime,
     required int recordVolume,
@@ -26,6 +27,7 @@ class SaveVoidingHistoryUsecase {
     try {
       final voidingHistory = await _historyRepository.saveVoidngHistory(
         VoidingHistory(
+          id: id,
           hashId: hashId,
           recordTime: recordTime,
           recordVolume: recordVolume,

@@ -16,7 +16,7 @@ class ManualInputVoidingBuilder extends StatelessWidget {
   });
 
   final DateTime recordTime;
-  final VoidingHistory? history;
+  final History? history;
 
   @override
   Widget build(BuildContext context) {

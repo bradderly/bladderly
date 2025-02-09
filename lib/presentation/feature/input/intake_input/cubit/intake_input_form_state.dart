@@ -4,6 +4,7 @@ class IntakeInputFormState extends Equatable {
   const IntakeInputFormState({
     required this.unit,
     required this.recordTime,
+    this.id,
     this.beverageModel,
     this.recordVolumeModel,
     this.memo = '',
@@ -12,12 +13,12 @@ class IntakeInputFormState extends Equatable {
   factory IntakeInputFormState.fromBeverageTypeModel({
     required Unit unit,
     required DateTime recordTime,
-    required BeverageTypeModel beverageTypeModel,
+    BeverageTypeModel? beverageTypeModel,
   }) {
     return IntakeInputFormState(
       unit: unit,
       recordTime: recordTime,
-      beverageModel: IntakeInputBeverageModel.onlyType(beverageTypeModel),
+      beverageModel: beverageTypeModel == null ? null : IntakeInputBeverageModel.onlyType(beverageTypeModel),
     );
   }
 
@@ -27,6 +28,7 @@ class IntakeInputFormState extends Equatable {
   }) {
     final beverageTypeModel = BeverageTypeModel.of(intakeHistory.beverageType);
     return IntakeInputFormState(
+      id: intakeHistory.id,
       unit: unit,
       recordTime: intakeHistory.recordTime,
       beverageModel: IntakeInputBeverageModel(
@@ -38,6 +40,7 @@ class IntakeInputFormState extends Equatable {
     );
   }
 
+  final int? id;
   final Unit unit;
   final DateTime recordTime;
   final IntakeInputBeverageModel? beverageModel;
@@ -64,6 +67,7 @@ class IntakeInputFormState extends Equatable {
     String? memo,
   }) {
     return IntakeInputFormState(
+      id: id,
       unit: unit ?? this.unit,
       recordTime: recordTime ?? this.recordTime,
       beverageModel: beverageModel ?? this.beverageModel,
@@ -74,6 +78,7 @@ class IntakeInputFormState extends Equatable {
 
   @override
   List<Object?> get props => [
+        id,
         unit,
         recordTime,
         beverageModel,

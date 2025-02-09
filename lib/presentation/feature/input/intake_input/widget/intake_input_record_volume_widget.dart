@@ -59,44 +59,12 @@ class _IntakeInputRecordVolumeWidgetState extends State<IntakeInputRecordVolumeW
             IntakeInputRecordVolumeModel.values.length,
             (index) {
               final recordVolumeModel = IntakeInputRecordVolumeModel.values[index];
-              final isSelected = recordVolumeModel.runtimeType == widget.recordVolumeModel.runtimeType;
 
               return GestureDetector(
-                onTap: () => widget.onChangedVolume(recordVolumeModel),
-                child: Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      width: 78,
-                      height: 78,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: isSelected ? context.colorTheme.paleLime.shade70 : context.colorTheme.neutral.shade4,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(16),
-                        color: isSelected ? context.colorTheme.paleLime.shade10 : null,
-                      ),
-                      child: recordVolumeModel.icon.svg(
-                        colorFilter: isSelected
-                            ? ColorFilter.mode(
-                                context.colorTheme.paleLime.shade70,
-                                BlendMode.srcIn,
-                              )
-                            : null,
-                      ),
-                    ),
-                    const Gap(8),
-                    Text(
-                      recordVolumeModel.type.tr(context),
-                      style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade10),
-                    ),
-                    if (recordVolumeModel.typeValue.isNotEmpty)
-                      Text(
-                        '${widget.unit.parseFromMl(int.parse(recordVolumeModel.typeValue.tr(context)))}${widget.unit.name}',
-                        style: context.textStyleTheme.b12SemiBold.copyWith(color: context.colorTheme.neutral.shade6),
-                      ),
-                  ],
+                onTap: () => widget.onChangedVolume(recordVolumeModel.copyWith(value: widget.recordVolumeModel?.value)),
+                child: _buildVolumeType(
+                  isSelected: recordVolumeModel.runtimeType == widget.recordVolumeModel.runtimeType,
+                  recordVolumeModel: recordVolumeModel,
                 ),
               );
             },
@@ -104,64 +72,109 @@ class _IntakeInputRecordVolumeWidgetState extends State<IntakeInputRecordVolumeW
         ),
         if (widget.recordVolumeModel case final IntakeInputDrinkMoreVolumeModel recordVolumeModel) ...[
           const Gap(24),
-          Row(
+          _buildVolumeField(recordVolumeModel),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildVolumeType({
+    required bool isSelected,
+    required IntakeInputRecordVolumeModel recordVolumeModel,
+  }) {
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.center,
+          width: 78,
+          height: 78,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: isSelected ? context.colorTheme.paleLime.shade70 : context.colorTheme.neutral.shade4,
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(16),
+            color: isSelected ? context.colorTheme.paleLime.shade10 : null,
+          ),
+          child: recordVolumeModel.icon.svg(
+            colorFilter: isSelected
+                ? ColorFilter.mode(
+                    context.colorTheme.paleLime.shade70,
+                    BlendMode.srcIn,
+                  )
+                : null,
+          ),
+        ),
+        const Gap(8),
+        Text(
+          recordVolumeModel.type.tr(context),
+          style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade10),
+        ),
+        if (recordVolumeModel.typeValue.isNotEmpty)
+          Text(
+            '${widget.unit.parseFromMl(int.parse(recordVolumeModel.typeValue.tr(context)))}${widget.unit.name}',
+            style: context.textStyleTheme.b12SemiBold.copyWith(color: context.colorTheme.neutral.shade6),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildVolumeField(IntakeInputDrinkMoreVolumeModel recordVolumeModel) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Assets.icon.icInputArrowRight.svg(),
+        const Gap(5),
+        Expanded(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Assets.icon.icInputArrowRight.svg(),
-              const Gap(5),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Please specify the amount'.tr(context),
-                      style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
-                    ),
-                    const Gap(16),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            onChanged: (value) => widget.onChangedVolume(recordVolumeModel.copyWith(value: value)),
-                            controller: textEditingController,
-                            focusNode: widget.focusNode,
-                            scrollPadding: const EdgeInsets.only(bottom: 12),
-                            autocorrect: false,
-                            enableSuggestions: false,
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              isDense: true,
-                              contentPadding: const EdgeInsets.only(bottom: 12),
-                              border: UnderlineInputBorder(
-                                borderSide: BorderSide(color: context.colorTheme.paleLime.shade60, width: 2),
-                              ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: context.colorTheme.paleLime.shade60, width: 2),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: context.colorTheme.paleLime.shade60, width: 2),
-                              ),
-                              hintText: 'Enter the amount here'.tr(context),
-                            ),
-                            style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade7),
-                            inputFormatters: [
-                              InputVolumeFormatter(unit: widget.unit),
-                            ],
-                          ),
+              Text(
+                'Please specify the amount'.tr(context),
+                style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
+              ),
+              const Gap(16),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      onChanged: (value) => widget.onChangedVolume(recordVolumeModel.copyWith(value: value)),
+                      controller: textEditingController,
+                      focusNode: widget.focusNode,
+                      scrollPadding: const EdgeInsets.only(bottom: 12),
+                      autocorrect: false,
+                      enableSuggestions: false,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: const EdgeInsets.only(bottom: 12),
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(color: context.colorTheme.paleLime.shade60, width: 2),
                         ),
-                        const Gap(24),
-                        InputUnitDropdownButton(
-                          onChangedUnit: widget.onChangedUnit,
-                          unit: widget.unit,
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: context.colorTheme.paleLime.shade60, width: 2),
                         ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: context.colorTheme.paleLime.shade60, width: 2),
+                        ),
+                        hintText: 'Enter the amount here'.tr(context),
+                      ),
+                      style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade7),
+                      inputFormatters: [
+                        InputVolumeFormatter(unit: widget.unit),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                  const Gap(24),
+                  InputUnitDropdownButton(
+                    onChangedUnit: widget.onChangedUnit,
+                    unit: widget.unit,
+                  ),
+                ],
               ),
             ],
           ),
-        ],
+        ),
       ],
     );
   }

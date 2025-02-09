@@ -32,7 +32,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
   }
 
   @override
-  Stream<Histories<History>> getHistoriesStream({
+  Stream<Histories> getHistoriesStream({
     required String hashId,
     required DateTime date,
   }) {
@@ -42,6 +42,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
         .filter()
         .hashIdEqualTo(hashId)
         .recordTimeBetween(lowerDate, upperDate, includeUpper: false)
+        .sortByRecordTime()
         .watch(fireImmediately: true)
         .map((entities) => Histories(list: entities.map(HistoryMapper.fromHistoryEntity).toList()));
   }
@@ -67,6 +68,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
     return isar.historyEntitys
         .filter()
         .hashIdEqualTo(hashId)
+        .sortByRecordTime()
         .watch(fireImmediately: true)
         .map((entities) => entities.map((e) => DateUtils.dateOnly(e.recordTime)).toSet().toList());
   }
@@ -92,5 +94,14 @@ class HistoryRepositoryImpl implements HistoryRepository {
       final id = await isar.historyEntitys.put(HistoryEntityMapper.fromLeakageHistory(leakageHistory));
       return leakageHistory.setId(id);
     });
+  }
+
+  @override
+  History? getHistoryById(int id) {
+    if (isar.historyEntitys.getSync(id) case final HistoryEntity historyEntity) {
+      return HistoryMapper.fromHistoryEntity(historyEntity);
+    }
+
+    return null;
   }
 }

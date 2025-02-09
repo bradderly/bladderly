@@ -9,6 +9,7 @@ sealed class ManualInputVoidingEvent extends Equatable {
 
 final class ManualInputVoidingSave extends ManualInputVoidingEvent {
   const ManualInputVoidingSave({
+    required this.id,
     required this.hashId,
     required this.recordTime,
     required this.recordVolume,
@@ -19,6 +20,7 @@ final class ManualInputVoidingSave extends ManualInputVoidingEvent {
     required this.memo,
   });
 
+  final int? id;
   final String hashId;
   final DateTime recordTime;
   final int recordVolume;
@@ -30,6 +32,7 @@ final class ManualInputVoidingSave extends ManualInputVoidingEvent {
 
   @override
   List<Object?> get props => [
+        id,
         hashId,
         recordTime,
         recordVolume,

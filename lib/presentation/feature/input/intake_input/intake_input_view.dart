@@ -35,10 +35,12 @@ class _IntakeInputViewState extends State<IntakeInputView> {
 
   void _onSave(BuildContext context, IntakeInputFormState state) {
     final event = IntakeInputSave(
+      id: state.id,
       hashId: 'ydu3328@naver.com',
       recordTime: state.recordTime,
       beverageType: state.beverageModel!.value,
       recordVolume: state.recordVolumeModel!.volume,
+      memo: state.memo,
     );
 
     context.read<IntakeInputBloc>().add(event);
@@ -136,7 +138,6 @@ class _IntakeInputViewState extends State<IntakeInputView> {
       bottom: 28,
       child: Center(
         child: BlocBuilder<IntakeInputFormCubit, IntakeInputFormState>(
-          buildWhen: (prev, curr) => prev.isValid != curr.isValid,
           builder: (context, state) => InputSaveButton(
             onPressed: state.isValid ? () => _onSave(context, state) : null,
           ),

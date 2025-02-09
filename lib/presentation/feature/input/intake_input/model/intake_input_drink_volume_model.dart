@@ -31,13 +31,13 @@ sealed class IntakeInputRecordVolumeModel extends Equatable {
   SvgGenImage get icon;
 
   IntakeInputRecordVolumeModel copyWith({
-    required String value,
+    required String? value,
   }) {
     return switch (this) {
-      IntakeInputDrinkSmallVolumeModel() => IntakeInputDrinkSmallVolumeModel(value: value),
-      IntakeInputDrinkMediumVolumeModel() => IntakeInputDrinkMediumVolumeModel(value: value),
-      IntakeInputDrinkLargeVolumeModel() => IntakeInputDrinkLargeVolumeModel(value: value),
-      IntakeInputDrinkMoreVolumeModel() => IntakeInputDrinkMoreVolumeModel(value: value),
+      final IntakeInputDrinkSmallVolumeModel model => IntakeInputDrinkSmallVolumeModel(value: value ?? model.value),
+      final IntakeInputDrinkMediumVolumeModel model => IntakeInputDrinkMediumVolumeModel(value: value ?? model.value),
+      final IntakeInputDrinkLargeVolumeModel model => IntakeInputDrinkLargeVolumeModel(value: value ?? model.value),
+      final IntakeInputDrinkMoreVolumeModel model => IntakeInputDrinkMoreVolumeModel(value: value ?? model.value),
     };
   }
 

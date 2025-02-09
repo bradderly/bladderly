@@ -28,6 +28,7 @@ class SaveVoidingHistoryWithFileUsecase {
 
       final voidingHistory = await _historyRepository.saveVoidngHistory(
         VoidingHistory(
+          id: null,
           hashId: hashId,
           recordTime: recordTime,
           recordUrgency: recordUrgency,

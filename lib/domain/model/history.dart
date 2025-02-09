@@ -4,11 +4,14 @@ import 'package:equatable/equatable.dart';
 
 sealed class History extends Equatable {
   const History({
+    required this.id,
     required this.hashId,
     required this.recordTime,
     required this.memo,
     required this.status,
   });
+
+  final int? id;
 
   final String hashId;
 
@@ -22,12 +25,9 @@ sealed class History extends Equatable {
 
   History setId(int id);
 
-  String get id {
-    return '$hashId-${recordTime.millisecondsSinceEpoch}';
-  }
-
   @override
   List<Object?> get props => [
+        id,
         recordTime,
         memo,
         status,
@@ -36,6 +36,7 @@ sealed class History extends Equatable {
 
 class VoidingHistory extends History {
   const VoidingHistory({
+    required super.id,
     required super.hashId,
     required super.recordTime,
     required super.memo,
@@ -69,6 +70,7 @@ class VoidingHistory extends History {
   @override
   VoidingHistory setId(int id) {
     return VoidingHistory(
+      id: id,
       hashId: hashId,
       recordTime: recordTime,
       memo: memo,
@@ -96,6 +98,7 @@ class VoidingHistory extends History {
 
 class IntakeHistory extends History {
   const IntakeHistory({
+    required super.id,
     required super.hashId,
     required super.recordTime,
     required super.memo,
@@ -113,6 +116,7 @@ class IntakeHistory extends History {
   @override
   IntakeHistory setId(int id) {
     return IntakeHistory(
+      id: id,
       hashId: hashId,
       recordTime: recordTime,
       memo: memo,
@@ -132,6 +136,7 @@ class IntakeHistory extends History {
 
 class LeakageHistory extends History {
   const LeakageHistory({
+    required super.id,
     required super.hashId,
     required super.recordTime,
     required super.memo,
@@ -144,6 +149,7 @@ class LeakageHistory extends History {
   @override
   LeakageHistory setId(int id) {
     return LeakageHistory(
+      id: id,
       hashId: hashId,
       recordTime: recordTime,
       memo: memo,

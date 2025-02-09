@@ -20,10 +20,12 @@ class IntakeInputBloc extends Bloc<IntakeInputEvent, IntakeInputState> {
     emit(const IntakeInputSaveInProgress());
 
     final result = await _saveIntakeHistoryUsecase(
+      id: event.id,
       hashId: event.hashId,
       recordTime: event.recordTime,
       beverageType: event.beverageType,
       recordVolume: event.recordVolume,
+      memo: event.memo,
     );
 
     result.fold(

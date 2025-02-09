@@ -10,8 +10,12 @@ class ManualInputVoidingFormCubit extends Cubit<ManualInputVoidingFormState> {
   ManualInputVoidingFormCubit({
     required Unit unit,
     required DateTime recordTime,
-    required VoidingHistory? history,
-  }) : super(ManualInputVoidingFormState.fromHistory(recordTime: recordTime, unit: unit, history: history));
+    required History? history,
+  }) : super(
+          history == null
+              ? ManualInputVoidingFormState(recordTime: recordTime, unit: unit)
+              : ManualInputVoidingFormState.fromHistory(history: history, unit: unit),
+        );
 
   void setRecordTime(DateTime recordTime) {
     emit(state.copyWith(recordTime: recordTime));

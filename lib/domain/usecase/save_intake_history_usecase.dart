@@ -13,6 +13,7 @@ class SaveIntakeHistoryUsecase {
   final HistoryRepository _historyRepository;
 
   Future<Either<Exception, IntakeHistory>> call({
+    required int? id,
     required String hashId,
     required DateTime recordTime,
     required String beverageType,
@@ -22,6 +23,7 @@ class SaveIntakeHistoryUsecase {
     try {
       final voidingHistory = await _historyRepository.saveIntakeHistory(
         IntakeHistory(
+          id: id,
           hashId: hashId,
           recordTime: recordTime,
           beverageType: beverageType,

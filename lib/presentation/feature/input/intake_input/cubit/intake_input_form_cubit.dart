@@ -20,13 +20,11 @@ class IntakeInputFormCubit extends Cubit<IntakeInputFormState> {
                 unit: unit,
                 intakeHistory: intakeHistory,
               ),
-            _ => beverageTypeModel == null
-                ? IntakeInputFormState(unit: unit, recordTime: recordTime)
-                : IntakeInputFormState.fromBeverageTypeModel(
-                    unit: unit,
-                    recordTime: recordTime,
-                    beverageTypeModel: beverageTypeModel,
-                  ),
+            _ => IntakeInputFormState.fromBeverageTypeModel(
+                unit: unit,
+                recordTime: recordTime,
+                beverageTypeModel: beverageTypeModel,
+              ),
           },
         );
 

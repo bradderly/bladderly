@@ -36,6 +36,7 @@ class _ManualInputLeakageViewState extends State<ManualInputLeakageView> with Au
 
   void _onSave(BuildContext context, ManualInputLeakageFormState state) {
     final event = ManualInputLeakageSave(
+      id: state.id,
       hashId: 'ydu3328@naver.com',
       recordTime: state.recordTime,
       leakageVolume: state.leakageVolume!,
@@ -106,7 +107,6 @@ class _ManualInputLeakageViewState extends State<ManualInputLeakageView> with Au
       bottom: 28,
       child: Center(
         child: BlocBuilder<ManualInputLeakageFormCubit, ManualInputLeakageFormState>(
-          buildWhen: (prev, curr) => prev.isValid != curr.isValid,
           builder: (context, state) => InputSaveButton(
             onPressed: state.isValid ? () => _onSave(context, state) : null,
           ),

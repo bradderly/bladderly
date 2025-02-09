@@ -21,7 +21,13 @@ class ManualInputView extends StatefulWidget {
 }
 
 class _ManualInputViewState extends State<ManualInputView> {
-  late final pageController = PageController(initialPage: widget.history is LeakageHistory ? 1 : 0);
+  late final pageController = PageController(
+    initialPage: switch (widget.history) {
+      final VoidingHistory _ => 0,
+      final LeakageHistory _ => 1,
+      _ => 0,
+    },
+  );
 
   late DateTime recordTime = widget.history?.recordTime ?? DateTime.now();
 
@@ -64,14 +70,8 @@ class _ManualInputViewState extends State<ManualInputView> {
           physics: const NeverScrollableScrollPhysics(),
           controller: pageController,
           children: [
-            ManualInputVoidingBuilder(
-              recordTime: recordTime,
-              history: switch (widget.history) { final VoidingHistory history => history, _ => null },
-            ),
-            ManualInputLeakageBuilder(
-              recordTime: recordTime,
-              history: switch (widget.history) { final LeakageHistory history => history, _ => null },
-            ),
+            ManualInputVoidingBuilder(recordTime: recordTime, history: widget.history),
+            ManualInputLeakageBuilder(recordTime: recordTime, history: widget.history),
           ],
         ),
       ),

@@ -8,6 +8,7 @@ import 'package:bradderly/presentation/feature/export/widget/export_stickey_butt
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:scrolls_to_top/scrolls_to_top.dart';
 
 enum _DateType {
   selected,
@@ -73,64 +74,71 @@ class _ExportCalendarViewState extends State<ExportCalendarView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: ExportCalendarAppBar(onTapToday: () => scrollController.jumpTo(0)),
-      body: SafeArea(
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            ListView.builder(
-              controller: scrollController,
-              physics: scrollPhysics,
-              padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 48),
-              itemBuilder: (context, index) {
-                final calendarDate = DateUtils.addMonthsToMonthDate(today, -index);
-                return Column(
-                  children: [
-                    _buildCalendarHeader(context, calendarDate: calendarDate),
-                    const Gap(32),
-                    _buildCalendarWeekDay(context),
-                    const Gap(24),
-                    _buildCalendarDay(context, calendarDate: calendarDate),
-                    const Gap(48),
-                  ],
-                );
-              },
-            ),
-            Positioned.fill(
-              top: null,
-              child: BlocSelector<ExportDatesCubit, ExportDatesState, List<DateTime>>(
-                selector: (state) => state.dates,
-                builder: (context, selectedDates) => ExportStickeyButton(
-                  onTap: selectedDates.isEmpty ? null : () => widget.onTapNext(selectedDates),
-                  text: 'Continue'.tr(context),
-                  header: RichText(
-                    text: TextSpan(
-                      children: [
-                        if (selectedDates.isEmpty)
-                          TextSpan(text: 'You can export up to 7 days'.tr(context))
-                        else ...[
-                          TextSpan(text: '${selectedDates.length}'),
-                          switch (context.locale) {
-                            AppLocale.en when selectedDates.length == 1 => const TextSpan(text: ' day selected '),
-                            AppLocale.en => const TextSpan(text: ' days selected '),
-                            AppLocale.ko => const TextSpan(text: '일 선택됨 '),
-                          },
-                          TextSpan(
-                            text: '(up to 7 days)'.tr(context),
-                            style: selectedDates.length == 7 ? TextStyle(color: context.colorTheme.warning) : null,
-                          ),
+    return ScrollsToTop(
+      onScrollsToTop: (_) => scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 1000),
+        curve: Curves.easeOutCirc,
+      ),
+      child: Scaffold(
+        appBar: ExportCalendarAppBar(onTapToday: () => scrollController.jumpTo(0)),
+        body: SafeArea(
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              ListView.builder(
+                controller: scrollController,
+                physics: scrollPhysics,
+                padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 48),
+                itemBuilder: (context, index) {
+                  final calendarDate = DateUtils.addMonthsToMonthDate(today, -index);
+                  return Column(
+                    children: [
+                      _buildCalendarHeader(context, calendarDate: calendarDate),
+                      const Gap(32),
+                      _buildCalendarWeekDay(context),
+                      const Gap(24),
+                      _buildCalendarDay(context, calendarDate: calendarDate),
+                      const Gap(48),
+                    ],
+                  );
+                },
+              ),
+              Positioned.fill(
+                top: null,
+                child: BlocSelector<ExportDatesCubit, ExportDatesState, List<DateTime>>(
+                  selector: (state) => state.dates,
+                  builder: (context, selectedDates) => ExportStickeyButton(
+                    onTap: selectedDates.isEmpty ? null : () => widget.onTapNext(selectedDates),
+                    text: 'Continue'.tr(context),
+                    header: RichText(
+                      text: TextSpan(
+                        children: [
+                          if (selectedDates.isEmpty)
+                            TextSpan(text: 'You can export up to 7 days'.tr(context))
+                          else ...[
+                            TextSpan(text: '${selectedDates.length}'),
+                            switch (context.locale) {
+                              AppLocale.en when selectedDates.length == 1 => const TextSpan(text: ' day selected '),
+                              AppLocale.en => const TextSpan(text: ' days selected '),
+                              AppLocale.ko => const TextSpan(text: '일 선택됨 '),
+                            },
+                            TextSpan(
+                              text: '(up to 7 days)'.tr(context),
+                              style: selectedDates.length == 7 ? TextStyle(color: context.colorTheme.warning) : null,
+                            ),
+                          ],
                         ],
-                      ],
-                      style: context.textStyleTheme.b16SemiBold.copyWith(
-                        color: context.colorTheme.neutral.shade6,
+                        style: context.textStyleTheme.b16SemiBold.copyWith(
+                          color: context.colorTheme.neutral.shade6,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

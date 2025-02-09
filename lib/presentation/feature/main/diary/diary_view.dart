@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:scrolls_to_top/scrolls_to_top.dart';
 
 class DiaryView extends StatefulWidget {
   const DiaryView({
@@ -71,39 +72,46 @@ class _DiaryViewState extends State<DiaryView> with AutomaticKeepAliveClientMixi
     return BlocListener<MainTabCubit, MainTabState>(
       listenWhen: (_, curr) => curr is MainTabDiary,
       listener: (_, __) => scrollToSection((context.read<MainTabCubit>().state as MainTabDiary).scrollSection),
-      child: Scaffold(
-        appBar: DiaryAppBar(
-          onTapExport: () =>
-              ExportRoute(historyDates: context.read<DiaryHistoryDatesCubit>().state.dates).push<void>(context),
-          onChanged: onDateChanged,
-          today: DateUtils.dateOnly(DateTime.now().add(Duration.zero)),
+      child: ScrollsToTop(
+        onScrollsToTop: (_) => scrollController.animateTo(
+          0,
+          duration: const Duration(milliseconds: 1000),
+          curve: Curves.easeOutCirc,
         ),
-        body: SafeArea(
-          child: ListView(
-            controller: scrollController,
-            padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 61),
-            children: [
-              BlocBuilder<DiaryCubit, DiaryState>(
-                buildWhen: (prev, curr) =>
-                    prev.diaryIntakeSummaryModel != curr.diaryIntakeSummaryModel ||
-                    prev.diaryVoidingSummaryModel != curr.diaryVoidingSummaryModel,
-                builder: (context, state) => DiaryTodaySummaryWidget(
-                  voidingSummaryKey: voidingSummaryKey,
-                  voidingSummaryExpandController: voidingSummaryExpandController,
-                  diaryVoidingSummaryModel: state.diaryVoidingSummaryModel,
-                  intakeSummaryKey: intakeSummaryKey,
-                  intakeSummaryExpandController: intakeSummaryExpandController,
-                  diaryIntakeSummaryModel: state.diaryIntakeSummaryModel,
+        child: Scaffold(
+          appBar: DiaryAppBar(
+            onTapExport: () =>
+                ExportRoute(historyDates: context.read<DiaryHistoryDatesCubit>().state.dates).push<void>(context),
+            onChanged: onDateChanged,
+            today: DateUtils.dateOnly(DateTime.now()),
+          ),
+          body: SafeArea(
+            child: ListView(
+              controller: scrollController,
+              padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 61),
+              children: [
+                BlocBuilder<DiaryCubit, DiaryState>(
+                  buildWhen: (prev, curr) =>
+                      prev.diaryIntakeSummaryModel != curr.diaryIntakeSummaryModel ||
+                      prev.diaryVoidingSummaryModel != curr.diaryVoidingSummaryModel,
+                  builder: (context, state) => DiaryTodaySummaryWidget(
+                    voidingSummaryKey: voidingSummaryKey,
+                    voidingSummaryExpandController: voidingSummaryExpandController,
+                    diaryVoidingSummaryModel: state.diaryVoidingSummaryModel,
+                    intakeSummaryKey: intakeSummaryKey,
+                    intakeSummaryExpandController: intakeSummaryExpandController,
+                    diaryIntakeSummaryModel: state.diaryIntakeSummaryModel,
+                  ),
                 ),
-              ),
-              const Gap(37),
-              BlocBuilder<DiaryCubit, DiaryState>(
-                buildWhen: (prev, curr) => !listEquals(prev.diaryHistoryModels, curr.diaryHistoryModels),
-                builder: (context, state) => DiaryHistoriesWidget(
-                  diaryHistoryModels: state.diaryHistoryModels,
+                const Gap(37),
+                BlocBuilder<DiaryCubit, DiaryState>(
+                  buildWhen: (prev, curr) => !listEquals(prev.diaryHistoryModels, curr.diaryHistoryModels),
+                  builder: (context, state) => DiaryHistoriesWidget(
+                    diaryHistoryModels: state.diaryHistoryModels,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

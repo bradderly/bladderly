@@ -163,7 +163,7 @@ class DiaryIntakeSummaryWidget extends StatelessWidget {
             children: entries
                 .mapIndexed(
                   (index, entry) => Expanded(
-                    flex: entry.value.toInt(),
+                    flex: (entry.value * 100).toInt(),
                     child: Container(
                       height: 16,
                       decoration: BoxDecoration(

@@ -14,6 +14,7 @@ class SaveLeakageHistoryUsecase {
   final HistoryRepository _historyRepository;
 
   Future<Either<Exception, LeakageHistory>> call({
+    required int? id,
     required String hashId,
     required DateTime recordTime,
     required LeakageVolume leakageVolume,
@@ -22,6 +23,7 @@ class SaveLeakageHistoryUsecase {
     try {
       final voidingHistory = await _historyRepository.saveLeakageHistory(
         LeakageHistory(
+          id: id,
           hashId: hashId,
           recordTime: recordTime,
           leakageVolume: leakageVolume,

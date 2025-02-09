@@ -81,7 +81,7 @@ class _BladderlyAppState extends State<BladderlyApp> {
             child: ScrollConfiguration(
               behavior: const _ScrollBehavior(),
               child: GestureDetector(
-                onTap: () => FocusScope.of(context).unfocus(),
+                onTap: FocusScope.of(context).unfocus,
                 child: child,
               ),
             ),

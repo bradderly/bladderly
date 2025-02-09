@@ -21,6 +21,7 @@ class ManualInputLeakageBloc extends Bloc<ManualInputLeakageEvent, ManualInputLe
     emit(ManualInputLeakageSaveInProgress());
 
     final result = await _saveLeakageHistoryUsecase(
+      id: event.id,
       hashId: event.hashId,
       leakageVolume: event.leakageVolume,
       recordTime: event.recordTime,
