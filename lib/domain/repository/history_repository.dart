@@ -31,4 +31,6 @@ abstract class HistoryRepository {
   Future<void> uploadVoidingSoundFile(File file);
 
   History? getHistoryById(int id);
+
+  void deleteHistoryById(int id);
 }

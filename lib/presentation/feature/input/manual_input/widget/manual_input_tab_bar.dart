@@ -59,7 +59,7 @@ class ManualInputTabBar extends StatelessWidget implements PreferredSizeWidget {
     return Expanded(
       child: GestureDetector(
         onTap: () {
-          FocusScope.of(context).unfocus();
+          FocusScope.of(context).requestFocus(FocusNode());
           Future.delayed(
             const Duration(milliseconds: 100),
             () => pageController.jumpToPage(_ManualInputTab.values.indexOf(tab)),

@@ -16,9 +16,15 @@ import 'package:bradderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 class IntakeInputView extends StatefulWidget {
-  const IntakeInputView({super.key});
+  const IntakeInputView({
+    super.key,
+    required this.isEditing,
+  });
+
+  final bool isEditing;
 
   @override
   State<IntakeInputView> createState() => _IntakeInputViewState();
@@ -46,12 +52,22 @@ class _IntakeInputViewState extends State<IntakeInputView> {
     context.read<IntakeInputBloc>().add(event);
   }
 
+  void _onSaveSuccess(BuildContext context) {
+    context.pop();
+
+    if (widget.isEditing) {
+      return context.pop();
+    } else {
+      return const MainRoute(tab: MainRouteTab.diary).go(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<IntakeInputBloc, IntakeInputState>(
       listener: (context, state) => switch (state) {
         IntakeInputSaveInProgress() => ProgressIndicatorModal.show(context),
-        IntakeInputSaveSuccess() || IntakeInputSaveFailure() => const MainRoute(tab: MainRouteTab.diary).go(context),
+        IntakeInputSaveSuccess() => _onSaveSuccess(context),
         _ => null,
       },
       child: Scaffold(

@@ -29,6 +29,10 @@ class Histories<T extends History> {
   Iterable<A> map<A>(A Function(T e) toElement) {
     return _list.map(toElement);
   }
+
+  Map<DateTime, List<T>> groupByRecordTime() {
+    return groupBy(_list, (element) => element.recordTime.copyWith(second: 0, millisecond: 0, microsecond: 0));
+  }
 }
 
 extension VodingHistoriesExtension on VodingHistories {

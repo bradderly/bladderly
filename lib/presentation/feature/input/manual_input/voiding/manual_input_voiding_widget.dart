@@ -15,14 +15,17 @@ import 'package:bradderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 class ManualInputVoidingWidget extends StatefulWidget {
   const ManualInputVoidingWidget({
     super.key,
     required this.recordTime,
+    required this.isEditing,
   });
 
   final DateTime recordTime;
+  final bool isEditing;
 
   @override
   State<ManualInputVoidingWidget> createState() => _ManualInputVoidingWidgetState();
@@ -38,6 +41,14 @@ class _ManualInputVoidingWidgetState extends State<ManualInputVoidingWidget> wit
   }
 
   @override
+  void didUpdateWidget(covariant ManualInputVoidingWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.recordTime != widget.recordTime) {
+      context.read<ManualInputVoidingFormCubit>().setRecordTime(widget.recordTime);
+    }
+  }
+
+  @override
   void dispose() {
     recordVolumeFocusNode.dispose();
     super.dispose();
@@ -50,7 +61,7 @@ class _ManualInputVoidingWidgetState extends State<ManualInputVoidingWidget> wit
     final event = ManualInputVoidingSave(
       id: state.id,
       hashId: 'ydu3328@naver.com',
-      recordTime: widget.recordTime,
+      recordTime: state.recordTime,
       recordVolume: state.unit.parseToMl(int.parse(state.recordVolume)),
       recordUrgency: state.recordUrgency!,
       isNocutria: state.isNocutria!,
@@ -62,6 +73,20 @@ class _ManualInputVoidingWidgetState extends State<ManualInputVoidingWidget> wit
     context.read<ManualInputVoidingBloc>().add(event);
   }
 
+  Future<void> onSaveInProgress(BuildContext context) {
+    return ProgressIndicatorModal.show(context);
+  }
+
+  void onSaveSuccess(BuildContext context) {
+    context.pop();
+
+    if (widget.isEditing) {
+      return context.pop();
+    } else {
+      return const MainRoute(tab: MainRouteTab.diary).go(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -69,9 +94,7 @@ class _ManualInputVoidingWidgetState extends State<ManualInputVoidingWidget> wit
     return BlocListener<ManualInputVoidingBloc, ManualInputVoidingState>(
       listener: (context, state) => switch (state) {
         ManualInputVoidingSaveInProgress() => ProgressIndicatorModal.show(context),
-        ManualInputVoidingSaveSuccess() ||
-        ManualInputVoidingSaveFailure() =>
-          const MainRoute(tab: MainRouteTab.diary).go(context),
+        ManualInputVoidingSaveSuccess() => onSaveSuccess(context),
         _ => null,
       },
       child: Stack(
