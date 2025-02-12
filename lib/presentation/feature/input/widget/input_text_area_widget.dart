@@ -22,6 +22,7 @@ class InputTextAreaWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: TextFormField(
+        onChanged: onChanged,
         initialValue: initialValue,
         textInputAction: TextInputAction.done,
         scrollPadding: const EdgeInsets.only(bottom: 112),

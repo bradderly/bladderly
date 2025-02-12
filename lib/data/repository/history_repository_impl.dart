@@ -104,4 +104,9 @@ class HistoryRepositoryImpl implements HistoryRepository {
 
     return null;
   }
+
+  @override
+  void deleteHistoryById(int id) {
+    return isar.writeTxnSync(() => isar.historyEntitys.deleteSync(id));
+  }
 }

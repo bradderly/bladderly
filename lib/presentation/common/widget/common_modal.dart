@@ -11,9 +11,11 @@ class CommonModal extends StatelessWidget {
   static Future<T?> show<T>(
     BuildContext context, {
     required Widget child,
+    bool barrierDismissible = true,
   }) {
     return showDialog<T>(
       context: context,
+      barrierDismissible: barrierDismissible,
       builder: (context) => CommonModal(child: child),
     );
   }

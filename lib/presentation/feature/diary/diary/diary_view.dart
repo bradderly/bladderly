@@ -124,6 +124,7 @@ class _DiaryViewState extends State<DiaryView> with AutomaticKeepAliveClientMixi
               const Gap(37),
               BlocBuilder<DiaryCubit, DiaryState>(
                 builder: (context, state) => DiaryHistoriesWidget(
+                  onTapHistory: (id) => DetailedListRoute(historyId: id, date: state.dateTime).go(context),
                   diaryHistoryModels: state.diaryHistoryModels,
                 ),
               ),

@@ -33,7 +33,10 @@ class ManualInputVoidingBuilder extends StatelessWidget {
           create: (_) => ManualInputVoidingBloc(saveVoidingHistoryUsecase: getIt<SaveVoidingHistoryUsecase>()),
         ),
       ],
-      child: ManualInputVoidingWidget(recordTime: recordTime),
+      child: ManualInputVoidingWidget(
+        recordTime: recordTime,
+        isEditing: history != null,
+      ),
     );
   }
 }

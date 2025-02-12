@@ -11,14 +11,17 @@ import 'package:bradderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 class ManualInputLeakageView extends StatefulWidget {
   const ManualInputLeakageView({
     super.key,
     required this.recordTime,
+    required this.isEditing,
   });
 
   final DateTime recordTime;
+  final bool isEditing;
 
   @override
   State<ManualInputLeakageView> createState() => _ManualInputLeakageViewState();
@@ -27,12 +30,15 @@ class ManualInputLeakageView extends StatefulWidget {
 class _ManualInputLeakageViewState extends State<ManualInputLeakageView> with AutomaticKeepAliveClientMixin {
   @override
   void didUpdateWidget(covariant ManualInputLeakageView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
     if (oldWidget.recordTime != widget.recordTime) {
       context.read<ManualInputLeakageFormCubit>().setRecordTime(widget.recordTime);
     }
-
-    super.didUpdateWidget(oldWidget);
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   void _onSave(BuildContext context, ManualInputLeakageFormState state) {
     final event = ManualInputLeakageSave(
@@ -46,8 +52,19 @@ class _ManualInputLeakageViewState extends State<ManualInputLeakageView> with Au
     context.read<ManualInputLeakageBloc>().add(event);
   }
 
-  @override
-  bool get wantKeepAlive => true;
+  Future<void> onSaveInProgress(BuildContext context) {
+    return ProgressIndicatorModal.show(context);
+  }
+
+  void onSaveSuccess(BuildContext context) {
+    context.pop();
+
+    if (widget.isEditing) {
+      return context.pop();
+    } else {
+      return const MainRoute(tab: MainRouteTab.diary).go(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,10 +72,8 @@ class _ManualInputLeakageViewState extends State<ManualInputLeakageView> with Au
 
     return BlocListener<ManualInputLeakageBloc, ManualInputLeakageState>(
       listener: (context, state) => switch (state) {
-        ManualInputLeakageSaveInProgress() => ProgressIndicatorModal.show(context),
-        ManualInputLeakageSaveSuccess() ||
-        ManualInputLeakageSaveFailure() =>
-          const MainRoute(tab: MainRouteTab.diary).go(context),
+        ManualInputLeakageSaveInProgress() => onSaveInProgress(context),
+        ManualInputLeakageSaveSuccess() => onSaveSuccess(context),
         _ => null,
       },
       child: Stack(

@@ -1,6 +1,7 @@
 import 'package:bradderly/core/recorder/src/recorder_file.dart';
 import 'package:bradderly/domain/model/history.dart';
 import 'package:bradderly/presentation/common/model/beverage_type_model.dart';
+import 'package:bradderly/presentation/feature/diary/detailed_list/detailed_list_builder.dart';
 import 'package:bradderly/presentation/feature/export/export_builder.dart';
 import 'package:bradderly/presentation/feature/input/intake_input/intake_input_builder.dart';
 import 'package:bradderly/presentation/feature/input/manual_input/manual_input_builder.dart';
@@ -47,6 +48,11 @@ enum MainRouteTab {
     TypedGoRoute<IntakeInputRoute>(
       name: 'intake_input',
       path: 'intake_input',
+    ),
+    TypedGoRoute<DetailedListRoute>(
+      name: 'detailed_list',
+      path: 'detailed_list',
+      routes: [],
     ),
   ],
 )
@@ -210,6 +216,28 @@ class IntakeInputRoute extends GoRouteData {
       fullscreenDialog: true,
       child: IntakeInputBuilder(
         beverageTypeModel: beverageType,
+        historyId: historyId,
+      ),
+    );
+  }
+}
+
+class DetailedListRoute extends GoRouteData {
+  const DetailedListRoute({
+    required this.date,
+    required this.historyId,
+  });
+
+  final DateTime date;
+  final int historyId;
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      fullscreenDialog: true,
+      child: DetailedListBuilder(
+        date: date,
         historyId: historyId,
       ),
     );

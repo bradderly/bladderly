@@ -47,7 +47,7 @@ class _IntakeInputBuilderState extends State<IntakeInputBuilder> {
           create: (_) => IntakeInputBloc(saveIntakeHistoryUsecase: getIt<SaveIntakeHistoryUsecase>()),
         ),
       ],
-      child: const IntakeInputView(),
+      child: IntakeInputView(isEditing: widget.historyId != null),
     );
   }
 }

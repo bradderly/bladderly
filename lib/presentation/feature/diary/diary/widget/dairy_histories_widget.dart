@@ -5,16 +5,17 @@ import 'package:bradderly/presentation/common/extension/string_extension.dart';
 import 'package:bradderly/presentation/feature/diary/diary/model/diary_history_model.dart';
 import 'package:bradderly/presentation/feature/diary/diary/model/diary_history_type_model.dart';
 import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
-import 'package:bradderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class DiaryHistoriesWidget extends StatelessWidget {
   const DiaryHistoriesWidget({
     super.key,
+    required this.onTapHistory,
     required this.diaryHistoryModels,
   });
 
+  final void Function(int) onTapHistory;
   final List<DiaryHistoryModel> diaryHistoryModels;
 
   @override
@@ -92,12 +93,7 @@ class DiaryHistoriesWidget extends StatelessWidget {
               const Divider(color: Color(0xFFE6E6E6), height: 1),
               for (final diaryHistoryModel in diaryHistoryModels) ...[
                 GestureDetector(
-                  onTap: () => switch (diaryHistoryModel.type) {
-                    DiaryHistoryTypeModel.voiding => ManualInputRoute(historyId: diaryHistoryModel.id).go(context),
-                    DiaryHistoryTypeModel.leakage => ManualInputRoute(historyId: diaryHistoryModel.id).go(context),
-                    DiaryHistoryTypeModel.intake =>
-                      IntakeInputRoute.fromHistoryId(historyId: diaryHistoryModel.id).go(context),
-                  },
+                  onTap: () => onTapHistory(diaryHistoryModel.id),
                   behavior: HitTestBehavior.translucent,
                   child: _HistoryWidget(diaryHistoryModel: diaryHistoryModel),
                 ),

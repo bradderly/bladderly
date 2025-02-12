@@ -31,7 +31,10 @@ class ManualInputLeakageBuilder extends StatelessWidget {
           create: (_) => ManualInputLeakageBloc(saveLeakageHistoryUsecase: getIt<SaveLeakageHistoryUsecase>()),
         ),
       ],
-      child: ManualInputLeakageView(recordTime: recordTime),
+      child: ManualInputLeakageView(
+        recordTime: recordTime,
+        isEditing: history != null,
+      ),
     );
   }
 }
