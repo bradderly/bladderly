@@ -3,6 +3,7 @@ import 'package:bradderly/presentation/common/cubit/locale_cubit.dart';
 import 'package:bradderly/presentation/common/cubit/unit_cubit.dart';
 import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bradderly/presentation/common/locale/app_locale.dart';
+import 'package:bradderly/presentation/common/widget/no_over_bouncing_scroll_physcis.dart';
 import 'package:bradderly/presentation/router/app_router.dart';
 import 'package:bradderly/presentation/theme/color/color_theme.dart';
 import 'package:bradderly/presentation/theme/shadow/shadow_theme.dart';
@@ -16,7 +17,7 @@ class _ScrollBehavior extends ScrollBehavior {
 
   @override
   ScrollPhysics getScrollPhysics(BuildContext context) {
-    return const ClampingScrollPhysics();
+    return const NoOverBouncingScrollPhysics();
   }
 
   @override

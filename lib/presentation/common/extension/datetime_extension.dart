@@ -25,13 +25,6 @@ extension DatetimeExtension on DateTime {
     };
   }
 
-  String getHourMinuteWithAmPm(BuildContext context) {
-    return switch (context.locale) {
-      AppLocale.en => DateFormat('hh:mm a').format(this),
-      AppLocale.ko => '${hour < 12 ? '오전' : '오후'} ${DateFormat('hh:mm').format(this)}',
-    };
-  }
-
   String getDayOfweek(BuildContext context) {
     return context.locale.getDayOfWeek(weekday - 1);
   }

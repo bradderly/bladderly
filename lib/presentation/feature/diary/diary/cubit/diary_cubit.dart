@@ -13,9 +13,12 @@ part 'diary_state.dart';
 
 class DiaryCubit extends Cubit<DiaryState> {
   DiaryCubit({
+    required DateTime dateTime,
     required GetHistoriesStreamUsecase getHistoriesStreamUsecase,
   })  : _getHistoriesStreamUsecase = getHistoriesStreamUsecase,
-        super(const DiaryState());
+        super(DiaryState(dateTime: dateTime)) {
+    subscribe(dateTime);
+  }
 
   final GetHistoriesStreamUsecase _getHistoriesStreamUsecase;
 
@@ -24,15 +27,21 @@ class DiaryCubit extends Cubit<DiaryState> {
   void subscribe(DateTime dateTime) {
     _clearSubscription();
 
-    _subscription = _getHistoriesStreamUsecase(hashId: 'ydu3328@naver.com', dateTime: DateUtils.dateOnly(dateTime))
-        .listen(_listener);
+    _getHistoriesStreamUsecase(hashId: 'ydu3328@naver.com', dateTime: DateUtils.dateOnly(dateTime)).fold(
+      (l) => null,
+      (r) => _subscription = r.listen((histories) => _listener(dateTime: dateTime, histories: histories)),
+    );
   }
 
-  void _listener(Histories histories) {
+  void _listener({
+    required DateTime dateTime,
+    required Histories histories,
+  }) {
     if (isClosed) return;
 
     emit(
       DiaryState(
+        dateTime: dateTime,
         diaryVoidingSummaryModel: DiaryVoidingSummaryModel.fromDomain(histories.voidings),
         diaryIntakeSummaryModel: DiaryIntakeSummaryModel.fromDomain(histories.intakes),
         diaryHistoryModels: histories.map(DiaryHistoryModel.fromDomain).toList(),

@@ -45,7 +45,6 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
               children: [
                 SafeArea(
                   child: ListView(
-                    physics: const ClampingScrollPhysics(),
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     children: [
                       Gap(HomeAppBar.height),

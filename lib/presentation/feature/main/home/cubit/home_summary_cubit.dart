@@ -23,8 +23,10 @@ class HomeSummaryCubit extends Cubit<HomeSummaryState> {
   void subscribe(DateTime dateTime) {
     _clearSubscription();
 
-    _subscription = _getHistoriesStreamUsecase(hashId: 'ydu3328@naver.com', dateTime: DateUtils.dateOnly(dateTime))
-        .listen(_listener);
+    _getHistoriesStreamUsecase(hashId: 'ydu3328@naver.com', dateTime: DateUtils.dateOnly(dateTime)).fold(
+      (l) => null,
+      (r) => _subscription = r.listen(_listener),
+    );
   }
 
   void _listener(Histories histories) {
