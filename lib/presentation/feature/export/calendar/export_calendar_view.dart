@@ -64,8 +64,6 @@ class _ExportCalendarViewState extends State<ExportCalendarView> {
   final today = DateUtils.dateOnly(DateTime.now());
   late final scrollController = ScrollController();
 
-  ScrollPhysics? scrollPhysics;
-
   @override
   void dispose() {
     scrollController.dispose();
@@ -88,7 +86,6 @@ class _ExportCalendarViewState extends State<ExportCalendarView> {
             children: [
               ListView.builder(
                 controller: scrollController,
-                physics: scrollPhysics,
                 padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 48),
                 itemBuilder: (context, index) {
                   final calendarDate = DateUtils.addMonthsToMonthDate(today, -index);

@@ -5,7 +5,6 @@ import 'package:bradderly/presentation/feature/diary/diary/widget/dairy_historie
 import 'package:bradderly/presentation/feature/diary/diary/widget/diary_app_bar.dart';
 import 'package:bradderly/presentation/feature/diary/diary/widget/diary_today_summary_widget.dart';
 import 'package:bradderly/presentation/router/route/main_route.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -30,7 +29,7 @@ class _DiaryViewState extends State<DiaryView> with AutomaticKeepAliveClientMixi
   final intakeSummaryKey = GlobalKey();
   final intakeSummaryExpandController = ValueNotifier(false);
 
-  DateTime today = DateUtils.dateOnly(DateTime.now());
+  final today = DateUtils.dateOnly(DateTime.now());
 
   @override
   void initState() {
@@ -102,7 +101,7 @@ class _DiaryViewState extends State<DiaryView> with AutomaticKeepAliveClientMixi
           onTapExport: () =>
               ExportRoute(historyDates: context.read<DiaryHistoryDatesCubit>().state.dates).push<void>(context),
           onChanged: onDateChanged,
-          today: DateUtils.dateOnly(DateTime.now()),
+          today: today,
         ),
         body: SafeArea(
           child: ListView(
@@ -124,7 +123,6 @@ class _DiaryViewState extends State<DiaryView> with AutomaticKeepAliveClientMixi
               ),
               const Gap(37),
               BlocBuilder<DiaryCubit, DiaryState>(
-                buildWhen: (prev, curr) => !listEquals(prev.diaryHistoryModels, curr.diaryHistoryModels),
                 builder: (context, state) => DiaryHistoriesWidget(
                   diaryHistoryModels: state.diaryHistoryModels,
                 ),
