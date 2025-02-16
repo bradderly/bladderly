@@ -6,13 +6,9 @@ class DefaultView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-    return AnnotatedRegion<SystemUiOverlayStyle>(
+    return const AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
-      child:  const Scaffold(
-        
-      ),
+      child: Scaffold(),
     );
-  
   }
 }

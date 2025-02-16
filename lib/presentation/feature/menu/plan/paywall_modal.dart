@@ -1,10 +1,11 @@
-
 import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bradderly/presentation/common/extension/string_extension.dart';
 import 'package:bradderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:flutter/material.dart';
 
 class PaywallModal extends StatelessWidget {
+  const PaywallModal({super.key});
+
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
@@ -13,9 +14,9 @@ class PaywallModal extends StatelessWidget {
       minChildSize: 0.95,
       builder: (_, controller) {
         return Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
-            borderRadius: const BorderRadius.only(
+            borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
             ),
@@ -33,26 +34,28 @@ class PaywallModal extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 16),
                       child: Text(
                         'Plan'.tr(context),
-                        style:context.textStyleTheme.b14Medium.copyWith(
-                            color: context.colorTheme.neutral.shade6),
+                        style: context.textStyleTheme.b14Medium.copyWith(
+                          color: context.colorTheme.neutral.shade6,
+                        ),
                       ),
                     ),
-                   
-                  
                   ],
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 109, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
                 decoration: BoxDecoration(
                   color: context.colorTheme.neutral.shade6,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Text('Restore'.tr(context),
-                    style: context.textStyleTheme.b16SemiBold.copyWith(
-                      color: context.colorTheme.neutral.shade0,
-                    )),
-              )
+                child: Text(
+                  'Restore'.tr(context),
+                  style: context.textStyleTheme.b16SemiBold.copyWith(
+                    color: context.colorTheme.neutral.shade0,
+                  ),
+                ),
+              ),
             ],
           ),
         );

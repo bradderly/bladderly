@@ -28,7 +28,8 @@ class HistoryRepositoryImpl implements HistoryRepository {
 
   @override
   Future<void> removeHistoriesByHashId(String hashId) {
-    return isar.writeTxn(() => isar.historyEntitys.filter().hashIdEqualTo(hashId).deleteAll());
+    return isar.writeTxn(
+        () => isar.historyEntitys.filter().hashIdEqualTo(hashId).deleteAll());
   }
 
   @override
@@ -44,13 +45,15 @@ class HistoryRepositoryImpl implements HistoryRepository {
         .recordTimeBetween(lowerDate, upperDate, includeUpper: false)
         .sortByRecordTime()
         .watch(fireImmediately: true)
-        .map((entities) => Histories(list: entities.map(HistoryMapper.fromHistoryEntity).toList()));
+        .map((entities) => Histories(
+            list: entities.map(HistoryMapper.fromHistoryEntity).toList()));
   }
 
   @override
   Future<VoidingHistory> saveVoidngHistory(VoidingHistory vodingHistory) {
     return isar.writeTxn(() async {
-      final id = await isar.historyEntitys.put(HistoryEntityMapper.fromVoidingHistory(vodingHistory));
+      final id = await isar.historyEntitys
+          .put(HistoryEntityMapper.fromVoidingHistory(vodingHistory));
       return vodingHistory.setId(id);
     });
   }
@@ -58,7 +61,8 @@ class HistoryRepositoryImpl implements HistoryRepository {
   @override
   Future<IntakeHistory> saveIntakeHistory(IntakeHistory intakeHistory) {
     return isar.writeTxn(() async {
-      final id = await isar.historyEntitys.put(HistoryEntityMapper.fromIntakeHistory(intakeHistory));
+      final id = await isar.historyEntitys
+          .put(HistoryEntityMapper.fromIntakeHistory(intakeHistory));
       return intakeHistory.setId(id);
     });
   }
@@ -70,11 +74,15 @@ class HistoryRepositoryImpl implements HistoryRepository {
         .hashIdEqualTo(hashId)
         .sortByRecordTime()
         .watch(fireImmediately: true)
-        .map((entities) => entities.map((e) => DateUtils.dateOnly(e.recordTime)).toSet().toList());
+        .map((entities) => entities
+            .map((e) => DateUtils.dateOnly(e.recordTime))
+            .toSet()
+            .toList());
   }
 
   @override
-  Future<void> exportHistories({required String email, required List<DateTime> dates}) {
+  Future<void> exportHistories(
+      {required String email, required List<DateTime> dates}) {
     // TODO: implement exportHistories
     throw UnimplementedError();
   }

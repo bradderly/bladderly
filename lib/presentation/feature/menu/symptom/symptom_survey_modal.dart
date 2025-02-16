@@ -6,9 +6,10 @@ import 'package:bradderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:flutter/material.dart';
 
 class SymptomSurveyModal extends StatefulWidget {
+  // ignore: non_constant_identifier_names
+  const SymptomSurveyModal({super.key, required this.symptom_type});
+  // ignore: non_constant_identifier_names
   final String symptom_type;
-
-  SymptomSurveyModal({required this.symptom_type});
 
   @override
   State<SymptomSurveyModal> createState() => _SymptomSurveyModalState();
@@ -41,21 +42,22 @@ class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
     } else if (currentIndex == questions.length - 1) {
       asnwers.add(selectedOption!);
 
+      // ignore: inference_failure_on_function_invocation
       showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    builder: (context) {
-                      return SymptomResultModal(
-                       symptom_type: widget.symptom_type, 
-                  score: 13,
-                  status: 'Moderate',
-                  description:
-                      'Your score indicates moderate prostate symptoms that do not significantly impact your quality of life. If discomfort occurs, medication or procedures may be required.',
-                  dateTime: 'Tuesday, Nov 15\n9:00 AM',
-              );
-                    },
-                  );
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (context) {
+          return SymptomResultModal(
+            symptom_type: widget.symptom_type,
+            score: 13,
+            status: 'Moderate',
+            description:
+                '"Your score indicates moderate prostate symptoms that do not significantly impact your quality of life. If discomfort occurs, medication or procedures may be required."',
+            dateTime: 'Tuesday, Nov 15\n9:00 AM',
+          );
+        },
+      );
     }
   }
 
@@ -80,9 +82,9 @@ class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
       minChildSize: 0.95,
       builder: (_, controller) {
         return Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
-            borderRadius: const BorderRadius.only(
+            borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
             ),
@@ -105,56 +107,58 @@ class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
                           value: (currentIndex + 1) / questions.length,
                           backgroundColor: context.colorTheme.neutral.shade3,
                           valueColor: AlwaysStoppedAnimation<Color>(
-                              context.colorTheme.vermilion.primary.shade50),
+                            context.colorTheme.vermilion.primary.shade50,
+                          ),
                           minHeight: 8,
                         ),
                       ),
                     ),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Text(
-                        currentQuestion["title"].toString().tr(context),
+                        currentQuestion['title'].toString().tr(context),
                         style: context.textStyleTheme.b20Bold.copyWith(
-                            color: context.colorTheme.neutral.shade10),
+                          color: context.colorTheme.neutral.shade10,
+                        ),
                       ),
                     ),
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Text(
-                        currentQuestion["content"].toString().tr(context),
+                        currentQuestion['content'].toString().tr(context),
                         style: context.textStyleTheme.b16Medium.copyWith(
-                            color: context.colorTheme.neutral.shade10),
+                          color: context.colorTheme.neutral.shade10,
+                        ),
                       ),
                     ),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                     // Options
 
                     Expanded(
                       child: ListView.builder(
                         shrinkWrap: true, // 크기를 제한
-                        itemCount: (currentQuestion["answer"] as List)
+                        itemCount: (currentQuestion['answer'] as List)
                             .length, // 명시적 타입 캐스팅
                         itemBuilder: (context, index) {
-                          final List<Map<String, dynamic>> answers =
-                              currentQuestion["answer"]
-                                  as List<Map<String, dynamic>>; // 타입 지정
-                          final String option = answers[index]['content']
+                          final answers = currentQuestion['answer']
+                              as List<Map<String, dynamic>>; // 타입 지정
+                          final option = answers[index]['content']
                               as String; // 'content' 접근
                           return ListTile(
-                            title: Text(option.tr(context),
-                                style: context.textStyleTheme.b16Medium
-                                    .copyWith(
-                                        color:
-                                            context.colorTheme.neutral.shade6)),
+                            title: Text(
+                              option.tr(context),
+                              style: context.textStyleTheme.b16Medium.copyWith(
+                                color: context.colorTheme.neutral.shade6,
+                              ),
+                            ),
                             leading: Radio<int>(
                               value: index,
                               groupValue: selectedOption,
-                              fillColor:
-                                  MaterialStateProperty.resolveWith<Color>(
-                                      (states) {
-                                if (states.contains(MaterialState.selected)) {
+                              fillColor: WidgetStateProperty.resolveWith<Color>(
+                                  (states) {
+                                if (states.contains(WidgetState.selected)) {
                                   return context.colorTheme.vermilion.primary
                                       .shade50; // 선택된 상태일 때 색상
                                 }
@@ -167,8 +171,9 @@ class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
                                 });
                               },
                             ),
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 2, horizontal: 0), // 기본 패딩 줄이기
+                            contentPadding: const EdgeInsets.symmetric(
+                              vertical: 2,
+                            ), // 기본 패딩 줄이기
                             dense: true, // ListTile의 높이를 더 줄이기
                           );
                         },
@@ -188,8 +193,10 @@ class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
                         onTap: currentIndex == 0 ? null : onPrevious,
                         child: Container(
                           alignment: Alignment.center,
-                          padding: EdgeInsets.symmetric(
-                              vertical: 12, horizontal: 16),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 16,
+                          ),
                           decoration: BoxDecoration(
                             color: context.colorTheme.neutral.shade6,
                             borderRadius: BorderRadius.circular(8),
@@ -198,7 +205,7 @@ class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                "<- " + "Previous".tr(context),
+                                '<- ${'Previous'.tr(context)}',
                                 style:
                                     context.textStyleTheme.b16SemiBold.copyWith(
                                   color: context.colorTheme.neutral.shade0,
@@ -209,14 +216,16 @@ class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 16),
+                    const SizedBox(width: 16),
                     Expanded(
                       child: GestureDetector(
                         onTap: selectedOption == null ? null : onNext,
                         child: Container(
                           alignment: Alignment.center,
-                          padding: EdgeInsets.symmetric(
-                              vertical: 12, horizontal: 16),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 16,
+                          ),
                           decoration: BoxDecoration(
                             color: context.colorTheme.vermilion.primary.shade50,
                             borderRadius: BorderRadius.circular(8),
@@ -225,7 +234,7 @@ class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                "Next".tr(context) + " ->",
+                                '${'Next'.tr(context)} ->',
                                 style:
                                     context.textStyleTheme.b16SemiBold.copyWith(
                                   color: context.colorTheme.neutral.shade0,

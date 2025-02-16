@@ -6,7 +6,6 @@ import 'package:bradderly/presentation/feature/menu/howtouse/howtouse_view.dart'
 import 'package:bradderly/presentation/feature/menu/plan/plan_main_modal.dart';
 import 'package:bradderly/presentation/feature/menu/profile/user_profile_modal.dart';
 import 'package:bradderly/presentation/feature/menu/symptom/symptom_modal.dart';
-import 'package:bradderly/presentation/router/route/menu_tap_route.dart';
 import 'package:bradderly/presentation/router/route/onboarding_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,7 +18,7 @@ class MenuView extends StatefulWidget {
 }
 
 class _MenuViewState extends State<MenuView> {
-  String selectedUnit = "ml"; // 초기 선택 값
+  String selectedUnit = 'ml'; // 초기 선택 값
 
   void toggleUnit(String unit) {
     setState(() {
@@ -46,7 +45,8 @@ class _MenuViewState extends State<MenuView> {
                       Text(
                         'Menu'.tr(context),
                         style: context.textStyleTheme.b24BoldOutfit.copyWith(
-                            color: context.colorTheme.neutral.shade10),
+                          color: context.colorTheme.neutral.shade10,
+                        ),
                       ),
                       IconButton(
                         icon: Icon(
@@ -61,19 +61,20 @@ class _MenuViewState extends State<MenuView> {
                   ),
                 ),
                 SettingsSection(
-                  title: "Profile".tr(context),
+                  title: 'Profile'.tr(context),
                   items: [
                     SettingsItem(
                       icon: Icons.person,
-                      title: "User Profile".tr(context),
+                      title: 'User Profile'.tr(context),
                       onTap: () {
                         //   const MenuTapRoute().go(context);
+                        // ignore: inference_failure_on_function_invocation
                         showModalBottomSheet(
                           context: context,
                           isScrollControlled: true,
                           backgroundColor: Colors.transparent,
                           builder: (context) {
-                            return UserProfileModal();
+                            return const UserProfileModal();
                           },
                         );
                       },
@@ -81,76 +82,88 @@ class _MenuViewState extends State<MenuView> {
                   ],
                 ),
                 SettingsSection(
-                  title: "General".tr(context),
+                  title: 'General'.tr(context),
                   items: [
                     SettingsItem(
-                        icon: Icons.credit_card,
-                        title: "Plan".tr(context),
-                        onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            builder: (context) {
-                              return PlanMainModal();
-                            },
-                          );
-                        }),
-                    SettingsItem(
-                        icon: Icons.bar_chart,
-                        title: "Symptom score".tr(context),
-                        onTap: () {
-                           showModalBottomSheet(
+                      icon: Icons.credit_card,
+                      title: 'Plan'.tr(context),
+                      onTap: () {
+                        // ignore: inference_failure_on_function_invocation
+                        showModalBottomSheet(
                           context: context,
                           isScrollControlled: true,
                           backgroundColor: Colors.transparent,
                           builder: (context) {
-                            return SymptomModal();
+                            return const PlanMainModal();
                           },
                         );
-                        }),
+                      },
+                    ),
                     SettingsItem(
-                        icon: Icons.help_outline,
-                        title: "How to use".tr(context),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => HowtouseView()),
-                          );
-                        }),
-                    SettingsItem(
-                        icon: Icons.phone,
-                        title: "Contact Us".tr(context),
-                        onTap: () {
-                           showModalBottomSheet(
+                      icon: Icons.bar_chart,
+                      title: 'Symptom score'.tr(context),
+                      onTap: () {
+                        // ignore: inference_failure_on_function_invocation
+                        showModalBottomSheet(
                           context: context,
                           isScrollControlled: true,
                           backgroundColor: Colors.transparent,
                           builder: (context) {
-                            return ContactusModal();
+                            return const SymptomModal();
                           },
                         );
-                        }),
+                      },
+                    ),
                     SettingsItem(
-                        icon: Icons.info_outline,
-                        title: "About".tr(context),
-                        onTap: () {
-                           showModalBottomSheet(
+                      icon: Icons.help_outline,
+                      title: 'How to use'.tr(context),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          // ignore: inference_failure_on_instance_creation
+                          MaterialPageRoute(
+                            builder: (context) => const HowtouseView(),
+                          ),
+                        );
+                      },
+                    ),
+                    SettingsItem(
+                      icon: Icons.phone,
+                      title: 'Contact Us'.tr(context),
+                      onTap: () {
+                        // ignore: inference_failure_on_function_invocation
+                        showModalBottomSheet(
                           context: context,
                           isScrollControlled: true,
                           backgroundColor: Colors.transparent,
                           builder: (context) {
-                            return AboutModal();
+                            return const ContactusModal();
                           },
                         );
-                        }),
+                      },
+                    ),
+                    SettingsItem(
+                      icon: Icons.info_outline,
+                      title: 'About'.tr(context),
+                      onTap: () {
+                        // ignore: inference_failure_on_function_invocation
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (context) {
+                            return const AboutModal();
+                          },
+                        );
+                      },
+                    ),
                   ],
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.only(top: 17, bottom: 16),
                   child: Text(
-                    "Unit setting".tr(context),
+                    'Unit setting'.tr(context),
                     style: context.textStyleTheme.b20Bold.copyWith(
                       color: context.colorTheme.neutral.shade10,
                     ),
@@ -159,9 +172,9 @@ class _MenuViewState extends State<MenuView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(child: _buildButton("ml", selectedUnit == "ml")),
+                    Expanded(child: _buildButton('ml', selectedUnit == 'ml')),
                     const SizedBox(width: 8), // 버튼 간 간격
-                    Expanded(child: _buildButton("oz", selectedUnit == "oz")),
+                    Expanded(child: _buildButton('oz', selectedUnit == 'oz')),
                   ],
                 ),
                 GestureDetector(
@@ -181,7 +194,7 @@ class _MenuViewState extends State<MenuView> {
                       borderRadius: BorderRadius.circular(12), // 둥근 모서리
                     ),
                     child: Text(
-                      "Sign out".tr(context),
+                      'Sign out'.tr(context),
                       style: context.textStyleTheme.b16SemiBold.copyWith(
                         color: context.colorTheme.neutral.shade0, // 텍스트 색상
                       ),
@@ -224,14 +237,13 @@ class _MenuViewState extends State<MenuView> {
 
 // Profile, General, Unit setting 섹션을 표시하는 위젯
 class SettingsSection extends StatelessWidget {
-  final String title;
-  final List<SettingsItem> items;
-
   const SettingsSection({
     super.key,
     required this.title,
     required this.items,
   });
+  final String title;
+  final List<SettingsItem> items;
 
   @override
   Widget build(BuildContext context) {
@@ -265,16 +277,15 @@ class SettingsSection extends StatelessWidget {
 }
 
 class SettingsItem extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final VoidCallback onTap;
-
   const SettingsItem({
     super.key,
     required this.icon,
     required this.title,
     required this.onTap,
   });
+  final IconData icon;
+  final String title;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -286,7 +297,7 @@ class SettingsItem extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: context.colorTheme.neutral.shade0,
-          boxShadow: [],
+          boxShadow: const [],
         ),
         child: Row(
           children: [
@@ -301,8 +312,11 @@ class SettingsItem extends StatelessWidget {
                 ),
               ),
             ),
-            Icon(Icons.arrow_forward_ios,
-                size: 16, color: context.colorTheme.neutral.shade10), // 우측 화살표
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 16,
+              color: context.colorTheme.neutral.shade10,
+            ), // 우측 화살표
           ],
         ),
       ),

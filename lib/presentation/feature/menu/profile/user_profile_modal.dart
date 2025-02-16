@@ -9,6 +9,8 @@ import 'package:bradderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:flutter/material.dart';
 
 class UserProfileModal extends StatelessWidget {
+  const UserProfileModal({super.key});
+
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
@@ -17,26 +19,25 @@ class UserProfileModal extends StatelessWidget {
       minChildSize: 0.95,
       builder: (_, controller) {
         return Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
-            borderRadius: const BorderRadius.only(
+            borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
             ),
           ),
-          padding: const EdgeInsets.symmetric( vertical: 41),
+          padding: const EdgeInsets.symmetric(vertical: 41),
           child: ListView(
             controller: controller,
             children: [
-
-                    ModalTitle(context, 'User Profile'.tr(context)),
+              ModalTitle(context, 'User Profile'.tr(context)),
               const SizedBox(height: 41),
               Padding(
                 padding: const EdgeInsets.only(left: 24),
                 child: Text(
                   'Personal Detail'.tr(context),
-                  style: context.textStyleTheme.b20Medium.copyWith(
-                      color: context.colorTheme.neutral.shade10),
+                  style: context.textStyleTheme.b20Medium
+                      .copyWith(color: context.colorTheme.neutral.shade10),
                 ),
               ),
               const SizedBox(height: 10),
@@ -51,58 +52,67 @@ class UserProfileModal extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 24),
                 child: Text(
                   'Account'.tr(context),
-                  style: context.textStyleTheme.b20Medium.copyWith(
-                      color: context.colorTheme.neutral.shade10),
+                  style: context.textStyleTheme.b20Medium
+                      .copyWith(color: context.colorTheme.neutral.shade10),
                 ),
               ),
               const SizedBox(height: 10),
               InputTextForm(
-                  'Email ID'.tr(context), 'soundable@soundable.com', context),
+                'Email ID'.tr(context),
+                'soundable@soundable.com',
+                context,
+              ),
               Padding(
-                padding: const EdgeInsets.only(top: 12.0, left: 24),
+                padding: const EdgeInsets.only(top: 12, left: 24),
                 child: Text(
                   'Password'.tr(context),
-                  style:context.textStyleTheme.b14Medium.copyWith(
-                      color: context.colorTheme.neutral.shade6),
+                  style: context.textStyleTheme.b14Medium
+                      .copyWith(color: context.colorTheme.neutral.shade6),
                 ),
               ),
               TextArrow(
-                  title: "Change Password".tr(context),
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      builder: (context) {
-                        return ChangePasswordModal();
-                      },
-                    );
-                  }),
+                title: 'Change Password'.tr(context),
+                onTap: () {
+                  // ignore: inference_failure_on_function_invocation
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) {
+                      return const ChangePasswordModal();
+                    },
+                  );
+                },
+              ),
               TextArrow(
-                  title: "Set Up Passcode".tr(context),
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      builder: (context) {
-                        return SetupPasscodeModal();
-                      },
-                    );
-                  }),
+                title: 'Set Up Passcode'.tr(context),
+                onTap: () {
+                  // ignore: inference_failure_on_function_invocation
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) {
+                      return const SetupPasscodeModal();
+                    },
+                  );
+                },
+              ),
               TextArrow(
-                  title: "Delete Account".tr(context),
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      builder: (context) {
-                        return DeleteAccountModal();
-                      },
-                    );
-                  }),
-              SizedBox(height: 40),
+                title: 'Delete Account'.tr(context),
+                onTap: () {
+                  // ignore: inference_failure_on_function_invocation
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) {
+                      return const DeleteAccountModal();
+                    },
+                  );
+                },
+              ),
+              const SizedBox(height: 40),
             ],
           ),
         );

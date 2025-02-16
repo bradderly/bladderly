@@ -2,42 +2,37 @@ import 'package:bradderly/presentation/common/extension/app_theme_extension.dart
 import 'package:bradderly/presentation/common/extension/string_extension.dart';
 import 'package:bradderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:flutter/material.dart';
+// ignore: library_prefixes
 import 'dart:math' as Math;
 
-
 class SymptomResultModal extends StatelessWidget {
+  const SymptomResultModal({
+    super.key,
+    // ignore: non_constant_identifier_names
+    required this.symptom_type,
+    required this.score,
+    required this.status,
+    required this.description,
+    required this.dateTime,
+  });
+  // ignore: non_constant_identifier_names
   final String symptom_type;
   final int score;
   final String status;
   final String description;
   final String dateTime;
 
-  const SymptomResultModal({
-    Key? key,
-    required this.symptom_type,
-    required this.score,
-    required this.status,
-    required this.description,
-    required this.dateTime,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    Color getStatusColor() {
-      if (score <= 7) return Color(0xff00BEA2);
-      if (score <= 19) return Colors.orange;
-      return Colors.red;
-    }
-
     return DraggableScrollableSheet(
       initialChildSize: 0.95,
       maxChildSize: 0.95,
       minChildSize: 0.95,
       builder: (_, controller) {
         return Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
-            borderRadius: const BorderRadius.only(
+            borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
             ),
@@ -52,11 +47,10 @@ class SymptomResultModal extends StatelessWidget {
                     // Title Section
                     ModalTitle(context, symptom_type),
                     const SizedBox(height: 39.5),
-                
+
                     // Score Display Section
                     Center(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
                             dateTime,
@@ -66,32 +60,68 @@ class SymptomResultModal extends StatelessWidget {
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 40),
-                    GaugeWidget(
-              score: 13,
-              level: 'Mild2',
-              levelColor: Colors.green,
-              angle: 3.14 * (13 / 35),
-            ),
+                          const GaugeWidget(
+                            score: 13,
+                            level: 'Mild2',
+                            levelColor: Colors.green,
+                            angle: 3.14 * (13 / 35),
+                          ),
                           const SizedBox(height: 16),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Column(
-                                children:  [
-                                  Text('Mild', style: context.textStyleTheme.b14SemiBold.copyWith(color: context.colorTheme.neutral.shade7)),
-                                  Text('1-7',  style: context.textStyleTheme.b14SemiBold.copyWith(color: context.colorTheme.neutral.shade7)),
+                                children: [
+                                  Text(
+                                    'Mild',
+                                    style: context.textStyleTheme.b14SemiBold
+                                        .copyWith(
+                                      color: context.colorTheme.neutral.shade7,
+                                    ),
+                                  ),
+                                  Text(
+                                    '1-7',
+                                    style: context.textStyleTheme.b14SemiBold
+                                        .copyWith(
+                                      color: context.colorTheme.neutral.shade7,
+                                    ),
+                                  ),
                                 ],
                               ),
                               Column(
-                                children:  [
-                                  Text('Moderate', style: context.textStyleTheme.b14SemiBold.copyWith(color: context.colorTheme.neutral.shade7)),
-                                  Text('8-19',  style: context.textStyleTheme.b14SemiBold.copyWith(color: context.colorTheme.neutral.shade7)),
+                                children: [
+                                  Text(
+                                    'Moderate',
+                                    style: context.textStyleTheme.b14SemiBold
+                                        .copyWith(
+                                      color: context.colorTheme.neutral.shade7,
+                                    ),
+                                  ),
+                                  Text(
+                                    '8-19',
+                                    style: context.textStyleTheme.b14SemiBold
+                                        .copyWith(
+                                      color: context.colorTheme.neutral.shade7,
+                                    ),
+                                  ),
                                 ],
                               ),
                               Column(
-                                children:  [
-                                  Text('Severe', style: context.textStyleTheme.b14SemiBold.copyWith(color: context.colorTheme.neutral.shade7)),
-                                  Text('20-35',  style: context.textStyleTheme.b14SemiBold.copyWith(color: context.colorTheme.neutral.shade7)),
+                                children: [
+                                  Text(
+                                    'Severe',
+                                    style: context.textStyleTheme.b14SemiBold
+                                        .copyWith(
+                                      color: context.colorTheme.neutral.shade7,
+                                    ),
+                                  ),
+                                  Text(
+                                    '20-35',
+                                    style: context.textStyleTheme.b14SemiBold
+                                        .copyWith(
+                                      color: context.colorTheme.neutral.shade7,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ],
@@ -102,7 +132,6 @@ class SymptomResultModal extends StatelessWidget {
                             height: 1,
                             color: context.colorTheme.neutral.shade5,
                           ),
-                
                           const SizedBox(height: 40),
                           Text(
                             description,
@@ -123,30 +152,27 @@ class SymptomResultModal extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 24),
-                
-                   
                   ],
                 ),
               ),
-
               GestureDetector(
-                onTap:(){
-                  
-                
-                },
+                onTap: () {},
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 109, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
                   decoration: BoxDecoration(
                     color: context.colorTheme.vermilion.primary.shade50,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Text('Okay'.tr(context),
-                      style: context.textStyleTheme.b16SemiBold.copyWith(
-                        color: context.colorTheme.neutral.shade0,
-                      )),
+                  child: Text(
+                    'Okay'.tr(context),
+                    style: context.textStyleTheme.b16SemiBold.copyWith(
+                      color: context.colorTheme.neutral.shade0,
+                    ),
+                  ),
                 ),
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
             ],
           ),
         );
@@ -154,19 +180,19 @@ class SymptomResultModal extends StatelessWidget {
     );
   }
 }
-class GaugeWidget extends StatelessWidget {
-  final int score;
-  final String level;
-  final Color levelColor;
-  final double angle;
 
+class GaugeWidget extends StatelessWidget {
   const GaugeWidget({
-    Key? key,
+    super.key,
     required this.score,
     required this.level,
     required this.levelColor,
     required this.angle,
-  }) : super(key: key);
+  });
+  final int score;
+  final String level;
+  final Color levelColor;
+  final double angle;
 
   @override
   Widget build(BuildContext context) {
@@ -185,17 +211,19 @@ class GaugeWidget extends StatelessWidget {
         ),
         // 점수와 레벨 텍스트
         Padding(
-          padding: EdgeInsets.only(top:39),
+          padding: const EdgeInsets.only(top: 39),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 '$score',
-                style:context.textStyleTheme.b28Bold.copyWith(color: Color(0xFFFFC909))
+                style: context.textStyleTheme.b28Bold
+                    .copyWith(color: const Color(0xFFFFC909)),
               ),
               Text(
                 level,
-                style:context.textStyleTheme.b28Bold.copyWith(color: Color(0xFFFFC909))
+                style: context.textStyleTheme.b28Bold
+                    .copyWith(color: const Color(0xFFFFC909)),
               ),
             ],
           ),
@@ -209,30 +237,49 @@ class GaugeWidget extends StatelessWidget {
 class BackgroundPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final Paint greenPaint = Paint()
-      ..color = Color(0xFF00BEA2)
+    final greenPaint = Paint()
+      ..color = const Color(0xFF00BEA2)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 10
       ..strokeCap = StrokeCap.round;
 
-    final Paint amberPaint = Paint()
+    final amberPaint = Paint()
       ..color = const Color(0xFFFFC909)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 10
       ..strokeCap = StrokeCap.round;
 
-    final Paint redPaint = Paint()
-      ..color = Color(0xFFFF6442) 
+    final redPaint = Paint()
+      ..color = const Color(0xFFFF6442)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 10
       ..strokeCap = StrokeCap.round;
 
-    final Rect arcRect = Rect.fromLTWH(0, 0, size.width, size.height * 2);
+    final arcRect = Rect.fromLTWH(0, 0, size.width, size.height * 2);
 
     // 배경 게이지 간격 추가
-    canvas.drawArc(arcRect, 3.14, 3.14 * (7 / 35) - 0.15, false, greenPaint);
-    canvas.drawArc(arcRect, 3.14 + 3.14 * (7 / 35), 3.14 * (12 / 35) - 0.15, false, amberPaint);
-    canvas.drawArc(arcRect, 3.14 + 3.14 * (19 / 35), 3.14 * (16 / 35) - 0.1, false, redPaint);
+    canvas
+      ..drawArc(
+        arcRect,
+        3.14,
+        3.14 * (7 / 35) - 0.15,
+        false,
+        greenPaint,
+      )
+      ..drawArc(
+        arcRect,
+        3.14 + 3.14 * (7 / 35),
+        3.14 * (12 / 35) - 0.15,
+        false,
+        amberPaint,
+      )
+      ..drawArc(
+        arcRect,
+        3.14 + 3.14 * (19 / 35),
+        3.14 * (16 / 35) - 0.1,
+        false,
+        redPaint,
+      );
   }
 
   @override
@@ -243,32 +290,33 @@ class BackgroundPainter extends CustomPainter {
 
 // 진행 상태를 나타내는 Paint
 class GaugePainter extends CustomPainter {
+  GaugePainter({required this.angle, required this.levelColor});
   final double angle;
   final Color levelColor;
 
-  GaugePainter({required this.angle, required this.levelColor});
-
   @override
   void paint(Canvas canvas, Size size) {
-    final Paint progressPaint = Paint()
+    final progressPaint = Paint()
       ..color = levelColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = 5
       ..strokeCap = StrokeCap.round;
 
-final Paint fillPaint = Paint()
-  ..color = Colors.white
-  ..style = PaintingStyle.fill; 
-
-
-    final Rect arcRect = Rect.fromLTWH(0, 0, size.width, size.height * 2);
+    final fillPaint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.fill;
 
     // 현재 점수 위치를 둥근 원으로 표시
-    final double markerX = size.width / 2 + (size.width / 2) * Math.cos(3.14 + angle);
-    final double markerY = size.height + (size.width / 2) * Math.sin(3.14 + angle);
+    final markerX = size.width / 2 + (size.width / 2) * Math.cos(3.14 + angle);
+    final markerY = size.height + (size.width / 2) * Math.sin(3.14 + angle);
 
-canvas.drawCircle(Offset(markerX, markerY), 10, fillPaint);
-    canvas.drawCircle(Offset(markerX, markerY), 10, progressPaint..style = PaintingStyle.stroke);
+    canvas
+      ..drawCircle(Offset(markerX, markerY), 10, fillPaint)
+      ..drawCircle(
+        Offset(markerX, markerY),
+        10,
+        progressPaint..style = PaintingStyle.stroke,
+      );
   }
 
   @override

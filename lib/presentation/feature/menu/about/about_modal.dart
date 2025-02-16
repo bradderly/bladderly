@@ -1,5 +1,3 @@
-
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bradderly/presentation/common/extension/string_extension.dart';
 import 'package:bradderly/presentation/feature/menu/plan/privacy_view.dart';
 import 'package:bradderly/presentation/feature/menu/plan/terms_view.dart';
@@ -8,6 +6,8 @@ import 'package:bradderly/presentation/feature/menu/widget/text_arrow.dart';
 import 'package:flutter/material.dart';
 
 class AboutModal extends StatelessWidget {
+  const AboutModal({super.key});
+
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
@@ -16,9 +16,9 @@ class AboutModal extends StatelessWidget {
       minChildSize: 0.95,
       builder: (_, controller) {
         return Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
-            borderRadius: const BorderRadius.only(
+            borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
             ),
@@ -32,29 +32,33 @@ class AboutModal extends StatelessWidget {
                   children: [
                     ModalTitle(context, 'Terms of Use'.tr(context)),
                     const SizedBox(height: 75.5),
-                   
                     TextArrow(
-                  title: "Terms of Use".tr(context),
-                  onTap: () {
-                    
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => TermsView()),
-                    );
-                  }),
-                   TextArrow(
-                  title: "Privacy Policy".tr(context),
-                  onTap: () {
-                     
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => PrivacyView()),
-                    );
-                  }),
+                      title: 'Terms of Use'.tr(context),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          // ignore: inference_failure_on_instance_creation
+                          MaterialPageRoute(
+                            builder: (context) => const TermsView(),
+                          ),
+                        );
+                      },
+                    ),
+                    TextArrow(
+                      title: 'Privacy Policy'.tr(context),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          // ignore: inference_failure_on_instance_creation
+                          MaterialPageRoute(
+                            builder: (context) => const PrivacyView(),
+                          ),
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
-             
             ],
           ),
         );
