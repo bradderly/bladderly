@@ -21,7 +21,7 @@ class SaveLeakageHistoryUsecase {
     String? memo,
   }) async {
     try {
-      final voidingHistory = await _historyRepository.saveLeakageHistory(
+      final voidingHistory = _historyRepository.saveLeakageHistory(
         LeakageHistory(
           id: id,
           hashId: hashId,

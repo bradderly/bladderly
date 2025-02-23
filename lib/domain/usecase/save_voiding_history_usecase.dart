@@ -25,7 +25,7 @@ class SaveVoidingHistoryUsecase {
     String? memo,
   }) async {
     try {
-      final voidingHistory = await _historyRepository.saveVoidngHistory(
+      final voidingHistory = _historyRepository.saveVoidngHistory(
         VoidingHistory(
           id: id,
           hashId: hashId,

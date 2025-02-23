@@ -26,7 +26,7 @@ class SaveVoidingHistoryWithFileUsecase {
     try {
       await _historyRepository.uploadVoidingSoundFile(file);
 
-      final voidingHistory = await _historyRepository.saveVoidngHistory(
+      final voidingHistory = _historyRepository.saveVoidngHistory(
         VoidingHistory(
           id: null,
           hashId: hashId,

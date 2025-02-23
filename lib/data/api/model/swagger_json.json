@@ -24,7 +24,9 @@
   "paths": {
     "/dev/audio-upload": {
       "post": {
-        "tags": ["file upload"],
+        "tags": [
+          "file upload"
+        ],
         "description": "m4a audio file upload",
         "operationId": "audioUpload",
         "parameters": [
@@ -84,7 +86,9 @@
     },
     "/dev/change-pw": {
       "post": {
-        "tags": ["register"],
+        "tags": [
+          "register"
+        ],
         "description": "change login passwoard",
         "operationId": "changePw",
         "parameters": [
@@ -130,7 +134,9 @@
     },
     "/dev/check-promo": {
       "get": {
-        "tags": ["payment"],
+        "tags": [
+          "payment"
+        ],
         "description": "check promotion/redeem/study code",
         "operationId": "checkPromo",
         "parameters": [
@@ -184,7 +190,9 @@
     },
     "/dev/confirm-pw": {
       "post": {
-        "tags": ["register"],
+        "tags": [
+          "register"
+        ],
         "description": "confirm password with verification code",
         "operationId": "confirmPw",
         "parameters": [
@@ -269,7 +277,9 @@
     },
     "/dev/delete-account": {
       "post": {
-        "tags": ["register"],
+        "tags": [
+          "register"
+        ],
         "description": "delete account",
         "parameters": [
           {
@@ -353,7 +363,9 @@
     },
     "/dev/forgot-pw": {
       "post": {
-        "tags": ["register"],
+        "tags": [
+          "register"
+        ],
         "description": "request password reset when forgot password",
         "operationId": "forgotPw",
         "parameters": [
@@ -439,7 +451,9 @@
     },
     "/dev/get-pay-info": {
       "get": {
-        "tags": ["payment"],
+        "tags": [
+          "payment"
+        ],
         "description": "get payment information",
         "operationId": "getPayInfo",
         "parameters": [
@@ -480,7 +494,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PaymentResponse"
+                  "$ref": "#/components/schemas/GetPayResponse"
                 }
               }
             }
@@ -589,7 +603,9 @@
     },
     "/dev/log-in": {
       "post": {
-        "tags": ["register"],
+        "tags": [
+          "register"
+        ],
         "description": "log in using email and password",
         "operationId": "logIn",
         "parameters": [
@@ -632,7 +648,9 @@
     },
     "/dev/log-out": {
       "post": {
-        "tags": ["register"],
+        "tags": [
+          "register"
+        ],
         "summary": "log-out",
         "description": "log-out",
         "operationId": "logOut",
@@ -718,7 +736,9 @@
     },
     "/dev/post-pay-info": {
       "post": {
-        "tags": ["payment"],
+        "tags": [
+          "payment"
+        ],
         "summary": "post-pay-info",
         "description": "post-pay-info",
         "operationId": "postPayInfo",
@@ -749,7 +769,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PaymentResponse"
+                  "$ref": "#/components/schemas/PostPayResponse"
                 }
               }
             }
@@ -846,7 +866,9 @@
     },
     "/dev/sign-up": {
       "post": {
-        "tags": ["register"],
+        "tags": [
+          "register"
+        ],
         "description": "sign up",
         "operationId": "signUp",
         "parameters": [
@@ -962,8 +984,7 @@
             "description": "success or invalid email/password"
           },
           "user_info": {
-            "type": "object",
-            "description": "user profile"
+            "$ref": "#/components/schemas/LoginResponse_user_info"
           }
         }
       },
@@ -995,13 +1016,12 @@
             "type": "array",
             "description": "all records",
             "items": {
-              "type": "object",
-              "description": "dictionary item"
+              "$ref": "#/components/schemas/GetAllResultResponse_records"
             }
           }
         }
       },
-      "PaymentResponse": {
+      "PostPayResponse": {
         "type": "object",
         "properties": {
           "message": {
@@ -1009,13 +1029,27 @@
             "description": "success or fail"
           },
           "pay_info": {
-            "type": "object",
-            "description": "payment information"
+            "$ref": "#/components/schemas/PostPayResponse_pay_info"
+          }
+        }
+      },
+      "GetPayResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "success or fail"
+          },
+          "pay_info": {
+            "$ref": "#/components/schemas/GetPayResponse_pay_info"
           }
         }
       },
       "LoginRequest": {
-        "required": ["email", "pw"],
+        "required": [
+          "email",
+          "pw"
+        ],
         "type": "object",
         "properties": {
           "email": {
@@ -1027,7 +1061,11 @@
         }
       },
       "ChagePwRequest": {
-        "required": ["email", "new_pw", "old_pw"],
+        "required": [
+          "email",
+          "new_pw",
+          "old_pw"
+        ],
         "type": "object",
         "properties": {
           "email": {
@@ -1042,7 +1080,11 @@
         }
       },
       "ConfirmPwRequest": {
-        "required": ["email", "new_pw", "verification_code"],
+        "required": [
+          "email",
+          "new_pw",
+          "verification_code"
+        ],
         "type": "object",
         "properties": {
           "email": {
@@ -1057,7 +1099,11 @@
         }
       },
       "ContactUsRequest": {
-        "required": ["email", "message", "subject"],
+        "required": [
+          "email",
+          "message",
+          "subject"
+        ],
         "type": "object",
         "properties": {
           "email": {
@@ -1078,7 +1124,9 @@
         }
       },
       "PostEmailRequest": {
-        "required": ["email"],
+        "required": [
+          "email"
+        ],
         "type": "object",
         "properties": {
           "email": {
@@ -1087,7 +1135,10 @@
         }
       },
       "ExportReportRequest": {
-        "required": ["export_date", "user_id"],
+        "required": [
+          "export_date",
+          "user_id"
+        ],
         "type": "object",
         "properties": {
           "export_date": {
@@ -1105,7 +1156,10 @@
         }
       },
       "DataMigrationRequest": {
-        "required": ["from_id", "to_id"],
+        "required": [
+          "from_id",
+          "to_id"
+        ],
         "type": "object",
         "properties": {
           "from_id": {
@@ -1119,7 +1173,9 @@
         }
       },
       "PaymentCheckRequest": {
-        "required": ["user_id"],
+        "required": [
+          "user_id"
+        ],
         "type": "object",
         "properties": {
           "user_id": {
@@ -1133,7 +1189,10 @@
         }
       },
       "DataExportSurveyRequest": {
-        "required": ["select", "user_id"],
+        "required": [
+          "select",
+          "user_id"
+        ],
         "type": "object",
         "properties": {
           "clinic": {
@@ -1154,7 +1213,12 @@
         }
       },
       "SaveSurveyRequest": {
-        "required": ["score_date", "score_name", "score_value", "user_id"],
+        "required": [
+          "score_date",
+          "score_name",
+          "score_value",
+          "user_id"
+        ],
         "type": "object",
         "properties": {
           "user_id": {
@@ -1179,7 +1243,11 @@
         }
       },
       "SignUpRequest": {
-        "required": ["email", "gender", "pw"],
+        "required": [
+          "email",
+          "gender",
+          "pw"
+        ],
         "type": "object",
         "properties": {
           "email": {
@@ -1197,7 +1265,10 @@
         }
       },
       "RecordUpdateRequest": {
-        "required": ["rec_date", "user_id"],
+        "required": [
+          "rec_date",
+          "user_id"
+        ],
         "type": "object",
         "properties": {
           "user_id": {
@@ -1211,6 +1282,190 @@
             "$ref": "#/components/schemas/RecordUpdateRequest_record"
           }
         }
+      },
+      "LoginResponse_user_info": {
+        "type": "object",
+        "properties": {
+          "last_name": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "x1ukde96wog6z"
+            }
+          },
+          "first_name": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "g2yytr2r7w248"
+            }
+          },
+          "birthyear": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "mtvry3f99gyum"
+            }
+          },
+          "email": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "3p37folh3asyt"
+            }
+          },
+          "gender": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "rnriojq5ihu2m"
+            }
+          }
+        },
+        "description": "user profile"
+      },
+      "GetAllResultResponse_records": {
+        "type": "object",
+        "properties": {
+          "record_time": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "jfqk72kbukadc"
+            }
+          },
+          "is_intake": {
+            "type": "boolean",
+            "x-stoplight": {
+              "id": "77up6hv0i3gnl"
+            }
+          },
+          "is_manual": {
+            "type": "boolean",
+            "x-stoplight": {
+              "id": "h1ba1fpbz7ht1"
+            }
+          },
+          "is_nocturia": {
+            "type": "boolean",
+            "x-stoplight": {
+              "id": "7r6nf49219880"
+            }
+          },
+          "is_leakage": {
+            "type": "boolean",
+            "x-stoplight": {
+              "id": "yk2dmlom9sbw4"
+            }
+          },
+          "leakage_memo": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "ow74ke8j8u5cs"
+            }
+          },
+          "record_volume": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "xuwqz2ms3iqr2"
+            }
+          },
+          "record_urgency": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "fb6fqqv66k86o"
+            }
+          },
+          "beverage_type": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "am54bh8ok6gec"
+            }
+          },
+          "leakage_volume": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "i98qhhaikjnui"
+            }
+          }
+        },
+        "description": "dictionary item"
+      },
+      "PostPayResponse_pay_info": {
+        "type": "object",
+        "properties": {
+          "original_transaction_id": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "bw7xbnwltw1w3"
+            }
+          },
+          "transaction_id": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "sp4yjzlqvvd8k"
+            }
+          },
+          "product_id": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "6fx6unstelpd8"
+            }
+          },
+          "purchase_date_ms": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "4j558kw7m6luf"
+            }
+          },
+          "expires_date_ms": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "uniww2uqmszwl"
+            }
+          },
+          "in_app_ownership_type": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "sjbnp10cfp2nc"
+            }
+          },
+          "cancellation_date_ms": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "pse6jjubg3moa"
+            }
+          },
+          "is_upgraded": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "l35z9b2b7jfqq"
+            }
+          },
+          "auto_renew_status": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "jm4bwfg1daq1w"
+            }
+          }
+        },
+        "description": "payment information"
+      },
+      "GetPayResponse_pay_info": {
+        "required": [
+          "is_pause",
+          "remain_count"
+        ],
+        "type": "object",
+        "properties": {
+          "remain_count": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "if3g9wa2xoqhr"
+            }
+          },
+          "is_pause": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "d7px7zvtesirs"
+            }
+          }
+        },
+        "description": "payment information"
       },
       "RecordUpdateRequest_record": {
         "type": "object",

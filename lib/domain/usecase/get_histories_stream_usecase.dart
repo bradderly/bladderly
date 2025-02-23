@@ -15,7 +15,7 @@ class GetHistoriesStreamUsecase {
     required DateTime dateTime,
   }) {
     try {
-      return Right(_historyRepository.getHistoriesStream(hashId: hashId, date: dateTime));
+      return Right(_historyRepository.getHistoriesStream(hashId: hashId, recordDate: dateTime));
     } on Exception catch (e) {
       return Left(e);
     } catch (e) {

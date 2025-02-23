@@ -126,7 +126,11 @@ class _ExportReportViewState extends State<ExportReportView> {
               child: BlocSelector<ExportReportBloc, ExportReportState, bool>(
                 selector: (state) => state.reasonModel.isValid,
                 builder: (context, isValid) => ExportStickeyButton(
-                  onTap: isValid ? () => context.read<ExportReportBloc>().add(const ExportReportSendReason()) : null,
+                  onTap: isValid
+                      ? () => context
+                          .read<ExportReportBloc>()
+                          .add(const ExportReportSendReason(hashId: 'ydu3328@naver.com'))
+                      : null,
                   text: 'Done'.tr(context),
                 ),
               ),
