@@ -21,5 +21,14 @@ class ExportReportSelectReason extends ExportReportEvent {
 }
 
 class ExportReportSendReason extends ExportReportEvent {
-  const ExportReportSendReason();
+  const ExportReportSendReason({
+    required this.hashId,
+  });
+
+  final String hashId;
+
+  @override
+  List<Object> get props => [
+        hashId,
+      ];
 }

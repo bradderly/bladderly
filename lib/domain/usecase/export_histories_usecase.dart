@@ -15,7 +15,7 @@ class ExportHistoriesUsecase {
     required List<DateTime> dates,
   }) async {
     try {
-      final result = await _historyRepository.exportHistories(email: email, dates: dates);
+      final result = await _historyRepository.exportHistories(hashId: email, dates: dates);
       return Right(result);
     } on Exception catch (e) {
       return Left(e);

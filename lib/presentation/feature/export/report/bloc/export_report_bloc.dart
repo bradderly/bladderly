@@ -24,7 +24,17 @@ class ExportReportBloc extends Bloc<ExportReportEvent, ExportReportState> {
   Future<void> _onSendReason(ExportReportSendReason event, Emitter<ExportReportState> emit) async {
     emit(ExportReportSendReasonInProgress(reasonModel: state.reasonModel));
 
-    final result = await _sendHistoriesExportReasonUsecase();
+    final result = await _sendHistoriesExportReasonUsecase(
+      hashId: event.hashId,
+      clinicInformation: switch (state.reasonModel) {
+        final ExportReportShareClinicReason reasonModel => reasonModel.clinicInformation,
+        _ => null,
+      },
+      doctorName: switch (state.reasonModel) {
+        final ExportReportShareClinicReason reasonModel => reasonModel.doctorName,
+        _ => null,
+      },
+    );
 
     result.fold(
       (exception) => emit(ExportReportSendReasonFailure(reasonModel: state.reasonModel, exception: exception)),

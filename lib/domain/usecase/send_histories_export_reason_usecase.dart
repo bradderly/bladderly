@@ -10,9 +10,17 @@ class SendHistoriesExportReasonUsecase {
 
   final HistoryRepository _historyRepository;
 
-  Future<Either<Exception, void>> call() async {
+  Future<Either<Exception, void>> call({
+    required String hashId,
+    required String? doctorName,
+    required String? clinicInformation,
+  }) async {
     try {
-      final result = await _historyRepository.sendHistoriesExportReason();
+      final result = await _historyRepository.sendHistoriesExportReason(
+        hashId: hashId,
+        doctorName: doctorName,
+        clinicInformation: clinicInformation,
+      );
       return Right(result);
     } on Exception catch (e) {
       return Left(e);

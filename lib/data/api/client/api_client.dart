@@ -136,7 +136,7 @@ abstract class ApiClient extends ChopperService {
   });
 
   @Post(path: '/update-record')
-  Future<Response<SimpleResponse>> updatteRecord({
+  Future<Response<SimpleResponse>> updateRecord({
     @Body() required RecordUpdateRequest request,
   });
 }
