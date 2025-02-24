@@ -1,3 +1,4 @@
+import 'package:bradderly/domain/model/user.dart';
 import 'package:equatable/equatable.dart';
 
 class UserModel extends Equatable {
@@ -21,6 +22,10 @@ class UserModel extends Equatable {
         height = 0,
         weight = 0,
         email = '';
+
+  factory UserModel.fromDomain(User user) {
+    return const UserModel.none();
+  }
 
   final String id;
   final String firstName;
