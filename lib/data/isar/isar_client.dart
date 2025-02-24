@@ -1,11 +1,10 @@
 import 'package:bradderly/data/isar/schema/history_entity.dart';
 import 'package:bradderly/domain/model/history_status.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:isar/isar.dart';
 
 abstract class IsarClient {
-  const IsarClient();
+  factory IsarClient(Isar isar) => _IsarClientImpl(isar: isar);
 
   HistoryEntity? getHistoryById(int id);
 
@@ -34,7 +33,6 @@ abstract class IsarClient {
   );
 }
 
-@LazySingleton(as: IsarClient)
 class _IsarClientImpl implements IsarClient {
   const _IsarClientImpl({required Isar isar}) : _isar = isar;
 

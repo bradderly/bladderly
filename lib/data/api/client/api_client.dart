@@ -70,18 +70,18 @@ abstract class ApiClient extends ChopperService {
   });
 
   @Get(path: '/get-pay-info')
-  Future<Response<PaymentResponse>> getPayInfo({
+  Future<Response<GetPayResponse>> getPayInfo({
     @Query('user-id') required String userId,
     @Query('device') required String device,
   });
 
-  @Post(path: '/get-pay-info')
-  Future<Response<PaymentResponse>> checkPayment({
+  @Post(path: '/post-pay-info')
+  Future<Response<PostPayResponse>> checkPayment({
     @Body() required PaymentCheckRequest request,
   });
 
   @Post(path: '/audio-upload')
-  Future<Response<PaymentResponse>> uploadAudio({
+  Future<Response<SimpleResponse>> uploadAudio({
     @Body() required PaymentCheckRequest request,
   });
 

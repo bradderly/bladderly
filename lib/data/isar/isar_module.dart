@@ -1,3 +1,4 @@
+import 'package:bradderly/data/isar/isar_client.dart';
 import 'package:bradderly/data/isar/schema/history_entity.dart';
 import 'package:injectable/injectable.dart';
 import 'package:isar/isar.dart';
@@ -17,5 +18,10 @@ abstract class IsarModule {
       ],
       directory: applicationDocumentsDirectory.path,
     );
+  }
+
+  @lazySingleton
+  IsarClient isarClient(Isar isar) {
+    return IsarClient(isar);
   }
 }

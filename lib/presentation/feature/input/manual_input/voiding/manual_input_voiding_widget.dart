@@ -1,5 +1,6 @@
 import 'package:bradderly/domain/model/leakage_volume.dart';
 import 'package:bradderly/presentation/common/extension/string_extension.dart';
+import 'package:bradderly/presentation/common/widget/common_keyboard_actions.dart';
 import 'package:bradderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bradderly/presentation/feature/input/manual_input/voiding/bloc/manual_input_voiding_bloc.dart';
 import 'package:bradderly/presentation/feature/input/manual_input/voiding/cubit/manual_input_voiding_form_cubit.dart';
@@ -7,7 +8,6 @@ import 'package:bradderly/presentation/feature/input/manual_input/voiding/widget
 import 'package:bradderly/presentation/feature/input/manual_input/widget/manual_input_leakage_volume_widget.dart';
 import 'package:bradderly/presentation/feature/input/widget/input_choice_button.dart';
 import 'package:bradderly/presentation/feature/input/widget/input_field_widget.dart';
-import 'package:bradderly/presentation/feature/input/widget/input_keyboard_actions.dart';
 import 'package:bradderly/presentation/feature/input/widget/input_record_urgency_widget.dart';
 import 'package:bradderly/presentation/feature/input/widget/input_save_button.dart';
 import 'package:bradderly/presentation/feature/input/widget/input_text_area_widget.dart';
@@ -100,7 +100,7 @@ class _ManualInputVoidingWidgetState extends State<ManualInputVoidingWidget> wit
       child: Stack(
         fit: StackFit.expand,
         children: [
-          InputKeyboardActions(
+          CommonKeyboardActions(
             focusNode: recordVolumeFocusNode,
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 24, bottom: 132),

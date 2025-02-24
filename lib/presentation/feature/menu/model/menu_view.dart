@@ -6,7 +6,6 @@ import 'package:bradderly/presentation/feature/menu/howtouse/howtouse_view.dart'
 import 'package:bradderly/presentation/feature/menu/plan/plan_main_modal.dart';
 import 'package:bradderly/presentation/feature/menu/profile/user_profile_modal.dart';
 import 'package:bradderly/presentation/feature/menu/symptom/symptom_modal.dart';
-import 'package:bradderly/presentation/router/route/onboarding_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -178,19 +177,15 @@ class _MenuViewState extends State<MenuView> {
                   ],
                 ),
                 GestureDetector(
-                  onTap: () {
-                    const SigninRoute().go(context);
-                  },
+                  onTap: () {},
                   child: Container(
                     width: 256,
                     height: 43,
                     margin: const EdgeInsets.only(top: 85, bottom: 28),
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: context
-                          .colorTheme.vermilion.primary.shade50, // 선택된 버튼 색상
+                      color: context.colorTheme.vermilion.primary.shade50, // 선택된 버튼 색상
                       borderRadius: BorderRadius.circular(12), // 둥근 모서리
                     ),
                     child: Text(
@@ -225,9 +220,7 @@ class _MenuViewState extends State<MenuView> {
         child: Text(
           unit,
           style: context.textStyleTheme.b16SemiBold.copyWith(
-            color: isSelected
-                ? context.colorTheme.neutral.shade0
-                : context.colorTheme.neutral.shade10, // 텍스트 색상
+            color: isSelected ? context.colorTheme.neutral.shade0 : context.colorTheme.neutral.shade10, // 텍스트 색상
           ),
         ),
       ),
@@ -263,8 +256,7 @@ class SettingsSection extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: Card(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             child: Column(
               children: items,
             ),
