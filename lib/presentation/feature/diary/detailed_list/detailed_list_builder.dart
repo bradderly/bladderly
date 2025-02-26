@@ -22,7 +22,7 @@ class DetailedListBuilder extends StatelessWidget {
       create: (_) => DetailedListHistoriesBloc(
         getHistoriesStreamUsecase: getIt<GetHistoriesStreamUsecase>(),
         deleteHistoryUsecase: getIt<DeleteHistoryUsecase>(),
-      )..add(DetailedListHistoriesSubscribe(hashId: 'ydu3328@naver.com', dateTime: date)),
+      )..add(DetailedListHistoriesSubscribe(userId: 'ydu3328@naver.com', dateTime: date)),
       child: DetailedListView(
         historyId: historyId,
         date: date,

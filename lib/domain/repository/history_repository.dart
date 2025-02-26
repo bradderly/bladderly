@@ -5,7 +5,7 @@ import 'package:bradderly/domain/model/history.dart';
 
 abstract class HistoryRepository {
   Stream<Histories> getHistoriesStream({
-    required String hashId,
+    required String userId,
     required DateTime recordDate,
   });
 
@@ -18,15 +18,15 @@ abstract class HistoryRepository {
   /// save history to local
   LeakageHistory saveLeakageHistory(LeakageHistory leakageHistory);
 
-  Stream<List<DateTime>> getHistoryDatesStream(String hashId);
+  Stream<List<DateTime>> getHistoryDatesStream(String userId);
 
   Future<void> exportHistories({
-    required String hashId,
+    required String userId,
     required List<DateTime> dates,
   });
 
   Future<void> sendHistoriesExportReason({
-    required String hashId,
+    required String userId,
     required String? doctorName,
     required String? clinicInformation,
   });
@@ -38,7 +38,7 @@ abstract class HistoryRepository {
   void deleteHistoryById(int id);
 
   Future<String?> uploadHistory({
-    required String hashId,
+    required String userId,
     required History history,
   });
 }

@@ -7,7 +7,7 @@ class HistoryEntityMapper {
   static HistoryEntity fromVoidingHistory(VoidingHistory history) {
     return HistoryEntity()
       ..setId(history.id)
-      ..hashId = history.hashId
+      ..userId = history.hashId
       ..recordTime = history.recordTime
       ..leakageMemo = history.memo
       ..recordVolume = history.recordVolume.toDouble()
@@ -22,7 +22,7 @@ class HistoryEntityMapper {
   static HistoryEntity fromIntakeHistory(IntakeHistory history) {
     return HistoryEntity()
       ..setId(history.id)
-      ..hashId = history.hashId
+      ..userId = history.hashId
       ..recordTime = history.recordTime
       ..leakageMemo = history.memo
       ..beverageType = history.beverageType
@@ -34,7 +34,7 @@ class HistoryEntityMapper {
   static HistoryEntity fromLeakageHistory(LeakageHistory history) {
     return HistoryEntity()
       ..setId(history.id)
-      ..hashId = history.hashId
+      ..userId = history.hashId
       ..recordTime = history.recordTime
       ..leakageMemo = history.memo
       ..isLeakage = true

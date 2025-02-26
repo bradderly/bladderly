@@ -24,9 +24,7 @@
   "paths": {
     "/dev/audio-upload": {
       "post": {
-        "tags": [
-          "file upload"
-        ],
+        "tags": ["file upload"],
         "description": "m4a audio file upload",
         "operationId": "audioUpload",
         "parameters": [
@@ -67,7 +65,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SimpleResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or fail"
+                    }
+                  }
                 }
               }
             }
@@ -86,10 +90,8 @@
     },
     "/dev/change-pw": {
       "post": {
-        "tags": [
-          "register"
-        ],
-        "description": "change login passwoard",
+        "tags": ["register"],
+        "description": "change log in passwoard",
         "operationId": "changePw",
         "parameters": [
           {
@@ -107,7 +109,19 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ChagePwRequest"
+                "required": ["email", "new_pw", "old_pw"],
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "new_pw": {
+                    "type": "string"
+                  },
+                  "old_pw": {
+                    "type": "string"
+                  }
+                }
               }
             }
           }
@@ -118,7 +132,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SimpleResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or fail"
+                    }
+                  }
                 }
               }
             }
@@ -134,9 +154,7 @@
     },
     "/dev/check-promo": {
       "get": {
-        "tags": [
-          "payment"
-        ],
+        "tags": ["payment"],
         "description": "check promotion/redeem/study code",
         "operationId": "checkPromo",
         "parameters": [
@@ -177,7 +195,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResultResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or fail"
+                    },
+                    "result": {
+                      "type": "string",
+                      "description": "return value"
+                    }
+                  }
                 }
               }
             }
@@ -190,9 +218,7 @@
     },
     "/dev/confirm-pw": {
       "post": {
-        "tags": [
-          "register"
-        ],
+        "tags": ["register"],
         "description": "confirm password with verification code",
         "operationId": "confirmPw",
         "parameters": [
@@ -211,7 +237,19 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ConfirmPwRequest"
+                "required": ["email", "new_pw", "verification_code"],
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "new_pw": {
+                    "type": "string"
+                  },
+                  "verification_code": {
+                    "type": "string"
+                  }
+                }
               }
             }
           }
@@ -222,7 +260,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SimpleResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or fail"
+                    }
+                  }
                 }
               }
             }
@@ -253,7 +297,25 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactUsRequest"
+                "required": ["email", "message", "subject"],
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "first_name": {
+                    "type": "string"
+                  },
+                  "last_name": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  },
+                  "subject": {
+                    "type": "string"
+                  }
+                }
               }
             }
           }
@@ -264,7 +326,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SimpleResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or fail"
+                    }
+                  }
                 }
               }
             }
@@ -277,9 +345,7 @@
     },
     "/dev/delete-account": {
       "post": {
-        "tags": [
-          "register"
-        ],
+        "tags": ["register"],
         "description": "delete account",
         "parameters": [
           {
@@ -297,7 +363,13 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PostEmailRequest"
+                "required": ["email"],
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  }
+                }
               }
             }
           }
@@ -308,7 +380,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SimpleResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or fail"
+                    }
+                  }
                 }
               }
             }
@@ -339,7 +417,22 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ExportReportRequest"
+                "required": ["export_date", "user_id"],
+                "type": "object",
+                "properties": {
+                  "export_date": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "user_id": {
+                    "type": "string"
+                  },
+                  "language": {
+                    "type": "string"
+                  }
+                }
               }
             }
           }
@@ -350,7 +443,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SimpleResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or fail"
+                    }
+                  }
                 }
               }
             }
@@ -363,9 +462,7 @@
     },
     "/dev/forgot-pw": {
       "post": {
-        "tags": [
-          "register"
-        ],
+        "tags": ["register"],
         "description": "request password reset when forgot password",
         "operationId": "forgotPw",
         "parameters": [
@@ -384,7 +481,13 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PostEmailRequest"
+                "required": ["email"],
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  }
+                }
               }
             }
           }
@@ -395,7 +498,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SimpleResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or fail"
+                    }
+                  }
                 }
               }
             }
@@ -414,6 +523,7 @@
           {
             "name": "user_id",
             "in": "query",
+            "description": "email hashed value",
             "required": true,
             "style": "form",
             "explode": true,
@@ -424,7 +534,7 @@
           {
             "name": "x-api-key",
             "in": "header",
-            "required": false,
+            "required": true,
             "style": "simple",
             "explode": false,
             "schema": {
@@ -438,7 +548,83 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetAllResultResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or fail"
+                    },
+                    "records": {
+                      "type": "array",
+                      "description": "all records",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "record_time": {
+                            "type": "string",
+                            "x-stoplight": {
+                              "id": "jfqk72kbukadc"
+                            }
+                          },
+                          "is_intake": {
+                            "type": "boolean",
+                            "x-stoplight": {
+                              "id": "77up6hv0i3gnl"
+                            }
+                          },
+                          "is_manual": {
+                            "type": "boolean",
+                            "x-stoplight": {
+                              "id": "h1ba1fpbz7ht1"
+                            }
+                          },
+                          "is_nocturia": {
+                            "type": "boolean",
+                            "x-stoplight": {
+                              "id": "7r6nf49219880"
+                            }
+                          },
+                          "is_leakage": {
+                            "type": "boolean",
+                            "x-stoplight": {
+                              "id": "yk2dmlom9sbw4"
+                            }
+                          },
+                          "leakage_memo": {
+                            "type": "string",
+                            "x-stoplight": {
+                              "id": "ow74ke8j8u5cs"
+                            }
+                          },
+                          "record_volume": {
+                            "type": "string",
+                            "x-stoplight": {
+                              "id": "xuwqz2ms3iqr2"
+                            }
+                          },
+                          "record_urgency": {
+                            "type": "string",
+                            "x-stoplight": {
+                              "id": "fb6fqqv66k86o"
+                            }
+                          },
+                          "beverage_type": {
+                            "type": "string",
+                            "x-stoplight": {
+                              "id": "am54bh8ok6gec"
+                            }
+                          },
+                          "leakage_volume": {
+                            "type": "string",
+                            "x-stoplight": {
+                              "id": "i98qhhaikjnui"
+                            }
+                          }
+                        },
+                        "description": "dictionary item"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -446,14 +632,17 @@
           "400": {
             "description": "Bad Request"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/dev/get-pay-info": {
       "get": {
-        "tags": [
-          "payment"
-        ],
+        "tags": ["payment"],
         "description": "get payment information",
         "operationId": "getPayInfo",
         "parameters": [
@@ -494,7 +683,32 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetPayResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or fail"
+                    },
+                    "pay_info": {
+                      "required": ["is_pause", "remain_count"],
+                      "type": "object",
+                      "properties": {
+                        "remain_count": {
+                          "type": "string",
+                          "x-stoplight": {
+                            "id": "if3g9wa2xoqhr"
+                          }
+                        },
+                        "is_pause": {
+                          "type": "string",
+                          "x-stoplight": {
+                            "id": "d7px7zvtesirs"
+                          }
+                        }
+                      },
+                      "description": "payment information"
+                    }
+                  }
                 }
               }
             }
@@ -547,7 +761,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResultResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or fail"
+                    },
+                    "result": {
+                      "type": "string",
+                      "description": "return value"
+                    }
+                  }
                 }
               }
             }
@@ -590,7 +814,21 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetVersionResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or fail"
+                    },
+                    "min_ver": {
+                      "type": "string",
+                      "description": "support minimum app version"
+                    },
+                    "latest_ver": {
+                      "type": "string",
+                      "description": "latest app version"
+                    }
+                  }
                 }
               }
             }
@@ -603,9 +841,7 @@
     },
     "/dev/log-in": {
       "post": {
-        "tags": [
-          "register"
-        ],
+        "tags": ["register"],
         "description": "log in using email and password",
         "operationId": "logIn",
         "parameters": [
@@ -624,7 +860,16 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
+                "required": ["email", "pw"],
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "pw": {
+                    "type": "string"
+                  }
+                }
               }
             }
           }
@@ -635,7 +880,56 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or invalid email/password"
+                    },
+                    "user_info": {
+                      "type": "object",
+                      "properties": {
+                        "last_name": {
+                          "type": "string",
+                          "x-stoplight": {
+                            "id": "x1ukde96wog6z"
+                          }
+                        },
+                        "first_name": {
+                          "type": "string",
+                          "x-stoplight": {
+                            "id": "g2yytr2r7w248"
+                          }
+                        },
+                        "birthyear": {
+                          "type": "string",
+                          "x-stoplight": {
+                            "id": "mtvry3f99gyum"
+                          }
+                        },
+                        "gender": {
+                          "type": "string",
+                          "x-stoplight": {
+                            "id": "rnriojq5ihu2m"
+                          }
+                        },
+                        "country": {
+                          "type": "string",
+                          "x-stoplight": {
+                            "id": "4sacnf7lomy7f"
+                          }
+                        }
+                      },
+                      "description": "user profile"
+                    },
+                    "access_token": {
+                      "type": "string",
+                      "description": "token for authorization",
+                      "x-stoplight": {
+                        "id": "o4v5674gsyuf4"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -648,9 +942,7 @@
     },
     "/dev/log-out": {
       "post": {
-        "tags": [
-          "register"
-        ],
+        "tags": ["register"],
         "summary": "log-out",
         "description": "log-out",
         "operationId": "logOut",
@@ -670,7 +962,13 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PostEmailRequest"
+                "required": ["email"],
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  }
+                }
               }
             }
           }
@@ -681,7 +979,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SimpleResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or fail"
+                    }
+                  }
                 }
               }
             }
@@ -712,7 +1016,18 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DataMigrationRequest"
+                "required": ["from_id", "to_id"],
+                "type": "object",
+                "properties": {
+                  "from_id": {
+                    "type": "string",
+                    "description": "old user_id"
+                  },
+                  "to_id": {
+                    "type": "string",
+                    "description": "new user_id"
+                  }
+                }
               }
             }
           }
@@ -723,7 +1038,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SimpleResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or fail"
+                    }
+                  }
                 }
               }
             }
@@ -736,9 +1057,7 @@
     },
     "/dev/post-pay-info": {
       "post": {
-        "tags": [
-          "payment"
-        ],
+        "tags": ["payment"],
         "summary": "post-pay-info",
         "description": "post-pay-info",
         "operationId": "postPayInfo",
@@ -758,7 +1077,18 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PaymentCheckRequest"
+                "required": ["user_id"],
+                "type": "object",
+                "properties": {
+                  "user_id": {
+                    "type": "string",
+                    "description": "user_id"
+                  },
+                  "receipt": {
+                    "type": "string",
+                    "description": "iOS payment receipt for verification"
+                  }
+                }
               }
             }
           }
@@ -769,7 +1099,73 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostPayResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or fail"
+                    },
+                    "pay_info": {
+                      "type": "object",
+                      "properties": {
+                        "original_transaction_id": {
+                          "type": "string",
+                          "x-stoplight": {
+                            "id": "bw7xbnwltw1w3"
+                          }
+                        },
+                        "transaction_id": {
+                          "type": "string",
+                          "x-stoplight": {
+                            "id": "sp4yjzlqvvd8k"
+                          }
+                        },
+                        "product_id": {
+                          "type": "string",
+                          "x-stoplight": {
+                            "id": "6fx6unstelpd8"
+                          }
+                        },
+                        "purchase_date_ms": {
+                          "type": "string",
+                          "x-stoplight": {
+                            "id": "4j558kw7m6luf"
+                          }
+                        },
+                        "expires_date_ms": {
+                          "type": "string",
+                          "x-stoplight": {
+                            "id": "uniww2uqmszwl"
+                          }
+                        },
+                        "in_app_ownership_type": {
+                          "type": "string",
+                          "x-stoplight": {
+                            "id": "sjbnp10cfp2nc"
+                          }
+                        },
+                        "cancellation_date_ms": {
+                          "type": "string",
+                          "x-stoplight": {
+                            "id": "pse6jjubg3moa"
+                          }
+                        },
+                        "is_upgraded": {
+                          "type": "string",
+                          "x-stoplight": {
+                            "id": "l35z9b2b7jfqq"
+                          }
+                        },
+                        "auto_renew_status": {
+                          "type": "string",
+                          "x-stoplight": {
+                            "id": "jm4bwfg1daq1w"
+                          }
+                        }
+                      },
+                      "description": "payment information"
+                    }
+                  }
                 }
               }
             }
@@ -800,7 +1196,25 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DataExportSurveyRequest"
+                "required": ["select", "user_id"],
+                "type": "object",
+                "properties": {
+                  "clinic": {
+                    "type": "string",
+                    "description": "clinic name (optional)"
+                  },
+                  "doctor": {
+                    "type": "string",
+                    "description": "doctor name (optional)"
+                  },
+                  "select": {
+                    "type": "integer",
+                    "description": "survey select value"
+                  },
+                  "user_id": {
+                    "type": "string"
+                  }
+                }
               }
             }
           }
@@ -811,7 +1225,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SimpleResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or fail"
+                    }
+                  }
                 }
               }
             }
@@ -842,7 +1262,34 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SaveSurveyRequest"
+                "required": [
+                  "score_date",
+                  "score_name",
+                  "score_value",
+                  "user_id"
+                ],
+                "type": "object",
+                "properties": {
+                  "user_id": {
+                    "type": "string",
+                    "description": "user id"
+                  },
+                  "score_name": {
+                    "type": "string",
+                    "description": "IPSS or OABSS"
+                  },
+                  "score_date": {
+                    "type": "string",
+                    "description": "yyyymmdd-hhmmss"
+                  },
+                  "score_value": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "description": "score selection value"
+                    }
+                  }
+                }
               }
             }
           }
@@ -853,7 +1300,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SimpleResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or fail"
+                    }
+                  }
                 }
               }
             }
@@ -866,9 +1319,7 @@
     },
     "/dev/sign-up": {
       "post": {
-        "tags": [
-          "register"
-        ],
+        "tags": ["register"],
         "description": "sign up",
         "operationId": "signUp",
         "parameters": [
@@ -887,7 +1338,57 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SignUpRequest"
+                "required": [
+                  "guest_id",
+                  "gender",
+                  "birthyear",
+                  "social",
+                  "device",
+                  "region"
+                ],
+                "type": "object",
+                "properties": {
+                  "guest_id": {
+                    "type": "string",
+                    "description": "guest id"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "email address when signup"
+                  },
+                  "pw": {
+                    "type": "string",
+                    "description": "password when signup"
+                  },
+                  "gender": {
+                    "type": "string",
+                    "description": "male or female"
+                  },
+                  "birthyear": {
+                    "type": "string",
+                    "description": "year of birth (ex 1980)"
+                  },
+                  "username": {
+                    "type": "string",
+                    "description": "user name when signup"
+                  },
+                  "social": {
+                    "type": "string",
+                    "description": "E(email), A(apple), G(google), N(guest)"
+                  },
+                  "device": {
+                    "type": "string",
+                    "description": "Android or iPhone"
+                  },
+                  "region": {
+                    "type": "string",
+                    "description": "country code"
+                  },
+                  "disease": {
+                    "type": "string",
+                    "description": "any diagnosed disease info"
+                  }
+                }
               }
             }
           }
@@ -898,7 +1399,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SimpleResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or fail"
+                    }
+                  }
                 }
               }
             }
@@ -929,7 +1436,54 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RecordUpdateRequest"
+                "required": ["rec_date", "user_id"],
+                "type": "object",
+                "properties": {
+                  "user_id": {
+                    "type": "string"
+                  },
+                  "rec_date": {
+                    "type": "string",
+                    "description": "record date (yyyymmdd-hhmms)"
+                  },
+                  "record": {
+                    "type": "object",
+                    "properties": {
+                      "record_urgency": {
+                        "type": "string"
+                      },
+                      "is_nocturia": {
+                        "type": "boolean"
+                      },
+                      "is_intake": {
+                        "type": "boolean"
+                      },
+                      "is_manual": {
+                        "type": "boolean"
+                      },
+                      "is_leakage": {
+                        "type": "boolean"
+                      },
+                      "leakage_memo": {
+                        "type": "string"
+                      },
+                      "record_volume": {
+                        "type": "string"
+                      },
+                      "beverage_type": {
+                        "type": "string"
+                      },
+                      "leakage_volume": {
+                        "type": "string"
+                      },
+                      "delete_time": {
+                        "type": "string",
+                        "description": "when delete record (yyyymmdd-hhmmss)"
+                      }
+                    },
+                    "description": "record item"
+                  }
+                }
               }
             }
           }
@@ -940,7 +1494,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SimpleResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or fail"
+                    }
+                  }
                 }
               }
             }
@@ -984,7 +1544,47 @@
             "description": "success or invalid email/password"
           },
           "user_info": {
-            "$ref": "#/components/schemas/LoginResponse_user_info"
+            "type": "object",
+            "properties": {
+              "last_name": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "x1ukde96wog6z"
+                }
+              },
+              "first_name": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "g2yytr2r7w248"
+                }
+              },
+              "birthyear": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "mtvry3f99gyum"
+                }
+              },
+              "gender": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "rnriojq5ihu2m"
+                }
+              },
+              "country": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "4sacnf7lomy7f"
+                }
+              }
+            },
+            "description": "user profile"
+          },
+          "access_token": {
+            "type": "string",
+            "description": "token for authorization",
+            "x-stoplight": {
+              "id": "o4v5674gsyuf4"
+            }
           }
         }
       },
@@ -1016,7 +1616,70 @@
             "type": "array",
             "description": "all records",
             "items": {
-              "$ref": "#/components/schemas/GetAllResultResponse_records"
+              "type": "object",
+              "properties": {
+                "record_time": {
+                  "type": "string",
+                  "x-stoplight": {
+                    "id": "jfqk72kbukadc"
+                  }
+                },
+                "is_intake": {
+                  "type": "boolean",
+                  "x-stoplight": {
+                    "id": "77up6hv0i3gnl"
+                  }
+                },
+                "is_manual": {
+                  "type": "boolean",
+                  "x-stoplight": {
+                    "id": "h1ba1fpbz7ht1"
+                  }
+                },
+                "is_nocturia": {
+                  "type": "boolean",
+                  "x-stoplight": {
+                    "id": "7r6nf49219880"
+                  }
+                },
+                "is_leakage": {
+                  "type": "boolean",
+                  "x-stoplight": {
+                    "id": "yk2dmlom9sbw4"
+                  }
+                },
+                "leakage_memo": {
+                  "type": "string",
+                  "x-stoplight": {
+                    "id": "ow74ke8j8u5cs"
+                  }
+                },
+                "record_volume": {
+                  "type": "string",
+                  "x-stoplight": {
+                    "id": "xuwqz2ms3iqr2"
+                  }
+                },
+                "record_urgency": {
+                  "type": "string",
+                  "x-stoplight": {
+                    "id": "fb6fqqv66k86o"
+                  }
+                },
+                "beverage_type": {
+                  "type": "string",
+                  "x-stoplight": {
+                    "id": "am54bh8ok6gec"
+                  }
+                },
+                "leakage_volume": {
+                  "type": "string",
+                  "x-stoplight": {
+                    "id": "i98qhhaikjnui"
+                  }
+                }
+              },
+              "description": "dictionary item"
             }
           }
         }
@@ -1029,7 +1692,64 @@
             "description": "success or fail"
           },
           "pay_info": {
-            "$ref": "#/components/schemas/PostPayResponse_pay_info"
+            "type": "object",
+            "properties": {
+              "original_transaction_id": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "bw7xbnwltw1w3"
+                }
+              },
+              "transaction_id": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "sp4yjzlqvvd8k"
+                }
+              },
+              "product_id": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "6fx6unstelpd8"
+                }
+              },
+              "purchase_date_ms": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "4j558kw7m6luf"
+                }
+              },
+              "expires_date_ms": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "uniww2uqmszwl"
+                }
+              },
+              "in_app_ownership_type": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "sjbnp10cfp2nc"
+                }
+              },
+              "cancellation_date_ms": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "pse6jjubg3moa"
+                }
+              },
+              "is_upgraded": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "l35z9b2b7jfqq"
+                }
+              },
+              "auto_renew_status": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "jm4bwfg1daq1w"
+                }
+              }
+            },
+            "description": "payment information"
           }
         }
       },
@@ -1041,15 +1761,28 @@
             "description": "success or fail"
           },
           "pay_info": {
-            "$ref": "#/components/schemas/GetPayResponse_pay_info"
+            "required": ["is_pause", "remain_count"],
+            "type": "object",
+            "properties": {
+              "remain_count": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "if3g9wa2xoqhr"
+                }
+              },
+              "is_pause": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "d7px7zvtesirs"
+                }
+              }
+            },
+            "description": "payment information"
           }
         }
       },
       "LoginRequest": {
-        "required": [
-          "email",
-          "pw"
-        ],
+        "required": ["email", "pw"],
         "type": "object",
         "properties": {
           "email": {
@@ -1061,11 +1794,7 @@
         }
       },
       "ChagePwRequest": {
-        "required": [
-          "email",
-          "new_pw",
-          "old_pw"
-        ],
+        "required": ["email", "new_pw", "old_pw"],
         "type": "object",
         "properties": {
           "email": {
@@ -1080,11 +1809,7 @@
         }
       },
       "ConfirmPwRequest": {
-        "required": [
-          "email",
-          "new_pw",
-          "verification_code"
-        ],
+        "required": ["email", "new_pw", "verification_code"],
         "type": "object",
         "properties": {
           "email": {
@@ -1099,11 +1824,7 @@
         }
       },
       "ContactUsRequest": {
-        "required": [
-          "email",
-          "message",
-          "subject"
-        ],
+        "required": ["email", "message", "subject"],
         "type": "object",
         "properties": {
           "email": {
@@ -1124,9 +1845,7 @@
         }
       },
       "PostEmailRequest": {
-        "required": [
-          "email"
-        ],
+        "required": ["email"],
         "type": "object",
         "properties": {
           "email": {
@@ -1135,10 +1854,7 @@
         }
       },
       "ExportReportRequest": {
-        "required": [
-          "export_date",
-          "user_id"
-        ],
+        "required": ["export_date", "user_id"],
         "type": "object",
         "properties": {
           "export_date": {
@@ -1156,10 +1872,7 @@
         }
       },
       "DataMigrationRequest": {
-        "required": [
-          "from_id",
-          "to_id"
-        ],
+        "required": ["from_id", "to_id"],
         "type": "object",
         "properties": {
           "from_id": {
@@ -1173,9 +1886,7 @@
         }
       },
       "PaymentCheckRequest": {
-        "required": [
-          "user_id"
-        ],
+        "required": ["user_id"],
         "type": "object",
         "properties": {
           "user_id": {
@@ -1189,10 +1900,7 @@
         }
       },
       "DataExportSurveyRequest": {
-        "required": [
-          "select",
-          "user_id"
-        ],
+        "required": ["select", "user_id"],
         "type": "object",
         "properties": {
           "clinic": {
@@ -1204,7 +1912,7 @@
             "description": "doctor name (optional)"
           },
           "select": {
-            "type": "number",
+            "type": "integer",
             "description": "survey select value"
           },
           "user_id": {
@@ -1213,12 +1921,7 @@
         }
       },
       "SaveSurveyRequest": {
-        "required": [
-          "score_date",
-          "score_name",
-          "score_value",
-          "user_id"
-        ],
+        "required": ["score_date", "score_name", "score_value", "user_id"],
         "type": "object",
         "properties": {
           "user_id": {
@@ -1244,31 +1947,59 @@
       },
       "SignUpRequest": {
         "required": [
-          "email",
+          "guest_id",
           "gender",
-          "pw"
+          "birthyear",
+          "social",
+          "device",
+          "region"
         ],
         "type": "object",
         "properties": {
+          "guest_id": {
+            "type": "string",
+            "description": "guest id"
+          },
           "email": {
             "type": "string",
-            "description": "email address"
+            "description": "email address when signup"
           },
           "pw": {
             "type": "string",
-            "description": "password"
+            "description": "password when signup"
           },
           "gender": {
             "type": "string",
             "description": "male or female"
+          },
+          "birthyear": {
+            "type": "string",
+            "description": "year of birth (ex 1980)"
+          },
+          "username": {
+            "type": "string",
+            "description": "user name when signup"
+          },
+          "social": {
+            "type": "string",
+            "description": "E(email), A(apple), G(google), N(guest)"
+          },
+          "device": {
+            "type": "string",
+            "description": "Android or iPhone"
+          },
+          "region": {
+            "type": "string",
+            "description": "country code"
+          },
+          "disease": {
+            "type": "string",
+            "description": "any diagnosed disease info"
           }
         }
       },
       "RecordUpdateRequest": {
-        "required": [
-          "rec_date",
-          "user_id"
-        ],
+        "required": ["rec_date", "user_id"],
         "type": "object",
         "properties": {
           "user_id": {
@@ -1279,7 +2010,41 @@
             "description": "record date (yyyymmdd-hhmms)"
           },
           "record": {
-            "$ref": "#/components/schemas/RecordUpdateRequest_record"
+            "type": "object",
+            "properties": {
+              "record_urgency": {
+                "type": "string"
+              },
+              "is_nocturia": {
+                "type": "boolean"
+              },
+              "is_intake": {
+                "type": "boolean"
+              },
+              "is_manual": {
+                "type": "boolean"
+              },
+              "is_leakage": {
+                "type": "boolean"
+              },
+              "leakage_memo": {
+                "type": "string"
+              },
+              "record_volume": {
+                "type": "string"
+              },
+              "beverage_type": {
+                "type": "string"
+              },
+              "leakage_volume": {
+                "type": "string"
+              },
+              "delete_time": {
+                "type": "string",
+                "description": "when delete record (yyyymmdd-hhmmss)"
+              }
+            },
+            "description": "record item"
           }
         }
       },
@@ -1304,16 +2069,16 @@
               "id": "mtvry3f99gyum"
             }
           },
-          "email": {
-            "type": "string",
-            "x-stoplight": {
-              "id": "3p37folh3asyt"
-            }
-          },
           "gender": {
             "type": "string",
             "x-stoplight": {
               "id": "rnriojq5ihu2m"
+            }
+          },
+          "country": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "4sacnf7lomy7f"
             }
           }
         },
@@ -1446,10 +2211,7 @@
         "description": "payment information"
       },
       "GetPayResponse_pay_info": {
-        "required": [
-          "is_pause",
-          "remain_count"
-        ],
+        "required": ["is_pause", "remain_count"],
         "type": "object",
         "properties": {
           "remain_count": {
@@ -1505,6 +2267,12 @@
         "description": "record item"
       }
     },
-    "securitySchemes": {}
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
   }
 }

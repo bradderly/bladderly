@@ -7,7 +7,7 @@ part 'signup_guest_form_state.dart';
 class SignupGuestFormCubit extends Cubit<SignupGuestFormState> {
   SignupGuestFormCubit() : super(const SignupGuestFormState());
 
-  void setSex(Sex sex) {
+  void setSex(Gender sex) {
     return emit(state.copyWith(sex: sex));
   }
 

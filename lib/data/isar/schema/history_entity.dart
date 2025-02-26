@@ -10,9 +10,9 @@ class HistoryEntity {
 
   Id id = Isar.autoIncrement;
 
-  @Name('hash_id')
+  @Name('user_id')
   @Index(composite: [CompositeIndex('recordTime')])
-  late String hashId;
+  late String userId;
 
   @Name('record_time')
   late DateTime recordTime;

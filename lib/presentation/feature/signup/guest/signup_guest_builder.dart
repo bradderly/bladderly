@@ -4,6 +4,7 @@ import 'package:bradderly/presentation/feature/signup/guest/cubit/signup_guest_f
 import 'package:bradderly/presentation/feature/signup/guest/signup_guest_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uuid/v4.dart';
 
 class SignupGuestBuilder extends StatelessWidget {
   const SignupGuestBuilder({super.key});
@@ -16,7 +17,11 @@ class SignupGuestBuilder extends StatelessWidget {
           create: (_) => SignupGuestFormCubit(),
         ),
         BlocProvider(
-          create: (_) => SignupGuestBloc(signupGuestUsecase: getIt()),
+          create: (_) => SignupGuestBloc(
+            signupGuestUsecase: getIt(),
+            uuidV4: const UuidV4(),
+            deviceInfoModel: getIt(),
+          ),
         ),
       ],
       child: const SignupGuestView(),

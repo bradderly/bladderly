@@ -11,11 +11,11 @@ class GetHistoriesStreamUsecase {
   final HistoryRepository _historyRepository;
 
   Either<Exception, Stream<Histories>> call({
-    required String hashId,
+    required String userId,
     required DateTime dateTime,
   }) {
     try {
-      return Right(_historyRepository.getHistoriesStream(hashId: hashId, recordDate: dateTime));
+      return Right(_historyRepository.getHistoriesStream(userId: userId, recordDate: dateTime));
     } on Exception catch (e) {
       return Left(e);
     } catch (e) {

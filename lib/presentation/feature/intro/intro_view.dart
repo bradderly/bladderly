@@ -10,62 +10,70 @@ class IntroView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                children: [
-                  Text(
-                    'Bladderly',
-                    style: context.textStyleTheme.b24BoldOutfit
-                        .copyWith(fontSize: 40, color: context.colorTheme.vermilion.primary.shade50),
-                  ),
-                  const Gap(4),
-                  Text(
-                    'Smart Bladder Diary'.tr(context),
-                    style: context.textStyleTheme.b20Bold.copyWith(color: context.colorTheme.neutral.shade9),
-                  ),
-                  const Gap(16),
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade8),
-                      children: [
-                        TextSpan(text: 'Free yourself from the hassle'.tr(context)),
-                        const TextSpan(text: '\n'),
-                        TextSpan(text: 'of writing on paper.'.tr(context)),
-                      ],
-                    ),
-                  ),
-                  const Gap(32),
-                  PrimaryButton.filled(
-                    onPressed: () => const SignupGuestRoute().go(context),
-                    backgroundColor: context.colorTheme.vermilion.primary.shade50,
-                    borderRadius: 400,
-                    shape: BoxShape.rectangle,
-                    text: 'I’m new here'.tr(context),
-                    textColor: context.colorTheme.neutral.shade0,
-                    size: const Size.fromHeight(56),
-                  ),
-                  const Gap(24),
-                  GestureDetector(
-                    onTap: () => const SigninRoute().go(context),
-                    behavior: HitTestBehavior.translucent,
-                    child: Text(
-                      'I already have an account'.tr(context),
-                      style: context.textStyleTheme.b14SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
-                    ),
-                  ),
-                  Gap(55 - MediaQuery.paddingOf(context).bottom),
-                ],
-              ),
-            ),
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFFFC8150),
+            Color(0xFFFAD3BB),
+            Color(0xFFF8F8F7),
           ],
+          stops: [0, 0.17, 0.5],
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  children: [
+                    Text(
+                      'Bladderly',
+                      style: context.textStyleTheme.b24BoldOutfit
+                          .copyWith(fontSize: 40, color: context.colorTheme.vermilion.primary.shade50),
+                    ),
+                    const Gap(4),
+                    Text(
+                      'Smart Bladder Diary'.tr(context),
+                      style: context.textStyleTheme.b20Bold.copyWith(color: context.colorTheme.neutral.shade9),
+                    ),
+                    const Gap(16),
+                    Text(
+                      'Free yourself from the hassle of writing on paper.'.tr(context),
+                      style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade8),
+                    ),
+                    const Gap(32),
+                    PrimaryButton.filled(
+                      onPressed: () => const SignupGuestRoute().go(context),
+                      backgroundColor: context.colorTheme.vermilion.primary.shade50,
+                      borderRadius: 400,
+                      shape: BoxShape.rectangle,
+                      text: 'I’m new here'.tr(context),
+                      textColor: context.colorTheme.neutral.shade0,
+                      size: const Size.fromHeight(56),
+                    ),
+                    const Gap(24),
+                    GestureDetector(
+                      onTap: () => const SigninRoute().go(context),
+                      behavior: HitTestBehavior.translucent,
+                      child: Text(
+                        'I already have an account'.tr(context),
+                        style: context.textStyleTheme.b14SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
+                      ),
+                    ),
+                    Gap(55 - MediaQuery.paddingOf(context).bottom),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

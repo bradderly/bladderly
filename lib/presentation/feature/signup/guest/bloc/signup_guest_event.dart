@@ -9,16 +9,16 @@ sealed class SignupGuestEvent extends Equatable {
 
 class SignupGuestSubmit extends SignupGuestEvent {
   const SignupGuestSubmit({
-    required this.sex,
+    required this.gender,
     required this.yearOfBirth,
   });
 
-  final Sex sex;
+  final Gender gender;
   final int yearOfBirth;
 
   @override
   List<Object> get props => [
-        sex,
+        gender,
         yearOfBirth,
       ];
 }

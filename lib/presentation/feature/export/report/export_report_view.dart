@@ -129,7 +129,7 @@ class _ExportReportViewState extends State<ExportReportView> {
                   onTap: isValid
                       ? () => context
                           .read<ExportReportBloc>()
-                          .add(const ExportReportSendReason(hashId: 'ydu3328@naver.com'))
+                          .add(const ExportReportSendReason(userId: 'ydu3328@naver.com'))
                       : null,
                   text: 'Done'.tr(context),
                 ),

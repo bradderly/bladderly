@@ -25,11 +25,11 @@ class HistoryRepositoryImpl implements HistoryRepository {
 
   @override
   Stream<Histories> getHistoriesStream({
-    required String hashId,
+    required String userId,
     required DateTime recordDate,
   }) {
     return _isarClient
-        .getHistoriesStreamByHashIdAndDate(hashId: hashId, recordDate: recordDate)
+        .getHistoriesStreamByUserIdAndDate(userId: userId, recordDate: recordDate)
         .map((entities) => Histories(list: entities.map(HistoryMapper.fromHistoryEntity).toList()));
   }
 
@@ -52,18 +52,18 @@ class HistoryRepositoryImpl implements HistoryRepository {
   }
 
   @override
-  Stream<List<DateTime>> getHistoryDatesStream(String hashId) {
-    return _isarClient.getHistoryDatesStreamByHashId(hashId: hashId);
+  Stream<List<DateTime>> getHistoryDatesStream(String userId) {
+    return _isarClient.getHistoryDatesStreamByUserId(userId: userId);
   }
 
   @override
   Future<void> exportHistories({
-    required String hashId,
+    required String userId,
     required List<DateTime> dates,
   }) {
     return _apiClient.exportRecord(
       request: ExportReportRequest(
-        userId: hashId,
+        userId: userId,
         exportDate: [
           for (final date in dates) DateFormat('yyyyMMdd').format(date),
         ],
@@ -73,13 +73,13 @@ class HistoryRepositoryImpl implements HistoryRepository {
 
   @override
   Future<void> sendHistoriesExportReason({
-    required String hashId,
+    required String userId,
     required String? doctorName,
     required String? clinicInformation,
   }) {
     return _apiClient.reportPurpose(
       request: DataExportSurveyRequest(
-        userId: hashId,
+        userId: userId,
         doctor: doctorName,
         clinic: clinicInformation,
         select: doctorName == null && clinicInformation == null ? 0 : 1,
@@ -105,20 +105,20 @@ class HistoryRepositoryImpl implements HistoryRepository {
 
     if (history == null) return;
 
-    return _isarClient.removeHistoryByHashIdAndRecordTime(hashId: history.hashId, recordTime: history.recordTime);
+    return _isarClient.removeHistoryByUserIdAndRecordTime(userId: history.userId, recordTime: history.recordTime);
   }
 
   @override
   Future<String?> uploadHistory({
-    required String hashId,
+    required String userId,
     required History history,
   }) async {
     final response = await _apiClient.updateRecord(
       request: RecordUpdateRequest(
-        userId: hashId,
+        userId: userId,
         recDate: DateFormat('yyyyMMdd-hhmmss').format(history.recordTime),
         record: switch (history) {
-          VoidingHistory() => RecordUpdateRequestRecord(
+          VoidingHistory() => RecordUpdateRequest$Record(
               isLeakage: history.isLeakage,
               isNocturia: history.isNocutria,
               recordVolume: '${history.recordVolume}',
@@ -127,14 +127,14 @@ class HistoryRepositoryImpl implements HistoryRepository {
               leakageMemo: history.memo,
               isManual: history.isManual,
             ),
-          IntakeHistory() => RecordUpdateRequestRecord(
+          IntakeHistory() => RecordUpdateRequest$Record(
               beverageType: history.beverageType,
               leakageMemo: history.memo,
               recordVolume: '${history.recordVolume}',
               isIntake: true,
               isManual: true,
             ),
-          LeakageHistory() => RecordUpdateRequestRecord(
+          LeakageHistory() => RecordUpdateRequest$Record(
               leakageVolume: history.leakageVolume.name,
               leakageMemo: history.memo,
               isLeakage: true,

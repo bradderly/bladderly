@@ -16,17 +16,7 @@ final class SignupGuestSubmitInProgress extends SignupGuestState {
 }
 
 final class SignupGuestSubmitSuccess extends SignupGuestState {
-  const SignupGuestSubmitSuccess({
-    required this.userModel,
-  });
-
-  final UserModel userModel;
-
-  @override
-  List<Object> get props => [
-        ...super.props,
-        userModel,
-      ];
+  const SignupGuestSubmitSuccess();
 }
 
 final class SignupGuestSubmitFailure extends SignupGuestState {

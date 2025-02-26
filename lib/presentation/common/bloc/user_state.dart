@@ -5,26 +5,20 @@ sealed class UserState extends Equatable {
     required this.userModel,
   });
 
-  final UserModel userModel;
+  final UserModel? userModel;
+
+  UserModel get userModelOrThrowException => userModel ?? (throw Exception('UserModel is null'));
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         userModel,
       ];
 }
 
 final class UserInitial extends UserState {
-  const UserInitial() : super(userModel: const UserModel.none());
+  const UserInitial() : super(userModel: null);
 }
 
-final class UserLoadInProgress extends UserState {
-  const UserLoadInProgress({required super.userModel});
-}
-
-final class UserLoadSuccess extends UserState {
-  const UserLoadSuccess({required super.userModel});
-}
-
-final class UserLoadFailure extends UserState {
-  const UserLoadFailure({required super.userModel});
+final class UserChangeSuccess extends UserState {
+  const UserChangeSuccess({required UserModel super.userModel});
 }

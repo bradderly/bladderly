@@ -64,7 +64,7 @@ class _SoundInputRecordingViewState extends State<SoundInputRecordingView> with 
   }
 
   Future<void> startRecording() async {
-    final userModel = context.read<UserBloc>().state.userModel;
+    final userModel = context.read<UserBloc>().state.userModelOrThrowException;
 
     final fileName = [
       userModel.id,

@@ -11,13 +11,13 @@ class SendHistoriesExportReasonUsecase {
   final HistoryRepository _historyRepository;
 
   Future<Either<Exception, void>> call({
-    required String hashId,
+    required String userId,
     required String? doctorName,
     required String? clinicInformation,
   }) async {
     try {
       final result = await _historyRepository.sendHistoriesExportReason(
-        hashId: hashId,
+        userId: userId,
         doctorName: doctorName,
         clinicInformation: clinicInformation,
       );

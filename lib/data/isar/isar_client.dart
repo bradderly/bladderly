@@ -10,26 +10,26 @@ abstract class IsarClient {
 
   int saveHistory(HistoryEntity historyEntity);
 
-  void removeHistoryByHashIdAndRecordTime({
-    required String hashId,
+  void removeHistoryByUserIdAndRecordTime({
+    required String userId,
     required DateTime recordTime,
   });
 
-  Stream<List<HistoryEntity>> getHistoriesStreamByHashIdAndDate({
-    required String hashId,
+  Stream<List<HistoryEntity>> getHistoriesStreamByUserIdAndDate({
+    required String userId,
     required DateTime recordDate,
   });
 
-  Stream<List<DateTime>> getHistoryDatesStreamByHashId({
-    required String hashId,
+  Stream<List<DateTime>> getHistoryDatesStreamByUserId({
+    required String userId,
   });
 
-  Stream<List<HistoryEntity>> getPendingUploadHistoriesStreamByHashId(
-    String hashId,
+  Stream<List<HistoryEntity>> getPendingUploadHistoriesStreamByUserId(
+    String userId,
   );
 
-  List<HistoryEntity> getPendingUploadHistoriesByHashId(
-    String hashId,
+  List<HistoryEntity> getPendingUploadHistoriesByUserId(
+    String userId,
   );
 }
 
@@ -49,43 +49,43 @@ class _IsarClientImpl implements IsarClient {
   }
 
   @override
-  void removeHistoryByHashIdAndRecordTime({required String hashId, required DateTime recordTime}) {
+  void removeHistoryByUserIdAndRecordTime({required String userId, required DateTime recordTime}) {
     return _isar
-        .writeTxnSync(_isar.historyEntitys.filter().hashIdEqualTo(hashId).recordTimeEqualTo(recordTime).deleteAllSync);
+        .writeTxnSync(_isar.historyEntitys.filter().userIdEqualTo(userId).recordTimeEqualTo(recordTime).deleteAllSync);
   }
 
   @override
-  Stream<List<HistoryEntity>> getHistoriesStreamByHashIdAndDate({
-    required String hashId,
+  Stream<List<HistoryEntity>> getHistoriesStreamByUserIdAndDate({
+    required String userId,
     required DateTime recordDate,
   }) {
     final lowerDate = DateUtils.dateOnly(recordDate);
     final upperDate = lowerDate.add(const Duration(days: 1));
     return _isar.historyEntitys
         .filter()
-        .hashIdEqualTo(hashId)
+        .userIdEqualTo(userId)
         .recordTimeBetween(lowerDate, upperDate, includeUpper: false)
         .sortByRecordTime()
         .watch(fireImmediately: true);
   }
 
   @override
-  Stream<List<DateTime>> getHistoryDatesStreamByHashId({required String hashId}) {
+  Stream<List<DateTime>> getHistoryDatesStreamByUserId({required String userId}) {
     return _isar.historyEntitys
         .filter()
-        .hashIdEqualTo(hashId)
+        .userIdEqualTo(userId)
         .sortByRecordTime()
         .watch(fireImmediately: true)
         .map((entities) => entities.map((e) => DateUtils.dateOnly(e.recordTime)).toSet().toList());
   }
 
   @override
-  Stream<List<HistoryEntity>> getPendingUploadHistoriesStreamByHashId(String hashId) {
-    return _isar.historyEntitys.filter().hashIdEqualTo(hashId).statusEqualTo(HistoryStatus.pendingUpload).watch();
+  Stream<List<HistoryEntity>> getPendingUploadHistoriesStreamByUserId(String userId) {
+    return _isar.historyEntitys.filter().userIdEqualTo(userId).statusEqualTo(HistoryStatus.pendingUpload).watch();
   }
 
   @override
-  List<HistoryEntity> getPendingUploadHistoriesByHashId(String hashId) {
-    return _isar.historyEntitys.filter().hashIdEqualTo(hashId).statusEqualTo(HistoryStatus.pendingUpload).findAllSync();
+  List<HistoryEntity> getPendingUploadHistoriesByUserId(String userId) {
+    return _isar.historyEntitys.filter().userIdEqualTo(userId).statusEqualTo(HistoryStatus.pendingUpload).findAllSync();
   }
 }

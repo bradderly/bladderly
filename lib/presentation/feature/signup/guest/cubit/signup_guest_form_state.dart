@@ -6,7 +6,7 @@ class SignupGuestFormState extends Equatable {
     String yearOfBirth = '',
   }) : _yearOfBirth = yearOfBirth;
 
-  final Sex? sex;
+  final Gender? sex;
   final String _yearOfBirth;
 
   bool get isValid {
@@ -22,7 +22,7 @@ class SignupGuestFormState extends Equatable {
   int get yearOfBirth => int.parse(_yearOfBirth);
 
   SignupGuestFormState copyWith({
-    Sex? sex,
+    Gender? sex,
     String? yearOfBirth,
   }) {
     return SignupGuestFormState(
