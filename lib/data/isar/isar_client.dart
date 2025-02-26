@@ -1,4 +1,5 @@
 import 'package:bradderly/data/isar/schema/history_entity.dart';
+import 'package:bradderly/data/isar/schema/user_entity.dart';
 import 'package:bradderly/domain/model/history_status.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
@@ -31,6 +32,10 @@ abstract class IsarClient {
   List<HistoryEntity> getPendingUploadHistoriesByUserId(
     String userId,
   );
+
+  UserEntity? getUserOrNull();
+
+  Stream<UserEntity> getUserStream();
 }
 
 class _IsarClientImpl implements IsarClient {
@@ -87,5 +92,15 @@ class _IsarClientImpl implements IsarClient {
   @override
   List<HistoryEntity> getPendingUploadHistoriesByUserId(String userId) {
     return _isar.historyEntitys.filter().userIdEqualTo(userId).statusEqualTo(HistoryStatus.pendingUpload).findAllSync();
+  }
+
+  @override
+  UserEntity? getUserOrNull() {
+    return _isar.userEntitys.where().build().findAllSync().firstOrNull;
+  }
+
+  @override
+  Stream<UserEntity> getUserStream() {
+    return _isar.userEntitys.where().build().watch().map((entities) => entities.first);
   }
 }

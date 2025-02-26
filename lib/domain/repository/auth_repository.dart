@@ -2,23 +2,28 @@ import 'package:bradderly/domain/model/sex.dart';
 import 'package:bradderly/domain/model/user.dart';
 
 abstract class AuthRepository {
-  Future<User> signupGuest({
-    required Sex sex,
+  Future<void> signupGuest({
+    required String userId,
+    required Gender gender,
     required int yearOfBirth,
+    required String region,
+    required String device,
   });
 
   Future<bool> checkExistingUser({
     required String email,
   });
 
-  Future<User> signin({
+  Future<void> signin({
     required String email,
     required String password,
   });
 
-  Future<User> signup({
+  Future<void> signup({
     required String userId,
     required String email,
     required String password,
   });
+
+  Stream<User> get userStream;
 }

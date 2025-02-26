@@ -1,9 +1,9 @@
-enum Sex {
+enum Gender {
   female(text: 'Female'),
   male(text: 'Male'),
   ;
 
-  const Sex({
+  const Gender({
     required this.text,
   });
 

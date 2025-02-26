@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bradderly/core/package_device_info/src/model/device_info_model.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:device_region/device_region.dart';
 import 'package:injectable/injectable.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -10,6 +11,7 @@ abstract class PackageDeviceInfoModule {
   @preResolve
   Future<DeviceInfoModel> get deviceInfo async {
     final deviceInfoPlugin = DeviceInfoPlugin();
+    final region = await DeviceRegion.getSIMCountryCode().catchError((_) => null);
 
     late final String deviceName;
 
@@ -26,6 +28,7 @@ abstract class PackageDeviceInfoModule {
         RegExp('[^a-zA-Z0-9_]'),
         '',
       ),
+      region: region ?? '',
     );
   }
 

@@ -1,5 +1,4 @@
 import 'package:bradderly/domain/model/sex.dart';
-import 'package:bradderly/domain/model/user.dart';
 import 'package:bradderly/domain/repository/auth_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
@@ -12,17 +11,23 @@ class SignupGuestUsecase {
 
   final AuthRepository _authRepository;
 
-  Future<Either<Exception, User>> call({
-    required Sex sex,
+  Future<Either<Exception, void>> call({
+    required String userId,
+    required Gender gender,
     required int yearOfBirth,
+    required String region,
+    required String device,
   }) async {
     try {
-      final user = await _authRepository.signupGuest(
-        sex: sex,
+      await _authRepository.signupGuest(
+        userId: userId,
+        gender: gender,
         yearOfBirth: yearOfBirth,
+        region: region,
+        device: device,
       );
 
-      return Right(user);
+      return const Right(null);
     } on Exception catch (e) {
       return Left(e);
     } catch (e) {

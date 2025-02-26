@@ -1,5 +1,6 @@
 import 'package:bradderly/data/isar/isar_client.dart';
 import 'package:bradderly/data/isar/schema/history_entity.dart';
+import 'package:bradderly/data/isar/schema/user_entity.dart';
 import 'package:injectable/injectable.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
@@ -15,6 +16,7 @@ abstract class IsarModule {
     return Isar.open(
       [
         HistoryEntitySchema,
+        UserEntitySchema,
       ],
       directory: applicationDocumentsDirectory.path,
     );
