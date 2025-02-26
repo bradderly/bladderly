@@ -1,344 +1,860 @@
-key,en,ko
-Today Summary,Today’s Summary,오늘의 요약
-Voiding,Voiding,배뇨
-See more,See more,더보기
-Frequency,Frequency,빈도
-Total void,Total void,총 배뇨
-times,times,회
-Last record,Last record,마지막 기록
-ago,ago,전
-How to use,How to use,사용 방법
-Sound Input,Sound Input,소리 입력
-Manual Input,Manual Input,수동 입력
-Intake,Intake,섭취
-water,water,물
-caffeine,caffeine,카페인
-soda,soda,탄산
-juice,juice,주스
-alcohol,alcohol,주류
-others,others,기타
-Summary,Summary,요약
-Daytime,Daytime,주간
-Night-time,Night-time,야간
-Leakage,Leakage,요실금
-Voided volume,Voided volume,배뇨량
-Max,Max,최대
-Min,Min,최소
-Voiding interval,Voiding interval,배뇨 간격
-(hr:mins),(hr:mins),(시간:분)
-Mean,Mean,평균
-See less,See less,간단히 보기
-List Na Message,Looks like there’s nothing here yet.\nLet’s get started!,아직 기록이 없는 것 같아요.\n시작해볼까요!
-Time,Time,시간
-Amount,Amount,양
-Urge,Urge,요의
-Leak,Leak,누출
-Type,Type,유형
-Total amount,Total amount,총량
-Proportion,Proportion,비율
-List,List,목록
-S,S,소
-M,M,중
-L,L,대
-Pending Message,Processing your recording...,녹음 결과를 처리 중입니다...
-Refresh,Refresh,새로고침
-am,am,오전
-pm,pm,오후
-AM,AM,오전
-PM,PM,오후
-minutes,minutes,분
-hours,hours,시간
-minute,minute,분
-hour,hour,시간
-Beverage type,Beverage type,음료 유형
-Total amount Leakage,Total amount,전체 누출량
-Volume,Volume,배뇨량
-Urge Lv,Urge Lv,요의 수준
-Select urge level,Select urge level,마려웠던 정도를 선택해주세요
-No urge,No urge,요절박 증상 없음
-Urgent,Urgent,절박성 요실금
-Was it an urination during sleep?,Was it an urination during sleep?,수면 중 화장실에 가려고 깨셨나요?
-Did it leak?,Did it leak?,요실금이 발생했나요?
-Memo,Memo,메모
-Leakage Volume,Leakage Volume,누출량
-Small,Small,소
-Moderate,Moderate,중
-Large,Large,대
-Recording saved!,Recording saved!,녹음이 저장되었습니다!
-Recording save Message,Your recording is saved and ready for AI processing.,녹음이 저장되었으며 AI 처리를 위해 준비되었습니다.
-Yes,Yes,예
-No,No,아니오
-Add any notes or details here.,Add any notes or details here.,여기에 메모나 세부 사항을 추가하세요.
-Please record your urine output,Please record your urine output,소변 배출량을 기록해 주세요.
-In what situation did it occur?,In what situation did it occur?,어떤 상황에서 발생했나요?
-Medium,Medium,중
-More,More,더보기
-Type your beverage here,Type your beverage here,여기에 음료를 입력하세요
-Enter the amount here,Enter the amount here,여기에 양을 입력하세요
-How much did you drink?,How much did you drink?,얼마나 드셨나요?
-Today,Today,오늘
-Cancel,Cancel,취소
-Done,Done,완료
-Save,Save,저장하기
-Delete Message,Are you sure you want to delete the record?,기록을 삭제하시겠습니까?
-"Yes, Delete the record","Yes, Delete the record","네, 기록을 삭제합니다"
-"No, Keep the record","No, Keep the record","아니오, 기록을 유지합니다"
-Get Unlimited Access!,Get Unlimited Access!,모든 기능을 사용해보세요!
-Subscribe Message,Subscribe for the automatic voided volume measuring feature.,구독을 통해 배뇨량 자동 측정 기능을 무제한으로 이용해보세요.
-Annual,Annual,연간 요금제
-Monthly,Monthly,월간 요금제
-Enter Promo Code,Enter Promo Code,프로모션 코드 입력
-Enter Study Code,Enter Study Code,스터디 코드 입력
-Terms of Use,Terms of Use,이용약관
-Privacy Policy,Privacy Policy,개인정보보호 정책
-Study Code,Study Code,연구 코드
-Enter the study code,Enter the study code,연구 코드를 입력하세요.
-Study Message,"If you’re a study participant,\nenter your study code.",연구 참여자이신가요?\n안내 받은 연구 코드를 입력해 주세요.
-Having trouble finding the code?,Having trouble finding the code?,연구 코드를 찾는데 어려움이 있으신가요?
-Continue,Continue,다음
-"Leave us a message, and we’ll get back to you.","Leave us a message, and we’ll get back to you.",메시지를 남겨주시면 빠르게 답변 드리겠습니다.
-First Name,First Name,이름
-Last Name,Last Name,성
-Email Address,Email Address,이메일 주소
-Message,Message,메시지
-Submit,Submit,제출
-Preparing for the recording,Preparing for the recording,녹음을 준비 중입니다
-Recording started!,Recording started!,녹음이 시작되었습니다!
-Recording...,Recording...,녹음중...
-Tap to stop recording,Tap to stop recording,녹음을 중지하려면 탭하세요
-Are you sure you want to cancel the recording?,Are you sure you want to cancel the recording?,녹음을 취소하시겠습니까?
-"Yes, Cancel recording","Yes, Cancel recording","네, 녹음을 취소 하겠습니다."
-"No, Continue recording","No, Continue recording","아니요, 녹음을 계속 하겠습니다."
-We received your recording!,We received your recording!,녹음을 받았습니다!
-Analyzing Message,Your recording is being analyzed! The AI will process it and save the results automatically.,녹음을 분석 중입니다! AI가 처리한 후 결과를 자동으로 저장합니다.
-Go to Diary,Go to Diary,다이어리로 가기
-"Oops, we couldn’t analyze your results","Oops, we couldn’t analyze your results","죄송합니다, 결과를 분석할 수 없습니다."
-Issued records,Issued records,해당 시간 기록
-Add the void manually,Add the void manually,직접 배뇨량 기록 추가
-Keep the record without data,Keep the record without data,데이터 추가 없이 기록 유지
-Err_analyzing,There was an error during the analysis.\nPlease try again.,음향신호 분석 중에 오류가 있었습니다.\n다시 측정해 주세요.
-Err_length,Your recording was too short.\nPlease try again.,녹음이 너무 짧았습니다.\n다시 측정해 주세요.
-Err_highfreq_cut,Your hearing aids or audio devices may be interfering with your recording.\nPlease try again by disconnecting the devices.,보청기나 오디오 장치를 폰에 연결하여 사용하고 계신가요?\n외부 장치로 인해 측정 음향 신호에 왜곡이 있습니다.\n측정 시에는 연결을 해제하고 사용해 주세요.
-Err_no_void,We could not detect urination sounds.\nPlease try again.,녹음 중에 배뇨 소리를 감지하지 못했습니다.\n다시 측정해 주세요.
-Err_noisy_env,Your background noise is interfering with your recording.\nPlease try again.,배경 소음이 측정에 영향을 미칠 수 있습니다.\n다시 측정해 주세요.
-Err_VV,This recording does not meet our measurable criteria.,분석 범위를 벗어났습니다.\n다시 측정해 주세요.
-Hearing Message,Your hearing aids or audio devices may be interfering with your recording.\nPlease try again by disconnecting the devices.,보청기 또는 외부 음향 기기가 영향을주고 있습니다.\n연결 해제 후 다시 시도 해주세요.
-Menu,Menu,메뉴
-Profile,Profile,계정
-User Profile,User Profile,사용자 계정
-General,General,일반
-Plan,Plan,구독 플랜
-Symptom score,Symptom score,증상점수 설문지
-Contact us,Contact us,문의하기
-About,About,약관 및 정책
-Sign out,Sign out,로그아웃
-Unit setting,Unit setting,단위 설정
-User Profile,User Profile,사용자 계정
-Personal Detail,Personal Detail,개인 정보
-Sex,Sex,성별
-Year of Birth,Year of Birth,출생년도
-Height,Height,키
-Weight,Weight,몸무게
-Account,Account,계정 설정
-Email ID,Email ID,이메일 주소
-Password,Password,비밀번호
-Change Password,Change Password,비밀번호 변경
-Set Up Passcode,Set Up Passcode,암호 설정
-Delete Account,Delete Account,계정 삭제
-Old Password,Old Password,기존 비밀번호
-New Password,New Password,새로운 비밀번호
-Confirm New Password,Confirm New Password,비밀번호 확인
-Lock with Passcode,Lock with Passcode,암호를 사용하여 잠금
-Passcode Message,"If enabled, the app will be locked whenever you close the app and you will be prompted with Touch ID or your device’s passcode when relaunching.","앱이 실행될때마다, Touch ID 나 암호를 입력해야 합니다"
-Change passcode,Change passcode,암호 변경
-Type old password,Type old password,기존 비밀번호를 입력하세요
-Type new password,Type new password,새로운 비밀번호를 입력하세요
-Re-type new password,Re-type new password,새로운 비밀번호를 재입력 하세요
-Delete account Message,"Sorry to see you go, please tell us why you are deleting your account.",탈퇴하신다니 아쉽습니다.\n계정을 삭제하는 이유를 알려주세요.
-I am switching to different plans,I am switching to different plans,다른 요금제를 이용하려합니다.
-I achieved my goal,I achieved my goal,목표를 달성했습니다.
-I am not using enough,I am not using enough,서비스를 잘 이용하지 않습니다.
-"I wasn’t satisfied with or had issues with the features, including technical difficulties","I wasn’t satisfied with or had issues with the features, including technical difficulties",기능에 만족하지 못했거나 기술적인 문제를 포함한 불편함이 있었습니다.
-I found an alternative service,I found an alternative service,다른 서비스를 이용합니다.
-Other,Other,기타
-Delete account popup Message,Deleting your account will permanently remove all of your Bladderly information.\n\nAre you sure you want to delete your account?,계정을 삭제하실 경우 기존에 기록하신 모든 정보들이 사라집니다.\n\n그래도 계정을 삭제 하시겠습니까?
-"Yes, delete my account","Yes, delete my account","네, 계정을 삭제할게요"
-"No, keep my account","No, keep my account","아니요, 계정을 유지할게요"
-Next,Next,다음
-Restore,Restore,불러오기
-Member,Member,일반 회원
-Change Plan,Change Plan,플랜 변경하기
-Cancel Plan,Cancel Plan,플랜 취소하기
-NEXT BILLING DATE,NEXT BILLING DATE,다음 결제일
-"Sorry to see you go, please tell us why you are canceling your plan.","Sorry to see you go, please tell us why you are canceling your plan.",요금제를 해지하시는 이유가 무엇인가요?
-I think the service is too pricey,I think the service is too pricey,가격이 부담됩니다.
-I want to resume the subscription later on,I want to resume the subscription later on,나중에 재구독 할 예정입니다.
-I have technical difficulties,I have technical difficulties,기술적인 어려움이 있습니다.
-Terms of use,Terms of use,이용약관
-Privacy policy,Privacy policy,개인정보보호 정책
-Symptom Scores,Symptom Scores,증상점수 설문지
-References,References,출처
-(Urinary Health Test),(Urinary Health Test),국제전립선 증상점수
-(Overactive Bladder Test),(Overactive Bladder Test),과민성방광 증상점수
-No Symptom,No Symptom,증상 없음
-MILD,MILD,경증
-MODERATE,MODERATE,중등증
-SEVERE,SEVERE,중증
-Symptom Score,Symptom Score,국제전립선 증상점수
-IPSS,IPSS,국제전립선 증상점수
-OABSS,OABSS,과민성방광 증상점수
-IPSS Desc,This test is devised to help men determine how bothersome their symptoms are and check how effective their treatment is.\n\nTake the following 8-question quiz and get a personalized urinary health score.,이 검사는 전립선비대증과 관련된 배뇨의 저장과 배출 관련 증상들을 정량화하여 알려줍니다. 증상의 경중에 따라 치료방침을 결정하거나 약물이나 수술적 치료 후 경과 관찰에도 유용하게 사용될 수 있습니다.
-OABSS Desc,"This test quantifies four bladder symptoms such as frequency of day and night bathroom trips, urgency and incontinence. It is recommended for people taking bladder medication to assess treatment efficacy.","이 검사는 주간과 야간에 화장실에 가는 횟수, 절박도, 요실금 등 네가지 방광 증상을 정량화하여 알려줍니다. 방광 약을 복용하는 분들에게 치료 효과를 평가하기 위해 권장됩니다."
-Start,Start,시작하기
-Previous,Previous,이전
-IPSS Title 1,Incomplete emptying,잔뇨감
-IPSS Title 2,Frequency,빈뇨
-IPSS Title 3,Intermittency,끊어지는 배뇨
-IPSS Title 4,Urgency,요절박
-IPSS Title 5,Weak stream,약한 소변 줄기
-IPSS Title 6,Straining,복압배뇨
-IPSS Title 7,Nocturia,야간뇨
-IPSS Title 8,Quality of life due to urinary symptoms,삶의 질
-IPSS1,"Over the past month, how often have you had a sensation of not emptying your bladder completely after you finish urinating?",소변을 본 후에도 소변이 남아있는 느낌을 얼마나 자주 받습니까?
-IPSS2,"Over the past month, how often have you had to urinate again less than two hours after you finished urinating?",2시간 이내에 다시 소변을 보러 가는 경우가 얼마나 자주 있었습니까?
-IPSS3,"Over the past month, how often have you found you stopped and started again several times when you urinated?",한번 소변을 볼 때 소변 줄기가 여러번 끊어진 경우가 얼마나 자주 있었습니까?
-IPSS4,"Over the last month, how difficult have you found it to postpone urination?",소변이 마려울 때 참기 어려운 경우가 얼마나 자주 있었습니까?
-IPSS5,"Over the past month, how often have you had a weak urinary stream?",소변줄기가 약하다고 느낀 경우가 얼마나 자주 있었습니까?
-IPSS6,"Over the past month, how often have you had to push or strain to begin urination?",소변이 금방 나오지 않아 힘을 주는 경우가 얼마나 자주 있었습니까?
-IPSS7,"Over the past month, how many times did you most typically get up to urinate from the time you went to bed until the time you got up in the morning?",일반적으로 밤에 소변을 보기 위해 몇 번 일어났습니까?
-IPSS8,"If you were to spend the rest of your life with your urinary condition just the way it is now, how would you feel about that?",만약 지금 같은 배뇨 상태가 계속 지속된다면 어떤 느낌이 드시겠습니까?
-OABSS1,How many times do you typically urinate from waking in the morning until sleeping at night?,아침에 일어나서 밤에 자기 전까지 몇 회정도 소변을 보셨습니까?
-OABSS2,How many times do you typically wake up to urinate from sleeping at night until waking in the morning?,밤에 잠든 후부터 아침에 일어날 때까지 소변을 보기 위해 몇 회나 일어나셨습니까?
-OABSS3,"How often do you have a sudden desire to urinate, which is difficult to defer?",갑자기 소변이 마려워 참기 힘들었던 적이 있었습니까?
-OABSS4,How often do you leak urine because you cannot defer the sudden desire to urinate?,갑자기 소변이 마려워서 참지 못하고 소변을 지린 적이 있었습니까?
-Not at all,Not at all,전혀 없음
-Less than 1 in 5 Times,Less than 1 in 5 Times,5번 중 1번 이하
-Less than Half the Time,Less than Half the Time,2번 중 1번 이하
-About Half the Time,About Half the Time,절반 정도
-More than Half the Time,More than Half the Time,절반 이상
-Almost Always,Almost Always,거의 항상
-None,None,전혀 없음
-1 Time,1 Time,1번
-2 Times,2 Times,2번
-3 Times,3 Times,3번
-4 Times,4 Times,4번
-5 Times,5 Times,5번 이상
-Delighted,Delighted,매우 만족
-Pleased,Pleased,만족
-Mostly Satisfied,Mostly Satisfied,대체로 만족
-Mixed about equally satisfied and dissatisfied,Mixed about equally satisfied and dissatisfied,보통
-Mostly Dissatisfied,Mostly Dissatisfied,대체로 불만족
-Unhappy,Unhappy,불만족
-Terrible,Terrible,매우 불만족
-Less than 8,Less than 8,7회 이하
-Greater than 14,Greater than 14,15회 이상
-Greater than 2,Greater than 2,3회 이상
-Less than once a week,Less than once a week,일주일에 1회 보다는 적음
-Once a week or more,Once a week or more,일주일에 1회 또는 그 이상
-About once a day,About once a day,1일 1회 정도
-2 ~ 4 times a day,2 ~ 4 times a day,1일 2~4회
-5 times a day or more,5 times a day or more,1일 5회 또는 그 이상
-Mild,Mild,경증
-Moderate,Moderate,중등증
-Severe,Severe,중증
-Your score currently indicates no symptoms. Continue to take IPSS questionnaire monthly to monitor any changes.,Your score currently indicates no symptoms. Continue to take IPSS questionnaire monthly to monitor any changes.,전립선 증상이 없습니다. 달마다 주기적으로 응답하여 결과를 추적해보세요
-Your score indicates mild prostate symptoms. Ongoing observation or lifestyle changes may be necessary. Respond regularly each month to track results.,Your score indicates mild prostate symptoms. Ongoing observation or lifestyle changes may be necessary. Respond regularly each month to track results.,경미한 전립선 증상이 있습니다. 지속적인 관찰이나 생활습관 개선이 필요할 수 있습니다. 달마다 주기적으로 응답하여 결과를 추적해보세요.
-"Your score indicates moderate prostate symptoms that do not significantly impact your quality of life. If discomfort occurs, medication or procedures may be required.","Your score indicates moderate prostate symptoms that do not significantly impact your quality of life. If discomfort occurs, medication or procedures may be required.",중등의 전립선 증상이 있으나 삶의 질에 큰 영향을 미치지 않습니다. 불편함이 느껴지면 약을 복용하거나 시술이 필요할 수 있는 단계입니다.
-Your score indicates moderate prostate symptoms with noticeable discomfort. It is recommended to seek medical assistance. Medication or procedures may be necessary.,Your score indicates moderate prostate symptoms with noticeable discomfort. It is recommended to seek medical assistance. Medication or procedures may be necessary.,불편함이 느껴지는 중등의 전립선 증상이 있습니다. 의료진의 도움을 받아보시길 권고드립니다. 약을 복용하거나 시술이 필요할 수 있는 단계입니다.
-Your score indicates severe prostate symptoms with noticeable discomfort. It is recommended to seek medical assistance. Medication or procedures may be necessary.,Your score indicates severe prostate symptoms with noticeable discomfort. It is recommended to seek medical assistance. Medication or procedures may be necessary.,불편함이 느껴지는 중증의 전립선 증상이 있습니다. 의료진의 도움을 받아보시길 권고드립니다. 약을 복용하거나 시술이 필요할 수 있는 단계입니다.
-This is not a diagnosis. Consult with your doctor or medical professional if you have concerns about your condition.,This is not a diagnosis. Consult with your doctor or medical professional if you have concerns about your condition.,이 결과는 진단이 아니며 상태가 우려되시면 의료진과 상의하시기 바랍니다.
-Okay,Okay,확인
-Overactive Bladder Symptom Score,Overactive Bladder Symptom Score,과민성방광 증상점수
-Cancel plan Message,"Please try after your membership expires. If your subscription still exists, please cancel the subscription and try again after the membership period.",아직 구독 기간이 남아있습니다.\n구독 취소 후 기간이 만료되면 다시 시도해 주시기 바랍니다.
-Sign out Message,"Are you sure you want to sign out? Don’t worry, you can always log back in anytime!","로그아웃하시겠습니까?\n걱정 마세요, 언제든 다시 로그인하실 수 있어요!"
-"Yes, Sign Out","Yes, Sign Out","네, 로그아웃 할게요"
-"No, Keep Me Signed In","No, Keep Me Signed In","아니요, 로그인 상태를 유지할게요"
-A novel way to manage your bladder diary.,A novel way to manage\nyour bladder diary.,블래덜리로 작성하는\n깨끗하고 편리한 배뇨일지
-Create Account,Create Account,회원가입
-Sign In,Sign In,로그인
-Sign Up,Sign Up,회원가입
-Enter your email,Enter your email,이메일 주소를 입력해주세요
-Please enter a properly formatted email address.,Please enter a properly formatted email address.,이메일 주소 형식으로 입력해주세요.
-Set a password,Set a password,비밀번호를 입력해주세요
-Your password should have...,Your password should have...,비밀번호 설정 조건
-at least 8 characters,at least 8 characters,8글자 이상
-at least one digit,at least one digit,숫자 1개 이상
-at least one uppercase,at least one uppercase,대문자 1개 이상
-at least one special character,at least one special character,특수문자 1개 이상
-Enter your name,Enter your name,이름을 입력해주세요
-Enter your year of birth and sex,Enter your\nyear of birth and sex,출생년도와 성별을 입력해주세요
-Male,Male,남성
-Female,Female,여성
-Why is entering sex important?,Why is entering sex important?,성별 정보가 필요한 이유는 무엇인가요?
-Men and women make different urination sounds. Enter your sex to get the right results.,Men and women make different urination sounds. Enter your sex to get the right results.,남성과 여성은 신체 구조상 서로 다른 배뇨 소리가 나타납니다. 정확한 측정 결과를 위해 성별을입력해주세요.
-Congratulations!,Congratulations!,가입을 축하합니다!
-Welcome Message,You’re all set!\nLet’s check out Bladderly.,준비가 다 끝났습니다!\n블래덜리를 사용해보세요.
-Get Started,Get Started,시작하기
-Enter your email and password to sign in,Enter your email and password to sign in,이메일과 비밀번호를 입력해주세요
-Forgot Password?,Forgot Password?,비밀번호를 잊어버리셨나요?
-Your password is too short.,Your password is too short.,비밀번호는 6자 이상 입력해주세요.
-We will email you a verification code to reset your password,We will email you a verification code to reset your password,입력해주신 이메일 주소로 임시 코드를 발급해드리겠습니다.
-Enter verification code sent to your email and set a new password,Enter verification code sent to your email and set a new password,임시 코드 입력 후 새로운 비밀번호를 설정해 주세요.
-Verification Code,Verification Code,임시 코드
-Please enter 6-digit verification code.,Please enter 6-digit verification code.,6자리 임시코드를 입력해주세요.
-"Your password should have at least 8 characters including at least one digit, one uppercase, and one special character.","Your password should have at least 8 characters including at least one digit, one uppercase, and one special character.","비밀번호는 8글자 이상으로 영문 대문자, 숫자, 특수문자를 모두 사용하여 구성해주세요."
-Passwords do not match.,Passwords do not match.,비밀번호가 일치하지 않습니다.
-Quiet place makes accurate results.,Quiet place makes accurate results.,주변을 조용하게 합니다.
-Sit on the toilet and knees shoulder-width apart.,Sit on the toilet and knees shoulder-width apart.,변기에 앉아 무릎을 어깨 넓이 정도로 벌립니다.
-Check if you see the water in the toilet bowl.,Check if you see the water in the toilet bowl.,변기 안에 물이 보이도록 앉는 위치를 조정합니다.
-Press ‘Sound Input’ to begin measurement,Press ‘Sound Input’ to begin measurement,앱을 실행하여 ‘소리 입력' 버튼을 누릅니다.
-Hold your phone in your hand and put it on your lap. Check the direction of the microphone,Hold your phone in your hand and put it on your lap. Check the direction of the microphone,핸드폰을 손에 쥐고 무릎 위에 올려 놓습니다. 마이크 방향을 확인합니다.
-Place the phone 2-3 feet from the toilet water,Place the phone 2-3 feet from the toilet water,변기에서 90cm 거리에 변기를 향하도록 폰을 놓습니다.
-Press ‘Sound Input’ to begin recording,Press ‘Sound Input’ to begin recording,‘소리 입력' 버튼을 눌러 측정을 시작합니다.
-Aim at the center of the water while standing,Aim at the center of the water while standing,양변기의 물 가운데를 향해 편안하게 소변을 봅니다.
-Press ‘Stop Recording’ button before flushing,Press ‘Stop Recording’ button before flushing,‘녹음 마침’ 버튼을 눌러 측정을 마칩니다.
-Now flush the toilet,Now flush the toilet,측정을 마친 후 물을 내립니다.
-"For better accuracy, cut through the noise from the TV, chatter, vent fan, tap water, coughs, groaning, etc.","For better accuracy, cut through the noise from the TV, chatter, vent fan, tap water, coughs, groaning, etc.","TV 소리, 말소리, 환풍기, 수돗물, 기침, 한숨 소리 등이 섞이면 정확도가 떨어집니다."
-Sit back in a little bit than usual,Sit back in a little bit than usual,평소보다 약간 뒤로 앉게 됩니다.
-Subject,Subject,제목
-Required fields,Required fields,필수 입력 항목
-Home,Home,홈
-Diary,Diary,다이어리
-Live listen title,Detected: Hearing aid or\nLive Listen feature,보청기 또는 실시간 사용 기능 감지
-Live listen content,"Please disconnect or turn off your hearing aid or the Live Listen feature, as keeping them on can alter your results.",보청기 또는 실시간 듣기 기능이 감지 되었습니다. 측정값에 영향을 줄 수 있으므로 보청기 연결을 해제하거나 실시간 듣기 기능을 꺼 주세요.
-Model not supported,Model not supported,지원하지 않는 모델입니다.
-Not support message,"The device is not supported. All features are available, but measurement accuracy is not guaranteed. You can check the supported devices on the App Store Page or the website",현재 지원되지 않는 모델입니다. 측정은 가능하나 결과 정확도가 보증되지 않습니다. 지원모델은 앱스토어 페이지 또는 웹사이트에서 확인하실 수 있습니다.
-Recording available soon,Recording available soon,곧 지원 예정
-New model message,We're finalizing compatibility for the recording feature on the new iPhone series. Stay tuned!,새로운 아이폰 모델이어서 녹음 호환성 테스트 중입니다.
-Please check your internet connection,Please check your internet connection,인터넷 연결을 확인해주세요.
-OK,OK,확인
-Lock with Touch ID & Passcode,Lock with Touch ID & Passcode,Touch ID 및 암호 잠금
-Lock with Face ID & Passcode,Lock with Face ID & Passcode,Face ID 및 암호 잠금
-Passcode,Passcode,암호
-Set your passcode below,Set your passcode below,암호를 입력하세요
-Enter your old passcode,Enter your old passcode,기존 암호를 입력하세요
-Enter your new passcode,Enter your new passcode,새로운 암호를 입력하세요
-Confirm your passcode,Confirm your passcode,암호를 확인하세요
-Please enter the message,Please enter the message,메시지를 입력하세요
-Please enter the subject,Please enter the subject,제목을 입력하세요
-Confirm your new passcode,Confirm your new passcode,새로운 암호를 확인하세요
-Enter your passcode,Enter your passcode,암호를 입력하세요
-Times in the future cannot be set,Times in the future cannot be set,현재 시간 이후로는 설정할 수 없습니다
-International Prostate Symptom Score,International Prostate Symptom Score,국제전립선 증상점수
-Overactive Bladder Symptom Score,Overactive Bladder Symptom Score,과민성방광 증상점수
-Take,Take,시작
-time,time,회
-Passcode warning Message,The passcode you entered is incorrect.\nPlease try again.,입력하신 암호가 올바르지 않습니다.\n다시 시도해 주세요.
-What beverage did you have?,What beverage did you have?,어떤 음료를 마셨나요?
-Please specify the amount,Please specify the amount,양을 구체적으로 입력해주세요
-Select Date,Select Date,날짜를 선택하세요
-You can export up to 7 days,You can export up to 7 days,최대 7일까지 내보낼 수 있습니다.
-(up to 7 days),(up to 7 days),(최대 7일)
-Data report is sent to your email!,Data report is sent to your email!,기록 리포트가 메일로 발송되었습니다
-Your opinions matter the most. Please share with us the purpose of the data report.,Your opinions matter the most. Please share with us the purpose of the data report.,블래덜리팀은 서비스 개선을 위해 고객분들의 의견을 듣고자 합니다.
-What’s this report for?,What’s this report for?,리포트 사용 목적이 무엇인가요?
-For personal use only.,For personal use only.,스스로 관리하려고
-To share with a clinician.,To share with a clinician.,의사와 공유하려고
-Who are you planning to share this report with?,Who are you planning to share this report with?,누구와 공유하실 계획인가요?
-Selected data will be sent to,Selected data will be sent to,선택하신 데이터는 아래 이메일로 전송됩니다.
-Please check your inbox.,Please check your inbox.,메일함을 확인해주세요
-Share policy Message,"The current version of Bladderly export file has been specifically designed for Bladderly users. The Bladderly export file is compiled based on the voids recorded or measured by the user during the selected period. The information presented on the file is strictly limited to a compilation of data collected by the user and does not involve a higher level of statistical analysis. The accountability for completeness of all bladder event recordings and correct completion of recording for accurate voiding data capture lies with the user.\n\nDO NOT rely on the results provided here to assess your own health; consult your doctor. Bladderly is not intended to be, should not be taken to be, and it does not replace (I) professional medical advice, screening, diagnosis, or treatment, (II) the practice of medicine, or (III) the provision of medical care.","본 문서는 블래덜리 수집기록 문서입니다. 이 문서는 블래덜리 사용자에게만 제공됩니다. 본 문서의 수집기록은 사용자가 블래덜리 앱의 사운드 분석기술로 측정하거나 직접 입력한 기록이며, 사용자가 선택한 기간의 수집기록만 발췌하였습니다. 본 문서는 수집한 데이터의 편집물에 불과하며 더 높은 수준의 통계 분석을 포함하지 않습니다. 선택한 기간에 발생한 모든 배뇨/섭취 이벤트를 기록하는 책임은 사용자에게 있습니다. 사운드 분석 기술을 활용해 배뇨를 측정하는 경우, 정확한 녹음에 대한 책임은 사용자에게 있습니다.\n\n여기서 제공된 결과를 사용하여 건강을 평가하지 마십시오. 블래덜리는 전문 의학적 조언, 스크리닝, 진단 또는 치료를 대신하지 않으며 전문 의료진과 상담하시기 바랍니다."
-Agree and Export,Agree and Export,동의 후 내보내기
-Data Report,Data Report,기록 내보내기
-Dr. Name,Dr. Name,의사 이름
-Clinic Information,Clinic Information,병원 이름
+order no.,comp no.,page/section,change_type,key,en,ko,remark
+613,493,menu_score_oabss_answersheet,text,OABSS2_answer0,0,0회,ko - 한국어번역자 오증준교수 버전 따름
+765,622,Menu_score_oabss_p2,text,OABSS2_answer0,0,0회,ko - 한국어번역자 오증준교수 버전 따름
+614,493,menu_score_oabss_answersheet,text,OABSS2_answer1,1,1회,ko - 한국어번역자 오증준교수 버전 따름
+766,623,Menu_score_oabss_p2,text,OABSS2_answer1,1,1회,ko - 한국어번역자 오증준교수 버전 따름
+615,493,menu_score_oabss_answersheet,text,OABSS2_answer2,2,2회,ko - 한국어번역자 오증준교수 버전 따름
+767,624,Menu_score_oabss_p2,text,OABSS2_answer2,2,2회,ko - 한국어번역자 오증준교수 버전 따름
+72,54,diary_main_calendar,date format,(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기)
+74,98,diary_main_calendar,date format,(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기)
+100,80,detail_main,date format,(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기)
+138,104,diary_add_calendar,date format,(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기)
+139,105,diary_add_calendar,date format,(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기)
+168,143,sound_input_annot,date format,(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기)
+180,140,sound_input_popup_na,date format,(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기)
+183,144,manual_input,date format,(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기)
+212,173,intake_input,date format,(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기)
+232,193,export_calendar,date format,(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기)
+233,194,export_calendar,date format,(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기)
+380,329,menu_itemlist,date format,(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기)
+470,406,menu_plan_on,date format,(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기)
+473,408,menu_plan_on,date format,(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기)
+475,410,menu_plan_on,date format,(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기)
+521,456,menu_score_list,date format,(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기)
+531,462,menu_score_list,date format,(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기)
+540,468,menu_score_ipss_answersheet,date format,(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기)
+603,487,menu_score_oabss_answersheet,date format,(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기)
+733,602,Menu_score_ipss_result,date format,(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기)
+792,651,Menu_score_oabss_result,date format,(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기),(date format 가져와서 맞춰주기)
+81,62,diary_add_sumvoiding,text,(hr:mins),(hr:mins),(시간:분),
+633,500,menu_score_reference,text,(International Prostate Symptom Score),(International Prostate Symptom Score),국제전립선 증상점수,
+635,503,menu_score_reference,text,(Overactive Bladder Symptom Score),(Overactive Bladder Symptom Score),과민성방광 증상점수,
+491,426,menu_plan_paywall,pricing variable,(pricing variable & calculation),(pricing variable & calculation),(pricing variable & calculation),(pricing variable & calculation)
+488,423,menu_plan_paywall,pricing variable,(pricing variable),(pricing variable),(pricing variable),(pricing variable)
+492,427,menu_plan_paywall,pricing variable,(pricing variable),(pricing variable),(pricing variable),(pricing variable)
+495,430,menu_plan_paywall,pricing variable,(pricing variable),(pricing variable),(pricing variable),(pricing variable)
+236,195,export_calendar,text,(up to 7 days),(up to 7 days),(최대 7일),
+493,428,menu_plan_paywall,text,{a} / Month,{a} / Month,매월 {a},
+235,195,export_calendar,text,{a} days selected,{a} days selected,{n}일 선택됨,
+639,508,menu_score_ipss_intro,text,{a} min,{a} min,{m} 분,
+753,684,menu_score_oabss_intro,text,{a} min,{a} min,{m} 분,
+640,509,menu_score_ipss_intro,text,{a} questions,{a} questions,{a}개 질문,
+754,685,menu_score_oabss_intro,text,{a} questions,{a} questions,{a}개 질문,
+590,484,menu_score_ipss_answersheet,text,IPSS7_answer1,1 time,1번,ko - 한국어번역자 오증준교수 버전 따름
+713,582,Menu_score_ipss_p7,text,IPSS7_answer1,1 time,1번,ko - 한국어번역자 오증준교수 버전 따름
+622,495,menu_score_oabss_answersheet,text,OABSS3_answer4,2 ~ 4 times a day,1일 2~4회,ko - 한국어번역자 오증준교수 버전 따름
+629,497,menu_score_oabss_answersheet,text,OABSS4_answer4,2 ~ 4 times a day,1일 2~4회,ko - 한국어번역자 오증준교수 버전 따름
+777,635,Menu_score_oabss_p3,text,OABSS3_answer4,2 ~ 4 times a day,1일 2~4회,ko - 한국어번역자 오증준교수 버전 따름
+787,646,Menu_score_oabss_p4,text,OABSS4_answer4,2 ~ 4 times a day,1일 2~4회,ko - 한국어번역자 오증준교수 버전 따름
+591,484,menu_score_ipss_answersheet,text,IPSS7_answer2,2 times,2번,ko - 한국어번역자 오증준교수 버전 따름
+714,583,Menu_score_ipss_p7,text,IPSS7_answer2,2 times,2번,ko - 한국어번역자 오증준교수 버전 따름
+592,484,menu_score_ipss_answersheet,text,IPSS7_answer3,3 times,3번,ko - 한국어번역자 오증준교수 버전 따름
+715,584,Menu_score_ipss_p7,text,IPSS7_answer3,3 times,3번,ko - 한국어번역자 오증준교수 버전 따름
+463,403,menu_plan_on,text,3-Day Pass,3-Day Pass,3일 이용권,
+487,422,menu_plan_paywall,text,3-Day Pass,3-Day Pass,3일 이용권,
+593,484,menu_score_ipss_answersheet,text,IPSS7_answer4,4 times,4번,ko - 한국어번역자 오증준교수 버전 따름
+716,585,Menu_score_ipss_p7,text,IPSS7_answer4,4 times,4번,ko - 한국어번역자 오증준교수 버전 따름
+594,484,menu_score_ipss_answersheet,text,IPSS7_answer5,5 or more times,5번 이상,ko - 한국어번역자 오증준교수 버전 따름
+717,586,Menu_score_ipss_p7,text,IPSS7_answer5,5 or more times,5번 이상,ko - 한국어번역자 오증준교수 버전 따름
+623,495,menu_score_oabss_answersheet,text,OABSS3_answer5,5 times a day or more,1일 5회 또는 그 이상,ko - 한국어번역자 오증준교수 버전 따름
+630,497,menu_score_oabss_answersheet,text,OABSS4_answer5,5 times a day or more,1일 5회 또는 그 이상,ko - 한국어번역자 오증준교수 버전 따름
+778,636,Menu_score_oabss_p3,text,OABSS3_answer5,5 times a day or more,1일 5회 또는 그 이상,ko - 한국어번역자 오증준교수 버전 따름
+788,647,Menu_score_oabss_p4,text,OABSS4_answer5,5 times a day or more,1일 5회 또는 그 이상,ko - 한국어번역자 오증준교수 버전 따름
+610,491,menu_score_oabss_answersheet,text,OABSS1_answer1,8 ~ 14,8 ~ 14회,ko - 한국어번역자 오증준교수 버전 따름
+759,615,Menu_score_oabss_p1,text,OABSS1_answer1,8 ~ 14,8 ~ 14회,ko - 한국어번역자 오증준교수 버전 따름
+239,198,export_paywall,text,A bladder diary with the selected data will be created as a PDF file and then sent via email.,A bladder diary with the selected data will be created as a PDF file and then sent via email.,선택한 데이터로 배뇨일지를 구성하여  PDF 파일을 이메일로 전송해드립니다.,
+377,327,menu_itemlist,text,About,About,약관 및 정책,
+821,675,Menu_about,text,About,About,약관 및 정책,
+550,472,menu_score_ipss_answersheet,text,IPSS1_answer3,About Half the Time,5번 중 2-3번,ko - 한국어번역자 오증준교수 버전 따름
+557,474,menu_score_ipss_answersheet,text,IPSS2_answer3,About Half the Time,5번 중 2-3번,ko - 한국어번역자 오증준교수 버전 따름
+564,476,menu_score_ipss_answersheet,text,IPSS3_answer3,About Half the Time,5번 중 2-3번,ko - 한국어번역자 오증준교수 버전 따름
+571,478,menu_score_ipss_answersheet,text,IPSS4_answer3,About Half the Time,5번 중 2-3번,ko - 한국어번역자 오증준교수 버전 따름
+578,480,menu_score_ipss_answersheet,text,IPSS5_answer3,About Half the Time,5번 중 2-3번,ko - 한국어번역자 오증준교수 버전 따름
+585,482,menu_score_ipss_answersheet,text,IPSS6_answer3,About Half the Time,5번 중 2-3번,ko - 한국어번역자 오증준교수 버전 따름
+649,518,Menu_score_ipss_p1,text,IPSS1_answer3,About half the time,5번 중 2-3번,ko - 한국어번역자 오증준교수 버전 따름
+660,529,Menu_score_ipss_p2,text,IPSS2_answer3,About half the time,5번 중 2-3번,ko - 한국어번역자 오증준교수 버전 따름
+671,540,Menu_score_ipss_p3,text,IPSS3_answer3,About half the time,5번 중 2-3번,ko - 한국어번역자 오증준교수 버전 따름
+682,551,Menu_score_ipss_p4,text,IPSS4_answer3,About half the time,5번 중 2-3번,ko - 한국어번역자 오증준교수 버전 따름
+693,562,Menu_score_ipss_p5,text,IPSS5_answer3,About half the time,5번 중 2-3번,ko - 한국어번역자 오증준교수 버전 따름
+704,573,Menu_score_ipss_p6,text,IPSS6_answer3,About half the time,5번 중 2-3번,ko - 한국어번역자 오증준교수 버전 따름
+621,495,menu_score_oabss_answersheet,text,OABSS3_answer3,About once a day,1일 1회 정도,ko - 한국어번역자 오증준교수 버전 따름
+628,497,menu_score_oabss_answersheet,text,OABSS4_answer3,About once a day,1일 1회 정도,ko - 한국어번역자 오증준교수 버전 따름
+776,634,Menu_score_oabss_p3,text,OABSS3_answer3,About once a day,1일 1회 정도,ko - 한국어번역자 오증준교수 버전 따름
+786,645,Menu_score_oabss_p4,text,OABSS4_answer3,About once a day,1일 1회 정도,ko - 한국어번역자 오증준교수 버전 따름
+166,132,sound_input_annot,text,memo text voiding,Add any notes or details here.,배뇨와 관련된 상세 내용을 기록하세요.,
+202,163,manual_input_voiding,text,memo text voiding,Add any notes or details here.,배뇨와 관련된 상세 내용을 기록하세요.,
+210,171,manual_input_leakage,text,memo text leakage,Add any notes or details here.,"특별한 상황, 느낌 등 세부 내용을 기록하세요.",
+228,189,intake_input,text,memo text intake,Add any notes or details here.,수분 섭취와 관련된 상세 내용을 기록하세요.,
+515,450,menu_plan_promo_popup_invalid,text,promo code message text,Add any notes or details here.,메시지를 남겨주세요.,
+181,141,sound_input_popup_na,text,Add the void manually,Add the void manually,배뇨량 직접 입력하기,
+12,9,home_main_voiding,text,ago,ago,이전,
+252,211,export_agreement,text,Agree and Export,Agree and Export,동의 및 내보내기,
+306,266,howtouse_male,text,Aim at the center of the water while standing,Aim at the center of the water while standing,변기 앞에 서서 소변이 물 가운데에 떨어지도록 소변을 보세요.,
+23,20,home_main_intake,text,alcohol,alcohol,주류,
+70,53,diary_main_list,text,alcohol,alcohol,주류,
+94,74,diary_add_sumintake,text,alcohol,alcohol,주류,
+130,97,detail_main,text,alcohol,alcohol,주류,
+218,179,intake_input,text,alcohol,alcohol,주류,
+280,240,syspopup_notipermit,text,allow noti,Allow Access,알림 허용,
+284,244,syspopup_micpermit,text,allow mic,Allow Access,마이크 허용,
+552,472,menu_score_ipss_answersheet,text,IPSS1_answer5,Almost Always,거의 항상,ko - 한국어번역자 오증준교수 버전 따름
+559,474,menu_score_ipss_answersheet,text,IPSS2_answer5,Almost Always,거의 항상,ko - 한국어번역자 오증준교수 버전 따름
+566,476,menu_score_ipss_answersheet,text,IPSS3_answer5,Almost Always,거의 항상,ko - 한국어번역자 오증준교수 버전 따름
+573,478,menu_score_ipss_answersheet,text,IPSS4_answer5,Almost Always,거의 항상,ko - 한국어번역자 오증준교수 버전 따름
+580,480,menu_score_ipss_answersheet,text,IPSS5_answer5,Almost Always,거의 항상,ko - 한국어번역자 오증준교수 버전 따름
+587,482,menu_score_ipss_answersheet,text,IPSS6_answer5,Almost Always,거의 항상,ko - 한국어번역자 오증준교수 버전 따름
+651,520,Menu_score_ipss_p1,text,IPSS1_answer5,Almost Always,거의 항상,ko - 한국어번역자 오증준교수 버전 따름
+662,531,Menu_score_ipss_p2,text,IPSS2_answer5,Almost Always,거의 항상,ko - 한국어번역자 오증준교수 버전 따름
+673,542,Menu_score_ipss_p3,text,IPSS3_answer5,Almost Always,거의 항상,ko - 한국어번역자 오증준교수 버전 따름
+684,553,Menu_score_ipss_p4,text,IPSS4_answer5,Almost Always,거의 항상,ko - 한국어번역자 오증준교수 버전 따름
+695,564,Menu_score_ipss_p5,text,IPSS5_answer5,Almost Always,거의 항상,ko - 한국어번역자 오증준교수 버전 따름
+706,575,Menu_score_ipss_p6,text,IPSS6_answer5,Almost Always,거의 항상,ko - 한국어번역자 오증준교수 버전 따름
+57,50,diary_main_list,text,am list,am,am,
+59,50,diary_main_list,text,AM list,AM,AM,
+101,81,detail_main,text,am,am,오전,
+103,81,detail_main,text,AM,AM,오전,
+53,46,diary_main_list,text,Amount,Amount,부피,
+490,425,menu_plan_paywall,text,Annual,Annual,연간 요금제,
+465,403,menu_plan_on,text,Annual subscriber,Annual subscriber,연간 구독자,
+348,309,account_signup_info,text,Any diagnosed disease?,Any diagnosed disease?,현재 관리하고 계신 질환이 있나요?,
+838,680,Error_popup,text,Microphone permission body,App does not have permission to use the microphone. Go to Settings > Bladderly > Microphone to give the permission.,앱이 마이크를 사용할 수 있는 권한이 없습니다. 설정 > Bladderly > 마이크에서 권한을 허용해주세요.,에러팝업 06. 마이크 권한 없음 : 사운드 측정하려고 할 때
+378,328,menu_itemlist,text,App version,App version,앱 버전,
+505,440,menu_plan_promo,text,Apply,Apply,등록,
+146,112,sound_input_rec_popup_cancel,text,Are you sure you want to cancel the recording?,Are you sure you want to cancel the recording?,측정을 취소할까요?,
+135,101,detail_popup_delete,text,Delete Message,Are you sure you want to delete the record?,기록을 삭제할까요?,
+433,374,menu_userprofile_signout_popup,text,Sign out Message,"Are you sure you want to sign out? Don’t worry, you can always log back in anytime!",정말 로그아웃할까요?,
+340,301,account_signup,text,at least 8 characters,at least 8 characters,8글자 이상,
+341,302,account_signup,text,at least one digit,at least one digit,숫자 1개 이상,
+343,304,account_signup,text,at least one special character,at least one special character,특수문자 1개 이상,
+342,303,account_signup,text,at least one uppercase,at least one uppercase,대문자 1개 이상,
+242,201,export_paywall,text,Automatic voiding volume measurement,Automatic voiding volume measurement,자동 배뇨량 측정,
+452,393,menu_plan_off,text,Automatic voiding volume measurement,Automatic voiding volume measurement,자동 배뇨량 측정,
+477,412,menu_plan_on,text,Automatic voiding volume measurement,Automatic voiding volume measurement,자동 배뇨량 측정,
+485,420,menu_plan_paywall,text,Automatic voiding volume measurement,Automatic voiding volume measurement,자동 배뇨량 측정,
+476,411,menu_plan_on,text,Benefits,Benefits,프리미엄 기능,
+489,424,menu_plan_paywall,text,Best Value,Best Value,추천,
+125,95,detail_main,text,Beverage type,Beverage type,음료 종류,
+213,174,intake_input,text,Beverage type,Beverage type,음료 종류,
+276,236,guide_add_diary,text,Bladder Diary,Bladder Diary,배뇨일지,
+282,242,syspopup_micpermit,text,Bladderly records sound only while using Sound Input to estimate your urine volume.,Bladderly records sound only while using Sound Input to estimate your urine volume.,"Bladderly는 소리 입력 기능을 사용할 때만 소리를 녹음하며, 녹음된 소리를 분석해 배뇨량을 추정합니다.",
+347,308,account_signup_info,text,Bladderly User,Bladderly User,블래덜리 사용자,
+405,352,menu_userprofile_guest,text,Bladderly User,Bladderly User,블래덜리 사용자,
+450,391,menu_plan_off,text,Bladderly User,Bladderly User,블래덜리 사용자,
+20,17,home_main_intake,text,caffeine,caffeine,카페인,
+67,53,diary_main_list,text,caffeine,caffeine,카페인,
+91,71,diary_add_sumintake,text,caffeine,caffeine,카페인,
+127,97,detail_main,text,caffeine,caffeine,카페인,
+215,176,intake_input,text,caffeine,caffeine,카페인,
+457,398,menu_plan_off,text,Cancel plan,Cancel plan,결제 플랜 취소하기,
+481,416,menu_plan_on,text,Cancel plan,Cancel plan,결제 플랜 취소하기,
+414,359,menu_userprofile_passcode,text,Change passcode,Change passcode,암호 코드 변경,
+392,340,menu_userprofile_user,text,Change Password,Change Password,비밀번호 변경,
+422,363,menu_userprofile_changepw,text,Change Password,Change Password,비밀번호 변경,
+456,397,menu_plan_off,text,Change plan,Change plan,결제 플랜 변경하기,
+480,415,menu_plan_on,text,Change plan,Change plan,결제 플랜 변경하기,
+288,248,howtouse_female,text,Check the toilet water level,Check the toilet water level,변기 물의 양을 확인하세요.,
+302,262,howtouse_male,text,Check the toilet water level,Check the toilet water level,변기 물의 양을 확인하세요.,
+267,227,guide_page1,text,Check your diary,Check your diary,기록을 확인해보세요,
+261,220,export_survey,text,Clinic Information,Clinic Information,병원명,
+848,680,Error_popup,text,Forgot password reset issue title,Code does not match,코드가 일치하지 않습니다,"에러팝업 10. Forgot Password 비밀번호 리셋 실패
+"
+748,610,Menu_score_ipss_result,text,Confirm,Confirm,확인,
+801,658,Menu_score_oabss_result,text,Confirm,Confirm,확인,
+362,699,account_forgotpw2,text,Confirm New Password,Confirm New Password,비밀번호 확인,
+429,370,menu_userprofile_changepw,text,Confirm New Password,Confirm New Password,비밀번호 확인,
+840,680,Error_popup,text,Passcode failed 5 times title,Confirm Passcode,암호가 맞지 않습니다.,"에러팝업 07. 패스코드 5번 실패해서 진입 불가할 때
+"
+419,361,menu_userprofile_passcode_input,text,Confirm your new passcode,Confirm your new passcode,한 번 더 입력하세요.,
+417,361,menu_userprofile_passcode_input,text,Confirm your passcode,Confirm your passcode,한 번 더 입력하세요.,
+376,326,menu_itemlist,text,Contact us,Contact us,문의하기,
+809,663,Menu_contactus,text,Contact Us,Contact Us,문의하기,
+237,196,export_calendar,text,Continue,Continue,다음,
+344,305,account_signup,text,Continue,Continue,다음,
+327,288,account_entry,text,Continue with Apple,Continue with Apple,Apple ID로 계속하기,
+328,289,account_entry,text,Continue with Google,Continue with Google,Google ID로 계속하기,
+397,345,menu_userprofile_guest,text,Create an Account or Sign In,Create an Account or Sign In,가입 또는 로그인,
+370,321,menu_itemlist,text,Data export,Data export,배뇨일지 내보내기,
+248,207,export_agreement,text,Data Report,Data Report,배뇨일지 내보내기,
+253,212,export_survey,text,Data Report,Data Report,배뇨일지 내보내기,
+254,213,export_survey,text,Data report is sent to your email!,Data report is sent to your email!,배뇨일지가 이메일로 발송되었습니다.,
+34,30,diary_main_sumvoiding,text,Daytime,Daytime,주간,
+436,377,menu_userprofile_delete,text,Delete Account,Delete Account,계정 삭제,
+394,342,menu_userprofile_user,text,Delete Account and Data,Delete Account and Data,계정과 데이터 삭제,
+408,355,menu_userprofile_guest,text,Delete All Data,Delete All Data,데이터 삭제,
+445,386,menu_userprofile_delete_popup,text,Delete account popup Message,Deleting your account will permanently remove all of your Bladderly information.\n\nAre you sure you want to delete your account?,탈퇴하면 그동안 기록한 정보가 모두 삭제됩니다.\n\n계정을 삭제할까요?,
+596,486,menu_score_ipss_answersheet,text,IPSS8_answer0,Delighted,아무 문제없다,ko - 한국어번역자 오증준교수 버전 따름
+723,592,Menu_score_ipss_p8,text,IPSS8_answer0,Delighted,아무 문제없다,ko - 한국어번역자 오증준교수 버전 따름
+824,680,Error_popup,text,Hearing aid or Live Listen detected title,Detected: Hearing aid or Live Listen feature,감지됨: 보청기 또는 실시간 듣기 활성화,"에러팝업 01. 보청기 혹은 실시간 듣기 : 앱 실행 시 체크
+"
+806,660,Menu_language,text,Deutsch,Deutsch,Deutsch,독일어
+3,679,home_main,text,Diary,Diary,다이어리,
+238,197,export_paywall,text,Diary Export,Diary Export,배뇨일지 내보내기,
+158,124,sound_input_annot,text,Did it leak?,Did it leak?,요실금이 있었나요?,
+194,155,manual_input_voiding,text,Did it leak?,Did it leak?,요실금이 있었나요?,
+141,107,diary_add_calendar,text,Done date,Done,이동,
+262,221,export_survey,text,Done,Done,완료,
+287,247,howtouse_female,text,Done,Done,완료,
+301,261,howtouse_male,text,Done,Done,완료,
+350,311,account_signup_info,text,Done,Done,완료,
+260,219,export_survey,text,Dr. Name,Dr. Name,의사 이름,
+608,490,menu_score_oabss_answersheet,text,OABSS1,"During the last week, how many times do you typically urinate from waking in the morning until sleeping at night?",최근 1주일간 아침에 일어나서 밤에 자기 전까지 몇 회 정도 소변을 보셨습니까?,ko - 한국어번역자 오증준교수 버전 따름
+757,613,Menu_score_oabss_p1,text,OABSS1,"During the last week, how many times do you typically urinate from waking in the morning until sleeping at night?",최근 1주일간 아침에 일어나서 밤에 자기 전까지 몇 회 정도 소변을 보셨습니까?,ko - 한국어번역자 오증준교수 버전 따름
+612,492,menu_score_oabss_answersheet,text,OABSS2,"During the last week, how many times do you typically wake up to urinate from sleeping at night until waking in the morning?",최근 1주일간 밤에 잠든 후부터 아침에 일어날 때까지 소변을 보기 위해 몇 회나 일어나셨습니까?,ko - 한국어번역자 오증준교수 버전 따름
+764,621,Menu_score_oabss_p2,text,OABSS2,"During the last week, how many times do you typically wake up to urinate from sleeping at night until waking in the morning?",최근 1주일간 밤에 잠든 후부터 아침에 일어날 때까지 소변을 보기 위해 몇 회나 일어나셨습니까?,ko - 한국어번역자 오증준교수 버전 따름
+617,494,menu_score_oabss_answersheet,text,OABSS3,"During the last week, how often do have a sudden desire to urinate, which is difficult to defer? ",최근 1주일간 갑자기 소변이 마려워 참기 힘들었던 적이 있었습니까?,ko - 한국어번역자 오증준교수 버전 따름
+772,630,Menu_score_oabss_p3,text,OABSS3,"During the last week, how often do have a sudden desire to urinate, which is difficult to defer? ",최근 1주일간 갑자기 소변이 마려워 참기 힘들었던 적이 있었습니까?,ko - 한국어번역자 오증준교수 버전 따름
+624,496,menu_score_oabss_answersheet,text,OABSS4,"During the last week, how often do you leak urine, because you cannot defer the sudden desire to urinate?",최근 1주일간 갑자기 소변이 마려워서 참지 못하고 소변을 지린 적이 있었습니까?,ko - 한국어번역자 오증준교수 버전 따름
+782,641,Menu_score_oabss_p4,text,OABSS4,"During the last week, how often do you leak urine, because you cannot defer the sudden desire to urinate?",최근 1주일간 갑자기 소변이 마려워서 참지 못하고 소변을 지린 적이 있었습니까?,ko - 한국어번역자 오증준교수 버전 따름
+324,285,account_entry,text,Email Address,Email Address,이메일 주소,
+331,292,account_login,text,Email Address,Email Address,이메일 주소,
+337,298,account_signup,text,Email Address,Email Address,이메일 주소,
+353,690,account_forgotpw1,text,Email Address,Email Address,이메일 주소,
+513,448,menu_plan_promo_popup_invalid,text,Email Address,Email Address,이메일 주소,
+812,666,Menu_contactus,text,Email Address,Email Address,이메일 주소,
+384,333,menu_userprofile_user,text,Email ID,Email ID,이메일 주소,
+399,347,menu_userprofile_guest,text,Email ID,Email ID,이메일 주소,
+278,238,syspopup_notipermit,text,Enable notifications for reminders to guide you on your Bladderly journey.,Enable notifications for reminders to guide you on your Bladderly journey.,Bladderly와 함께 꾸준히 관리할 수 있도록 알림을 보내드릴게요!,
+472,407,menu_plan_on,text,End date,End date,종료일,
+373,324,menu_itemlist,text,English (United States),English (United States),English (United States),
+804,660,Menu_language,text,English (United States),English (United States),English (United States),
+296,256,howtouse_female,text,Ensure the microphone is facing the toilet bowl.,Ensure the microphone is facing the toilet bowl.,핸드폰 마이크가 변기 가운데로 향하게 하세요.,
+294,264,howtouse_female,text,Ensure you can see the water in the toilet bowl.,Ensure you can see the water in the toilet bowl.,다리 사이로 물이 내려다 보이는 정도가 좋습니다.,
+458,399,menu_plan_off,text,Enter promo code,Enter promo code,프로모션 코드 입력,
+482,417,menu_plan_on,text,Enter promo code,Enter promo code,프로모션 코드 입력,
+496,431,menu_plan_paywall,text,Enter Promo Code,Enter Promo Code,프로모션 코드 입력,
+357,694,account_forgotpw2,text,Enter verification code sent to your email and set a new password.,Enter verification code sent to your email and set a new password.,"임시 코드를 입력하고, 새 비밀번호를 설정하세요.",
+502,437,menu_plan_promo,text,Enter your code,Enter your code,프로모션 코드를 입력하세요,
+418,361,menu_userprofile_passcode_input,text,Enter your old passcode,Enter your old passcode,기존 암호를 입력하세요.,
+420,361,menu_userprofile_passcode_input,text,Enter your passcode,Enter your passcode,암호를 입력하세요.,
+375,325,menu_itemlist,text,FAQ,FAQ,FAQ,
+808,662,Menu_faq,text,FAQ,FAQ,FAQ,
+318,279,intro_info,text,Female,Female,여성,
+386,335,menu_userprofile_user,text,Female,Female,여성,
+401,349,menu_userprofile_guest,text,Female,Female,여성,
+290,250,howtouse_female,text,Find a quiet bathroom,Find a quiet bathroom,주변을 조용하게 만듭니다.,
+511,446,menu_plan_promo_popup_invalid,text,First Name,First Name,이름,
+810,664,Menu_contactus,text,First Name,First Name,이름,
+316,277,intro_info,text,"First, we’d like to get to know you.","First, we’d like to get to know you.","먼저, 당신에 대해 알아가고 싶어요.",
+291,251,howtouse_female,text,"For better accuracy, avoid sounds like TV, chatter, vent fans, running water, coughing, or groaning.","For better accuracy, avoid sounds like TV, chatter, vent fans, running water, coughing, or groaning.","환풍기, 물방울 떨어지는 소리, 기침, 한숨 소리 등 노이즈가 섞이면 정확도가 떨어질 수 있습니다.",
+257,216,export_survey,text,For personal use only.,For personal use only.,셀프 관리를 위하여,
+333,294,account_login,text,Forgot Password?,Forgot Password?,비밀번호를 잊어버리셨나요?,
+462,403,menu_plan_on,text,Free trial,Free trial,무료 체험,
+466,404,menu_plan_on,text,Free Trial Period,Free Trial Period,체험 기간,
+310,271,intro_entry,text,Free yourself from the hassle of writing on paper.,Free yourself from the hassle of writing on paper.,종이에 작성하는 번거로움에서 벗어나세요.,
+6,4,home_main_voiding,text,Frequency,Frequency,횟수,
+33,29,diary_main_sumvoiding,text,Frequency voiding,Frequency,배뇨 횟수,
+86,67,diary_add_sumintake,text,Frequency intake,Frequency,섭취 횟수,
+655,524,Menu_score_ipss_p2,text,IPSS Title 2,Frequency,빈뇨,
+368,319,menu_itemlist,text,General,General,일반,
+321,282,intro_info,text,Get Started,Get started,시작하기,
+241,200,export_paywall,text,Get Unlimited Access!,Get Unlimited Access!,프리미엄 기능을 사용하세요!,
+451,392,menu_plan_off,text,Get Unlimited Access!,Get Unlimited Access!,프리미엄 기능을 사용하세요!,
+484,419,menu_plan_paywall,text,Get Unlimited Access!,Get Unlimited Access!,프리미엄 기능을 사용하세요!,
+171,136,sound_input_popup_done,text,Go to Diary,Go to Diary,다이어리 보기,
+611,491,menu_score_oabss_answersheet,text,OABSS1_answer2,Greater than 14,15회 이상,ko - 한국어번역자 오증준교수 버전 따름
+760,616,Menu_score_oabss_p1,text,OABSS1_answer2,Greater than 14,15회 이상,ko - 한국어번역자 오증준교수 버전 따름
+616,493,menu_score_oabss_answersheet,text,OABSS2_answer3,Greater than 2,3회 이상,ko - 한국어번역자 오증준교수 버전 따름
+768,625,Menu_score_oabss_p2,text,OABSS2_answer3,Greater than 2,3회 이상,ko - 한국어번역자 오증준교수 버전 따름
+504,439,menu_plan_promo,text,Having trouble finding the code?,Having trouble finding the code?,프로모션 코드를 등록할 수 없나요?,
+509,444,menu_plan_promo_popup_invalid,text,Having trouble finding the code?,Having trouble finding the code?,프로모션 코드를 등록할 수 없나요?,
+295,255,howtouse_female,text,Hold your phone on your lap,Hold your phone on your lap,스마트폰을 쥔 손을 무릎에 올립니다.,
+2,678,home_main,text,Home,Home,홈,
+113,89,detail_main,text,hour,hour,시간,
+114,89,detail_main,text,hours,hours,시간,
+13,10,home_main_voiding,text,How to use,How to use,사용 방법,
+439,380,menu_userprofile_delete,text,I achieved my goal,I achieved my goal,이용 목적을 달성해서,
+311,272,intro_entry,text,I agree to Bladderly’s Terms of Use and acknowledge the Privacy Policy,I agree to Bladderly’s Terms of Use and acknowledge the Privacy Policy,"Bladderly 이용 약관과 개인정보 처리방침을 확인하였으며, 이에 동의합니다.",
+313,274,intro_entry,text,I already have an account,I already have an account,이미 계정이 있어요.,
+440,381,menu_userprofile_delete,text,I am not using enough,I am not using enough,앱을 별로 이용하지 않아서,
+438,379,menu_userprofile_delete,text,I am switching to different plans,I am switching to different plans,요금제를 변경하기 위하여,
+442,383,menu_userprofile_delete,text,I found an alternative service,I found an alternative service,다른 서비스를 이용하기 위해서,
+441,382,menu_userprofile_delete,text,"I wasn’t satisfied with or had issues with the features, including technical difficulties","I wasn’t satisfied with or had issues with the features, including technical difficulties","기능이 불만족스러워서, 기술적인 문제가 있어서.",
+312,273,intro_entry,text,I’m new here,I’m new here,처음 오셨나요?,
+413,358,menu_userprofile_passcode,text,Passcode Message,"If enabled, the app will be locked whenever you close the app and you will be prompted with Face ID or your device’s passcode when relaunching.","이 기능을 활성화하면, 앱을 실행할 때 Face ID 또는 비밀번호 입력이 필요합니다.",
+841,680,Error_popup,text,Passcode failed 5 times body,"If you forgot your passcode, delete the app and reinstall it to continue using the service.","암호를 잊으셨다면, 앱을 삭제한 후 다시 설치하여 서비스를 계속 이용하세요.","에러팝업 07. 패스코드 5번 실패해서 진입 불가할 때
+"
+595,485,menu_score_ipss_answersheet,text,IPSS8,"If you were to spend the rest of your life with your urinary condition just the way it is now, how would you feel about that?",지금 소변을 보는 상태로 평생을 보낸다면 당신은 어떻게 느끼겠습니까?,ko - 한국어번역자 오증준교수 버전 따름
+722,591,Menu_score_ipss_p8,text,IPSS8,"If you were to spend the rest of your life with your urinary condition just the way it is now, how would you feel about that?",지금 소변을 보는 상태로 평생을 보낸다면 당신은 어떻게 느끼겠습니까?,ko - 한국어번역자 오증준교수 버전 따름
+209,170,manual_input_leakage,text,In what situation did it occur?,In what situation did it occur?,어떤 상황에서 발생했나요?,
+644,513,Menu_score_ipss_p1,text,IPSS Title 1,Incomplete emptying,잔뇨감,
+16,13,home_main_intake,text,Intake,Intake,수분 섭취,
+44,37,diary_main_sumintake,text,Intake,Intake,수분 섭취,
+50,43,diary_main_list,text,Intake,Intake,수분 섭취,
+122,93,detail_main,text,Intake,Intake,수분 섭취,
+666,535,Menu_score_ipss_p3,text,IPSS Title 3,Intermittency,끊어지는 배뇨,
+638,507,menu_score_ipss_intro,text,International Prostate Symptom Score,International Prostate Symptom Score,국제전립선 증상점수,
+506,441,menu_plan_promo_popup_invalid,text,Invalid Code,Invalid Code,사용할 수 없는 코드입니다.,
+518,453,menu_score_list,text,IPSS,IPSS,IPSS,
+541,469,menu_score_ipss_answersheet,text,IPSS,IPSS,IPSS,
+632,499,menu_score_reference,text,IPSS,IPSS,IPSS,
+636,505,menu_score_ipss_intro,text,IPSS,IPSS,IPSS,
+637,506,menu_score_ipss_intro,text,IPSS,IPSS,IPSS,
+643,512,Menu_score_ipss_p1,text,IPSS,IPSS,IPSS,
+654,523,Menu_score_ipss_p2,text,IPSS,IPSS,IPSS,
+665,534,Menu_score_ipss_p3,text,IPSS,IPSS,IPSS,
+676,545,Menu_score_ipss_p4,text,IPSS,IPSS,IPSS,
+687,556,Menu_score_ipss_p5,text,IPSS,IPSS,IPSS,
+698,567,Menu_score_ipss_p6,text,IPSS,IPSS,IPSS,
+709,578,Menu_score_ipss_p7,text,IPSS,IPSS,IPSS,
+720,589,Menu_score_ipss_p8,text,IPSS,IPSS,IPSS,
+732,601,Menu_score_ipss_result,text,IPSS,IPSS,IPSS,
+179,139,sound_input_popup_na,text,Issued records,Issued records,배뇨 시각,
+323,284,account_entry,text,"It’s free, secure and easy.\nWe will save your data safely.","It’s free, secure and easy.\nWe will save your data safely.","무료로, 안전하게, 그리고 쉽게!\n당신의 데이터를 안전하게 보관해 드립니다.",
+330,291,account_login,text,"It’s free, secure and easy.\nWe will save your data safely.","It’s free, secure and easy.\nWe will save your data safely.","무료로, 안전하게, 그리고 쉽게!\n당신의 데이터를 안전하게 보관해 드립니다.",
+336,297,account_signup,text,"It’s free, secure and easy.\nWe will save your data safely.","It’s free, secure and easy.\nWe will save your data safely.","무료로, 안전하게, 그리고 쉽게!\n당신의 데이터를 안전하게 보관해 드립니다.",
+22,19,home_main_intake,text,juice,juice,주스,
+69,53,diary_main_list,text,juice,juice,주스,
+93,73,diary_add_sumintake,text,juice,juice,주스,
+129,97,detail_main,text,juice,juice,주스,
+217,178,intake_input,text,juice,juice,주스,
+182,142,sound_input_popup_na,text,Keep the record without data,Keep the record without data,기록하지 않고 나가기,
+293,253,howtouse_female,text,Knees shoulder-width apart,Knees shoulder-width apart,무릎을 어깨 너비 정도로 벌립니다.,
+65,52,diary_main_list,text,L,L,L,
+112,88,detail_main,text,L,L,L,
+372,323,menu_itemlist,text,Language,Language,언어,
+802,659,Menu_language,text,Language,Language,언어,
+121,92,detail_main,text,Large,Large,L,
+164,130,sound_input_annot,text,Large,Large,L,
+200,161,manual_input_voiding,text,Large,Large,L,
+208,169,manual_input_leakage,text,Large,Large,L,
+224,185,intake_input,text,Large,Large,L,
+512,447,menu_plan_promo_popup_invalid,text,Last Name,Last Name,성,
+811,665,Menu_contactus,text,Last Name,Last Name,성,
+11,8,home_main_voiding,text,Last record,Last record,마지막 기록,
+379,329,menu_itemlist,text,Latest :,Latest :,최신 업데이트 :,
+55,48,diary_main_list,text,Leak,Leak,요실금,
+36,32,diary_main_sumvoiding,text,Leakage,Leakage,요실금,
+51,44,diary_main_list,text,Leakage,Leakage,요실금,
+109,85,detail_main,text,Leakage,Leakage,요실금,
+117,90,detail_main,text,Leakage,Leakage,요실금,
+204,165,manual_input_leakage,text,Leakage,Leakage,요실금,
+161,127,sound_input_annot,text,Leakage Volume,Leakage Volume,누출양,
+197,158,manual_input_voiding,text,Leakage Volume,Leakage Volume,누출양,
+205,166,manual_input_leakage,text,Leakage Volume,Leakage Volume,누출양,
+244,203,export_paywall,text,Learn more,Learn more,더 알아보기,
+454,395,menu_plan_off,text,Learn more,Learn more,더 알아보기,
+27,24,home_add_voiding_lock,design,lock msg pay link,Learn More About Premium,프리미엄에 대해 더 알아보기,"버튼 디자인에 적용
+"
+25,22,home_add_voiding_lock,design,lock msg howto,Learn to use this function before starting,자동측정 방법,"버튼 디자인에 적용
+"
+510,445,menu_plan_promo_popup_invalid,text,"Leave us a message, and we’ll get back to you.","Leave us a message, and we’ll get back to you.",메시지를 남겨주시면 빠르게 답변드리겠습니다.,
+548,472,menu_score_ipss_answersheet,text,IPSS1_answer1,Less than 1 in 5 times,5번 중 한 번,ko - 한국어번역자 오증준교수 버전 따름
+555,474,menu_score_ipss_answersheet,text,IPSS2_answer1,Less than 1 in 5 times,5번 중 한 번,ko - 한국어번역자 오증준교수 버전 따름
+562,476,menu_score_ipss_answersheet,text,IPSS3_answer1,Less than 1 in 5 times,5번 중 한 번,ko - 한국어번역자 오증준교수 버전 따름
+569,478,menu_score_ipss_answersheet,text,IPSS4_answer1,Less than 1 in 5 times,5번 중 한 번,ko - 한국어번역자 오증준교수 버전 따름
+576,480,menu_score_ipss_answersheet,text,IPSS5_answer1,Less than 1 in 5 times,5번 중 한 번,ko - 한국어번역자 오증준교수 버전 따름
+583,482,menu_score_ipss_answersheet,text,IPSS6_answer1,Less than 1 in 5 times,5번 중 한 번,ko - 한국어번역자 오증준교수 버전 따름
+647,516,Menu_score_ipss_p1,text,IPSS1_answer1,Less than 1 in 5 times,5번 중 한 번,ko - 한국어번역자 오증준교수 버전 따름
+658,527,Menu_score_ipss_p2,text,IPSS2_answer1,Less than 1 in 5 times,5번 중 한 번,"ko - 한국어번역자 오증준교수 버전 따름
+"
+669,538,Menu_score_ipss_p3,text,IPSS3_answer1,Less than 1 in 5 times,5번 중 한 번,ko - 한국어번역자 오증준교수 버전 따름
+680,549,Menu_score_ipss_p4,text,IPSS4_answer1,Less than 1 in 5 times,5번 중 한 번,ko - 한국어번역자 오증준교수 버전 따름
+691,560,Menu_score_ipss_p5,text,IPSS5_answer1,Less than 1 in 5 times,5번 중 한 번,ko - 한국어번역자 오증준교수 버전 따름
+702,571,Menu_score_ipss_p6,text,IPSS6_answer1,Less than 1 in 5 times,5번 중 한 번,ko - 한국어번역자 오증준교수 버전 따름
+609,491,menu_score_oabss_answersheet,text,OABSS1_answer0,Less than 8,7회 이하,ko - 한국어번역자 오증준교수 버전 따름
+758,614,Menu_score_oabss_p1,text,OABSS1_answer0,Less than 8,7회 이하,ko - 한국어번역자 오증준교수 버전 따름
+549,472,menu_score_ipss_answersheet,text,IPSS1_answer2,Less than half the time,5번 중 1-2번,ko - 한국어번역자 오증준교수 버전 따름
+556,474,menu_score_ipss_answersheet,text,IPSS2_answer2,Less than half the time,5번 중 1-2번,ko - 한국어번역자 오증준교수 버전 따름
+563,476,menu_score_ipss_answersheet,text,IPSS3_answer2,Less than half the time,5번 중 1-2번,ko - 한국어번역자 오증준교수 버전 따름
+570,478,menu_score_ipss_answersheet,text,IPSS4_answer2,Less than half the time,5번 중 1-2번,ko - 한국어번역자 오증준교수 버전 따름
+577,480,menu_score_ipss_answersheet,text,IPSS5_answer2,Less than half the time,5번 중 1-2번,ko - 한국어번역자 오증준교수 버전 따름
+584,482,menu_score_ipss_answersheet,text,IPSS6_answer2,Less than half the time,5번 중 1-2번,ko - 한국어번역자 오증준교수 버전 따름
+648,517,Menu_score_ipss_p1,text,IPSS1_answer2,Less than half the time,5번 중 1-2번,ko - 한국어번역자 오증준교수 버전 따름
+659,528,Menu_score_ipss_p2,text,IPSS2_answer2,Less than half the time,5번 중 1-2번,ko - 한국어번역자 오증준교수 버전 따름
+670,539,Menu_score_ipss_p3,text,IPSS3_answer2,Less than half the time,5번 중 1-2번,ko - 한국어번역자 오증준교수 버전 따름
+681,550,Menu_score_ipss_p4,text,IPSS4_answer2,Less than half the time,5번 중 1-2번,ko - 한국어번역자 오증준교수 버전 따름
+692,561,Menu_score_ipss_p5,text,IPSS5_answer2,Less than half the time,5번 중 1-2번,ko - 한국어번역자 오증준교수 버전 따름
+703,572,Menu_score_ipss_p6,text,IPSS6_answer2,Less than half the time,5번 중 1-2번,ko - 한국어번역자 오증준교수 버전 따름
+619,495,menu_score_oabss_answersheet,text,OABSS3_answer1,Less than once a week,일주일에 1회 보다는 적음,ko - 한국어번역자 오증준교수 버전 따름
+626,497,menu_score_oabss_answersheet,text,OABSS4_answer1,Less than once a week,일주일에 1회 보다는 적음,ko - 한국어번역자 오증준교수 버전 따름
+774,632,Menu_score_oabss_p3,text,OABSS3_answer1,Less than once a week,일주일에 1회 보다는 적음,ko - 한국어번역자 오증준교수 버전 따름
+784,643,Menu_score_oabss_p4,text,OABSS4_answer1,Less than once a week,일주일에 1회 보다는 적음,ko - 한국어번역자 오증준교수 버전 따름
+263,223,guide_page1,text,Let’s Get You Set Up! ,Let’s Get You Set Up! ,시작할 준비가 되었나요?,
+274,234,guide_page2,text,Let’s go!,Let’s go!,블래덜리 시작하기,
+315,276,intro_info,text,Let’s take it step by step together to better days.,Let’s take it step by step together to better days.,더 나은 날을 위해 함께 한 걸음씩 나아가요.,
+48,41,diary_main_list,text,List,List,모든 기록,
+411,357,menu_userprofile_passcode,text,Lock with Face ID & Passcode,Lock with Face ID & Passcode,Face ID 및 비밀번호 잠금,
+410,357,menu_userprofile_passcode,text,Lock with Passcode,Lock with Passcode,비밀번호를 사용하여 잠금,
+412,357,menu_userprofile_passcode,text,Lock with Touch ID & Passcode,Lock with Touch ID & Passcode,Touch ID 및 비밀번호 잠금,
+322,283,account_entry,text,Log in or Sign up,Log in or Sign up,로그인 혹은 회원가입 하기 ,
+265,225,guide_page1,text,Log intake & voiding,Log intake & voiding,배뇨와 섭취를 기록하세요,
+99,79,diary_add_list,text,List Na Message,Looks like there’s nothing here yet.\nLet’s get started!,아직 기록이 없습니다.,
+134,222,detail_empty,text,List Na Message,Looks like there’s nothing here yet.\nLet’s get started!,아직 기록이 없습니다.,
+538,466,menu_score_list,text,List Na Message,Looks like there’s nothing here yet.\nLet’s get started!,아직 기록이 없습니다.,
+539,467,menu_score_list,text,List Na Message,Looks like there’s nothing here yet.\nLet’s get started!,아직 기록이 없습니다.,
+64,52,diary_main_list,text,M,M,M,
+111,88,detail_main,text,M,M,M,
+319,280,intro_info,text,Male,Male,남성,
+387,335,menu_userprofile_user,text,Male,Male,남성,
+402,349,menu_userprofile_guest,text,Male,Male,남성,
+390,338,menu_userprofile_user,text,Manage Account,Manage Account,계정 설정,
+406,353,menu_userprofile_guest,text,Manage Account,Manage Account,계정 설정,
+15,12,home_main_voiding,text,Manual Input,Manual Input,직접 입력,
+76,57,diary_add_sumvoiding,text,Max,Max,최대,
+82,63,diary_add_sumvoiding,text,Max,Max,최대,
+83,64,diary_add_sumvoiding,text,Mean,Mean,평균,
+120,92,detail_main,text,Medium,Medium,M,
+163,129,sound_input_annot,text,Medium,Medium,M,
+199,160,manual_input_voiding,text,Medium,Medium,M,
+207,168,manual_input_leakage,text,Medium,Medium,M,
+223,184,intake_input,text,Medium,Medium,M,
+165,131,sound_input_annot,text,Memo,Memo,메모,
+201,162,manual_input_voiding,text,Memo,Memo,메모,
+227,188,intake_input,text,Memo,Memo,메모,
+364,316,menu_itemlist,text,Menu,Menu,설정,
+514,449,menu_plan_promo_popup_invalid,text,Message,Message,메시지,
+815,669,Menu_contactus,text,Message,Message,메시지,
+837,680,Error_popup,text,Microphone permission title,Microphone Access,마이크 접근 권한이 필요합니다.,에러팝업 06. 마이크 권한 없음 : 사운드 측정하려고 할 때
+281,241,syspopup_micpermit,text,Microphone Access Needed for Sound Input,Microphone Access Needed for Sound Input,소리 입력을 사용하려면 마이크가 필요해요,
+523,457,menu_score_list,text,Mild,Mild,경증,
+532,463,menu_score_list,Mild,Mild,Mild,경증,
+543,470,menu_score_ipss_answersheet,text,Mild,Mild,경증,
+605,489,menu_score_oabss_answersheet,text,Mild,Mild,경증,
+735,603,Menu_score_ipss_result,text,Mild,Mild,경증,
+739,605,Menu_score_ipss_result,text,Mild,Mild,경증,
+793,652,Menu_score_oabss_result,text,Mild,Mild,경증,
+797,654,Menu_score_oabss_result,text,Mild,Mild,경증,
+77,58,diary_add_sumvoiding,text,Min,Min,최소,
+84,65,diary_add_sumvoiding,text,Min,Min,최소,
+115,89,detail_main,text,minute,minute,분,
+116,89,detail_main,text,minutes,minutes,분,
+599,486,menu_score_ipss_answersheet,text,IPSS8_answer3,Mixed,"만족, 불만족이 반반이다",ko - 한국어번역자 오증준교수 버전 따름
+726,595,Menu_score_ipss_p8,text,IPSS8_answer3,Mixed,"만족, 불만족이 반반이다",ko - 한국어번역자 오증준교수 버전 따름
+10,7,home_main_voiding,unit format,ml,ml,ml,(meaurement system - metric or US or UK 가져와서 맞춰주기)
+17,14,home_main_intake,unit format,ml,ml,ml,(meaurement system - metric or US or UK 가져와서 맞춰주기)
+32,28,diary_main_sumvoiding,unit format,ml,ml,ml,(meaurement system - metric or US or UK 가져와서 맞춰주기)
+46,39,diary_main_sumintake,unit format,ml,ml,ml,(meaurement system - metric or US or UK 가져와서 맞춰주기)
+62,51,diary_main_list,unit format,ml,ml,ml,(meaurement system - metric or US or UK 가져와서 맞춰주기)
+78,59,diary_add_sumvoiding,unit format,ml,ml,ml,(meaurement system - metric or US or UK 가져와서 맞춰주기)
+79,60,diary_add_sumvoiding,unit format,ml,ml,ml,(meaurement system - metric or US or UK 가져와서 맞춰주기)
+107,83,detail_main,unit format,ml,ml,ml,(meaurement system - metric or US or UK 가져와서 맞춰주기)
+124,94,detail_main,unit format,ml,ml,ml,(meaurement system - metric or US or UK 가져와서 맞춰주기)
+187,148,manual_input_voiding,unit format,ml,ml,ml,(meaurement system - metric or US or UK 가져와서 맞춰주기)
+827,680,Error_popup,text,Unsupported device title,Model not supported,지원되지 않는 모델입니다.,"에러팝업 02. 미지원기기 : 앱 처음 다운로드 받았을 때, 사운드 측정할 때"
+524,457,menu_score_list,text,Moderate,Moderate,중등증,
+533,463,menu_score_list,Moderate,Moderate,Moderate,중등증,
+544,470,menu_score_ipss_answersheet,text,Moderate,Moderate,중등증,
+606,489,menu_score_oabss_answersheet,text,Moderate,Moderate,중등증,
+736,603,Menu_score_ipss_result,text,Moderate,Moderate,중등증,
+740,606,Menu_score_ipss_result,text,Moderate,Moderate,중등증,
+794,653,Menu_score_oabss_result,text,Moderate,Moderate,중등증,
+798,655,Menu_score_oabss_result,text,Moderate,Moderate,중등증,
+494,429,menu_plan_paywall,text,Monthly,Monthly,월간 요금제,
+464,403,menu_plan_on,text,Monthly subscriber,Monthly subscriber,월간 구독자,
+225,186,intake_input,text,More intake,More,직접입력,
+551,472,menu_score_ipss_answersheet,text,IPSS1_answer4,More than half the time,5번 중 3-4번,ko - 한국어번역자 오증준교수 버전 따름
+558,474,menu_score_ipss_answersheet,text,IPSS2_answer4,More than half the time,5번 중 3-4번,ko - 한국어번역자 오증준교수 버전 따름
+565,476,menu_score_ipss_answersheet,text,IPSS3_answer4,More than half the time,5번 중 3-4번,ko - 한국어번역자 오증준교수 버전 따름
+572,478,menu_score_ipss_answersheet,text,IPSS4_answer4,More than half the time,5번 중 3-4번,ko - 한국어번역자 오증준교수 버전 따름
+579,480,menu_score_ipss_answersheet,text,IPSS5_answer4,More than half the time,5번 중 3-4번,ko - 한국어번역자 오증준교수 버전 따름
+586,482,menu_score_ipss_answersheet,text,IPSS6_answer4,More than half the time,5번 중 3-4번,ko - 한국어번역자 오증준교수 버전 따름
+650,519,Menu_score_ipss_p1,text,IPSS1_answer4,More than half the time,5번 중 3-4번,ko - 한국어번역자 오증준교수 버전 따름
+661,530,Menu_score_ipss_p2,text,IPSS2_answer4,More than half the time,5번 중 3-4번,ko - 한국어번역자 오증준교수 버전 따름
+672,541,Menu_score_ipss_p3,text,IPSS3_answer4,More than half the time,5번 중 3-4번,ko - 한국어번역자 오증준교수 버전 따름
+683,552,Menu_score_ipss_p4,text,IPSS4_answer4,More than half the time,5번 중 3-4번,ko - 한국어번역자 오증준교수 버전 따름
+694,563,Menu_score_ipss_p5,text,IPSS5_answer4,More than half the time,5번 중 3-4번,ko - 한국어번역자 오증준교수 버전 따름
+705,574,Menu_score_ipss_p6,text,IPSS6_answer4,More than half the time,5번 중 3-4번,ko - 한국어번역자 오증준교수 버전 따름
+600,486,menu_score_ipss_answersheet,text,IPSS8_answer4,Mostly dissatisfied,대체로 불만이다,ko - 한국어번역자 오증준교수 버전 따름
+727,596,Menu_score_ipss_p8,text,IPSS8_answer4,Mostly dissatisfied,대체로 불만이다,ko - 한국어번역자 오증준교수 버전 따름
+598,486,menu_score_ipss_answersheet,text,IPSS8_answer2,Mostly satisfied,대체로 만족이다,ko - 한국어번역자 오증준교수 버전 따름
+725,594,Menu_score_ipss_p8,text,IPSS8_answer2,Mostly satisfied,대체로 만족이다,ko - 한국어번역자 오증준교수 버전 따름
+61,51,diary_main_list,text,NA,N/A,N/A,
+277,237,syspopup_notipermit,text,Need a Gentle Nudge?,Need a Gentle Nudge?,리마인더 알림을 켜두세요,
+271,231,guide_page2,text,Need a printed copy of your logs?,Need a printed copy of your logs?,배뇨일지 프린트가  필요한가요?,
+830,680,Error_popup,text,Upcoming supported device title,New iPhone!,새로운 iPhone 시리즈!,"에러팝업 03. 지원예정 기기 : 앱 처음 다운로드 받았을 때, 사운드 측정할 때"
+360,697,account_forgotpw2,text,New Password,New Password,새로운 비밀번호,
+426,367,menu_userprofile_changepw,text,New Password,New Password,새로운 비밀번호,
+245,204,export_paywall,text,Next,Next,다음,
+286,246,howtouse_female,text,Next,Next,다음,
+300,260,howtouse_male,text,Next,Next,다음,
+326,287,account_entry,text,Next,Next,다음,
+334,295,account_login,text,Next,Next,다음,
+444,385,menu_userprofile_delete,text,Next,Next,다음,
+498,433,menu_plan_paywall,text,Next,Next,다음,
+653,522,Menu_score_ipss_p1,text,Next,Next,다음,
+664,533,Menu_score_ipss_p2,text,Next,Next,다음,
+675,544,Menu_score_ipss_p3,text,Next,Next,다음,
+686,555,Menu_score_ipss_p4,text,Next,Next,다음,
+697,566,Menu_score_ipss_p5,text,Next,Next,다음,
+708,577,Menu_score_ipss_p6,text,Next,Next,다음,
+719,588,Menu_score_ipss_p7,text,Next,Next,다음,
+762,618,Menu_score_oabss_p1,text,Next,Next,다음,
+770,627,Menu_score_oabss_p2,text,Next,Next,다음,
+780,638,Menu_score_oabss_p3,text,Next,Next,다음,
+474,409,menu_plan_on,text,Next renewal date ,Next renewal date ,다음 결제일,
+35,31,diary_main_sumvoiding,text,Night-time,Night-time,야간,
+157,123,sound_input_annot,text,No,No,아니오,
+160,126,sound_input_annot,text,No,No,아니오,
+193,154,manual_input_voiding,text,No,No,아니오,
+196,157,manual_input_voiding,text,No,No,아니오,
+522,457,menu_score_list,text,No symptom,No symptom,증상 없음,
+542,470,menu_score_ipss_answersheet,text,No symptom,No symptom,증상 없음,
+734,603,Menu_score_ipss_result,text,No Symptom,No Symptom,증상 없음,
+153,119,sound_input_annot,text,No urge,No urge,절박감 없음,
+189,159,manual_input_voiding,text,No urge,No urge,절박감 없음,
+148,114,sound_input_rec_popup_cancel,text,"No, Continue recording","No, Continue recording","아니요, 측정을 계속합니다.",
+435,376,menu_userprofile_signout_popup,text,"No, Keep Me Signed In","No, Keep Me Signed In","아니요, 로그인 상태를 유지할게요.",
+447,388,menu_userprofile_delete_popup,text,"No, keep my account","No, keep my account","아니요, 계정을 삭제하지 않습니다.",
+137,103,detail_popup_delete,text,"No, Keep the record","No, Keep the record","아니요, 기록을 유지합니다.",
+710,579,Menu_score_ipss_p7,text,IPSS Title 7,Nocturia,야간뇨,
+589,484,menu_score_ipss_answersheet,text,IPSS7_answer0,None,없다,ko - 한국어번역자 오증준교수 버전 따름
+712,581,Menu_score_ipss_p7,text,IPSS7_answer0,None,없다,ko - 한국어번역자 오증준교수 버전 따름
+547,472,menu_score_ipss_answersheet,text,IPSS1_answer0,Not at all,전혀 없음,ko - 한국어번역자 오증준교수 버전 따름
+554,474,menu_score_ipss_answersheet,text,IPSS2_answer0,Not at all,전혀 없음,ko - 한국어번역자 오증준교수 버전 따름
+561,476,menu_score_ipss_answersheet,text,IPSS3_answer0,Not at all,전혀 없음,ko - 한국어번역자 오증준교수 버전 따름
+568,478,menu_score_ipss_answersheet,text,IPSS4_answer0,Not at all,전혀 없음,ko - 한국어번역자 오증준교수 버전 따름
+575,480,menu_score_ipss_answersheet,text,IPSS5_answer0,Not at all,전혀 없음,ko - 한국어번역자 오증준교수 버전 따름
+582,482,menu_score_ipss_answersheet,text,IPSS6_answer0,Not at all,전혀 없음,ko - 한국어번역자 오증준교수 버전 따름
+618,495,menu_score_oabss_answersheet,text,OABSS3_answer0,Not at all,없음,ko - 한국어번역자 오증준교수 버전 따름
+625,497,menu_score_oabss_answersheet,text,OABSS4_answer0,Not at all,없음,ko - 한국어번역자 오증준교수 버전 따름
+646,515,Menu_score_ipss_p1,text,IPSS1_answer0,Not at all,전혀 없음,ko - 한국어번역자 오증준교수 버전 따름
+657,526,Menu_score_ipss_p2,text,IPSS2_answer0,Not at all,전혀 없음,ko - 한국어번역자 오증준교수 버전 따름
+668,537,Menu_score_ipss_p3,text,IPSS3_answer0,Not at all,전혀 없음,ko - 한국어번역자 오증준교수 버전 따름
+679,548,Menu_score_ipss_p4,text,IPSS4_answer0,Not at all,전혀 없음,ko - 한국어번역자 오증준교수 버전 따름
+690,559,Menu_score_ipss_p5,text,IPSS5_answer0,Not at all,전혀 없음,ko - 한국어번역자 오증준교수 버전 따름
+701,570,Menu_score_ipss_p6,text,IPSS6_answer0,Not at all,전혀 없음,ko - 한국어번역자 오증준교수 버전 따름
+773,631,Menu_score_oabss_p3,text,OABSS3_answer0,Not at all,없음,ko - 한국어번역자 오증준교수 버전 따름
+783,642,Menu_score_oabss_p4,text,OABSS4_answer0,Not at all,없음,ko - 한국어번역자 오증준교수 버전 따름
+279,239,syspopup_notipermit,text,Not Now,Not Now,다음에 할래요,
+283,243,syspopup_micpermit,text,Not Now,Not Now,다음에 할래요,
+349,310,account_signup_info,text,Not to answer,Not to answer,다음에 답변하기,
+308,268,howtouse_male,text,Now flush the toilet,Now flush the toilet,변기의 물을 내리세요.,
+528,459,menu_score_list,text,OABSS,OABSS,OABSS,
+604,488,menu_score_oabss_answersheet,text,OABSS,OABSS,OABSS,
+634,502,menu_score_reference,text,OABSS,OABSS,OABSS,
+749,611,Menu_score_oabss_p1,text,OABSS,OABSS,OABSS,
+750,681,menu_score_oabss_intro,text,OABSS,OABSS,OABSS,
+751,682,menu_score_oabss_intro,text,OABSS,OABSS,OABSS,
+763,619,Menu_score_oabss_p2,text,OABSS,OABSS,OABSS,
+771,628,Menu_score_oabss_p3,text,OABSS,OABSS,OABSS,
+781,639,Menu_score_oabss_p4,text,OABSS,OABSS,OABSS,
+791,650,Menu_score_oabss_result,text,OABSS,OABSS,OABSS,
+508,443,menu_plan_promo_popup_invalid,text,Okay,Okay,확인,
+820,674,Menu_contactus,text,Okay,Okay,확인,
+826,680,Error_popup,text,Hearing aid or Live Listen detected button,Okay,확인,에러팝업 01. 보청기 혹은 실시간 듣기 : 앱 실행 시 체크
+829,680,Error_popup,text,Unsupported device button,Okay,확인,"에러팝업 02. 미지원기기 : 앱 처음 다운로드 받았을 때, 사운드 측정할 때"
+832,680,Error_popup,text,Upcoming supported device button,Okay,확인,"에러팝업 03. 지원예정 기기 : 앱 처음 다운로드 받았을 때, 사운드 측정할 때"
+834,680,Error_popup,text,Network issue button,Okay,확인,에러팝업 04. 인터넷 연결 안됨 
+836,680,Error_popup,text,Future time selection button,Okay,확인,에러팝업 05. 미래시간 선택 : 데이터 기록할 때
+839,680,Error_popup,text,Microphone permission button,Okay,확인,에러팝업 06. 마이크 권한 없음 : 사운드 측정하려고 할 때
+842,680,Error_popup,text,Passcode failed 5 times button,Okay,확인,에러팝업 07. 패스코드 5번 실패해서 진입 불가할 때
+844,680,Error_popup,text,Password change failed button,Okay,확인,에러팝업 08. Manage Account 비밀번호 변경 실패
+847,680,Error_popup,text,Sign-in failed button,Okay,확인,에러팝업 09. 로그인 실패
+850,680,Error_popup,text,Forgot password reset issue button,Okay,확인,에러팝업 10. Forgot Password 비밀번호 리셋 실패
+852,680,Error_popup,text,Cancel plan Message button,Okay,확인,에러팝업 11. 구독 기간이 남았는데 계정 삭제하려고 할 때
+423,364,menu_userprofile_changepw,text,Old Password,Old Password,기존 비밀번호,
+620,495,menu_score_oabss_answersheet,text,OABSS3_answer2,Once a week or more,일주일에 1회 또는 그 이상,ko - 한국어번역자 오증준교수 버전 따름
+627,497,menu_score_oabss_answersheet,text,OABSS4_answer2,Once a week or more,일주일에 1회 또는 그 이상,ko - 한국어번역자 오증준교수 버전 따름
+775,633,Menu_score_oabss_p3,text,OABSS3_answer2,Once a week or more,일주일에 1회 또는 그 이상,ko - 한국어번역자 오증준교수 버전 따름
+785,644,Menu_score_oabss_p4,text,OABSS4_answer2,Once a week or more,일주일에 1회 또는 그 이상,ko - 한국어번역자 오증준교수 버전 따름
+172,137,sound_input_popup_na,text,"Oops, we couldn’t analyze your results","Oops, we couldn’t analyze your results",죄송합니다. 배뇨량을 계산할 수 없습니다.,
+443,384,menu_userprofile_delete,text,Other,Other,기타,
+24,21,home_main_intake,text,others,others,기타,
+71,53,diary_main_list,text,others,others,기타,
+95,75,diary_add_sumintake,text,others,others,기타,
+131,97,detail_main,text,others,others,기타,
+219,180,intake_input,text,others,others,기타,
+567,477,menu_score_ipss_answersheet,text,IPSS4,"Over the last month, how difficult have you found it to postpone urination?",지난 한달 동안 소변을 참기 어려운 경우가 있습니까?,ko - 한국어번역자 오증준교수 버전 따름
+678,547,Menu_score_ipss_p4,text,IPSS4,"Over the last month, how difficult have you found it to postpone urination?",지난 한달 동안 소변을 참기 어려운 경우가 있습니까?,ko - 한국어번역자 오증준교수 버전 따름
+588,483,menu_score_ipss_answersheet,text,IPSS7,"Over the past month, how many times did you most typically get up to urinate from the time you went to bed until the time you got up in the morning?",지난 한달 동안 잠자다 일어나서 소변을 보는 경우가 하룻밤에 몇 번이나 있습니까?,ko - 한국어번역자 오증준교수 버전 따름
+711,580,Menu_score_ipss_p7,text,IPSS7,"Over the past month, how many times did you most typically get up to urinate from the time you went to bed until the time you got up in the morning?",지난 한달 동안 잠자다 일어나서 소변을 보는 경우가 하룻밤에 몇 번이나 있습니까?,ko - 한국어번역자 오증준교수 버전 따름
+560,475,menu_score_ipss_answersheet,text,IPSS3,"Over the past month, how often have you found you stopped and started again several times when you urinated?",지난 한달 동안 소변을 볼 때 소변줄기가 끊어져서 다시 힘주어 소변을 보는 경우가 있습니까?,ko - 한국어번역자 오증준교수 버전 따름
+667,536,Menu_score_ipss_p3,text,IPSS3,"Over the past month, how often have you found you stopped and started again several times when you urinated?",지난 한달 동안 소변을 볼 때 소변줄기가 끊어져서 다시 힘주어 소변을 보는 경우가 있습니까?,ko - 한국어번역자 오증준교수 버전 따름
+546,471,menu_score_ipss_answersheet,text,IPSS1,"Over the past month, how often have you had a sensation of not emptying your bladder completely after you finish urinating?",지난 한달 동안 소변을 볼 때 다 보았는데도 소변이 남아 있는 것 같이 느끼는 경우가 있습니까?,ko - 한국어번역자 오증준교수 버전 따름
+645,514,Menu_score_ipss_p1,text,IPSS1,"Over the past month, how often have you had a sensation of not emptying your bladder completely after you finish urinating?",지난 한달 동안 소변을 볼 때 다 보았는데도 소변이 남아 있는 것 같이 느끼는 경우가 있습니까?,ko - 한국어번역자 오증준교수 버전 따름
+574,479,menu_score_ipss_answersheet,text,IPSS5,"Over the past month, how often have you had a weak urinary stream?",지난 한달 동안 소변줄기가 약하거나 가늘다고 생각한 경우가 있습니까?,ko - 한국어번역자 오증준교수 버전 따름
+689,558,Menu_score_ipss_p5,text,IPSS5,"Over the past month, how often have you had a weak urinary stream?",지난 한달 동안 소변줄기가 약하거나 가늘다고 생각한 경우가 있습니까?,ko - 한국어번역자 오증준교수 버전 따름
+581,481,menu_score_ipss_answersheet,text,IPSS6,"Over the past month, how often have you had to push or strain to begin urination?",지난 한달 동안 소변을 볼 때 소변이 금방 나오지 않아서 아랫배에 힘을 주어야 하는 경우가 있습니까?,ko - 한국어번역자 오증준교수 버전 따름
+700,569,Menu_score_ipss_p6,text,IPSS6,"Over the past month, how often have you had to push or strain to begin urination?",지난 한달 동안 소변을 볼 때 소변이 금방 나오지 않아서 아랫배에 힘을 주어야 하는 경우가 있습니까?,ko - 한국어번역자 오증준교수 버전 따름
+553,473,menu_score_ipss_answersheet,text,IPSS2,"Over the past month, how often have you had to urinate again less than two hours after you finished urinating?",지난 한달 동안 소변을 본 후 2시간 이내에 다시 소변을 보는 경우가 있습니까?,ko - 한국어번역자 오증준교수 버전 따름
+656,525,Menu_score_ipss_p2,text,IPSS2,"Over the past month, how often have you had to urinate again less than two hours after you finished urinating?",지난 한달 동안 소변을 본 후 2시간 이내에 다시 소변을 보는 경우가 있습니까?,ko - 한국어번역자 오증준교수 버전 따름
+529,460,menu_score_list,text,Overactive Bladder Symptom,Overactive Bladder Symptom,과민성 방광 증상,
+752,683,menu_score_oabss_intro,text,Overactive Bladder Symptom Score,Overactive Bladder Symptom Score,과민성방광 증상점수,
+415,360,menu_userprofile_passcode_input,text,Passcode,Passcode,암호,
+332,293,account_login,text,Password,Password,비밀번호,
+338,299,account_signup,text,Password,Password,비밀번호,
+363,700,account_forgotpw2,text,Passwords do not match.,Passwords do not match.,비밀번호가 일치하지 않습니다.,
+431,372,menu_userprofile_changepw,text,Passwords do not match.,Passwords do not match.,비밀번호가 일치하지 않습니다.,
+240,199,export_paywall,text,PDF Export Once,PDF Export Once,배뇨일지 PDF 내보내기 1회권,
+243,202,export_paywall,text,PDF export reports,PDF export reports,배뇨일지 PDF 내보내기,
+453,394,menu_plan_off,text,PDF export reports,PDF export reports,배뇨일지 PDF 내보내기,
+478,413,menu_plan_on,text,PDF export reports,PDF export reports,배뇨일지 PDF 내보내기,
+486,421,menu_plan_paywall,text,PDF export reports,PDF export reports,배뇨일지 PDF 내보내기,
+383,332,menu_userprofile_user,text,Personal Information,Personal Information,개인 정보,
+398,346,menu_userprofile_guest,text,Personal Information,Personal Information,개인 정보,
+304,264,howtouse_male,text,Place the phone 2-3 feet from the toilet water,Place the phone 2-3 feet from the toilet water,변기에서 1m 이내에 스마트폰을 놓으세요.,
+369,320,menu_itemlist,text,Plan,Plan,구독 플랜,
+448,389,menu_plan_off,text,Plan,Plan,구독 플랜,
+460,401,menu_plan_on,text,Plan,Plan,구독 플랜,
+250,209,export_agreement,text,Please check your inbox.,Please check your inbox.,메일함을 확인하세요.,
+833,680,Error_popup,text,Network issue body,Please check your internet connection.,인터넷 연결을 확인해주세요.,에러팝업 04. 인터넷 연결 안됨 
+843,680,Error_popup,text,Password change failed body,Please check your old password.,기존 비밀번호를 잘못 입력하셨습니다.,에러팝업 08. Manage Account 비밀번호 변경 실패
+825,680,Error_popup,text,Hearing aid or Live Listen detected body,"Please disconnect or turn off your hearing aid or the Live Listen feature, as keeping them on can alter your results.",보청기 또는 실시간 듣기 기능을 꺼 주세요. 측정값에 영향을 줄 수 있습니다.,에러팝업 01. 보청기 혹은 실시간 듣기 : 앱 실행 시 체크
+359,696,account_forgotpw2,text,Please enter 6-digit verification code.,Please enter 6-digit verification code.,6자리 임시 코드를 입력하세요.,
+325,286,account_entry,text,Please enter a properly formatted email address.,Please enter a properly formatted email address.,이메일 주소 형식으로 입력하세요.,
+354,691,account_forgotpw1,text,Please enter a properly formatted email address.,Please enter a properly formatted email address.,이메일 주소 형식으로 입력하세요.,
+816,670,Menu_contactus,text,Please enter the message,Please enter the message,메시지를 입력하세요,
+814,668,Menu_contactus,text,Please enter the subject,Please enter the subject,제목을 입력하세요.,
+186,147,manual_input_voiding,text,Please record your urine output,Please record your urine output,소변 배출량을 입력하세요.,
+221,182,intake_input,text,Please specify the amount,Please specify the amount,섭취량을 입력하세요.,
+226,187,intake_input,text,Enter the amount here,Please specify the amount,여기에 섭취량을 입력하세요.,
+851,680,Error_popup,text,Cancel plan Message body,"Please try after your membership expires. If your subscription still exists, please cancel the subscription and try again after the membership period.","유료사용 기간이 남아 있습니다. 먼저 구독 취소 후, 기간이 만료된 이후에 계정을 삭제할 수 있습니다.",에러팝업 11. 구독 기간이 남았는데 계정 삭제하려고 할 때
+597,486,menu_score_ipss_answersheet,text,IPSS8_answer1,Pleased,괜찮다,ko - 한국어번역자 오증준교수 버전 따름
+724,593,Menu_score_ipss_p8,text,IPSS8_answer1,Pleased,괜찮다,ko - 한국어번역자 오증준교수 버전 따름
+58,50,diary_main_list,text,pm list,pm,pm,
+60,50,diary_main_list,text,PM list,PM,PM,
+102,81,detail_main,text,pm,pm,오후,
+104,81,detail_main,text,PM,PM,오후,
+389,337,menu_userprofile_user,text,Preferred Name,Preferred Name,이름,
+404,351,menu_userprofile_guest,text,Preferred Name,Preferred Name,이름,
+142,108,sound_input_rec,text,Preparing for the recording,Preparing for the recording,측정 준비중입니다.,
+297,257,howtouse_female,text,Press ‘Sound Input’,Press ‘Sound Input’,앱을 열고 ‘자동 측정' 을 누르세요.,
+305,265,howtouse_male,text,Press ‘Sound Input’ to begin recording,Press ‘Sound Input’ to begin recording,자동 측정'을 누르세요.,
+307,267,howtouse_male,text,Press ‘Stop Recording’ button before flushing,Press ‘Stop Recording’ button before flushing,측정 종료'를 누르세요.,
+652,521,Menu_score_ipss_p1,text,Previous,Previous,이전,
+663,532,Menu_score_ipss_p2,text,Previous,Previous,이전,
+674,543,Menu_score_ipss_p3,text,Previous,Previous,이전,
+685,554,Menu_score_ipss_p4,text,Previous,Previous,이전,
+696,565,Menu_score_ipss_p5,text,Previous,Previous,이전,
+707,576,Menu_score_ipss_p6,text,Previous,Previous,이전,
+718,587,Menu_score_ipss_p7,text,Previous,Previous,이전,
+730,599,Menu_score_ipss_p8,text,Previous,Previous,이전,
+761,617,Menu_score_oabss_p1,text,Previous,Previous,이전,
+769,626,Menu_score_oabss_p2,text,Previous,Previous,이전,
+779,637,Menu_score_oabss_p3,text,Previous,Previous,이전,
+789,648,Menu_score_oabss_p4,text,Previous,Previous,이전,
+247,206,export_paywall,text,Privacy Policy,Privacy Policy,개인정보보호 정책,
+500,435,menu_plan_paywall,text,Privacy Policy,Privacy Policy,개인정보보호 정책,
+823,677,Menu_about,text,Privacy Policy,Privacy Policy,개인정보보호 정책,
+97,77,diary_add_list,text,Pending Message,Processing your recording...,결과 분석 중입니다,
+133,100,detail_main,text,warning processing,Processing your recording… ,현재 녹음 결과를 처리 중입니다.,
+366,317,menu_itemlist,text,Profile,Profile,계정,
+501,436,menu_plan_promo,text,Promo Code,Promo Code,프로모션 코드,
+503,438,menu_plan_promo,text,Promo Code,Promo Code,프로모션 코드,
+89,69,diary_add_sumintake,text,Proportion,Proportion,비율,
+519,454,menu_score_list,text,Prostate Symptom,Prostate Symptom,전립선 증상,
+467,404,menu_plan_on,text,Purchase information,Purchase information,구독 정보,
+721,590,Menu_score_ipss_p8,text,IPSS Title 8,Quality of life due to urinary symptoms,삶의 질,
+430,371,menu_userprofile_changepw,text,Re-type new password,Re-type new password,새로운 비밀번호를 다시 입력 하세요.,
+150,116,sound_input_annot,text,Recording saved!,Recording saved!,측정이 완료되었습니다!,
+143,109,sound_input_rec,text,Recording started!,Recording started!,측정이 시작되었습니다.,
+144,110,sound_input_rec,text,Recording...,Recording...,측정중,
+537,465,menu_score_list,text,References,References,출처,
+631,498,menu_score_reference,text,References,References,출처,
+98,78,diary_add_list,text,Refresh,Refresh,새로고침,
+817,671,Menu_contactus,text,Required fields,Required fields,필수 입력,
+459,400,menu_plan_off,text,Retrieve purchase data,Retrieve purchase data,결제 정보 불러오기,
+483,418,menu_plan_on,text,Retrieve purchase data,Retrieve purchase data,결제 정보 불러오기,
+63,52,diary_main_list,text,S,S,S,
+110,88,detail_main,text,S,S,S,
+167,133,sound_input_annot,text,Save,Save,저장하기,
+203,164,manual_input_voiding,text,Save,Save,저장하기,
+211,172,manual_input_leakage,text,Save,Save,저장하기,
+229,190,intake_input,text,Save,Save,저장하기,
+432,373,menu_userprofile_changepw,text,Save pw,Save,비밀번호 변경하기,
+807,661,Menu_language,text,Save,Save,저장하기,
+396,344,menu_userprofile_guest,text,Save your data?,Save your data?,데이터를 안전하게 저장할까요?,
+738,604,Menu_score_ipss_result,text,Score:,Score:,증상점수:,
+796,653,Menu_score_oabss_result,text,Score:,Score:,증상점수:,
+85,66,diary_add_sumvoiding,text,See less,See less,간단히 보기,
+96,76,diary_add_sumintake,text,See less,See less,간단히 보기,
+526,458,menu_score_list,text,See less,See less,간단히 보기,
+535,464,menu_score_list,text,See less,See less,간단히 보기,
+5,3,home_main_voiding,text,See more,See more,더보기,
+18,15,home_main_intake,text,See more,See more,더보기,
+43,36,diary_main_sumvoiding,text,See more,See more,더보기,
+47,40,diary_main_sumintake,text,See more,See more,더보기,
+527,458,menu_score_list,text,See more,See more,더보기,
+536,464,menu_score_list,text,See more,See more,더보기,
+231,192,export_calendar,text,Select Date,Select Date,날짜를 선택하세요.,
+152,118,sound_input_annot,text,Select urge level,Select urge level,요의의 강도를 선택하세요,
+188,149,manual_input_voiding,text,Select urge level,Select urge level,요의의 강도를 선택하세요,
+249,208,export_agreement,text,Selected data will be sent to,Selected data will be sent to,아래의 이메일로 전송됩니다.,
+391,339,menu_userprofile_user,text,Set Up Passcode,Set Up Passcode,암호 설정,
+407,354,menu_userprofile_guest,text,Set Up Passcode,Set Up Passcode,암호 설정,
+409,356,menu_userprofile_passcode,text,Set Up Passcode,Set Up Passcode,암호 설정,
+416,361,menu_userprofile_passcode_input,text,Set your passcode below,Set your passcode below,암호를 입력하세요,
+455,396,menu_plan_off,text,Setting plan,Setting,구독 관리,
+479,414,menu_plan_on,text,Setting plan,Setting,구독 관리,
+525,457,menu_score_list,text,Severe,Severe,중증,
+534,463,menu_score_list,Severe,Severe,Severe,중증,
+545,470,menu_score_ipss_answersheet,text,Severe,Severe,중증,
+607,489,menu_score_oabss_answersheet,text,Severe,Severe,중증,
+737,603,Menu_score_ipss_result,text,Severe,Severe,중증,
+741,607,Menu_score_ipss_result,text,Severe,Severe,중증,
+795,653,Menu_score_oabss_result,text,Severe,Severe,중증,
+799,656,Menu_score_oabss_result,text,Severe,Severe,중증,
+317,278,intro_info,text,Sex intro,Sex,성별을 알려주세요.,
+385,334,menu_userprofile_user,text,Sex,Sex,성별,
+400,348,menu_userprofile_guest,text,Sex,Sex,성별,
+329,290,account_login,text,Sign In,Sign In,로그인,
+351,688,account_forgotpw1,text,Sign In,Sign In,로그인,
+356,693,account_forgotpw2,text,Sign In,Sign In,로그인,
+393,341,menu_userprofile_user,text,Sign Out,Sign Out,로그아웃,
+335,296,account_signup,text,Sign up,Sign up,회원가입,
+845,680,Error_popup,text,Sign-in failed title,Sign-in Failed,로그인할 수 없습니다.,에러팝업 09. 로그인 실패
+292,252,howtouse_female,text,Sit farther back than usual,Sit farther back than usual,변좌에서 엉덩이를 뒤쪽으로 밀어 앉으세요.,
+285,245,howtouse_female,text,Skip,Skip,Skip,
+299,259,howtouse_male,text,Skip,Skip,Skip,
+119,92,detail_main,text,Small,Small,S,
+162,128,sound_input_annot,text,Small,Small,S,
+198,159,manual_input_voiding,text,Small,Small,S,
+206,167,manual_input_leakage,text,Small,Small,S,
+222,183,intake_input,text,Small,Small,S,
+309,270,intro_entry,text,Smart Bladder Diary,Smart Bladder Diary,스마트 배뇨일지,
+21,18,home_main_intake,text,soda,soda,탄산,
+68,53,diary_main_list,text,soda,soda,탄산,
+92,72,diary_add_sumintake,text,soda,soda,탄산,
+128,97,detail_main,text,soda,soda,탄산,
+216,177,intake_input,text,soda,soda,탄산,
+437,378,menu_userprofile_delete,text,Delete account Message,"Sorry to see you go, please tell us why you are deleting your account.",아쉽습니다.\n탈퇴 이유를 알려주세요.,
+14,11,home_main_voiding,text,Sound Input,Sound Input,자동 측정,
+642,511,menu_score_ipss_intro,text,Start,Start,시작하기,
+756,687,menu_score_oabss_intro,text,Start,Start,시작하기,
+469,405,menu_plan_on,text,Start date,Start date,시작일,
+264,224,guide_page1,text,Step 1,Step 1,Step 1,
+269,229,guide_page1,text,Step 1,Step 1,Step 1,
+266,226,guide_page1,text,Step 2,Step 2,Step 2,
+270,230,guide_page1,text,Step 2,Step 2,Step 2,
+272,232,guide_page2,text,Step 3,Step 3,Step 3,
+275,235,guide_page2,text,Step 3,Step 3,Step 3,
+699,568,Menu_score_ipss_p6,text,IPSS Title 6,Straining,복압배뇨,
+813,667,Menu_contactus,text,Subject,Subject,제목,
+355,692,account_forgotpw1,text,Submit forgot pw,Submit,임시 코드 받기,
+365,701,account_forgotpw2,text,Submit change pw,Submit,비밀번호 변경하기,
+516,451,menu_plan_promo_popup_invalid,text,Submit,Submit,제출하기,
+731,600,Menu_score_ipss_p8,text,Submit,Submit,제출하기,
+790,649,Menu_score_oabss_p4,text,Submit,Submit,제출하기,
+818,672,Menu_contactus,text,Submit,Submit,제출하기,
+449,390,menu_plan_off,text,Subscription details,Subscription details,구독 정보,
+461,402,menu_plan_on,text,Subscription details,Subscription details,구독 정보,
+28,25,diary_main,text,Summary,Summary,요약,
+371,322,menu_itemlist,text,Symptom score,Symptom score,증상점수 설문지,
+517,452,menu_score_list,text,Symptom Scores,Symptom Scores,증상점수 설문지,
+520,455,menu_score_list,text,Take,Take,시작,
+530,461,menu_score_list,text,Take,Take,시작,
+145,111,sound_input_rec,text,Tap to stop recording,Tap to stop recording,측정을 멈추려면 탭하세요.,
+268,228,guide_page1,text,Tell me more about Bladder Diary,Tell me more about Bladder Diary,배뇨일지 더 알아보기,
+345,306,account_signup_info,text,Tell us about you!,Tell us about you!,당신에 대해 알려주세요!,
+246,205,export_paywall,text,Terms of Use,Terms of Use,이용약관,
+822,676,Menu_about,text,Terms of Use,Terms of Use,이용약관,
+499,434,menu_plan_paywall,text,Terms or Use,Terms or Use,이용약관,
+602,486,menu_score_ipss_answersheet,text,IPSS8_answer6,Terrible,견딜 수 없다,ko - 한국어번역자 오증준교수 버전 따름
+729,598,Menu_score_ipss_p8,text,IPSS8_answer6,Terrible,견딜 수 없다,ko - 한국어번역자 오증준교수 버전 따름
+507,442,menu_plan_promo_popup_invalid,text,"That promo code didn’t work. Try entering it again, and if you’re still having trouble, email us at hello@bladderly.com for assistance.","That promo code didn’t work. Try entering it again, and if you’re still having trouble, email us at hello@bladderly.com for assistance.","입력하신 코드가 유효하지 않습니다. 다시 입력해 보시고, 계속 문제가 발생하면 hello@bladderly.com으로 이메일을 보내 주세요.",
+251,210,export_agreement,text,Share policy Message,"The current version of Bladderly export file has been specifically designed for Bladderly users. The Bladderly export file is compiled based on the voids recorded or measured by the user during the selected period. The information presented on the file is strictly limited to a compilation of data collected by the user and does not involve a higher level of statistical analysis. The accountability for completeness of all bladder event recordings and correct completion of recording for accurate voiding data capture lies with the user.\n\nDO NOT rely on the results provided here to assess your own health; consult your doctor. Bladderly is not intended to be, should not be taken to be, and it does not replace (I) professional medical advice, screening, diagnosis, or treatment, (II) the practice of medicine, or (III) the provision of medical care.","본 문서는 블래덜리 수집기록 문서입니다. 이 문서는 블래덜리 사용자에게만 제공됩니다. 본 문서의 수집기록은 사용자가 블래덜리 앱의 사운드 분석기술로 측정하거나 직접 입력한 기록이며, 사용자가 선택한 기간의 수집기록만 발췌하였습니다. 본 문서는 수집한 데이터의 편집물에 불과하며 더 높은 수준의 통계 분석을 포함하지 않습니다. 선택한 기간에 발생한 모든 배뇨/섭취 이벤트를 기록하는 책임은 사용자에게 있습니다. 사운드 분석 기술을 활용하여 배뇨를 측정하는 경우, 정확한 녹음에 대한 책임은 사용자에게 있습니다.\n\n블래덜리는 전문 의학적 조언, 스크리닝, 진단 또는 치료를 대신하지 않습니다. 여기에서 제공하는 결과를 사용하여 건강을 평가하지 말고, 전문 의료인과 상담하십시오. ",
+828,680,Error_popup,text,Unsupported device body,"The device is not supported. All features are available, but measurement accuracy is not guaranteed. You can check the supported devices on the App Store Page or the website.",현재 지원되지 않는 모델입니다. 측정은 가능하지만 정확도가 보장되지 않습니다. App Store 페이지 또는 웹사이트에서 지원되는 기기를 확인하세요.,"에러팝업 02. 미지원기기 : 앱 처음 다운로드 받았을 때, 사운드 측정할 때"
+421,362,menu_userprofile_passcode_input,text,The passcode you entered is incorrect.\nPlease try again.,The passcode you entered is incorrect.\nPlease try again.,비밀번호가 올바르지 않습니다. 다시 입력하세요.,
+849,680,Error_popup,text,Forgot password reset issue body,The verification code does not match. Please try again.,인증 코드가 일치하지 않습니다. 다시 시도해주세요.,에러팝업 10. Forgot Password 비밀번호 리셋 실패
+298,258,howtouse_female,text,Then start urinating.,Then start urinating.,그리고 배뇨를 시작하세요.,
+173,138,sound_input_popup_na,text,Err_analyzing,There was an error during the analysis.\nPlease try again.,사운드 분석에 오류가 발생했습니다. 다시 측정하세요.,
+747,609,Menu_score_ipss_result,text,This is not a diagnosis. Consult with your doctor or medical professional if you have concerns about your condition.,This is not a diagnosis. Consult with your doctor or medical professional if you have concerns about your condition.,이 결과는 진단이 아닙니다. 건강 상태가 걱정되시면 의사와 상담하세요.,
+800,657,Menu_score_oabss_result,text,This is not a diagnosis. Consult with your doctor or medical professional if you have concerns about your condition.,This is not a diagnosis. Consult with your doctor or medical professional if you have concerns about your condition.,이 결과는 진단이 아닙니다. 건강 상태가 걱정되시면 의사와 상담하세요.,
+178,138,sound_input_popup_na,text,Err_VV,This recording does not meet our measurable criteria.,분석 범위를 벗어났습니다.\n다시 측정해 주세요.,
+641,510,menu_score_ipss_intro,text,IPSS Desc,This test is devised to help men determine how bothersome their symptoms are and check how effective their treatment is.\n\nTake the following 8-question quiz  and get a personalized urinary health score.,이 검사는 전립선비대증과 관련된 배뇨의 저장과 배출 관련 증상들을 정량화하여 알려줍니다. 증상의 경중에 따라 치료방침을 결정하거나 약물이나 수술적 치료 후 경과 관찰에 유용하게 사용할 수 있습니다.,
+755,686,menu_score_oabss_intro,text,OABSS Desc,"This test quantifies four bladder symptoms such as frequency of day and night bathroom trips, urgency and incontinence. It is recommended for people taking bladder medication to assess treatment efficacy.","이 검사는 주간과 야간에 화장실에 가는 횟수, 절박도, 요실금 등 네가지 방광 증상을 정량화하여 알려줍니다. 방광 약을 복용자의 치료 효과를 평가 목적으로 권장됩니다.",
+7,5,home_main_voiding,text,time,time,회,
+37,33,diary_main_sumvoiding,text,time,time,회,
+39,34,diary_main_sumvoiding,text,time,time,회,
+41,35,diary_main_sumvoiding,text,time,time,회,
+52,45,diary_main_list,text,Time list,Time,시간,
+87,68,diary_add_sumintake,text,time,time,회,
+8,5,home_main_voiding,text,times,times,회,
+38,33,diary_main_sumvoiding,text,times,times,회,
+40,34,diary_main_sumvoiding,text,times,times,회,
+42,35,diary_main_sumvoiding,text,times,times,회,
+88,68,diary_add_sumintake,text,times,times,회,
+835,680,Error_popup,text,Future time selection body,Times in the future cannot be set.,현재 시간 이후로는 설정할 수 없습니다.,에러팝업 05. 미래시간 선택 : 데이터 기록할 때
+258,217,export_survey,text,To share with a clinician.,To share with a clinician.,병원에 제출하기 위하여,
+73,55,diary_main_calendar,design,Today,Today,오늘,버튼 디자인에 적용
+140,106,diary_add_calendar,text,Today,Today,오늘,
+230,191,export_calendar,text,Today,Today,오늘,
+1,1,home_main,text,Today Summary,Today’s Summary,오늘의 요약,
+29,25,diary_main,text,Today Summary,Today’s Summary,오늘의 요약,
+846,680,Error_popup,text,Sign-in failed body,Too many sign-in attempts. Please try again in a few hours.,로그인 실패 횟수가 초과되었습니다. 나중에 다시 시도해주세요.,에러팝업 09. 로그인 실패
+31,27,diary_main_sumvoiding,text,Total amount voiding,Total amount,총 배뇨량,
+45,38,diary_main_sumintake,text,Total amount intake,Total amount,총 섭취량,
+118,91,detail_main,text,Total amount Leakage,Total amount,누출량,
+123,94,detail_main,text,Total amount intake,Total amount,총 섭취량,
+9,6,home_main_voiding,text,Total void,Total void,총 배뇨량,
+471,407,menu_plan_on,text,Trial End date,Trial End date,종료일,
+468,405,menu_plan_on,text,Trial Start date,Trial Start date,시작일,
+56,49,diary_main_list,text,Type,Type,섭취,
+427,368,menu_userprofile_changepw,text,Type new password,Type new password,새로운 비밀번호를 입력하세요.,
+424,365,menu_userprofile_changepw,text,Type old password,Type old password,기존 비밀번호를 입력하세요.,
+601,486,menu_score_ipss_answersheet,text,IPSS8_answer5,Unhappy,괴롭다,ko - 한국어번역자 오증준교수 버전 따름
+728,597,Menu_score_ipss_p8,text,IPSS8_answer5,Unhappy,괴롭다,ko - 한국어번역자 오증준교수 버전 따름
+381,330,menu_itemlist,text,Unit setting,Unit setting,단위 설정,
+26,23,home_add_voiding_lock,design,lock msg pay,Unlock AI-powered sound recording  and analyze your voiding activities. ,AI 기반 소리 입력을 활성화하고 배뇨 활동을  자동으로 분석하세요.,버튼 디자인에 적용
+54,47,diary_main_list,text,Urge,Urge,요의,
+108,84,detail_main,text,Urge Lv,Urge Lv,요의 수준,
+677,546,Menu_score_ipss_p4,text,IPSS Title 4,Urgency,요절박,
+154,120,sound_input_annot,text,Urgent,Urgent,절박감 강함,
+190,151,manual_input_voiding,text,Urgent,Urgent,절박감 강함,
+289,249,howtouse_female,text,Use this feature only with toilets that have enough water.,Use this feature only with toilets that have enough water.,물이 충분한 양변기에서만 사용하세요.,
+303,263,howtouse_male,text,Use this feature only with toilets that have enough water.,Use this feature only with toilets that have enough water.,물이 충분한 양변기에서만 사용하세요.,
+367,318,menu_itemlist,text,User Profile,User Profile,사용자 계정,
+382,331,menu_userprofile_user,text,User Profile,User Profile,사용자 계정,
+395,343,menu_userprofile_guest,text,User Profile,User Profile,사용자 계정,
+358,695,account_forgotpw2,text,Verification Code,Verification Code,임시 코드,
+75,56,diary_add_sumvoiding,text,Voided volume,Voided volume,배뇨량,
+149,115,sound_input_annot,text,Voided volume,Voided volume,배뇨량,
+185,146,manual_input_voiding,text,Voided volume,Voided volume,배뇨량,
+132,99,detail_main,text,warnin,Voided Volume Not Recorded. Please manually record the amount to ensure accurate tracking.,배뇨량이 기록되지 않았습니다. 정확한 추적을 위해 직접 배뇨량을 기록해 주세요.,
+4,2,home_main_voiding,text,Voiding,Voiding,배뇨,
+30,26,diary_main_sumvoiding,text,Voiding,Voiding,배뇨,
+49,42,diary_main_list,text,Voiding,Voiding,배뇨,
+105,82,detail_main,text,Voiding,Voiding,배뇨,
+184,145,manual_input_voiding,text,Voiding,Voiding,배뇨,
+80,61,diary_add_sumvoiding,text,Voiding interval,Voiding interval,배뇨 간격,
+106,83,detail_main,text,Volume,Volume,배뇨량,
+155,121,sound_input_annot,text,Was it an urination during sleep?,Was it an urination during sleep?,자다가 일어났나요?,
+191,151,manual_input_voiding,text,Was it an urination during sleep?,Was it an urination during sleep?,자다가 일어났나요?,
+19,16,home_main_intake,text,water,water,물,
+66,53,diary_main_list,text,water,water,물,
+90,70,diary_add_sumintake,text,water,water,물,
+126,97,detail_main,text,water,water,물,
+214,175,intake_input,text,water,water,물,
+176,138,sound_input_popup_na,text,Err_no_void,We could not detect urination sounds.\nPlease try again.,배뇨 소리가 감지되지 않았습니다.\n다시 측정하세요.,
+169,134,sound_input_popup_done,text,We received your recording!,We received your recording!,측정이 완료되었습니다.,
+352,689,account_forgotpw1,text,We will email you a verification code to reset your password,We will email you a verification code to reset your password,입력한 이메일 주소로 임시 코드가 발급됩니다.,
+831,680,Error_popup,text,Upcoming supported device body,We're finalizing compatibility for the recording feature on the new iPhone series. Stay tuned!,호환성을 최종 조정 중입니다. 곧 지원될 예정이니 기대해 주세요!!,"에러팝업 03. 지원예정 기기 : 앱 처음 다운로드 받았을 때, 사운드 측정할 때"
+688,557,Menu_score_ipss_p5,text,IPSS Title 5,Weak stream,약한 소변 줄기,
+220,181,intake_input,text,What beverage did you have?,What beverage did you have?,어떤 음료를 드셨나요?,
+346,307,account_signup_info,text,What would like me to call you?,What would like me to call you?,이름,
+256,215,export_survey,text,What’s this report for?,What’s this report for?,배뇨일지의 사용목적이 무엇인가요?,
+259,218,export_survey,text,Who are you planning to share this report with?,Who are you planning to share this report with?,배뇨일지를 누구와 공유할 예정인가요?,
+320,281,intro_info,text,Year of Birth info,Year of Birth,출생년도를 알려주세요.,
+388,336,menu_userprofile_user,text,Year of Birth,Year of Birth,출생년도,
+403,350,menu_userprofile_guest,text,Year of Birth,Year of Birth,출생년도,
+156,122,sound_input_annot,text,Yes,Yes,예,
+159,125,sound_input_annot,text,Yes,Yes,예,
+192,153,manual_input_voiding,text,Yes,Yes,예,
+195,156,manual_input_voiding,text,Yes,Yes,예,
+147,113,sound_input_rec_popup_cancel,text,"Yes, Cancel recording","Yes, Cancel recording","네, 취소합니다.",
+446,387,menu_userprofile_delete_popup,text,"Yes, delete my account","Yes, delete my account","네, 계정을 삭제합니다.",
+136,102,detail_popup_delete,text,"Yes, Delete the record","Yes, Delete the record","네, 삭제합니다.",
+434,375,menu_userprofile_signout_popup,text,"Yes, Sign Out","Yes, Sign Out","네, 로그아웃 할게요.",
+273,232,guide_page2,text,You can export PDF,You can export PDF,PDF로 쉽게 만들 수 있어요,
+234,195,export_calendar,text,You can export up to 7 days,You can export up to 7 days,최대 7일까지 선택할 수 있습니다.,
+314,275,intro_info,text,You’re not alone.,You’re not alone.,당신은 혼자가 아니에요.,
+177,138,sound_input_popup_na,text,Err_noisy_env,Your background noise is interfering with your recording.\nPlease try again.,주위 소음으로 인하여 측정되지 않았습니다. 다시 시도하세요.,
+175,138,sound_input_popup_na,text,Err_highfreq_cut,Your hearing aids or audio devices may be interfering with your recording.\nPlease try again by disconnecting the devices.,보청기 혹은 오디오 장치가 녹음을 방해할 수 있습니다. 연결을 해제하고 다시 시도하세요.,
+819,673,Menu_contactus,text,Your inquiry has been successfully received. We will replay via email after review.,Your inquiry has been successfully received. We will replay via email after review.,접수되었습니다. 확인 후 이메일로 답변드리겠습니다.,
+497,432,menu_plan_paywall,text,Your monthly or annual subscription automatically renews for the same term unless canceled.,Your monthly or annual subscription automatically renews for the same term unless canceled.,"월간 또는 연간 구독은 동일한 기간으로 자동 갱신되며, 언제든 취소 가능합니다.",
+255,214,export_survey,text,Your opinions matter the most. Please share with us the purpose of the data report.,Your opinions matter the most. Please share with us the purpose of the data report.,고객님의 소중한 의견을 들려주세요.,
+425,366,menu_userprofile_changepw,text,Your password is too short.,Your password is too short.,비밀번호는 8자 이상 입력해주세요.,
+361,698,account_forgotpw2,text,"Your password should have at least 8 characters including at least one digit, one uppercase, and one special character.","Your password should have at least 8 characters including at least one digit, one uppercase, and one special character.","영문 대문자, 숫자, 특수문자를 포함하여 8글자 이상으로 만드세요.",
+428,369,menu_userprofile_changepw,text,"Your password should have at least 8 characters including at least one digit, one uppercase, and one special character.","Your password should have at least 8 characters including at least one digit, one uppercase, and one special character.","영문 대문자, 숫자, 특수문자를 포함하여 8글자 이상으로 만드세요.",
+339,300,account_signup,text,Your password should have...,Your password should have...,비밀번호 형식,
+170,135,sound_input_popup_done,text,Analyzing Message,Your recording is being analyzed! The AI will process it and save the results automatically.,분석중입니다. 분석이 끝나면 배뇨량이 자동 저장됩니다.,
+151,117,sound_input_annot,text,Recording save Message,Your recording is saved and ready for AI processing.,분석이 완료되면 배뇨량이 자동저장됩니다.,
+174,138,sound_input_popup_na,text,Err_length,Your recording was too short.\nPlease try again.,녹음 시간이 짧습니다. 다시 측정하세요.,
+742,608,Menu_score_ipss_result,text,Your score currently indicates no symptoms. Continue to take IPSS questionnaire monthly to monitor any changes.,Your score currently indicates no symptoms. Continue to take IPSS questionnaire monthly to monitor any changes.,현재 점수상 특별한 증상이 없습니다. 변화를 살피기 위해 매달 IPSS 설문을 계속 진행하세요.,
+743,608,Menu_score_ipss_result,text,Your score indicates mild prostate symptoms. Ongoing observation or lifestyle changes may be necessary. Respond regularly each month to track results.,Your score indicates mild prostate symptoms. Ongoing observation or lifestyle changes may be necessary. Respond regularly each month to track results.,현재 점수는 경미한 전립선 증상을 나타냅니다. 지속적인 관찰이나 생활 습관 개선이 필요할 수 있습니다. 변화를 확인하기 위해 매달 설문에 응답하세요.,
+744,608,Menu_score_ipss_result,text,"Your score indicates moderate prostate symptoms that do not significantly impact your quality of life. If discomfort occurs, medication or procedures may be required.","Your score indicates moderate prostate symptoms that do not significantly impact your quality of life. If discomfort occurs, medication or procedures may be required.","현재 점수는 중등도 전립선 증상을 나타내지만, 삶의 질에 큰 영향을 미치지는 않습니다. 불편함이 느껴진다면 약물 치료나 시술이 필요할 수 있습니다.",
+745,608,Menu_score_ipss_result,text,Your score indicates moderate prostate symptoms with noticeable discomfort. It is recommended to seek medical assistance. Medication or procedures may be necessary.,Your score indicates moderate prostate symptoms with noticeable discomfort. It is recommended to seek medical assistance. Medication or procedures may be necessary.,"현재 점수는 중등도 전립선 증상으로 불편함이 느껴지는 수준입니다. 의료 상담을 받는 것이 좋으며, 약물 치료나 시술이 필요할 수 있습니다.",
+746,608,Menu_score_ipss_result,text,Your score indicates severe prostate symptoms with noticeable discomfort. It is recommended to seek medical assistance. Medication or procedures may be necessary.,Your score indicates severe prostate symptoms with noticeable discomfort. It is recommended to seek medical assistance. Medication or procedures may be necessary.,"현재 점수는 심한 전립선 증상으로 불편함이 뚜렷한 상태입니다. 의료 상담을 받는 것이 권장되며, 약물 치료나 시술이 필요할 수 있습니다.",
+374,324,menu_itemlist,,Korean,한국어,한국어,한국어
+803,660,Menu_language,text,Korean,한국어,한국어,한국어
+805,660,Menu_language,text,Japanese,日本語,日本語,일본어

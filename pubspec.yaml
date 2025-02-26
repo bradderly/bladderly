@@ -52,6 +52,7 @@ dependencies:
   flutter_localization: 0.3.1
   flutter_keyboard_visibility: 6.0.0
   scrolls_to_top: 2.1.1
+  csv: 6.0.0
 
 dev_dependencies:
   flutter_test:
