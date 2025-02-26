@@ -1,6 +1,6 @@
 import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
 import 'package:collection/collection.dart';
-import 'package:csv2json/csv2json.dart';
+import 'package:csv/csv.dart';
 import 'package:flutter/services.dart';
 
 enum AppLocale {
@@ -37,16 +37,31 @@ class Translation {
 
     final fileContent = await rootBundle.loadString(Assets.i18n.stringsI18n);
 
-    final jsons = csv2json(fileContent);
+    final rows = const CsvToListConverter().convert(fileContent);
 
-    for (final json in jsons) {
-      final key = json.remove('key');
+    final header = rows.removeAt(0);
+
+    final keyIndex = header.indexOf('key');
+
+    final localeIndexMap = AppLocale.values.fold<Map<AppLocale, int>>(
+      {},
+      (map, locale) => map..[locale] = header.indexOf(locale.name),
+    );
+
+    for (final row in rows) {
+      final key = row.elementAtOrNull(keyIndex)?.toString().replaceAll(r'\n', '\n');
 
       if (key == null) continue;
 
-      for (final entry in json.entries) {
-        (_translations[AppLocale.of(entry.key)] ??= <String, String>{})
-            .addAll({key: entry.value.replaceAll(r'\n', '\n')});
+      for (final localIndexMapEntry in localeIndexMap.entries) {
+        final locale = localIndexMapEntry.key;
+        final index = localIndexMapEntry.value;
+
+        if (_translations[locale] == null) {
+          _translations[locale] = <String, String>{};
+        }
+
+        _translations[locale]?[key] = '${row.elementAtOrNull(index)}'.replaceAll(r'\n', '\n');
       }
     }
   }
