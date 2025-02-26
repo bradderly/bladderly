@@ -50,8 +50,7 @@ class _DeleteAccountModalState extends State<DeleteAccountModal> {
                     Padding(
                       padding: const EdgeInsets.only(left: 16, right: 32),
                       child: Text(
-                        'Sorry to see you go, please tell us why you are deleting your account.'
-                            .tr(context),
+                        'Delete account Message'.tr(context),
                         style: context.textStyleTheme.b16Medium.copyWith(
                           color: context.colorTheme.neutral.shade10,
                         ),
@@ -77,11 +76,10 @@ class _DeleteAccountModalState extends State<DeleteAccountModal> {
                   if (selectedReason == null) {
                     return;
                   }
-                  showDeleteAccountDialog(context);
+                  showDeleteAccountDialog(context, onConfirm: () {});
                 },
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
                   decoration: BoxDecoration(
                     color: (selectedReason == null)
                         ? context.colorTheme.neutral.shade6
@@ -117,53 +115,50 @@ void showDeleteAccountDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16), // 둥근 모서리
         ),
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
+        contentPadding: const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Delete account popup Message'.tr(context),
-              style: context.textStyleTheme.b16SemiBold
-                  .copyWith(color: context.colorTheme.neutral.shade10),
-            ),
-            const SizedBox(height: 24),
-            Text(
-              'Are you sure you want to delete your account?',
-              style: context.textStyleTheme.b16SemiBold
-                  .copyWith(color: context.colorTheme.neutral.shade10),
+              style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
             ),
             const SizedBox(height: 32),
             Column(
               children: [
-                ElevatedButton(
-                  onPressed: onConfirm,
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                GestureDetector(
+                  onTap: onConfirm,
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 56,
+                    decoration: BoxDecoration(
+                      color: context.colorTheme.neutral.shade2,
+                      borderRadius: BorderRadius.circular(400),
                     ),
-                  ),
-                  child: Text(
-                    'Yes, Delete my Account',
-                    style: context.textStyleTheme.b16SemiBold
-                        .copyWith(color: context.colorTheme.neutral.shade10),
+                    child: Text(
+                      'Yes, delete my account'.tr(context),
+                      style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 12),
-                ElevatedButton(
-                  onPressed: onCancel,
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                const SizedBox(height: 16),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 56,
+                    decoration: BoxDecoration(
+                      color: context.colorTheme.vermilion.primary.shade50,
+                      borderRadius: BorderRadius.circular(400),
                     ),
-                  ),
-                  child: Text(
-                    'No, Keep my Account',
-                    style: context.textStyleTheme.b16SemiBold.copyWith(
-                      color: context.colorTheme.neutral.shade0,
+                    child: Text(
+                      'No, keep my account'.tr(context),
+                      style: context.textStyleTheme.b16SemiBold.copyWith(
+                        color: context.colorTheme.neutral.shade0,
+                      ),
                     ),
                   ),
                 ),

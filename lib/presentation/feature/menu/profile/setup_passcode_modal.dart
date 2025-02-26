@@ -11,7 +11,6 @@ class SetupPasscodeModal extends StatefulWidget {
 }
 
 class _SetupPasscodeModalState extends State<SetupPasscodeModal> {
-  bool _obscureText = true;
   bool isSwitched = false;
 
   @override
@@ -58,8 +57,7 @@ class _SetupPasscodeModalState extends State<SetupPasscodeModal> {
                               children: [
                                 Text(
                                   'Lock with Face ID & Passcode'.tr(context),
-                                  style:
-                                      context.textStyleTheme.b16Medium.copyWith(
+                                  style: context.textStyleTheme.b16Medium.copyWith(
                                     color: context.colorTheme.neutral.shade10,
                                   ),
                                 ),
@@ -76,8 +74,7 @@ class _SetupPasscodeModalState extends State<SetupPasscodeModal> {
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
                                       color: isSwitched
-                                          ? context.colorTheme.vermilion.primary
-                                              .shade50
+                                          ? context.colorTheme.vermilion.primary.shade50
                                           : const Color(0x78788029),
                                       boxShadow: const [
                                         BoxShadow(
@@ -93,8 +90,7 @@ class _SetupPasscodeModalState extends State<SetupPasscodeModal> {
                                           duration: const Duration(
                                             milliseconds: 3000,
                                           ),
-                                          curve: Curves
-                                              .easeOutBack, // 살짝 튕기는 효과 추가
+                                          curve: Curves.easeOutBack, // 살짝 튕기는 효과 추가
                                           tween: Tween<double>(
                                             begin: isSwitched ? 2 : 22,
                                             end: isSwitched ? 22 : 2,
@@ -131,46 +127,9 @@ class _SetupPasscodeModalState extends State<SetupPasscodeModal> {
                           const SizedBox(height: 36),
                           // Description Text
                           Text(
-                            'If enabled, the app will be locked whenever you close the app and you will be prompted with Touch ID or your device’s passcode when relaunching.'
-                                .tr(context),
+                            'Passcode Message'.tr(context),
                             style: context.textStyleTheme.b14Medium.copyWith(
                               color: context.colorTheme.neutral.shade6,
-                            ),
-                          ),
-                          const SizedBox(height: 21),
-                          // Change Passcode Field
-                          TextField(
-                            obscureText: _obscureText,
-                            obscuringCharacter: '*', // 별표로 대체
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: context.colorTheme.neutral.shade2,
-                              hintText: 'Change passcode'.tr(context),
-                              hintStyle:
-                                  context.textStyleTheme.b16Medium.copyWith(
-                                color: context.colorTheme.neutral.shade6,
-                              ),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _obscureText
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                  color: context.colorTheme.neutral.shade6,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    _obscureText = !_obscureText;
-                                  });
-                                },
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                vertical: 14.5,
-                                horizontal: 16,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide.none,
-                              ),
                             ),
                           ),
                         ],
@@ -180,8 +139,7 @@ class _SetupPasscodeModalState extends State<SetupPasscodeModal> {
                 ),
               ),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
                 decoration: BoxDecoration(
                   color: context.colorTheme.neutral.shade6,
                   borderRadius: BorderRadius.circular(8),
