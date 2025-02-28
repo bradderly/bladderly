@@ -1,6 +1,6 @@
-import 'package:bradderly/domain/model/histories.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/diary/detailed_list/model/detailed_list_history_model.dart';
+import 'package:bladderly/domain/model/histories.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/diary/detailed_list/model/detailed_list_history_model.dart';
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';

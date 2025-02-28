@@ -1,5 +1,5 @@
-import 'package:bradderly/domain/model/histories.dart';
-import 'package:bradderly/presentation/common/extension/duration_extension.dart';
+import 'package:bladderly/domain/model/histories.dart';
+import 'package:bladderly/presentation/common/extension/duration_extension.dart';
 import 'package:equatable/equatable.dart';
 
 class HomeVoidingSummaryModel extends Equatable {

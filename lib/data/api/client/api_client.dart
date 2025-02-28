@@ -1,8 +1,10 @@
 // Package imports:
-import 'package:bradderly/data/api/client/converter/api_client_converter.dart';
-import 'package:bradderly/data/api/client/interceptor/api_client_x_api_key_interceptor.dart';
-import 'package:bradderly/data/api/model/swagger_json.models.swagger.dart';
+import 'package:bladderly/data/api/client/converter/api_client_converter.dart';
+import 'package:bladderly/data/api/client/interceptor/api_client_x_api_key_interceptor.dart';
+import 'package:bladderly/data/api/client/interceptor/api_response_exception_interceptor.dart';
+import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 import 'package:chopper/chopper.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/io_client.dart' show IOClient;
 import 'package:http/retry.dart' show RetryClient;
 
@@ -22,7 +24,15 @@ abstract class ApiClient extends ChopperService {
         converter: ApiClientConverter(),
         interceptors: [
           ApiClientXApiKeyInterceptor(),
-          HttpLoggingInterceptor(),
+          HttpLoggingInterceptor(
+            logger: chopperLogger
+              ..onRecord.listen((rec) {
+                if (kDebugMode) {
+                  print(rec.message);
+                }
+              }),
+          ),
+          ApiResponseExceptionInterceptor(),
         ],
       ),
     );
@@ -48,7 +58,7 @@ abstract class ApiClient extends ChopperService {
     @Body() required PostEmailRequest request,
   });
 
-  @Post(path: 'log-in')
+  @Post(path: '/log-in')
   Future<Response<LoginResponse>> logIn({
     @Body() required LoginRequest request,
   });
@@ -59,7 +69,7 @@ abstract class ApiClient extends ChopperService {
   });
 
   @Post(path: '/sign-up')
-  Future<Response<SimpleResponse>> signUp({
+  Future<Response<SignUpResponse>> signUp({
     @Body() required SignUpRequest request,
   });
 
@@ -70,18 +80,18 @@ abstract class ApiClient extends ChopperService {
   });
 
   @Get(path: '/get-pay-info')
-  Future<Response<PaymentResponse>> getPayInfo({
+  Future<Response<GetPayResponse>> getPayInfo({
     @Query('user-id') required String userId,
     @Query('device') required String device,
   });
 
-  @Post(path: '/get-pay-info')
-  Future<Response<PaymentResponse>> checkPayment({
+  @Post(path: '/post-pay-info')
+  Future<Response<PostPayResponse>> checkPayment({
     @Body() required PaymentCheckRequest request,
   });
 
   @Post(path: '/audio-upload')
-  Future<Response<PaymentResponse>> uploadAudio({
+  Future<Response<SimpleResponse>> uploadAudio({
     @Body() required PaymentCheckRequest request,
   });
 

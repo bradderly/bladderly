@@ -1,7 +1,7 @@
-import 'package:bradderly/domain/model/history.dart';
-import 'package:bradderly/domain/model/history_status.dart';
-import 'package:bradderly/domain/model/leakage_volume.dart';
-import 'package:bradderly/domain/repository/history_repository.dart';
+import 'package:bladderly/domain/model/history.dart';
+import 'package:bladderly/domain/model/history_status.dart';
+import 'package:bladderly/domain/model/leakage_volume.dart';
+import 'package:bladderly/domain/repository/history_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 

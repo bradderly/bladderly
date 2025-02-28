@@ -1,5 +1,5 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 

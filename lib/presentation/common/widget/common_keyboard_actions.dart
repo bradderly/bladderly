@@ -1,10 +1,10 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
-class InputKeyboardActions extends StatelessWidget {
-  const InputKeyboardActions({
+class CommonKeyboardActions extends StatelessWidget {
+  const CommonKeyboardActions({
     super.key,
     required this.focusNode,
     required this.child,

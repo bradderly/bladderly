@@ -1,15 +1,15 @@
 import 'dart:async';
 
-import 'package:bradderly/core/package_device_info/src/model/device_info_model.dart';
-import 'package:bradderly/core/recorder/recorder_module.dart';
-import 'package:bradderly/core/recorder/src/recorder_file.dart';
-import 'package:bradderly/presentation/common/bloc/user_bloc.dart';
-import 'package:bradderly/presentation/common/cubit/pending_upload_file_cubit.dart';
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/input/sound_input_recording/widget/sound_input_recording_stop_dialog.dart';
-import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
-import 'package:bradderly/presentation/router/route/main_route.dart';
+import 'package:bladderly/core/package_device_info/src/model/device_info_model.dart';
+import 'package:bladderly/core/recorder/recorder_module.dart';
+import 'package:bladderly/core/recorder/src/recorder_file.dart';
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
+import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/input/sound_input_recording/widget/sound_input_recording_stop_dialog.dart';
+import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
+import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,7 +64,7 @@ class _SoundInputRecordingViewState extends State<SoundInputRecordingView> with 
   }
 
   Future<void> startRecording() async {
-    final userModel = context.read<UserBloc>().state.userModel;
+    final userModel = context.read<UserBloc>().state.userModelOrThrowException;
 
     final fileName = [
       userModel.id,

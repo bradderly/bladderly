@@ -1,9 +1,9 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/menu/symptom/symptom_descript_modal.dart';
-import 'package:bradderly/presentation/feature/menu/symptom/symptom_introduce_modal.dart';
-import 'package:bradderly/presentation/feature/menu/symptom/symptom_moderate_modal.dart';
-import 'package:bradderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/symptom_descript_modal.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/symptom_introduce_modal.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/symptom_moderate_modal.dart';
+import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:flutter/material.dart';
 
 class SymptomModal extends StatelessWidget {
@@ -35,8 +35,7 @@ class SymptomModal extends StatelessWidget {
                     const SizedBox(height: 40),
                     SurveyItem(
                       title: 'I-PSS',
-                      subtitle:
-                          'International Prostate Symptom Score'.tr(context),
+                      subtitle: 'International Prostate Symptom Score'.tr(context),
                       score: 2,
                     ),
                     SurveyItem(
@@ -61,12 +60,11 @@ class SymptomModal extends StatelessWidget {
                   );
                 },
                 child: Text(
-                  'Learn about the tests'.tr(context),
+                  'References'.tr(context),
                   style: context.textStyleTheme.b16SemiBold.copyWith(
                     color: context.colorTheme.vermilion.primary.shade50,
                     decoration: TextDecoration.underline,
-                    decorationColor:
-                        context.colorTheme.vermilion.primary.shade50,
+                    decorationColor: context.colorTheme.vermilion.primary.shade50,
                   ),
                 ),
               ),
@@ -107,17 +105,14 @@ class _SurveyItemState extends State<SurveyItem> {
         child: Column(
           children: [
             ListTile(
-              contentPadding:
-                  const EdgeInsets.only(left: 16, top: 24, right: 16),
+              contentPadding: const EdgeInsets.only(left: 16, top: 24, right: 16),
               title: Text(
                 widget.title,
-                style: context.textStyleTheme.b16SemiBold
-                    .copyWith(color: context.colorTheme.neutral.shade10),
+                style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
               ),
               subtitle: Text(
                 widget.subtitle.tr(context),
-                style: context.textStyleTheme.b12Medium
-                    .copyWith(color: context.colorTheme.neutral.shade7),
+                style: context.textStyleTheme.b12Medium.copyWith(color: context.colorTheme.neutral.shade7),
               ),
               trailing: GestureDetector(
                 onTap: () {
@@ -138,8 +133,7 @@ class _SurveyItemState extends State<SurveyItem> {
                     color: context.colorTheme.vermilion.primary.shade50,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                   child: Text(
                     'Take'.tr(context),
                     style: context.textStyleTheme.b12SemiBold.copyWith(
@@ -162,10 +156,8 @@ class _SurveyItemState extends State<SurveyItem> {
                       height: 76,
                       alignment: Alignment.center,
                       child: Text(
-                        'Looks like there’s nothing here yet.\nLet’s get started!'
-                            .tr(context),
-                        style: context.textStyleTheme.b14Medium
-                            .copyWith(color: context.colorTheme.neutral.shade6),
+                        'Looks like there’s nothing here yet.\nLet’s get started!'.tr(context),
+                        style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
                         textAlign: TextAlign.center,
                       ),
                     )
@@ -190,17 +182,13 @@ class _SurveyItemState extends State<SurveyItem> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      isExpanded
-                          ? Icons.keyboard_arrow_up
-                          : Icons.keyboard_arrow_down,
+                      isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
                       color: context.colorTheme.neutral.shade7,
                       size: 16,
                     ),
                     const SizedBox(width: 1),
                     Text(
-                      isExpanded
-                          ? 'See less'.tr(context)
-                          : 'See more'.tr(context),
+                      isExpanded ? 'See less'.tr(context) : 'See more'.tr(context),
                       style: context.textStyleTheme.b14Medium.copyWith(
                         color: context.colorTheme.neutral.shade7,
                       ),
@@ -229,8 +217,7 @@ class _SurveyItemState extends State<SurveyItem> {
             children: [
               Text(
                 date,
-                style: context.textStyleTheme.b14Medium
-                    .copyWith(color: context.colorTheme.neutral.shade8),
+                style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade8),
               ),
               Row(
                 children: [

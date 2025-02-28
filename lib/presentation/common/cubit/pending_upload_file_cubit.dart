@@ -1,4 +1,4 @@
-import 'package:bradderly/core/recorder/src/recorder_file.dart';
+import 'package:bladderly/core/recorder/src/recorder_file.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 

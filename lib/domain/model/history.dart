@@ -1,5 +1,5 @@
-import 'package:bradderly/domain/model/history_status.dart';
-import 'package:bradderly/domain/model/leakage_volume.dart';
+import 'package:bladderly/domain/model/history_status.dart';
+import 'package:bladderly/domain/model/leakage_volume.dart';
 import 'package:equatable/equatable.dart';
 
 sealed class History extends Equatable {

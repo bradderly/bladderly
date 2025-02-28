@@ -1,4 +1,4 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:flutter/material.dart';
 
 class HowtousePage extends StatelessWidget {
@@ -28,8 +28,7 @@ class HowtousePage extends StatelessWidget {
           child: Text(
             title,
             textAlign: TextAlign.center,
-            style: context.textStyleTheme.b24Bold
-                .copyWith(color: context.colorTheme.neutral.shade10),
+            style: context.textStyleTheme.b24Bold.copyWith(color: context.colorTheme.neutral.shade10),
           ),
         ),
         if (description.isNotEmpty) ...[
@@ -39,8 +38,7 @@ class HowtousePage extends StatelessWidget {
             child: Text(
               description,
               textAlign: TextAlign.center,
-              style: context.textStyleTheme.b14SemiBold
-                  .copyWith(color: context.colorTheme.neutral.shade7),
+              style: context.textStyleTheme.b14SemiBold.copyWith(color: context.colorTheme.neutral.shade7),
             ),
           ),
         ],

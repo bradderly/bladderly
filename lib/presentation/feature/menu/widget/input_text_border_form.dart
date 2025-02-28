@@ -1,4 +1,4 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:flutter/material.dart';
 
 // ignore: non_constant_identifier_names
@@ -16,8 +16,7 @@ Widget InputTextBorderForm(
       children: [
         Text(
           title,
-          style: context.textStyleTheme.b14Medium
-              .copyWith(color: context.colorTheme.neutral.shade6),
+          style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
         ),
         const SizedBox(height: 11),
         Container(
@@ -31,13 +30,11 @@ Widget InputTextBorderForm(
           ),
           child: TextFormField(
             maxLines: maxlines,
-            style: context.textStyleTheme.b16Medium
-                .copyWith(color: context.colorTheme.neutral.shade10),
+            style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade10),
             decoration: InputDecoration(
               hintText: value,
               isDense: true,
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
               hintStyle: context.textStyleTheme.b16Medium.copyWith(
                 color: context.colorTheme.neutral.shade6,
               ),

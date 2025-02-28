@@ -1,13 +1,16 @@
-import 'package:bradderly/presentation/common/bloc/user_bloc.dart';
-import 'package:bradderly/presentation/common/cubit/locale_cubit.dart';
-import 'package:bradderly/presentation/common/cubit/unit_cubit.dart';
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/locale/app_locale.dart';
-import 'package:bradderly/presentation/common/widget/no_over_bouncing_scroll_physcis.dart';
-import 'package:bradderly/presentation/router/app_router.dart';
-import 'package:bradderly/presentation/theme/color/color_theme.dart';
-import 'package:bradderly/presentation/theme/shadow/shadow_theme.dart';
-import 'package:bradderly/presentation/theme/text_style/text_style_theme.dart';
+import 'package:bladderly/core/di/di.dart';
+import 'package:bladderly/domain/usecase/get_user_stream_usecase.dart';
+import 'package:bladderly/domain/usecase/get_user_usecase.dart';
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
+import 'package:bladderly/presentation/common/cubit/locale_cubit.dart';
+import 'package:bladderly/presentation/common/cubit/unit_cubit.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/locale/app_locale.dart';
+import 'package:bladderly/presentation/common/widget/no_over_bouncing_scroll_physcis.dart';
+import 'package:bladderly/presentation/router/app_router.dart';
+import 'package:bladderly/presentation/theme/color/color_theme.dart';
+import 'package:bladderly/presentation/theme/shadow/shadow_theme.dart';
+import 'package:bladderly/presentation/theme/text_style/text_style_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localization/flutter_localization.dart';
@@ -59,7 +62,10 @@ class _BladderlyAppState extends State<BladderlyApp> {
           create: (_) => UnitCubit(),
         ),
         BlocProvider<UserBloc>(
-          create: (_) => UserBloc(),
+          create: (_) => UserBloc(
+            getUserUsecase: getIt<GetUserUsecase>(),
+            getUserStreamUsecase: getIt<GetUserStreamUsecase>(),
+          )..add(const UserLoad()),
         ),
         BlocProvider<AppLocaleCubit>.value(
           value: appLocaleCubit,

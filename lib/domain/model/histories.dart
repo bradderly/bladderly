@@ -1,4 +1,4 @@
-import 'package:bradderly/domain/model/history.dart';
+import 'package:bladderly/domain/model/history.dart';
 import 'package:collection/collection.dart';
 
 typedef VodingHistories = Histories<VoidingHistory>;

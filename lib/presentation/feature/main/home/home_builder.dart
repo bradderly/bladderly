@@ -1,6 +1,6 @@
-import 'package:bradderly/core/di/di.dart';
-import 'package:bradderly/presentation/feature/main/home/cubit/home_summary_cubit.dart';
-import 'package:bradderly/presentation/feature/main/home/home_view.dart';
+import 'package:bladderly/core/di/di.dart';
+import 'package:bladderly/presentation/feature/main/home/cubit/home_summary_cubit.dart';
+import 'package:bladderly/presentation/feature/main/home/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

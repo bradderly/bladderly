@@ -1,4 +1,4 @@
-import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
+import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:equatable/equatable.dart';
 
 sealed class IntakeInputRecordVolumeModel extends Equatable {

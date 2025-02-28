@@ -1,5 +1,5 @@
-import 'package:bradderly/data/isar/schema/history_entity.dart';
-import 'package:bradderly/domain/model/history.dart';
+import 'package:bladderly/data/isar/schema/history_entity.dart';
+import 'package:bladderly/domain/model/history.dart';
 
 class HistoryEntityMapper {
   const HistoryEntityMapper._();
@@ -7,7 +7,7 @@ class HistoryEntityMapper {
   static HistoryEntity fromVoidingHistory(VoidingHistory history) {
     return HistoryEntity()
       ..setId(history.id)
-      ..hashId = history.hashId
+      ..userId = history.hashId
       ..recordTime = history.recordTime
       ..leakageMemo = history.memo
       ..recordVolume = history.recordVolume.toDouble()
@@ -22,7 +22,7 @@ class HistoryEntityMapper {
   static HistoryEntity fromIntakeHistory(IntakeHistory history) {
     return HistoryEntity()
       ..setId(history.id)
-      ..hashId = history.hashId
+      ..userId = history.hashId
       ..recordTime = history.recordTime
       ..leakageMemo = history.memo
       ..beverageType = history.beverageType
@@ -34,7 +34,7 @@ class HistoryEntityMapper {
   static HistoryEntity fromLeakageHistory(LeakageHistory history) {
     return HistoryEntity()
       ..setId(history.id)
-      ..hashId = history.hashId
+      ..userId = history.hashId
       ..recordTime = history.recordTime
       ..leakageMemo = history.memo
       ..isLeakage = true

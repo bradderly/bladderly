@@ -1,4 +1,4 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:flutter/material.dart';
 
 // ignore: non_constant_identifier_names
@@ -10,8 +10,7 @@ Widget ModalTitleBack(BuildContext context, String title) {
       children: [
         Text(
           title,
-          style: context.textStyleTheme.b16SemiBold
-              .copyWith(color: context.colorTheme.neutral.shade10),
+          style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
         ),
         Positioned(
           left: 0,

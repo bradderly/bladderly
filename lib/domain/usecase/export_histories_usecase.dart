@@ -1,4 +1,4 @@
-import 'package:bradderly/domain/repository/history_repository.dart';
+import 'package:bladderly/domain/repository/history_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
@@ -15,7 +15,7 @@ class ExportHistoriesUsecase {
     required List<DateTime> dates,
   }) async {
     try {
-      final result = await _historyRepository.exportHistories(hashId: email, dates: dates);
+      final result = await _historyRepository.exportHistories(userId: email, dates: dates);
       return Right(result);
     } on Exception catch (e) {
       return Left(e);

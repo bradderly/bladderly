@@ -1,45 +1,76 @@
+import 'package:bladderly/domain/model/sex.dart';
+import 'package:bladderly/domain/model/user.dart';
 import 'package:equatable/equatable.dart';
 
-class UserModel extends Equatable {
+abstract class UserModel extends Equatable {
   const UserModel({
     required this.id,
-    required this.firstName,
-    required this.lastName,
     required this.gender,
-    required this.birthYear,
-    required this.height,
-    required this.weight,
-    required this.email,
+    required this.yearOfBirth,
   });
 
-  const UserModel.none()
-      : id = '',
-        firstName = '',
-        lastName = '',
-        gender = '',
-        birthYear = 0,
-        height = 0,
-        weight = 0,
-        email = '';
+  factory UserModel.fromDomain(User user) {
+    if (user.email != null && user.name != null && user.disease != null) {
+      return RegularUserModel(
+        id: user.id,
+        gender: user.gender,
+        yearOfBirth: user.yearOfBirth,
+        name: user.name!,
+        disease: user.disease!,
+        email: user.email!,
+      );
+    }
+
+    return GuestUserModel(
+      id: user.id,
+      gender: user.gender,
+      yearOfBirth: user.yearOfBirth,
+    );
+  }
 
   final String id;
-  final String firstName;
-  final String lastName;
-  final String gender;
-  final int birthYear;
-  final int height;
-  final int weight;
-  final String email;
+
+  final Gender gender;
+
+  final int yearOfBirth;
 
   @override
   List<Object?> get props => [
         id,
-        firstName,
-        lastName,
         gender,
-        birthYear,
-        height,
-        weight,
+        yearOfBirth,
+      ];
+}
+
+class GuestUserModel extends UserModel {
+  const GuestUserModel({
+    required super.id,
+    required super.gender,
+    required super.yearOfBirth,
+  });
+}
+
+class RegularUserModel extends UserModel {
+  const RegularUserModel({
+    required super.id,
+    required super.gender,
+    required super.yearOfBirth,
+    required this.name,
+    required this.email,
+    required this.disease,
+  });
+
+  final String name;
+
+  final String email;
+
+  final String disease;
+
+  @override
+  List<Object?> get props => [
+        ...super.props,
+        name,
         email,
+        disease,
       ];
 }

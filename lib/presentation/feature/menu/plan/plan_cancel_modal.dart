@@ -1,17 +1,17 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/menu/widget/modal_title.dart';
-import 'package:bradderly/presentation/feature/menu/widget/reason_option.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:bladderly/presentation/feature/menu/widget/reason_option.dart';
 import 'package:flutter/material.dart';
 
-class CancelPlanModal extends StatefulWidget {
-  const CancelPlanModal({super.key});
+class PlanCancelModal extends StatefulWidget {
+  const PlanCancelModal({super.key});
 
   @override
-  State<CancelPlanModal> createState() => _CancelPlanModalState();
+  State<PlanCancelModal> createState() => _PlanCancelModalState();
 }
 
-class _CancelPlanModalState extends State<CancelPlanModal> {
+class _PlanCancelModalState extends State<PlanCancelModal> {
   String? selectedReason;
 
   final List<String> reasons = [
@@ -49,8 +49,7 @@ class _CancelPlanModalState extends State<CancelPlanModal> {
                     Padding(
                       padding: const EdgeInsets.only(left: 16, right: 32),
                       child: Text(
-                        'Sorry to see you go, please tell us why you are canceling your plan.'
-                            .tr(context),
+                        'Sorry to see you go, please tell us why you are canceling your plan.'.tr(context),
                         style: context.textStyleTheme.b16Medium.copyWith(
                           color: context.colorTheme.neutral.shade10,
                         ),
@@ -76,11 +75,15 @@ class _CancelPlanModalState extends State<CancelPlanModal> {
                   if (selectedReason == null) {
                     return;
                   }
-                  showDeletePlanDialog(context);
+                  showDeletePlanDialog(
+                    context,
+                    onConfirm: () {
+                      Navigator.pop(context);
+                    },
+                  );
                 },
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
                   decoration: BoxDecoration(
                     color: (selectedReason == null)
                         ? context.colorTheme.neutral.shade6
@@ -112,39 +115,42 @@ void showDeletePlanDialog(
   showDialog(
     context: context,
     builder: (context) {
-      final content = 'Cancel plan Message'.tr(context);
       return AlertDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16), // 둥근 모서리
         ),
-        contentPadding:
-            const EdgeInsets.only(left: 32, top: 52, right: 32, bottom: 52),
+        contentPadding: const EdgeInsets.only(left: 32, top: 52, right: 32, bottom: 52),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              content,
-              style: context.textStyleTheme.b16SemiBold
-                  .copyWith(color: context.colorTheme.neutral.shade10),
+              'Your subscription has been canceled.'.tr(context),
+              style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
             ),
-            const SizedBox(height: 120),
+            const SizedBox(height: 24),
+            Text(
+              'Cancel plan Message'.tr(context),
+              style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
+            ),
+            const SizedBox(height: 24),
             Column(
               children: [
-                ElevatedButton(
-                  onPressed: onConfirm,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        context.colorTheme.vermilion.primary.shade50,
-                    minimumSize: const Size(double.infinity, 50),
-                    shape: RoundedRectangleBorder(
+                GestureDetector(
+                  onTap: onConfirm,
+                  child: Container(
+                    height: 56,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: context.colorTheme.vermilion.primary.shade50,
                       borderRadius: BorderRadius.circular(400),
                     ),
-                  ),
-                  child: Text(
-                    'OK'.tr(context),
-                    style: context.textStyleTheme.b16SemiBold
-                        .copyWith(color: context.colorTheme.neutral.shade10),
+                    child: Text(
+                      'Okay'.tr(context),
+                      style: context.textStyleTheme.b16SemiBold.copyWith(
+                        color: context.colorTheme.neutral.shade0,
+                      ),
+                    ),
                   ),
                 ),
               ],

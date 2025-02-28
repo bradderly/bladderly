@@ -1,8 +1,8 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/menu/widget/input_text_border_form.dart';
-import 'package:bradderly/presentation/feature/menu/widget/input_text_form.dart';
-import 'package:bradderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/menu/widget/input_text_border_form.dart';
+import 'package:bladderly/presentation/feature/menu/widget/input_text_form.dart';
+import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:flutter/material.dart';
 
 class ContactusModal extends StatelessWidget {
@@ -66,8 +66,7 @@ class ContactusModal extends StatelessWidget {
                 ),
               ),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
                 decoration: BoxDecoration(
                   color: context.colorTheme.neutral.shade6,
                   borderRadius: BorderRadius.circular(8),

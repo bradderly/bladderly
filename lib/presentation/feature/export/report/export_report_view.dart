@@ -1,11 +1,11 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/export/report/bloc/export_report_bloc.dart';
-import 'package:bradderly/presentation/feature/export/report/model/export_report_reason_model.dart';
-import 'package:bradderly/presentation/feature/export/report/widget/export_report_app_bar.dart';
-import 'package:bradderly/presentation/feature/export/report/widget/export_report_check_box_widget.dart';
-import 'package:bradderly/presentation/feature/export/report/widget/export_report_text_field.dart';
-import 'package:bradderly/presentation/feature/export/widget/export_stickey_button.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/export/report/bloc/export_report_bloc.dart';
+import 'package:bladderly/presentation/feature/export/report/model/export_report_reason_model.dart';
+import 'package:bladderly/presentation/feature/export/report/widget/export_report_app_bar.dart';
+import 'package:bladderly/presentation/feature/export/report/widget/export_report_check_box_widget.dart';
+import 'package:bladderly/presentation/feature/export/report/widget/export_report_text_field.dart';
+import 'package:bladderly/presentation/feature/export/widget/export_stickey_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -129,7 +129,7 @@ class _ExportReportViewState extends State<ExportReportView> {
                   onTap: isValid
                       ? () => context
                           .read<ExportReportBloc>()
-                          .add(const ExportReportSendReason(hashId: 'ydu3328@naver.com'))
+                          .add(const ExportReportSendReason(userId: 'ydu3328@naver.com'))
                       : null,
                   text: 'Done'.tr(context),
                 ),

@@ -1,4 +1,4 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:flutter/material.dart';
 
 class TextArrow extends StatelessWidget {
@@ -21,8 +21,7 @@ class TextArrow extends StatelessWidget {
           color: context.colorTheme.neutral.shade0,
           boxShadow: const [],
           border: Border(
-            bottom:
-                BorderSide(color: context.colorTheme.neutral.shade5, width: 2),
+            bottom: BorderSide(color: context.colorTheme.neutral.shade5, width: 2),
           ), // Added border only at the bottom
         ),
         child: Row(

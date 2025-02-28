@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:bradderly/core/recorder/src/recorder_file.dart';
+import 'package:bladderly/core/recorder/src/recorder_file.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path/path.dart';

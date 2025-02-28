@@ -1,14 +1,14 @@
 import 'dart:io';
 
-import 'package:bradderly/data/api/client/api_client.dart';
-import 'package:bradderly/data/api/model/swagger_json.models.swagger.dart';
-import 'package:bradderly/data/isar/isar_client.dart';
-import 'package:bradderly/data/isar/schema/history_entity.dart';
-import 'package:bradderly/data/mapper/history_entity_mapper.dart';
-import 'package:bradderly/data/mapper/history_mapper.dart';
-import 'package:bradderly/domain/model/histories.dart';
-import 'package:bradderly/domain/model/history.dart';
-import 'package:bradderly/domain/repository/history_repository.dart';
+import 'package:bladderly/data/api/client/api_client.dart';
+import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
+import 'package:bladderly/data/isar/isar_client.dart';
+import 'package:bladderly/data/isar/schema/history_entity.dart';
+import 'package:bladderly/data/mapper/history_entity_mapper.dart';
+import 'package:bladderly/data/mapper/history_mapper.dart';
+import 'package:bladderly/domain/model/histories.dart';
+import 'package:bladderly/domain/model/history.dart';
+import 'package:bladderly/domain/repository/history_repository.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 
@@ -25,11 +25,11 @@ class HistoryRepositoryImpl implements HistoryRepository {
 
   @override
   Stream<Histories> getHistoriesStream({
-    required String hashId,
+    required String userId,
     required DateTime recordDate,
   }) {
     return _isarClient
-        .getHistoriesStreamByHashIdAndDate(hashId: hashId, recordDate: recordDate)
+        .getHistoriesStreamByUserIdAndDate(userId: userId, recordDate: recordDate)
         .map((entities) => Histories(list: entities.map(HistoryMapper.fromHistoryEntity).toList()));
   }
 
@@ -52,18 +52,18 @@ class HistoryRepositoryImpl implements HistoryRepository {
   }
 
   @override
-  Stream<List<DateTime>> getHistoryDatesStream(String hashId) {
-    return _isarClient.getHistoryDatesStreamByHashId(hashId: hashId);
+  Stream<List<DateTime>> getHistoryDatesStream(String userId) {
+    return _isarClient.getHistoryDatesStreamByUserId(userId: userId);
   }
 
   @override
   Future<void> exportHistories({
-    required String hashId,
+    required String userId,
     required List<DateTime> dates,
   }) {
     return _apiClient.exportRecord(
       request: ExportReportRequest(
-        userId: hashId,
+        userId: userId,
         exportDate: [
           for (final date in dates) DateFormat('yyyyMMdd').format(date),
         ],
@@ -73,13 +73,13 @@ class HistoryRepositoryImpl implements HistoryRepository {
 
   @override
   Future<void> sendHistoriesExportReason({
-    required String hashId,
+    required String userId,
     required String? doctorName,
     required String? clinicInformation,
   }) {
     return _apiClient.reportPurpose(
       request: DataExportSurveyRequest(
-        userId: hashId,
+        userId: userId,
         doctor: doctorName,
         clinic: clinicInformation,
         select: doctorName == null && clinicInformation == null ? 0 : 1,
@@ -92,7 +92,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
 
   @override
   History? getHistoryById(int id) {
-    if (_isarClient.getHistoryById(id) case final HistoryEntity historyEntity) {
+    if (_isarClient.getHistoryOrNullById(id) case final HistoryEntity historyEntity) {
       return HistoryMapper.fromHistoryEntity(historyEntity);
     }
 
@@ -101,24 +101,24 @@ class HistoryRepositoryImpl implements HistoryRepository {
 
   @override
   Future<void> deleteHistoryById(int id) async {
-    final history = _isarClient.getHistoryById(id);
+    final history = _isarClient.getHistoryOrNullById(id);
 
     if (history == null) return;
 
-    return _isarClient.removeHistoryByHashIdAndRecordTime(hashId: history.hashId, recordTime: history.recordTime);
+    return _isarClient.removeHistoryByUserIdAndRecordTime(userId: history.userId, recordTime: history.recordTime);
   }
 
   @override
   Future<String?> uploadHistory({
-    required String hashId,
+    required String userId,
     required History history,
   }) async {
     final response = await _apiClient.updateRecord(
       request: RecordUpdateRequest(
-        userId: hashId,
+        userId: userId,
         recDate: DateFormat('yyyyMMdd-hhmmss').format(history.recordTime),
         record: switch (history) {
-          VoidingHistory() => RecordUpdateRequestRecord(
+          VoidingHistory() => RecordUpdateRequest$Record(
               isLeakage: history.isLeakage,
               isNocturia: history.isNocutria,
               recordVolume: '${history.recordVolume}',
@@ -127,14 +127,14 @@ class HistoryRepositoryImpl implements HistoryRepository {
               leakageMemo: history.memo,
               isManual: history.isManual,
             ),
-          IntakeHistory() => RecordUpdateRequestRecord(
+          IntakeHistory() => RecordUpdateRequest$Record(
               beverageType: history.beverageType,
               leakageMemo: history.memo,
               recordVolume: '${history.recordVolume}',
               isIntake: true,
               isManual: true,
             ),
-          LeakageHistory() => RecordUpdateRequestRecord(
+          LeakageHistory() => RecordUpdateRequest$Record(
               leakageVolume: history.leakageVolume.name,
               leakageMemo: history.memo,
               isLeakage: true,

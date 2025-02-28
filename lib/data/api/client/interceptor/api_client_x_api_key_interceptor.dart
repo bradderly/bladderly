@@ -6,6 +6,7 @@ class ApiClientXApiKeyInterceptor implements RequestInterceptor {
     return request.copyWith(
       headers: {
         'x-api-key': '3rXDcDwBhc18isTzhlsZd8JnmYU4Plkp3pGf5hiN',
+        'Content-Type': 'application/json',
       },
     );
   }

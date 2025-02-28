@@ -1,5 +1,5 @@
 /*
-import 'package:bradderly/presentation/feature/menu/plan/paywall_view.dart';
+import 'package:bladderly/presentation/feature/menu/plan/paywall_view.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:go_router/go_router.dart';

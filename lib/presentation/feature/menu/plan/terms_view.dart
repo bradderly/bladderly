@@ -1,6 +1,6 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -30,8 +30,7 @@ class TermsView extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 24, top: 25, right: 24),
                   child: Text(
                     date,
-                    style: context.textStyleTheme.b14Medium
-                        .copyWith(color: context.colorTheme.neutral.shade6),
+                    style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
                   ),
                 ),
                 Container(
@@ -39,8 +38,7 @@ class TermsView extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 24, top: 40, right: 24),
                   child: Text(
                     title,
-                    style: context.textStyleTheme.b16Medium
-                        .copyWith(color: context.colorTheme.neutral.shade10),
+                    style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade10),
                   ),
                 ),
                 Container(
@@ -48,8 +46,7 @@ class TermsView extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 24, top: 16, right: 24),
                   child: Text(
                     content,
-                    style: context.textStyleTheme.b16Regular
-                        .copyWith(color: context.colorTheme.neutral.shade8),
+                    style: context.textStyleTheme.b16Regular.copyWith(color: context.colorTheme.neutral.shade8),
                   ),
                 ),
                 Container(
@@ -57,8 +54,7 @@ class TermsView extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 24, top: 16, right: 24),
                   child: Text(
                     content,
-                    style: context.textStyleTheme.b16Regular
-                        .copyWith(color: context.colorTheme.neutral.shade8),
+                    style: context.textStyleTheme.b16Regular.copyWith(color: context.colorTheme.neutral.shade8),
                   ),
                 ),
                 Container(
@@ -66,8 +62,7 @@ class TermsView extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 24, top: 16, right: 24),
                   child: Text(
                     content,
-                    style: context.textStyleTheme.b16Regular
-                        .copyWith(color: context.colorTheme.neutral.shade8),
+                    style: context.textStyleTheme.b16Regular.copyWith(color: context.colorTheme.neutral.shade8),
                   ),
                 ),
               ],

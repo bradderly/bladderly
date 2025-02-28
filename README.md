@@ -1,4 +1,4 @@
-# bradderly
+# bladderly
 
 프로젝트 실행을 위해 fvm 설치 및 빌드러너를 돌려야 합니다.
 

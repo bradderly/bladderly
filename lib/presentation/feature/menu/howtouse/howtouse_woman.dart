@@ -1,7 +1,7 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/menu/widget/howtouse_page.dart';
-import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/menu/widget/howtouse_page.dart';
+import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:flutter/material.dart';
 
 class HowtouseWoman extends StatefulWidget {
@@ -39,8 +39,7 @@ class _HowtouseWomanState extends State<HowtouseWoman> {
     },
     {
       'image': 'assets/img/howtouse_woman5.png',
-      'title':
-          'Hold your phone in your hand and put it on your lap. Check the direction of the microphone',
+      'title': 'Hold your phone in your hand and put it on your lap. Check the direction of the microphone',
       'description': '',
     },
   ];
@@ -97,8 +96,7 @@ class _HowtouseWomanState extends State<HowtouseWoman> {
                 itemBuilder: (context, index) => HowtousePage(
                   image: onboardingData[index]['image']!,
                   title: onboardingData[index]['title']!.tr(context),
-                  description:
-                      onboardingData[index]['description']!.tr(context),
+                  description: onboardingData[index]['description']!.tr(context),
                 ),
               ),
             ),
@@ -117,8 +115,7 @@ class _HowtouseWomanState extends State<HowtouseWoman> {
                   ElevatedButton(
                     onPressed: _nextPage,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          context.colorTheme.vermilion.primary.shade50,
+                      backgroundColor: context.colorTheme.vermilion.primary.shade50,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),

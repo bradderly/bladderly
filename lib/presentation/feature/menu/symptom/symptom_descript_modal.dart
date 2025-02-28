@@ -1,6 +1,6 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/menu/widget/modal_title_back.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/menu/widget/modal_title_back.dart';
 import 'package:flutter/material.dart';
 
 class SymptomDescriptModal extends StatelessWidget {
@@ -33,15 +33,15 @@ class SymptomDescriptModal extends StatelessWidget {
                     SymptomDescriptForm(
                       context,
                       'IPSS',
-                      '(Urinary Health Test)',
-                      '1. Barry MJ, et al.  American Urological Association symptom index for benign prostatic hyperplasia. Journal of Urology, 1992',
+                      '(International Prostate Symptom Score)',
+                      'Barry MJ, et al.  American Urological Association symptom index for benign prostatic hyperplasia. Journal of Urology, 1992',
                     ),
                     const SizedBox(height: 56),
                     SymptomDescriptForm(
                       context,
                       'OABSS',
                       '(Overactive Bladder Test)',
-                      '1. Barry MJ, et al.  American Urological Association symptom index for benign prostatic hyperplasia. Journal of Urology, 1992',
+                      'Homma Y, et al. Symptom assessment tool for overactive bladder syndrome - overactive bladder symptom score. Urology, 2006',
                     ),
                   ],
                 ),
@@ -87,8 +87,7 @@ Widget SymptomDescriptForm(
           ),
           child: Text(
             description,
-            style: context.textStyleTheme.b16Medium
-                .copyWith(color: context.colorTheme.neutral.shade9),
+            style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade9),
           ),
         ),
       ],

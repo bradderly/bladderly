@@ -1,9 +1,10 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/menu/widget/modal_title.dart';
-import 'package:flutter/material.dart';
 // ignore: library_prefixes
 import 'dart:math' as Math;
+
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:flutter/material.dart';
 
 class SymptomResultModal extends StatelessWidget {
   const SymptomResultModal({
@@ -74,15 +75,13 @@ class SymptomResultModal extends StatelessWidget {
                                 children: [
                                   Text(
                                     'Mild',
-                                    style: context.textStyleTheme.b14SemiBold
-                                        .copyWith(
+                                    style: context.textStyleTheme.b14SemiBold.copyWith(
                                       color: context.colorTheme.neutral.shade7,
                                     ),
                                   ),
                                   Text(
                                     '1-7',
-                                    style: context.textStyleTheme.b14SemiBold
-                                        .copyWith(
+                                    style: context.textStyleTheme.b14SemiBold.copyWith(
                                       color: context.colorTheme.neutral.shade7,
                                     ),
                                   ),
@@ -92,15 +91,13 @@ class SymptomResultModal extends StatelessWidget {
                                 children: [
                                   Text(
                                     'Moderate',
-                                    style: context.textStyleTheme.b14SemiBold
-                                        .copyWith(
+                                    style: context.textStyleTheme.b14SemiBold.copyWith(
                                       color: context.colorTheme.neutral.shade7,
                                     ),
                                   ),
                                   Text(
                                     '8-19',
-                                    style: context.textStyleTheme.b14SemiBold
-                                        .copyWith(
+                                    style: context.textStyleTheme.b14SemiBold.copyWith(
                                       color: context.colorTheme.neutral.shade7,
                                     ),
                                   ),
@@ -110,15 +107,13 @@ class SymptomResultModal extends StatelessWidget {
                                 children: [
                                   Text(
                                     'Severe',
-                                    style: context.textStyleTheme.b14SemiBold
-                                        .copyWith(
+                                    style: context.textStyleTheme.b14SemiBold.copyWith(
                                       color: context.colorTheme.neutral.shade7,
                                     ),
                                   ),
                                   Text(
                                     '20-35',
-                                    style: context.textStyleTheme.b14SemiBold
-                                        .copyWith(
+                                    style: context.textStyleTheme.b14SemiBold.copyWith(
                                       color: context.colorTheme.neutral.shade7,
                                     ),
                                   ),
@@ -158,8 +153,7 @@ class SymptomResultModal extends StatelessWidget {
               GestureDetector(
                 onTap: () {},
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
                   decoration: BoxDecoration(
                     color: context.colorTheme.vermilion.primary.shade50,
                     borderRadius: BorderRadius.circular(8),
@@ -217,13 +211,11 @@ class GaugeWidget extends StatelessWidget {
             children: [
               Text(
                 '$score',
-                style: context.textStyleTheme.b28Bold
-                    .copyWith(color: const Color(0xFFFFC909)),
+                style: context.textStyleTheme.b28Bold.copyWith(color: const Color(0xFFFFC909)),
               ),
               Text(
                 level,
-                style: context.textStyleTheme.b28Bold
-                    .copyWith(color: const Color(0xFFFFC909)),
+                style: context.textStyleTheme.b28Bold.copyWith(color: const Color(0xFFFFC909)),
               ),
             ],
           ),

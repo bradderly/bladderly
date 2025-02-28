@@ -1,7 +1,7 @@
-import 'package:bradderly/domain/model/histories.dart';
-import 'package:bradderly/domain/usecase/delete_history_usecase.dart';
-import 'package:bradderly/domain/usecase/get_histories_stream_usecase.dart';
-import 'package:bradderly/presentation/feature/diary/detailed_list/model/detailed_list_grouped_histories_model.dart';
+import 'package:bladderly/domain/model/histories.dart';
+import 'package:bladderly/domain/usecase/delete_history_usecase.dart';
+import 'package:bladderly/domain/usecase/get_histories_stream_usecase.dart';
+import 'package:bladderly/presentation/feature/diary/detailed_list/model/detailed_list_grouped_histories_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +24,7 @@ class DetailedListHistoriesBloc extends Bloc<DetailedListHistoriesEvent, Detaile
   final DeleteHistoryUsecase _deleteHistoryUsecase;
 
   Future<void> _onSubscribe(DetailedListHistoriesSubscribe event, Emitter<DetailedListHistoriesState> emit) {
-    return _getHistoriesStreamUsecase(hashId: event.hashId, dateTime: DateUtils.dateOnly(event.dateTime)).fold(
+    return _getHistoriesStreamUsecase(userId: event.userId, dateTime: DateUtils.dateOnly(event.dateTime)).fold(
       (l) => Future.sync(
         () => emit(
           DetailedListHistoriesSubscribeFailure(

@@ -1,6 +1,6 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:flutter/material.dart';
 
 class PaywallModal extends StatelessWidget {
@@ -43,8 +43,7 @@ class PaywallModal extends StatelessWidget {
                 ),
               ),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
                 decoration: BoxDecoration(
                   color: context.colorTheme.neutral.shade6,
                   borderRadius: BorderRadius.circular(8),

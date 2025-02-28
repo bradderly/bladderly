@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProgressIndicatorModal extends StatelessWidget {
-  const ProgressIndicatorModal({super.key});
+  const ProgressIndicatorModal._();
 
   static Future<void> show(
     BuildContext context, {
@@ -15,7 +15,7 @@ class ProgressIndicatorModal extends StatelessWidget {
     return showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => const ProgressIndicatorModal(),
+      builder: (context) => const ProgressIndicatorModal._(),
     );
   }
 

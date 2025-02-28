@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:bradderly/domain/usecase/get_history_dates_stream_usecase.dart';
+import 'package:bladderly/domain/usecase/get_history_dates_stream_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

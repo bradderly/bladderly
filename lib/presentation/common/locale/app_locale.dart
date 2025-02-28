@@ -1,4 +1,4 @@
-import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
+import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:collection/collection.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart';

@@ -1,8 +1,8 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/menu/symptom/data/symptom_dataset.dart';
-import 'package:bradderly/presentation/feature/menu/symptom/symptom_result_modal.dart';
-import 'package:bradderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/data/symptom_dataset.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/symptom_result_modal.dart';
+import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:flutter/material.dart';
 
 class SymptomSurveyModal extends StatefulWidget {
@@ -139,13 +139,10 @@ class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
                     Expanded(
                       child: ListView.builder(
                         shrinkWrap: true, // 크기를 제한
-                        itemCount: (currentQuestion['answer'] as List)
-                            .length, // 명시적 타입 캐스팅
+                        itemCount: (currentQuestion['answer'] as List).length, // 명시적 타입 캐스팅
                         itemBuilder: (context, index) {
-                          final answers = currentQuestion['answer']
-                              as List<Map<String, dynamic>>; // 타입 지정
-                          final option = answers[index]['content']
-                              as String; // 'content' 접근
+                          final answers = currentQuestion['answer'] as List<Map<String, dynamic>>; // 타입 지정
+                          final option = answers[index]['content'] as String; // 'content' 접근
                           return ListTile(
                             title: Text(
                               option.tr(context),
@@ -156,14 +153,11 @@ class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
                             leading: Radio<int>(
                               value: index,
                               groupValue: selectedOption,
-                              fillColor: WidgetStateProperty.resolveWith<Color>(
-                                  (states) {
+                              fillColor: WidgetStateProperty.resolveWith<Color>((states) {
                                 if (states.contains(WidgetState.selected)) {
-                                  return context.colorTheme.vermilion.primary
-                                      .shade50; // 선택된 상태일 때 색상
+                                  return context.colorTheme.vermilion.primary.shade50; // 선택된 상태일 때 색상
                                 }
-                                return context
-                                    .colorTheme.neutral.shade6; // 기본 색상
+                                return context.colorTheme.neutral.shade6; // 기본 색상
                               }),
                               onChanged: (value) {
                                 setState(() {
@@ -206,8 +200,7 @@ class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
                             children: [
                               Text(
                                 '<- ${'Previous'.tr(context)}',
-                                style:
-                                    context.textStyleTheme.b16SemiBold.copyWith(
+                                style: context.textStyleTheme.b16SemiBold.copyWith(
                                   color: context.colorTheme.neutral.shade0,
                                 ),
                               ),
@@ -227,7 +220,9 @@ class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
                             horizontal: 16,
                           ),
                           decoration: BoxDecoration(
-                            color: context.colorTheme.vermilion.primary.shade50,
+                            color: (selectedOption != null)
+                                ? context.colorTheme.vermilion.primary.shade50
+                                : context.colorTheme.neutral.shade6,
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Row(
@@ -235,8 +230,7 @@ class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
                             children: [
                               Text(
                                 '${'Next'.tr(context)} ->',
-                                style:
-                                    context.textStyleTheme.b16SemiBold.copyWith(
+                                style: context.textStyleTheme.b16SemiBold.copyWith(
                                   color: context.colorTheme.neutral.shade0,
                                 ),
                               ),

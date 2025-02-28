@@ -9,16 +9,16 @@ sealed class DetailedListHistoriesEvent extends Equatable {
 
 class DetailedListHistoriesSubscribe extends DetailedListHistoriesEvent {
   const DetailedListHistoriesSubscribe({
-    required this.hashId,
+    required this.userId,
     required this.dateTime,
   });
 
-  final String hashId;
+  final String userId;
   final DateTime dateTime;
 
   @override
   List<Object> get props => [
-        hashId,
+        userId,
         dateTime,
       ];
 }

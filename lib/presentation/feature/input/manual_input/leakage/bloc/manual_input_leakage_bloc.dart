@@ -1,6 +1,6 @@
+import 'package:bladderly/domain/model/leakage_volume.dart';
+import 'package:bladderly/domain/usecase/save_leakage_history_usecase.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
-import 'package:bradderly/domain/model/leakage_volume.dart';
-import 'package:bradderly/domain/usecase/save_leakage_history_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

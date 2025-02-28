@@ -1,4 +1,4 @@
-import 'package:bradderly/presentation/common/model/beverage_type_model.dart';
+import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
 import 'package:equatable/equatable.dart';
 
 class IntakeInputBeverageModel extends Equatable {

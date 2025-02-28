@@ -1,124 +1,80 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/common/widget/primary_button.dart';
-import 'package:bradderly/presentation/feature/intro/widget/intro_page_view.dart';
-import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
-import 'package:bradderly/presentation/router/route/onboarding_route.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/common/widget/primary_button.dart';
+import 'package:bladderly/presentation/router/route/intro_route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-class IntroView extends StatefulWidget {
+class IntroView extends StatelessWidget {
   const IntroView({super.key});
 
   @override
-  State<IntroView> createState() => _IntroViewState();
-}
-
-class _IntroViewState extends State<IntroView> {
-  final pageController = PageController();
-
-  @override
-  void dispose() {
-    pageController.dispose();
-    super.dispose();
-  }
-
-  void goNextPage() {
-    final pageIndex = pageController.page?.ceil() ?? 0;
-    final isLastPage = pageIndex >= (pageController.viewportFraction / pageController.position.maxScrollExtent) + 1;
-
-    if (isLastPage) {
-      return const OnboardingRoute().go(context);
-    }
-
-    pageController.nextPage(
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        Assets.img.imgIntroBg.image(),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            leading: const SizedBox(width: 12),
-            leadingWidth: 12,
-            backgroundColor: Colors.transparent,
-            centerTitle: false,
-            toolbarHeight: 66,
-            title: Assets.icon.icIntroLogo.svg(),
-          ),
-          body: SafeArea(
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                Positioned.fill(
-                  top: 200 - MediaQuery.paddingOf(context).top,
-                  child: IntroPageView(pageController: pageController),
-                ),
-                Positioned.fill(
-                  top: null,
-                  bottom: 28,
-                  child: Column(
-                    children: [
-                      _buildIndicator(),
-                      const Gap(32),
-                      SizedBox(
-                        width: 256,
-                        height: 43,
-                        child: PrimaryButton.filled(
-                          onPressed: goNextPage,
-                          borderRadius: 8,
-                          backgroundColor: context.colorTheme.vermilion.primary.shade50,
-                          shape: BoxShape.rectangle,
-                          text: 'Continue'.tr(context),
-                          textColor: context.colorTheme.neutral.shade0,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildIndicator() {
-    return ListenableBuilder(
-      listenable: pageController,
-      builder: (_, __) => Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(
-          5,
-          (index) {
-            if (index.isOdd) return const Gap(12);
-
-            final dotIndex = index ~/ 2;
-            final pageIndex = pageController.hasClients ? (pageController.page?.round() ?? 0) : 0;
-            final isActive = dotIndex == pageIndex;
-
-            return _buildDot(isActive: isActive);
-          },
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFFFC8150),
+            Color(0xFFFAD3BB),
+            Color(0xFFF8F8F7),
+          ],
+          stops: [0, 0.17, 0.5],
         ),
       ),
-    );
-  }
-
-  Widget _buildDot({required bool isActive}) {
-    return Container(
-      width: 10,
-      height: 10,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: isActive ? context.colorTheme.vermilion.primary.shade50 : context.colorTheme.neutral.shade4,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  children: [
+                    Text(
+                      'Bladderly',
+                      style: context.textStyleTheme.b24BoldOutfit
+                          .copyWith(fontSize: 40, color: context.colorTheme.vermilion.primary.shade50),
+                    ),
+                    const Gap(4),
+                    Text(
+                      'Smart Bladder Diary'.tr(context),
+                      style: context.textStyleTheme.b20Bold.copyWith(color: context.colorTheme.neutral.shade9),
+                    ),
+                    const Gap(16),
+                    Text(
+                      'Free yourself from the hassle of writing on paper.'.tr(context),
+                      style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade8),
+                    ),
+                    const Gap(32),
+                    PrimaryButton.filled(
+                      onPressed: () => const SignUpGuestRoute().go(context),
+                      backgroundColor: context.colorTheme.vermilion.primary.shade50,
+                      borderRadius: 400,
+                      shape: BoxShape.rectangle,
+                      text: 'I’m new here'.tr(context),
+                      textColor: context.colorTheme.neutral.shade0,
+                      size: const Size.fromHeight(56),
+                    ),
+                    const Gap(24),
+                    GestureDetector(
+                      onTap: () => const SignInRoute().go(context),
+                      behavior: HitTestBehavior.translucent,
+                      child: Text(
+                        'I already have an account'.tr(context),
+                        style: context.textStyleTheme.b14SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
+                      ),
+                    ),
+                    Gap(55 - MediaQuery.paddingOf(context).bottom),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

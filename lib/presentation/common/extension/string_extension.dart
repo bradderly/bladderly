@@ -1,5 +1,5 @@
-import 'package:bradderly/presentation/common/cubit/locale_cubit.dart';
-import 'package:bradderly/presentation/common/locale/app_locale.dart';
+import 'package:bladderly/presentation/common/cubit/locale_cubit.dart';
+import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
