@@ -1,12 +1,12 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/menu/widget/input_text_form.dart';
-import 'package:bradderly/presentation/feature/menu/profile/change_password_modal.dart';
-import 'package:bradderly/presentation/feature/menu/profile/delete_account_modal.dart';
-import 'package:bradderly/presentation/feature/menu/profile/setup_passcode_modal.dart';
-import 'package:bradderly/presentation/feature/menu/widget/modal_title.dart';
-import 'package:bradderly/presentation/feature/menu/widget/text_icon_arrow_form.dart';
-import 'package:bradderly/presentation/feature/menu/widget/text_view_form.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/menu/profile/change_password_modal.dart';
+import 'package:bladderly/presentation/feature/menu/profile/delete_account_modal.dart';
+import 'package:bladderly/presentation/feature/menu/profile/setup_passcode_modal.dart';
+import 'package:bladderly/presentation/feature/menu/widget/input_text_form.dart';
+import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:bladderly/presentation/feature/menu/widget/text_icon_arrow_form.dart';
+import 'package:bladderly/presentation/feature/menu/widget/text_view_form.dart';
 import 'package:flutter/material.dart';
 
 class UserProfileModal extends StatelessWidget {

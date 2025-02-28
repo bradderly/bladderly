@@ -1,5 +1,5 @@
-import 'package:bradderly/data/isar/schema/history_entity.dart';
-import 'package:bradderly/domain/model/history.dart';
+import 'package:bladderly/data/isar/schema/history_entity.dart';
+import 'package:bladderly/domain/model/history.dart';
 
 class HistoryMapper {
   const HistoryMapper._();

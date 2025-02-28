@@ -1,8 +1,8 @@
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/menu/plan/privacy_view.dart';
-import 'package:bradderly/presentation/feature/menu/plan/terms_view.dart';
-import 'package:bradderly/presentation/feature/menu/widget/modal_title.dart';
-import 'package:bradderly/presentation/feature/menu/widget/text_arrow_form.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/menu/plan/privacy_view.dart';
+import 'package:bladderly/presentation/feature/menu/plan/terms_view.dart';
+import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:bladderly/presentation/feature/menu/widget/text_arrow_form.dart';
 import 'package:flutter/material.dart';
 
 class AboutModal extends StatelessWidget {

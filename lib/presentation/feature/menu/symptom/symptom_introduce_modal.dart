@@ -1,8 +1,8 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/menu/symptom/data/symptom_dataset.dart';
-import 'package:bradderly/presentation/feature/menu/symptom/symptom_survey_modal.dart';
-import 'package:bradderly/presentation/feature/menu/widget/modal_title_back.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/data/symptom_dataset.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/symptom_survey_modal.dart';
+import 'package:bladderly/presentation/feature/menu/widget/modal_title_back.dart';
 import 'package:flutter/material.dart';
 
 class SymptomIntroduceModal extends StatelessWidget {
@@ -72,14 +72,12 @@ class SymptomIntroduceModal extends StatelessWidget {
                               vertical: 8,
                             ),
                             decoration: BoxDecoration(
-                              color:
-                                  context.colorTheme.vermilion.primary.shade40,
+                              color: context.colorTheme.vermilion.primary.shade40,
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
                               symptomData['time'].toString().tr(context),
-                              style:
-                                  context.textStyleTheme.b14SemiBold.copyWith(
+                              style: context.textStyleTheme.b14SemiBold.copyWith(
                                 color: context.colorTheme.neutral.shade0,
                               ),
                             ),
@@ -93,16 +91,12 @@ class SymptomIntroduceModal extends StatelessWidget {
                               vertical: 8,
                             ),
                             decoration: BoxDecoration(
-                              color:
-                                  context.colorTheme.vermilion.primary.shade40,
+                              color: context.colorTheme.vermilion.primary.shade40,
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
-                              symptomData['qustion_count']
-                                  .toString()
-                                  .tr(context),
-                              style:
-                                  context.textStyleTheme.b14SemiBold.copyWith(
+                              symptomData['qustion_count'].toString().tr(context),
+                              style: context.textStyleTheme.b14SemiBold.copyWith(
                                 color: context.colorTheme.neutral.shade0,
                               ),
                             ),
@@ -122,8 +116,7 @@ class SymptomIntroduceModal extends StatelessWidget {
                       ),
                       child: Text(
                         symptomData['content'].toString().tr(context),
-                        style: context.textStyleTheme.b16SemiBold
-                            .copyWith(color: context.colorTheme.neutral.shade9),
+                        style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade9),
                       ),
                     ),
                   ],
@@ -142,8 +135,7 @@ class SymptomIntroduceModal extends StatelessWidget {
                   );
                 },
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
                   decoration: BoxDecoration(
                     color: context.colorTheme.vermilion.primary.shade50,
                     borderRadius: BorderRadius.circular(8),

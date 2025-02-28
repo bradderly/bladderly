@@ -1,7 +1,7 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/locale/app_locale.dart';
-import 'package:bradderly/presentation/feature/diary/detailed_list/model/detailed_list_history_model.dart';
-import 'package:bradderly/presentation/feature/diary/detailed_list/widget/detailed_list_history_widget.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/locale/app_locale.dart';
+import 'package:bladderly/presentation/feature/diary/detailed_list/model/detailed_list_history_model.dart';
+import 'package:bladderly/presentation/feature/diary/detailed_list/widget/detailed_list_history_widget.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';

@@ -1,13 +1,12 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/menu/about/about_modal.dart';
-import 'package:bradderly/presentation/feature/menu/contactus/contactus_modal.dart';
-import 'package:bradderly/presentation/feature/menu/faq/faq_view_modal.dart';
-import 'package:bradderly/presentation/feature/menu/howtouse/howtouse_view.dart';
-import 'package:bradderly/presentation/feature/menu/language/language_view_modal.dart';
-import 'package:bradderly/presentation/feature/menu/plan/plan_main_modal.dart';
-import 'package:bradderly/presentation/feature/menu/profile/user_profile_modal.dart';
-import 'package:bradderly/presentation/feature/menu/symptom/symptom_modal.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/menu/about/about_modal.dart';
+import 'package:bladderly/presentation/feature/menu/contactus/contactus_modal.dart';
+import 'package:bladderly/presentation/feature/menu/faq/faq_view_modal.dart';
+import 'package:bladderly/presentation/feature/menu/language/language_view_modal.dart';
+import 'package:bladderly/presentation/feature/menu/plan/plan_main_modal.dart';
+import 'package:bladderly/presentation/feature/menu/profile/user_profile_modal.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/symptom_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

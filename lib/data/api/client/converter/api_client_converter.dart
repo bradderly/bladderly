@@ -1,6 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 
-import 'package:bradderly/data/api/model/swagger_json.models.swagger.dart';
+import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 import 'package:chopper/chopper.dart' as chopper;
 
 typedef $JsonFactory<T> = T Function(Map<String, dynamic> json);
@@ -57,19 +58,21 @@ class ApiClientConverter extends chopper.JsonConverter {
       return chopper.Response(response.base, null, error: response.error);
     }
 
-    final jsonRes = await super.convertResponse<ResultType, Item>(response);
-    return jsonRes.copyWith<ResultType>(body: _jsonDecoder.decode<Item>(jsonRes.body) as ResultType);
+    if (response.isSuccessful) {
+      final jsonParser = _jsonDecoder.factories[Item];
+      final json = Map<String, dynamic>.from(jsonDecode(response.bodyString) as Map);
+
+      final parsedBody = jsonParser?.call(json);
+
+      return response.copyWith<ResultType>(body: parsedBody as ResultType);
+    }
+
+    return super.convertResponse<ResultType, Item>(response);
   }
 }
 
 final _jsonDecoder = _CustomJsonDecoder({
-  SimpleResponse: SimpleResponse.fromJsonFactory,
-  ResultResponse: ResultResponse.fromJsonFactory,
-  LoginResponse: LoginResponse.fromJsonFactory,
-  GetVersionResponse: GetVersionResponse.fromJsonFactory,
-  GetAllResultResponse: GetAllResultResponse.fromJsonFactory,
-  GetPayResponse: GetPayResponse.fromJsonFactory,
-  PostPayResponse: PostPayResponse.fromJsonFactory,
+  /** REQUEST */
   LoginRequest: LoginRequest.fromJsonFactory,
   ChagePwRequest: ChagePwRequest.fromJsonFactory,
   ConfirmPwRequest: ConfirmPwRequest.fromJsonFactory,
@@ -83,4 +86,14 @@ final _jsonDecoder = _CustomJsonDecoder({
   SignUpRequest: SignUpRequest.fromJsonFactory,
   RecordUpdateRequest: RecordUpdateRequest.fromJsonFactory,
   RecordUpdateRequestRecord: RecordUpdateRequestRecord.fromJsonFactory,
+
+  /** RESPONSE */
+  SimpleResponse: SimpleResponse.fromJsonFactory,
+  ResultResponse: ResultResponse.fromJsonFactory,
+  LoginResponse: LoginResponse.fromJsonFactory,
+  GetVersionResponse: GetVersionResponse.fromJsonFactory,
+  GetAllResultResponse: GetAllResultResponse.fromJsonFactory,
+  GetPayResponse: GetPayResponse.fromJsonFactory,
+  PostPayResponse: PostPayResponse.fromJsonFactory,
+  SignUpResponse: SignUpResponse.fromJsonFactory,
 });

@@ -1,67 +1,188 @@
-import 'package:bradderly/data/api/client/api_client.dart';
-import 'package:bradderly/data/api/model/swagger_json.models.swagger.dart';
-import 'package:bradderly/data/isar/isar_client.dart';
-import 'package:bradderly/data/mapper/user_mapper.dart';
-import 'package:bradderly/domain/model/sex.dart';
-import 'package:bradderly/domain/model/user.dart';
-import 'package:bradderly/domain/repository/auth_repository.dart';
+import 'package:bladderly/core/package_device_info/src/model/device_info_model.dart';
+import 'package:bladderly/data/api/client/api_client.dart';
+import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
+import 'package:bladderly/data/isar/isar_client.dart';
+import 'package:bladderly/data/isar/schema/apple_credential_entity.dart';
+import 'package:bladderly/data/isar/schema/user_entity.dart';
+import 'package:bladderly/data/mapper/user_mapper.dart';
+import 'package:bladderly/domain/exception/not_found_apple_credential_exception.dart';
+import 'package:bladderly/domain/exception/not_found_user_exception.dart';
+import 'package:bladderly/domain/exception/not_found_user_identifier_exception.dart';
+import 'package:bladderly/domain/model/sex.dart';
+import 'package:bladderly/domain/model/sign_up_method.dart';
+import 'package:bladderly/domain/model/user.dart';
+import 'package:bladderly/domain/repository/auth_repository.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
-  const AuthRepositoryImpl({
+  AuthRepositoryImpl({
+    required DeviceInfoModel deviceInfoModel,
     required IsarClient isarClient,
     required ApiClient apiClient,
-  })  : _isarClient = isarClient,
-        _apiClient = apiClient;
+  })  : _deviceInfoModel = deviceInfoModel,
+        _isarClient = isarClient,
+        _apiClient = apiClient,
+        _userSubject = BehaviorSubject();
 
+  final DeviceInfoModel _deviceInfoModel;
   final IsarClient _isarClient;
   final ApiClient _apiClient;
 
+  final BehaviorSubject<User?> _userSubject;
+
   @override
-  Future<bool> checkExistingUser({required String email}) {
-    throw UnimplementedError();
+  Future<User> signIn({
+    required String email,
+    required String password,
+  }) async {
+    final request = LoginRequest(email: email, pw: password);
+
+    final response = await _apiClient.logIn(request: request).then((response) => response.body!);
+
+    final userInfo = response.userInfo;
+
+    if (userInfo == null) {
+      throw const NotFoundUserException(message: 'not found user');
+    }
+
+    final user = UserMapper.fromLoginResponse$UserInfo(userInfo: userInfo, email: email);
+
+    _saveUserToLocal(user);
+
+    return user;
   }
 
   @override
-  Future<User> signin({required String email, required String password}) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<User> signup({required String userId, required String email, required String password}) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<User> signupGuest({
+  Future<User> signUp({
     required String userId,
+    required String userName,
+    required String disease,
+    String? email,
+    String? password,
+  }) async {
+    final user = switch (_isarClient.getUserOrNullByUserId(userId)) {
+      final UserEntity userEntity =>
+        UserMapper.fromUserEntity(userEntity).copyWith(email: email, name: userName, disease: disease),
+      _ => throw const NotFoundUserException(message: 'not found user'),
+    };
+
+    final signUpRequest = SignUpRequest(
+      gender: user.gender.name,
+      birthyear: '${user.yearOfBirth}',
+      social: user.signUpMethod.value,
+      email: user.email,
+      pw: password,
+      device: _deviceInfoModel.name,
+      region: _deviceInfoModel.region,
+    );
+
+    return _apiClient
+        .signUp(request: signUpRequest)
+        .then((response) => response.body!)
+        .then((_) => _saveUserToLocal(user))
+        .then((_) => user);
+  }
+
+  @override
+  Future<User> signUpGuest({
     required Gender gender,
     required int yearOfBirth,
-    required String region,
-    required String device,
+    required SignUpMethod signUpMethod,
   }) async {
-    await _apiClient.signUp(
-      request: SignUpRequest(
-        guestId: userId,
-        gender: gender.name,
-        birthyear: '$yearOfBirth',
-        device: device,
-        region: region,
-        social: 'N',
-      ),
+    final signUpRequest = SignUpRequest(
+      gender: gender.name,
+      birthyear: '$yearOfBirth',
+      device: _deviceInfoModel.name,
+      region: _deviceInfoModel.region,
+      social: signUpMethod.value,
     );
 
-    return User(
-      id: userId,
-      email: null,
-      name: null,
-      gender: gender.name,
+    final response = await _apiClient.signUp(request: signUpRequest).then((response) => response.body!);
+
+    final user = User(
+      id: response.id!,
+      gender: gender,
       yearOfBirth: yearOfBirth,
-      signupMethod: 'N',
+      signUpMethod: signUpMethod,
     );
+
+    _saveUserToLocal(user);
+
+    return user;
   }
 
   @override
-  Stream<User> get userStream => _isarClient.getUserStream().map(UserMapper.fromUserEntity);
+  Future<String> signInApple() async {
+    /// 애플 로그인은 첫 로그인 이후 부터는 메일을 제공하지 않음.
+    /// 서버에 userIdentifier에 저장하거나 로컬 DB에 저장하여 사용 해야함.
+    final credential = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+      ],
+    );
+
+    /// Platform이 IOS가 아닌경우에 null 일수 있음.
+    final userIdentifier =
+        credential.userIdentifier ?? (throw const NotFoundUserIdentifierException(message: 'IOS가 아닌 기기는 지원하지 않습니다.'));
+    final email = credential.email;
+    final isFirstSignin = email != null;
+
+    if (isFirstSignin) {
+      return _isarClient
+          .saveAppleCredential(
+            AppleCredentialEntity()
+              ..userIdentifier = userIdentifier
+              ..email = email,
+          )
+          .email;
+    }
+
+    final entity = _isarClient.getAppleCredentialOrNullByUserIdentifier(userIdentifier);
+
+    return entity?.email ?? (throw const NotFoundAppleCredentialException(message: 'Apple Credential not found'));
+  }
+
+  @override
+  Future<String> signInGoogle() async {
+    final credential = await GoogleSignIn.standard().signIn();
+
+    return credential?.email ?? (throw Exception('Google Sign In failed'));
+  }
+
+  @override
+  void signOut() {
+    _clearUserFromLocal();
+  }
+
+  @override
+  Stream<User?> get userStream => _userSubject.stream;
+
+  @override
+  User? getUserOrNullByUserId(String userId) {
+    final userEntity = _isarClient.getUserOrNullByUserId(userId);
+
+    if (userEntity == null) {
+      return null;
+    }
+
+    final user = UserMapper.fromUserEntity(userEntity);
+
+    _saveUserToLocal(user);
+
+    return user;
+  }
+
+  void _saveUserToLocal(User user) {
+    _isarClient.saveUser(UserMapper.toUserEntity(user));
+    _userSubject.add(user);
+  }
+
+  void _clearUserFromLocal() {
+    _isarClient.clearAll();
+    _userSubject.add(null);
+  }
 }

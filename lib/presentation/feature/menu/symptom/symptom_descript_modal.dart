@@ -1,6 +1,6 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/menu/widget/modal_title_back.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/menu/widget/modal_title_back.dart';
 import 'package:flutter/material.dart';
 
 class SymptomDescriptModal extends StatelessWidget {

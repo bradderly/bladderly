@@ -1,7 +1,8 @@
 // Flutter imports:
-import 'package:bradderly/presentation/feature/intro/intro_view.dart';
-import 'package:bradderly/presentation/feature/signin/singin_builder.dart';
-import 'package:bradderly/presentation/feature/signup/guest/signup_guest_builder.dart';
+import 'package:bladderly/presentation/feature/intro/intro_view.dart';
+import 'package:bladderly/presentation/feature/sign_in/sing_in_builder.dart';
+import 'package:bladderly/presentation/feature/sign_up/guest/sign_up_guest_builder.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 // Package imports:
 import 'package:go_router/go_router.dart';
@@ -13,8 +14,8 @@ part 'intro_route.g.dart';
   name: 'intro',
   path: '/intro',
   routes: [
-    TypedGoRoute<SigninRoute>(name: 'signin', path: 'signin'),
-    TypedGoRoute<SignupGuestRoute>(name: 'signup', path: 'signup'),
+    TypedGoRoute<SignInRoute>(name: 'sign-in', path: 'sign-in'),
+    TypedGoRoute<SignUpGuestRoute>(name: 'sign-up', path: 'sign-up'),
   ],
 )
 class IntroRoute extends GoRouteData {
@@ -27,8 +28,8 @@ class IntroRoute extends GoRouteData {
       );
 }
 
-class SigninRoute extends GoRouteData {
-  const SigninRoute();
+class SignInRoute extends GoRouteData {
+  const SignInRoute();
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) => CupertinoPage<void>(
@@ -37,12 +38,35 @@ class SigninRoute extends GoRouteData {
       );
 }
 
-class SignupGuestRoute extends GoRouteData {
-  const SignupGuestRoute();
+class SignUpGuestRouteExtra extends Equatable {
+  const SignUpGuestRouteExtra({
+    required this.email,
+    required this.signUpMethod,
+  });
+
+  final String email;
+  final String signUpMethod;
+
+  @override
+  List<Object> get props => [
+        email,
+        signUpMethod,
+      ];
+}
+
+class SignUpGuestRoute extends GoRouteData {
+  const SignUpGuestRoute({
+    this.$extra,
+  });
+
+  final SignUpGuestRouteExtra? $extra;
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) => CupertinoPage<void>(
         key: state.pageKey,
-        child: const SignupGuestBuilder(),
+        child: SignUpGuestBuilder(
+          email: $extra?.email,
+          signUpMethod: $extra?.signUpMethod,
+        ),
       );
 }

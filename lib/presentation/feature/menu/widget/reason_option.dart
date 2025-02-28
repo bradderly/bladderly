@@ -1,4 +1,4 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:flutter/material.dart';
 
 class ReasonOption extends StatelessWidget {
@@ -17,8 +17,7 @@ class ReasonOption extends StatelessWidget {
     return ListTile(
       title: Text(
         reason,
-        style: context.textStyleTheme.b16Medium
-            .copyWith(color: context.colorTheme.neutral.shade6),
+        style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade6),
       ),
       leading: Radio<String>(
         value: reason,

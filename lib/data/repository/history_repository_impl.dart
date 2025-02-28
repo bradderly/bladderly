@@ -1,14 +1,14 @@
 import 'dart:io';
 
-import 'package:bradderly/data/api/client/api_client.dart';
-import 'package:bradderly/data/api/model/swagger_json.models.swagger.dart';
-import 'package:bradderly/data/isar/isar_client.dart';
-import 'package:bradderly/data/isar/schema/history_entity.dart';
-import 'package:bradderly/data/mapper/history_entity_mapper.dart';
-import 'package:bradderly/data/mapper/history_mapper.dart';
-import 'package:bradderly/domain/model/histories.dart';
-import 'package:bradderly/domain/model/history.dart';
-import 'package:bradderly/domain/repository/history_repository.dart';
+import 'package:bladderly/data/api/client/api_client.dart';
+import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
+import 'package:bladderly/data/isar/isar_client.dart';
+import 'package:bladderly/data/isar/schema/history_entity.dart';
+import 'package:bladderly/data/mapper/history_entity_mapper.dart';
+import 'package:bladderly/data/mapper/history_mapper.dart';
+import 'package:bladderly/domain/model/histories.dart';
+import 'package:bladderly/domain/model/history.dart';
+import 'package:bladderly/domain/repository/history_repository.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 
@@ -92,7 +92,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
 
   @override
   History? getHistoryById(int id) {
-    if (_isarClient.getHistoryById(id) case final HistoryEntity historyEntity) {
+    if (_isarClient.getHistoryOrNullById(id) case final HistoryEntity historyEntity) {
       return HistoryMapper.fromHistoryEntity(historyEntity);
     }
 
@@ -101,7 +101,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
 
   @override
   Future<void> deleteHistoryById(int id) async {
-    final history = _isarClient.getHistoryById(id);
+    final history = _isarClient.getHistoryOrNullById(id);
 
     if (history == null) return;
 

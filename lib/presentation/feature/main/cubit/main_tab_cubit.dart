@@ -1,4 +1,4 @@
-import 'package:bradderly/presentation/feature/diary/diary/model/diary_tab_scroll_section_model.dart';
+import 'package:bladderly/presentation/feature/diary/diary/model/diary_tab_scroll_section_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -3,7 +3,7 @@
   "info": {
     "title": "Bladderly for Flutter",
     "contact": {},
-    "version": "1.0.0-oas3"
+    "version": "1.0.0"
   },
   "servers": [
     {
@@ -889,45 +889,32 @@
                     "user_info": {
                       "type": "object",
                       "properties": {
-                        "last_name": {
+                        "username": {
                           "type": "string",
-                          "x-stoplight": {
-                            "id": "x1ukde96wog6z"
-                          }
-                        },
-                        "first_name": {
-                          "type": "string",
-                          "x-stoplight": {
-                            "id": "g2yytr2r7w248"
-                          }
+                          "description": "user name"
                         },
                         "birthyear": {
                           "type": "string",
-                          "x-stoplight": {
-                            "id": "mtvry3f99gyum"
-                          }
+                          "description": "birth year"
                         },
                         "gender": {
                           "type": "string",
-                          "x-stoplight": {
-                            "id": "rnriojq5ihu2m"
-                          }
+                          "description": "gender (male or female)"
                         },
-                        "country": {
+                        "social": {
                           "type": "string",
-                          "x-stoplight": {
-                            "id": "4sacnf7lomy7f"
-                          }
+                          "description": "E(email), A(apple), G(google), N(guest)"
+                        },
+                        "id": {
+                          "type": "string",
+                          "description": "email hash value"
                         }
                       },
                       "description": "user profile"
                     },
                     "access_token": {
                       "type": "string",
-                      "description": "token for authorization",
-                      "x-stoplight": {
-                        "id": "o4v5674gsyuf4"
-                      }
+                      "description": "not use (token for authorization)"
                     }
                   }
                 }
@@ -1339,7 +1326,6 @@
             "application/json": {
               "schema": {
                 "required": [
-                  "guest_id",
                   "gender",
                   "birthyear",
                   "social",
@@ -1348,10 +1334,6 @@
                 ],
                 "type": "object",
                 "properties": {
-                  "guest_id": {
-                    "type": "string",
-                    "description": "guest id"
-                  },
                   "email": {
                     "type": "string",
                     "description": "email address when signup"
@@ -1359,6 +1341,10 @@
                   "pw": {
                     "type": "string",
                     "description": "password when signup"
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "guestmode id when signup"
                   },
                   "gender": {
                     "type": "string",
@@ -1404,6 +1390,10 @@
                     "message": {
                       "type": "string",
                       "description": "success or fail"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "guest mode uuid"
                     }
                   }
                 }
@@ -1523,6 +1513,19 @@
           }
         }
       },
+      "SignUpResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "success or fail"
+          },
+          "id": {
+            "type": "string",
+            "description": "guest mode uuid"
+          }
+        }
+      },
       "ResultResponse": {
         "type": "object",
         "properties": {
@@ -1546,45 +1549,32 @@
           "user_info": {
             "type": "object",
             "properties": {
-              "last_name": {
+              "username": {
                 "type": "string",
-                "x-stoplight": {
-                  "id": "x1ukde96wog6z"
-                }
-              },
-              "first_name": {
-                "type": "string",
-                "x-stoplight": {
-                  "id": "g2yytr2r7w248"
-                }
+                "description": "user name"
               },
               "birthyear": {
                 "type": "string",
-                "x-stoplight": {
-                  "id": "mtvry3f99gyum"
-                }
+                "description": "birth year"
               },
               "gender": {
                 "type": "string",
-                "x-stoplight": {
-                  "id": "rnriojq5ihu2m"
-                }
+                "description": "gender (male or female)"
               },
-              "country": {
+              "social": {
                 "type": "string",
-                "x-stoplight": {
-                  "id": "4sacnf7lomy7f"
-                }
+                "description": "E(email), A(apple), G(google), N(guest)"
+              },
+              "id": {
+                "type": "string",
+                "description": "email hash value"
               }
             },
             "description": "user profile"
           },
           "access_token": {
             "type": "string",
-            "description": "token for authorization",
-            "x-stoplight": {
-              "id": "o4v5674gsyuf4"
-            }
+            "description": "not use (token for authorization)"
           }
         }
       },
@@ -1946,20 +1936,9 @@
         }
       },
       "SignUpRequest": {
-        "required": [
-          "guest_id",
-          "gender",
-          "birthyear",
-          "social",
-          "device",
-          "region"
-        ],
+        "required": ["gender", "birthyear", "social", "device", "region"],
         "type": "object",
         "properties": {
-          "guest_id": {
-            "type": "string",
-            "description": "guest id"
-          },
           "email": {
             "type": "string",
             "description": "email address when signup"
@@ -1967,6 +1946,10 @@
           "pw": {
             "type": "string",
             "description": "password when signup"
+          },
+          "id": {
+            "type": "string",
+            "description": "guestmode id when signup"
           },
           "gender": {
             "type": "string",
@@ -2051,35 +2034,25 @@
       "LoginResponse_user_info": {
         "type": "object",
         "properties": {
-          "last_name": {
+          "username": {
             "type": "string",
-            "x-stoplight": {
-              "id": "x1ukde96wog6z"
-            }
-          },
-          "first_name": {
-            "type": "string",
-            "x-stoplight": {
-              "id": "g2yytr2r7w248"
-            }
+            "description": "user name"
           },
           "birthyear": {
             "type": "string",
-            "x-stoplight": {
-              "id": "mtvry3f99gyum"
-            }
+            "description": "birth year"
           },
           "gender": {
             "type": "string",
-            "x-stoplight": {
-              "id": "rnriojq5ihu2m"
-            }
+            "description": "gender (male or female)"
           },
-          "country": {
+          "social": {
             "type": "string",
-            "x-stoplight": {
-              "id": "4sacnf7lomy7f"
-            }
+            "description": "E(email), A(apple), G(google), N(guest)"
+          },
+          "id": {
+            "type": "string",
+            "description": "email hash value"
           }
         },
         "description": "user profile"

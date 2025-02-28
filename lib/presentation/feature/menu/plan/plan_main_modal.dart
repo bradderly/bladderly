@@ -1,10 +1,10 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/menu/plan/promo_code_modal.dart';
-import 'package:bradderly/presentation/feature/menu/widget/text_arrow_form.dart';
-import 'package:bradderly/presentation/feature/menu/plan/plan_cancel_modal.dart';
-import 'package:bradderly/presentation/feature/menu/plan/paywall_view.dart';
-import 'package:bradderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/menu/plan/paywall_view.dart';
+import 'package:bladderly/presentation/feature/menu/plan/plan_cancel_modal.dart';
+import 'package:bladderly/presentation/feature/menu/plan/promo_code_modal.dart';
+import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:bladderly/presentation/feature/menu/widget/text_arrow_form.dart';
 import 'package:flutter/material.dart';
 
 class PlanMainModal extends StatelessWidget {

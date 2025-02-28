@@ -1,15 +1,15 @@
-import 'package:bradderly/core/recorder/src/recorder_file.dart';
-import 'package:bradderly/domain/model/history.dart';
-import 'package:bradderly/presentation/common/model/beverage_type_model.dart';
-import 'package:bradderly/presentation/feature/diary/detailed_list/detailed_list_builder.dart';
-import 'package:bradderly/presentation/feature/export/export_builder.dart';
-import 'package:bradderly/presentation/feature/input/intake_input/intake_input_builder.dart';
-import 'package:bradderly/presentation/feature/input/manual_input/manual_input_builder.dart';
-import 'package:bradderly/presentation/feature/input/sound_input_note/sound_input_note_builder.dart';
-import 'package:bradderly/presentation/feature/input/sound_input_recording/sound_input_recording_builder.dart';
-import 'package:bradderly/presentation/feature/main/main_builder.dart';
-import 'package:bradderly/presentation/feature/menu/model/menu_view.dart';
-import 'package:bradderly/presentation/feature/menu/plan/paywall_view.dart';
+import 'package:bladderly/core/recorder/src/recorder_file.dart';
+import 'package:bladderly/domain/model/history.dart';
+import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
+import 'package:bladderly/presentation/feature/diary/detailed_list/detailed_list_builder.dart';
+import 'package:bladderly/presentation/feature/export/export_builder.dart';
+import 'package:bladderly/presentation/feature/input/intake_input/intake_input_builder.dart';
+import 'package:bladderly/presentation/feature/input/manual_input/manual_input_builder.dart';
+import 'package:bladderly/presentation/feature/input/sound_input_note/sound_input_note_builder.dart';
+import 'package:bladderly/presentation/feature/input/sound_input_recording/sound_input_recording_builder.dart';
+import 'package:bladderly/presentation/feature/main/main_builder.dart';
+import 'package:bladderly/presentation/feature/menu/model/menu_view.dart';
+import 'package:bladderly/presentation/feature/menu/plan/paywall_view.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
@@ -35,24 +35,24 @@ enum MainRouteTab {
       path: 'menu',
     ),
     TypedGoRoute<SoundInputRecordingRoute>(
-      name: 'sound_input_recording',
-      path: 'sound_input_recording',
+      name: 'sound-input-recording',
+      path: 'sound-input-recording',
     ),
     TypedGoRoute<SoundInputNoteRoute>(
-      name: 'sound_input_note',
-      path: 'sound_input_note',
+      name: 'sound-input-note',
+      path: 'sound-input-note',
     ),
     TypedGoRoute<ManualInputRoute>(
-      name: 'manual_input',
-      path: 'manual_input',
+      name: 'manual-input',
+      path: 'manual-input',
     ),
     TypedGoRoute<IntakeInputRoute>(
-      name: 'intake_input',
-      path: 'intake_input',
+      name: 'intake-input',
+      path: 'intake-input',
     ),
     TypedGoRoute<DetailedListRoute>(
-      name: 'detailed_list',
-      path: 'detailed_list',
+      name: 'detailed-list',
+      path: 'detailed-list',
     ),
     TypedGoRoute<PaywallRoute>(
       name: 'paywall',

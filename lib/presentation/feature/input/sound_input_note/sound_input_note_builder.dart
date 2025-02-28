@@ -1,11 +1,11 @@
-import 'package:bradderly/core/di/di.dart';
-import 'package:bradderly/core/recorder/recorder_module.dart';
-import 'package:bradderly/core/recorder/src/recorder_file.dart';
-import 'package:bradderly/domain/usecase/save_voiding_history_with_file_usecase.dart';
-import 'package:bradderly/presentation/common/cubit/pending_upload_file_cubit.dart';
-import 'package:bradderly/presentation/feature/input/sound_input_note/bloc/sound_input_note_bloc.dart';
-import 'package:bradderly/presentation/feature/input/sound_input_note/cubit/sound_input_note_form_cubit.dart';
-import 'package:bradderly/presentation/feature/input/sound_input_note/sound_input_note_view.dart';
+import 'package:bladderly/core/di/di.dart';
+import 'package:bladderly/core/recorder/recorder_module.dart';
+import 'package:bladderly/core/recorder/src/recorder_file.dart';
+import 'package:bladderly/domain/usecase/save_voiding_history_with_file_usecase.dart';
+import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
+import 'package:bladderly/presentation/feature/input/sound_input_note/bloc/sound_input_note_bloc.dart';
+import 'package:bladderly/presentation/feature/input/sound_input_note/cubit/sound_input_note_form_cubit.dart';
+import 'package:bladderly/presentation/feature/input/sound_input_note/sound_input_note_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

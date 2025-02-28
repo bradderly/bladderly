@@ -1,8 +1,8 @@
 /*
-import 'package:bradderly/presentation/feature/menu/model/menu_view.dart';
-import 'package:bradderly/presentation/feature/menu/plan/plan_view.dart';
-import 'package:bradderly/presentation/feature/menu/profile/profile_view.dart';
-import 'package:bradderly/presentation/feature/menu/symptom/symptom_view.dart';
+import 'package:bladderly/presentation/feature/menu/model/menu_view.dart';
+import 'package:bladderly/presentation/feature/menu/plan/plan_view.dart';
+import 'package:bladderly/presentation/feature/menu/profile/profile_view.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/symptom_view.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:go_router/go_router.dart';

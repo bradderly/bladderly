@@ -1,7 +1,7 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/common/widget/primary_button.dart';
-import 'package:bradderly/presentation/router/route/intro_route.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/common/widget/primary_button.dart';
+import 'package:bladderly/presentation/router/route/intro_route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -51,7 +51,7 @@ class IntroView extends StatelessWidget {
                     ),
                     const Gap(32),
                     PrimaryButton.filled(
-                      onPressed: () => const SignupGuestRoute().go(context),
+                      onPressed: () => const SignUpGuestRoute().go(context),
                       backgroundColor: context.colorTheme.vermilion.primary.shade50,
                       borderRadius: 400,
                       shape: BoxShape.rectangle,
@@ -61,7 +61,7 @@ class IntroView extends StatelessWidget {
                     ),
                     const Gap(24),
                     GestureDetector(
-                      onTap: () => const SigninRoute().go(context),
+                      onTap: () => const SignInRoute().go(context),
                       behavior: HitTestBehavior.translucent,
                       child: Text(
                         'I already have an account'.tr(context),

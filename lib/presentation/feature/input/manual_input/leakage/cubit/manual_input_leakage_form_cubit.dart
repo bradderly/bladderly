@@ -1,5 +1,5 @@
-import 'package:bradderly/domain/model/history.dart';
-import 'package:bradderly/domain/model/leakage_volume.dart';
+import 'package:bladderly/domain/model/history.dart';
+import 'package:bladderly/domain/model/leakage_volume.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

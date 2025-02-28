@@ -1,4 +1,4 @@
-import 'package:bradderly/presentation/feature/menu/howtouse/howtouse_woman.dart';
+import 'package:bladderly/presentation/feature/menu/howtouse/howtouse_woman.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

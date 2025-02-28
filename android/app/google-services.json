@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "588541542318",
+    "firebase_url": "https://soundable-privy-diary.firebaseio.com",
+    "project_id": "soundable-privy-diary",
+    "storage_bucket": "soundable-privy-diary.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588541542318:android:bec68fd28a1704e1",
+        "android_client_info": {
+          "package_name": "com.soundable.diaryandroid.us"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "588541542318-5v5u1v4cgo1svrph5phkecsgumm4ifh8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.soundable.diaryandroid.us",
+            "certificate_hash": "921887ad5971a18e8be3cbbbfe346399a3b91f57"
+          }
+        },
+        {
+          "client_id": "588541542318-lm4njhecmagvnm3i3mdcndknqekihdua.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.soundable.diaryandroid.us",
+            "certificate_hash": "409efb5ae69290db2e866044dd3ab3735d856be9"
+          }
+        },
+        {
+          "client_id": "588541542318-fdr7o3dojdjabdt6nj44k8f07chd88sr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUiTcaw8m-obdIeoYBBuMZGvxCruFrvL0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "588541542318-fdr7o3dojdjabdt6nj44k8f07chd88sr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "588541542318-6qi9glnl7fqcb39l97cvd96v9chtllvd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.soundablehealth.diaryus"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:bradderly/domain/model/histories.dart';
-import 'package:bradderly/domain/model/history.dart';
+import 'package:bladderly/domain/model/histories.dart';
+import 'package:bladderly/domain/model/history.dart';
 
 abstract class HistoryRepository {
   Stream<Histories> getHistoriesStream({

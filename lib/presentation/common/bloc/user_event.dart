@@ -7,10 +7,6 @@ sealed class UserEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class UserChange extends UserEvent {
-  const UserChange({
-    required this.userModel,
-  });
-
-  final UserModel userModel;
+class UserLoad extends UserEvent {
+  const UserLoad();
 }

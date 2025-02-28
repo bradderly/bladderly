@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:bradderly/core/package_device_info/src/model/device_info_model.dart';
+import 'package:bladderly/core/package_device_info/src/model/device_info_model.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:device_region/device_region.dart';
 import 'package:injectable/injectable.dart';

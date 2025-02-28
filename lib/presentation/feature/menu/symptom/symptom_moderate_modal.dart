@@ -1,7 +1,7 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/menu/symptom/data/symptom_dataset.dart';
-import 'package:bradderly/presentation/feature/menu/widget/modal_title_date_back.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/data/symptom_dataset.dart';
+import 'package:bladderly/presentation/feature/menu/widget/modal_title_date_back.dart';
 import 'package:flutter/material.dart';
 
 class SymptomModerateModal extends StatelessWidget {
@@ -66,15 +66,13 @@ class SymptomModerateModal extends StatelessWidget {
                               children: [
                                 Text(
                                   'Symptom Score'.tr(context),
-                                  style:
-                                      context.textStyleTheme.b14Medium.copyWith(
+                                  style: context.textStyleTheme.b14Medium.copyWith(
                                     color: context.colorTheme.neutral.shade7,
                                   ),
                                 ),
                                 Text(
                                   'Moderate'.tr(context),
-                                  style:
-                                      context.textStyleTheme.b28Bold.copyWith(
+                                  style: context.textStyleTheme.b28Bold.copyWith(
                                     color: context.colorTheme.neutral.shade10,
                                   ),
                                 ),
@@ -86,8 +84,7 @@ class SymptomModerateModal extends StatelessWidget {
                             height: 60,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
-                              color:
-                                  context.colorTheme.vermilion.primary.shade50,
+                              color: context.colorTheme.vermilion.primary.shade50,
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
@@ -158,8 +155,7 @@ Widget _buildScoreRow(
           child: Column(
             children: [
               Text(
-                'Over the past month, how often have you had the sensation of not emptying your bladder?'
-                    .tr(context),
+                'Over the past month, how often have you had the sensation of not emptying your bladder?'.tr(context),
                 style: context.textStyleTheme.b14Medium.copyWith(
                   color: context.colorTheme.neutral.shade9,
                 ),

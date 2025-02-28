@@ -1,6 +1,6 @@
-import 'package:bradderly/domain/model/unit.dart';
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
+import 'package:bladderly/domain/model/unit.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';

@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:bradderly/presentation/feature/splash/splash_builder.dart';
+import 'package:bladderly/presentation/feature/splash/splash_builder.dart';
 import 'package:flutter/cupertino.dart';
 // Package imports:
 import 'package:go_router/go_router.dart';

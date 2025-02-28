@@ -1,7 +1,7 @@
-import 'package:bradderly/domain/model/history.dart';
-import 'package:bradderly/domain/model/leakage_volume.dart';
-import 'package:bradderly/presentation/common/model/beverage_type_model.dart';
-import 'package:bradderly/presentation/generated/assets/assets.gen.dart';
+import 'package:bladderly/domain/model/history.dart';
+import 'package:bladderly/domain/model/leakage_volume.dart';
+import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
+import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:equatable/equatable.dart';
 
 sealed class DetailedListHistoryModel extends Equatable {

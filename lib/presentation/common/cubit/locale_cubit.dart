@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:bradderly/presentation/common/locale/app_locale.dart';
+import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 class AppLocaleCubit extends HydratedCubit<AppLocale> {

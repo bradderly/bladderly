@@ -1,5 +1,5 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/locale/app_locale.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 

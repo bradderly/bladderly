@@ -1,8 +1,8 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/menu/plan/promo_code_modal.dart';
-import 'package:bradderly/presentation/feature/menu/plan/terms_view.dart';
-import 'package:bradderly/presentation/feature/menu/plan/privacy_view.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/menu/plan/privacy_view.dart';
+import 'package:bladderly/presentation/feature/menu/plan/promo_code_modal.dart';
+import 'package:bladderly/presentation/feature/menu/plan/terms_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

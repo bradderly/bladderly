@@ -1,6 +1,6 @@
-import 'package:bradderly/app.dart';
-import 'package:bradderly/core/di/di.dart';
-import 'package:bradderly/presentation/common/locale/app_locale.dart';
+import 'package:bladderly/app.dart';
+import 'package:bladderly/core/di/di.dart';
+import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';

@@ -1,18 +1,18 @@
-import 'package:bradderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bradderly/presentation/common/extension/string_extension.dart';
-import 'package:bradderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:flutter/material.dart';
 
 class LanguageViewModal extends StatefulWidget {
   const LanguageViewModal({super.key});
 
   @override
-  _LanguageViewModalState createState() => _LanguageViewModalState();
+  State<LanguageViewModal> createState() => _LanguageViewModalState();
 }
 
 class _LanguageViewModalState extends State<LanguageViewModal> {
   String _selectedLanguage = 'English (United States)';
-  String _basicLanguage = 'English (United States)';
+  final String _basicLanguage = 'English (United States)';
 
   @override
   Widget build(BuildContext context) {

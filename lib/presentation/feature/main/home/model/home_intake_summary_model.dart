@@ -1,4 +1,4 @@
-import 'package:bradderly/domain/model/histories.dart';
+import 'package:bladderly/domain/model/histories.dart';
 import 'package:equatable/equatable.dart';
 
 class HomeIntakeSummaryModel extends Equatable {

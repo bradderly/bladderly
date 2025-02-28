@@ -1,4 +1,4 @@
-import 'package:bradderly/domain/model/unit.dart';
+import 'package:bladderly/domain/model/unit.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 class UnitCubit extends HydratedCubit<Unit> {

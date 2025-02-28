@@ -1,8 +1,8 @@
-import 'package:bradderly/domain/model/history.dart';
-import 'package:bradderly/domain/model/unit.dart';
-import 'package:bradderly/presentation/common/model/beverage_type_model.dart';
-import 'package:bradderly/presentation/feature/input/intake_input/model/intake_input_beverage_model.dart';
-import 'package:bradderly/presentation/feature/input/intake_input/model/intake_input_drink_volume_model.dart';
+import 'package:bladderly/domain/model/history.dart';
+import 'package:bladderly/domain/model/unit.dart';
+import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
+import 'package:bladderly/presentation/feature/input/intake_input/model/intake_input_beverage_model.dart';
+import 'package:bladderly/presentation/feature/input/intake_input/model/intake_input_drink_volume_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
