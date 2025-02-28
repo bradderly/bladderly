@@ -80,11 +80,11 @@ extension VodingHistoriesExtension on VodingHistories {
   }
 
   int get daytimeFrequency {
-    return _list.where((element) => !element.isNocutria).length;
+    return _list.where((element) => !element.isNocturia).length;
   }
 
   int get nighttimeFrequency {
-    return _list.where((element) => element.isNocutria).length;
+    return _list.where((element) => element.isNocturia).length;
   }
 }
 

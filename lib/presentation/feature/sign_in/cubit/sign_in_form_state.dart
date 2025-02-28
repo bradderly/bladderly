@@ -23,10 +23,7 @@ class SignInFormState extends Equatable {
     );
   }
 
-  bool get isValid {
-    print(email);
-    return email.isNotEmpty && password.isNotEmpty;
-  }
+  bool get isValid => email.isNotEmpty && password.isNotEmpty;
 
   @override
   List<Object> get props => [

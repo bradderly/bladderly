@@ -1,3 +1,5 @@
+// ignore_for_file: inference_failure_on_function_invocation
+
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/about/about_modal.dart';
@@ -7,6 +9,7 @@ import 'package:bladderly/presentation/feature/menu/language/language_view_modal
 import 'package:bladderly/presentation/feature/menu/plan/plan_main_modal.dart';
 import 'package:bladderly/presentation/feature/menu/profile/user_profile_modal.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/symptom_modal.dart';
+import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -68,15 +71,7 @@ class _MenuViewState extends State<MenuView> {
                         icon: Icons.person_outline,
                         title: 'User Profile'.tr(context),
                         onTap: () {
-                          // ignore: inference_failure_on_function_invocation
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            builder: (context) {
-                              return const UserProfileModal();
-                            },
-                          );
+                          ModalHelper.showModal(context, const UserProfileModal());
                         },
                       ),
                     ],
@@ -88,7 +83,6 @@ class _MenuViewState extends State<MenuView> {
                         icon: Icons.credit_card,
                         title: 'Plan'.tr(context),
                         onTap: () {
-                          // ignore: inference_failure_on_function_invocation
                           showModalBottomSheet(
                             context: context,
                             isScrollControlled: true,
@@ -103,7 +97,6 @@ class _MenuViewState extends State<MenuView> {
                         icon: Icons.ios_share,
                         title: 'Data export'.tr(context),
                         onTap: () {
-                          // ignore: inference_failure_on_function_invocation
                           showModalBottomSheet(
                             context: context,
                             isScrollControlled: true,
@@ -118,7 +111,6 @@ class _MenuViewState extends State<MenuView> {
                         icon: Icons.bar_chart,
                         title: 'Symptom score'.tr(context),
                         onTap: () {
-                          // ignore: inference_failure_on_function_invocation
                           showModalBottomSheet(
                             context: context,
                             isScrollControlled: true,
@@ -134,7 +126,6 @@ class _MenuViewState extends State<MenuView> {
                         title: 'Language'.tr(context),
                         subtitle: 'English (United States)'.tr(context),
                         onTap: () {
-                          // ignore: inference_failure_on_function_invocation
                           showModalBottomSheet(
                             context: context,
                             isScrollControlled: true,
@@ -163,7 +154,6 @@ class _MenuViewState extends State<MenuView> {
                         icon: Icons.phone,
                         title: 'Contact Us'.tr(context),
                         onTap: () {
-                          // ignore: inference_failure_on_function_invocation
                           showModalBottomSheet(
                             context: context,
                             isScrollControlled: true,
@@ -178,7 +168,6 @@ class _MenuViewState extends State<MenuView> {
                         icon: Icons.info_outline,
                         title: 'About'.tr(context),
                         onTap: () {
-                          // ignore: inference_failure_on_function_invocation
                           showModalBottomSheet(
                             context: context,
                             isScrollControlled: true,
@@ -344,6 +333,7 @@ class SettingsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: onTap,
       child: Container(
         height: 48,
@@ -351,7 +341,7 @@ class SettingsItem extends StatelessWidget {
         child: Row(
           children: [
             Icon(icon, size: 24, color: context.colorTheme.neutral.shade10),
-            const SizedBox(width: 12), // 아이콘과 텍스트 간격
+            const SizedBox(width: 12),
             Expanded(
               // 🔥 이걸 추가하면 무한 너비 문제 해결
               child: Row(

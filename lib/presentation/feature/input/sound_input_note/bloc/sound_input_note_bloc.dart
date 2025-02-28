@@ -22,7 +22,6 @@ class SoundInputNoteBloc extends Bloc<SoundInputNoteEvent, SoundInputNoteState> 
     emit(const SoundInputUploadInProgress());
 
     final result = await _saveVoidingHistoryWithFileUsecase(
-      hashId: event.hashId,
       file: event.file,
       recordTime: event.recordTime,
       recordUrgency: event.recordUrgency,

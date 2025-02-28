@@ -31,7 +31,7 @@ class ManualInputVoidingFormState extends Equatable {
       recordVolume: '${unit.parseFromMl(history.recordVolume)}',
       unit: unit,
       recordUrgency: history.recordUrgency,
-      isNocutria: history.isNocutria,
+      isNocutria: history.isNocturia,
       isLeakage: history.isLeakage,
       leakageVolume: history.leakageVolume,
       memo: history.memo ?? '',

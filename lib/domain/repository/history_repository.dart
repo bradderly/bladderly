@@ -5,20 +5,22 @@ import 'package:bladderly/domain/model/history.dart';
 
 abstract class HistoryRepository {
   Stream<Histories> getHistoriesStream({
-    required String userId,
     required DateTime recordDate,
   });
 
   /// save history to local
-  VoidingHistory saveVoidngHistory(VoidingHistory vodingHistory);
+  Future<VoidingHistory> saveVoidngHistory(VoidingHistory vodingHistory);
 
   /// save history to local
-  IntakeHistory saveIntakeHistory(IntakeHistory intakeHistory);
+  Future<IntakeHistory> saveIntakeHistory(IntakeHistory intakeHistory);
 
   /// save history to local
-  LeakageHistory saveLeakageHistory(LeakageHistory leakageHistory);
+  Future<LeakageHistory> saveLeakageHistory(LeakageHistory leakageHistory);
 
-  Stream<List<DateTime>> getHistoryDatesStream(String userId);
+  /// save history to local
+  Histories saveHistories(Histories histories);
+
+  Stream<List<DateTime>> getHistoryDatesStream();
 
   Future<void> exportHistories({
     required String userId,
@@ -41,4 +43,6 @@ abstract class HistoryRepository {
     required String userId,
     required History history,
   });
+
+  Future<Histories> getAllHistoriesFromServer({required String userId});
 }
