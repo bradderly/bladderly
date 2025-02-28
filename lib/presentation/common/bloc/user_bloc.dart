@@ -1,6 +1,7 @@
 import 'package:bladderly/domain/model/user.dart';
 import 'package:bladderly/domain/usecase/get_user_stream_usecase.dart';
 import 'package:bladderly/domain/usecase/get_user_usecase.dart';
+import 'package:bladderly/domain/usecase/sign_out_usecase.dart';
 import 'package:bladderly/presentation/common/model/user_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -12,14 +13,18 @@ class UserBloc extends HydratedBloc<UserEvent, UserState> {
   UserBloc({
     required GetUserUsecase getUserUsecase,
     required GetUserStreamUsecase getUserStreamUsecase,
+    required SignOutUsecase signOutUsecase,
   })  : _getUserUsecase = getUserUsecase,
         _getUserStreamUsecase = getUserStreamUsecase,
+        _signOutUsecase = signOutUsecase,
         super(const UserInitial()) {
     on<UserLoad>(_onLoad);
+    on<UserSignOut>(_onSignOut);
   }
 
   final GetUserUsecase _getUserUsecase;
   final GetUserStreamUsecase _getUserStreamUsecase;
+  final SignOutUsecase _signOutUsecase;
 
   void _onLoad(UserLoad event, Emitter<UserState> emit) {
     return _getUserStreamUsecase().fold(
@@ -32,6 +37,13 @@ class UserBloc extends HydratedBloc<UserEvent, UserState> {
           userModel: state._userModel,
         ),
       ),
+    );
+  }
+
+  void _onSignOut(UserSignOut event, Emitter<UserState> emit) {
+    return _signOutUsecase().fold(
+      (exception) => state,
+      (_) => emit(const UserInitial()),
     );
   }
 

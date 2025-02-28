@@ -10,29 +10,17 @@ abstract class IsarClient {
 
   HistoryEntity? getHistoryOrNullById(int id);
 
-  int saveHistory(HistoryEntity historyEntity);
+  Future<int> saveHistory(HistoryEntity historyEntity);
 
-  void removeHistoryByUserIdAndRecordTime({
-    required String userId,
-    required DateTime recordTime,
-  });
+  Future<List<int>> saveHistories(List<HistoryEntity> historyEntities);
 
-  Stream<List<HistoryEntity>> getHistoriesStreamByUserIdAndDate({
-    required String userId,
-    required DateTime recordDate,
-  });
+  void removeHistoryByRecordTime({required DateTime recordTime});
 
-  Stream<List<DateTime>> getHistoryDatesStreamByUserId({
-    required String userId,
-  });
+  Stream<List<HistoryEntity>> getHistoriesStreamByRecordDate({required DateTime recordDate});
 
-  Stream<List<HistoryEntity>> getPendingUploadHistoriesStreamByUserId(
-    String userId,
-  );
+  Stream<List<DateTime>> getHistoryDatesStream();
 
-  List<HistoryEntity> getPendingUploadHistoriesByUserId(
-    String userId,
-  );
+  List<HistoryEntity> getPendingUploadHistories();
 
   AppleCredentialEntity? getAppleCredentialOrNullByUserIdentifier(String userIdentifier);
 
@@ -58,64 +46,46 @@ class _IsarClientImpl implements IsarClient {
   }
 
   @override
-  int saveHistory(HistoryEntity historyEntity) {
-    return _isar.writeTxnSync(() => _isar.historyEntitys.putSync(historyEntity));
+  Future<int> saveHistory(HistoryEntity historyEntity) {
+    return _isar.writeTxn(() => _isar.historyEntitys.put(historyEntity));
   }
 
   @override
-  void removeHistoryByUserIdAndRecordTime({required String userId, required DateTime recordTime}) {
-    return _isar
-        .writeTxnSync(_isar.historyEntitys.filter().userIdEqualTo(userId).recordTimeEqualTo(recordTime).deleteAllSync);
+  void removeHistoryByRecordTime({
+    required DateTime recordTime,
+  }) {
+    return _isar.writeTxnSync(() => _isar.historyEntitys.deleteByRecordTimeSync(recordTime));
   }
 
   @override
-  Stream<List<HistoryEntity>> getHistoriesStreamByUserIdAndDate({
-    required String userId,
+  Stream<List<HistoryEntity>> getHistoriesStreamByRecordDate({
     required DateTime recordDate,
   }) {
     final lowerDate = DateUtils.dateOnly(recordDate);
     final upperDate = lowerDate.add(const Duration(days: 1));
     return _isar.historyEntitys
         .filter()
-        .userIdEqualTo(userId)
         .recordTimeBetween(lowerDate, upperDate, includeUpper: false)
         .sortByRecordTime()
         .watch(fireImmediately: true);
   }
 
   @override
-  Stream<List<DateTime>> getHistoryDatesStreamByUserId({required String userId}) {
+  Stream<List<DateTime>> getHistoryDatesStream() {
     return _isar.historyEntitys
-        .filter()
-        .userIdEqualTo(userId)
-        .sortByRecordTime()
+        .where()
         .watch(fireImmediately: true)
         .map((entities) => entities.map((e) => DateUtils.dateOnly(e.recordTime)).toSet().toList());
   }
 
   @override
-  Stream<List<HistoryEntity>> getPendingUploadHistoriesStreamByUserId(String userId) {
-    return _isar.historyEntitys.filter().userIdEqualTo(userId).statusEqualTo(HistoryStatus.pendingUpload).watch();
+  List<HistoryEntity> getPendingUploadHistories() {
+    return _isar.historyEntitys.filter().statusEqualTo(HistoryStatus.pendingUpload).findAllSync();
   }
-
-  @override
-  List<HistoryEntity> getPendingUploadHistoriesByUserId(String userId) {
-    return _isar.historyEntitys.filter().userIdEqualTo(userId).statusEqualTo(HistoryStatus.pendingUpload).findAllSync();
-  }
-
-  // @override
-  // UserEntity? getUserOrNull() {
-  //   return _isar.userEntitys.where().build().findAllSync().firstOrNull;
-  // }
-
-  // @override
-  // Stream<UserEntity> getUserStream() {
-  //   return _isar.userEntitys.where().build().watch().map((entities) => entities.first);
-  // }
 
   @override
   AppleCredentialEntity? getAppleCredentialOrNullByUserIdentifier(String userIdentifier) {
-    return _isar.appleCredentialEntitys.filter().userIdentifierEqualTo(userIdentifier).findFirstSync();
+    return _isar.appleCredentialEntitys.getByUserIdentifierSync(userIdentifier);
   }
 
   @override
@@ -133,13 +103,7 @@ class _IsarClientImpl implements IsarClient {
   @override
   UserEntity saveUser(UserEntity userEntity) {
     return _isar.writeTxnSync(
-      () {
-        if (_isar.userEntitys.getByUserIdSync(userEntity.userId)?.id case final int id) {
-          userEntity.id = id;
-        }
-
-        return _isar.userEntitys.getSync(_isar.userEntitys.putSync(userEntity))!;
-      },
+      () => _isar.userEntitys.getSync(_isar.userEntitys.putByUserIdSync(userEntity))!,
     );
   }
 
@@ -150,6 +114,11 @@ class _IsarClientImpl implements IsarClient {
 
   @override
   void clearAll() {
-    return _isar.clearSync();
+    return _isar.writeTxnSync(_isar.clearSync);
+  }
+
+  @override
+  Future<List<int>> saveHistories(List<HistoryEntity> historyEntities) {
+    return _isar.writeTxnSync(() => _isar.historyEntitys.putAllByRecordTime(historyEntities));
   }
 }

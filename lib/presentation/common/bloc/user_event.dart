@@ -10,3 +10,7 @@ sealed class UserEvent extends Equatable {
 class UserLoad extends UserEvent {
   const UserLoad();
 }
+
+class UserSignOut extends UserEvent {
+  const UserSignOut();
+}

@@ -27,7 +27,7 @@ class DiaryCubit extends Cubit<DiaryState> {
   void subscribe(DateTime dateTime) {
     _clearSubscription();
 
-    _getHistoriesStreamUsecase(userId: 'ydu3328@naver.com', dateTime: DateUtils.dateOnly(dateTime)).fold(
+    _getHistoriesStreamUsecase(dateTime: DateUtils.dateOnly(dateTime)).fold(
       (l) => null,
       (r) => _subscription = r.listen((histories) => _listener(dateTime: dateTime, histories: histories)),
     );

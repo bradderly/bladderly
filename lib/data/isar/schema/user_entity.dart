@@ -6,7 +6,7 @@ part 'user_entity.g.dart';
 class UserEntity {
   Id id = Isar.autoIncrement;
 
-  @Index(unique: true)
+  @Index(unique: true, replace: true)
   @Name('user_id')
   late String userId;
 

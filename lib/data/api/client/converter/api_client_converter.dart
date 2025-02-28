@@ -72,21 +72,6 @@ class ApiClientConverter extends chopper.JsonConverter {
 }
 
 final _jsonDecoder = _CustomJsonDecoder({
-  /** REQUEST */
-  LoginRequest: LoginRequest.fromJsonFactory,
-  ChagePwRequest: ChagePwRequest.fromJsonFactory,
-  ConfirmPwRequest: ConfirmPwRequest.fromJsonFactory,
-  ContactUsRequest: ContactUsRequest.fromJsonFactory,
-  PostEmailRequest: PostEmailRequest.fromJsonFactory,
-  ExportReportRequest: ExportReportRequest.fromJsonFactory,
-  DataMigrationRequest: DataMigrationRequest.fromJsonFactory,
-  PaymentCheckRequest: PaymentCheckRequest.fromJsonFactory,
-  DataExportSurveyRequest: DataExportSurveyRequest.fromJsonFactory,
-  SaveSurveyRequest: SaveSurveyRequest.fromJsonFactory,
-  SignUpRequest: SignUpRequest.fromJsonFactory,
-  RecordUpdateRequest: RecordUpdateRequest.fromJsonFactory,
-  RecordUpdateRequestRecord: RecordUpdateRequestRecord.fromJsonFactory,
-
   /** RESPONSE */
   SimpleResponse: SimpleResponse.fromJsonFactory,
   ResultResponse: ResultResponse.fromJsonFactory,
