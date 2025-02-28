@@ -1,63 +1,55 @@
-/*
 import 'package:bladderly/presentation/feature/menu/model/menu_view.dart';
-import 'package:bladderly/presentation/feature/menu/plan/plan_view.dart';
-import 'package:bladderly/presentation/feature/menu/profile/profile_view.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/symptom_view.dart';
+import 'package:bladderly/presentation/feature/menu/plan/plan_main_modal.dart';
+import 'package:bladderly/presentation/feature/menu/profile/user_profile_modal.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/symptom_modal.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:go_router/go_router.dart';
 
-part 'menu_tap_route.g.dart';
-
-@TypedGoRoute<MenuTapRoute>(
-  name: 'menutap', path: '/menutap',
-  routes: [
-    TypedGoRoute<ProfileRoute>(name: 'profile', path: 'profile'),
-    TypedGoRoute<PlanRoute>(name: 'plan', path: 'plan'),
-    TypedGoRoute<SymptomRoute>(name: 'symptom', path: 'symptom'),
-  ],
-  )
-
-
-class MenuTapRoute extends GoRouteData {
-  const MenuTapRoute();
+class MenuRoute extends GoRouteData {
+  const MenuRoute();
 
   @override
-  Page<void> buildPage(BuildContext context, GoRouterState state) => CupertinoPage<void>(
-        key: state.pageKey,
-        child: const MenuView(),
-      );
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      fullscreenDialog: true,
+      child: const MenuView(),
+    );
+  }
 }
 
 class ProfileRoute extends GoRouteData {
   const ProfileRoute();
 
   @override
-  Page<void> buildPage(BuildContext context, GoRouterState state) => CupertinoPage<void>(
-        key: state.pageKey,
-        child:  ProfileView(),
-      );
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: const UserProfileModal(),
+    );
+  }
 }
 
 class PlanRoute extends GoRouteData {
   const PlanRoute();
 
   @override
-  Page<void> buildPage(BuildContext context, GoRouterState state) => CupertinoPage<void>(
-        key: state.pageKey,
-        child: const PlanView(),
-      );
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: const PlanMainModal(),
+    );
+  }
 }
 
 class SymptomRoute extends GoRouteData {
   const SymptomRoute();
 
   @override
-  Page<void> buildPage(BuildContext context, GoRouterState state) => CupertinoPage<void>(
-        key: state.pageKey,
-        child: const SymptomView(),
-      );
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: const SymptomModal(),
+    );
+  }
 }
-
-
-*/

@@ -8,8 +8,8 @@ import 'package:bladderly/presentation/feature/input/manual_input/manual_input_b
 import 'package:bladderly/presentation/feature/input/sound_input_note/sound_input_note_builder.dart';
 import 'package:bladderly/presentation/feature/input/sound_input_recording/sound_input_recording_builder.dart';
 import 'package:bladderly/presentation/feature/main/main_builder.dart';
-import 'package:bladderly/presentation/feature/menu/model/menu_view.dart';
 import 'package:bladderly/presentation/feature/menu/plan/paywall_view.dart';
+import 'package:bladderly/presentation/router/route/menu_tap_route.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
@@ -33,6 +33,11 @@ enum MainRouteTab {
     TypedGoRoute<MenuRoute>(
       name: 'menu',
       path: 'menu',
+      routes: [
+        TypedGoRoute<ProfileRoute>(name: 'profile', path: 'profile'),
+        TypedGoRoute<PlanRoute>(name: 'plan', path: 'plan'),
+        TypedGoRoute<SymptomRoute>(name: 'symptom', path: 'symptom'),
+      ],
     ),
     TypedGoRoute<SoundInputRecordingRoute>(
       name: 'sound-input-recording',
@@ -72,19 +77,6 @@ class MainRoute extends GoRouteData {
     return CupertinoPage<void>(
       key: state.pageKey,
       child: const MainBuilder(),
-    );
-  }
-}
-
-class MenuRoute extends GoRouteData {
-  const MenuRoute();
-
-  @override
-  Page<void> buildPage(BuildContext context, GoRouterState state) {
-    return CupertinoPage<void>(
-      key: state.pageKey,
-      fullscreenDialog: true,
-      child: const MenuView(),
     );
   }
 }
