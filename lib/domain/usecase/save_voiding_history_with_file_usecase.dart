@@ -15,7 +15,6 @@ class SaveVoidingHistoryWithFileUsecase {
   final HistoryRepository _historyRepository;
 
   Future<Either<Exception, VoidingHistory>> call({
-    required String hashId,
     required DateTime recordTime,
     required int recordUrgency,
     required bool isNocutria,
@@ -26,13 +25,12 @@ class SaveVoidingHistoryWithFileUsecase {
     try {
       await _historyRepository.uploadVoidingSoundFile(file);
 
-      final voidingHistory = _historyRepository.saveVoidngHistory(
+      final voidingHistory = await _historyRepository.saveVoidngHistory(
         VoidingHistory(
           id: null,
-          hashId: hashId,
           recordTime: recordTime,
           recordUrgency: recordUrgency,
-          isNocutria: isNocutria,
+          isNocturia: isNocutria,
           isLeakage: isLeakage,
           memo: memo,
           isManual: false,

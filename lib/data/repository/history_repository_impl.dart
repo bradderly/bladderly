@@ -4,7 +4,6 @@ import 'package:bladderly/data/api/client/api_client.dart';
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 import 'package:bladderly/data/isar/isar_client.dart';
 import 'package:bladderly/data/isar/schema/history_entity.dart';
-import 'package:bladderly/data/mapper/history_entity_mapper.dart';
 import 'package:bladderly/data/mapper/history_mapper.dart';
 import 'package:bladderly/domain/model/histories.dart';
 import 'package:bladderly/domain/model/history.dart';
@@ -25,35 +24,39 @@ class HistoryRepositoryImpl implements HistoryRepository {
 
   @override
   Stream<Histories> getHistoriesStream({
-    required String userId,
     required DateTime recordDate,
   }) {
     return _isarClient
-        .getHistoriesStreamByUserIdAndDate(userId: userId, recordDate: recordDate)
+        .getHistoriesStreamByRecordDate(recordDate: recordDate)
         .map((entities) => Histories(list: entities.map(HistoryMapper.fromHistoryEntity).toList()));
   }
 
   @override
-  VoidingHistory saveVoidngHistory(VoidingHistory vodingHistory) {
-    final id = _isarClient.saveHistory(HistoryEntityMapper.fromVoidingHistory(vodingHistory));
+  Future<VoidingHistory> saveVoidngHistory(VoidingHistory vodingHistory) async {
+    final id = await _isarClient.saveHistory(HistoryMapper.toHistoryEntity(vodingHistory));
     return vodingHistory.setId(id);
   }
 
   @override
-  IntakeHistory saveIntakeHistory(IntakeHistory intakeHistory) {
-    final id = _isarClient.saveHistory(HistoryEntityMapper.fromIntakeHistory(intakeHistory));
+  Future<IntakeHistory> saveIntakeHistory(IntakeHistory intakeHistory) async {
+    final id = await _isarClient.saveHistory(HistoryMapper.toHistoryEntity(intakeHistory));
     return intakeHistory.setId(id);
   }
 
   @override
-  LeakageHistory saveLeakageHistory(LeakageHistory leakageHistory) {
-    final id = _isarClient.saveHistory(HistoryEntityMapper.fromLeakageHistory(leakageHistory));
+  Future<LeakageHistory> saveLeakageHistory(LeakageHistory leakageHistory) async {
+    final id = await _isarClient.saveHistory(HistoryMapper.toHistoryEntity(leakageHistory));
     return leakageHistory.setId(id);
   }
 
   @override
-  Stream<List<DateTime>> getHistoryDatesStream(String userId) {
-    return _isarClient.getHistoryDatesStreamByUserId(userId: userId);
+  Histories<History> saveHistories(Histories<History> histories) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<DateTime>> getHistoryDatesStream() {
+    return _isarClient.getHistoryDatesStream();
   }
 
   @override
@@ -105,7 +108,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
 
     if (history == null) return;
 
-    return _isarClient.removeHistoryByUserIdAndRecordTime(userId: history.userId, recordTime: history.recordTime);
+    return _isarClient.removeHistoryByRecordTime(recordTime: history.recordTime);
   }
 
   @override
@@ -120,7 +123,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
         record: switch (history) {
           VoidingHistory() => RecordUpdateRequest$Record(
               isLeakage: history.isLeakage,
-              isNocturia: history.isNocutria,
+              isNocturia: history.isNocturia,
               recordVolume: '${history.recordVolume}',
               leakageVolume: history.leakageVolume?.name,
               recordUrgency: '${history.recordUrgency}',
@@ -145,5 +148,13 @@ class HistoryRepositoryImpl implements HistoryRepository {
     );
 
     return response.body?.message;
+  }
+
+  @override
+  Future<Histories> getAllHistoriesFromServer({required String userId}) async {
+    final response = await _apiClient.getAllRecords(userId: userId).then((response) => response.body!);
+    final records = response.records ?? [];
+
+    return Histories(list: records.map(HistoryMapper.fromGetAllResultResponse$Records$Item).toList());
   }
 }

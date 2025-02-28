@@ -21,10 +21,9 @@ class SaveIntakeHistoryUsecase {
     String? memo,
   }) async {
     try {
-      final voidingHistory = _historyRepository.saveIntakeHistory(
+      final voidingHistory = await _historyRepository.saveIntakeHistory(
         IntakeHistory(
           id: id,
-          hashId: hashId,
           recordTime: recordTime,
           beverageType: beverageType,
           recordVolume: recordVolume,

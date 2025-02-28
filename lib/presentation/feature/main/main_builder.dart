@@ -1,5 +1,6 @@
 import 'package:bladderly/core/di/di.dart';
 import 'package:bladderly/core/recorder/recorder_module.dart';
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
 import 'package:bladderly/presentation/feature/main/cubit/main_tab_cubit.dart';
 import 'package:bladderly/presentation/feature/main/main_view.dart';
@@ -20,6 +21,9 @@ class MainBuilder extends StatelessWidget {
         ),
         BlocProvider<PendingUploadFileCubit>(
           create: (_) => PendingUploadFileCubit(),
+        ),
+        BlocProvider<UserBloc>.value(
+          value: context.read<UserBloc>(),
         ),
       ],
       child: MainView(

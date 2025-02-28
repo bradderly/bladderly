@@ -17,7 +17,7 @@ sealed class DetailedListHistoryModel extends Equatable {
           memo: history.memo,
           recordVolume: history.recordVolume,
           recordUrgency: history.recordUrgency,
-          isNocutria: history.isNocutria,
+          isNocutria: history.isNocturia,
           leakageVolume: switch (history.leakageVolume) {
             LeakageVolume.Small => 'S',
             LeakageVolume.Medium => 'M',

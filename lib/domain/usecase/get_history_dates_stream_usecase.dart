@@ -9,11 +9,9 @@ class GetHistoryDatesStreamUsecase {
 
   final HistoryRepository _historyRepository;
 
-  Either<Exception, Stream<List<DateTime>>> call({
-    required String hashId,
-  }) {
+  Either<Exception, Stream<List<DateTime>>> call() {
     try {
-      final stream = _historyRepository.getHistoryDatesStream(hashId);
+      final stream = _historyRepository.getHistoryDatesStream();
 
       return Right(stream);
     } on Exception catch (e) {

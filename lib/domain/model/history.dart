@@ -3,17 +3,14 @@ import 'package:bladderly/domain/model/leakage_volume.dart';
 import 'package:equatable/equatable.dart';
 
 sealed class History extends Equatable {
-  const History({
+  const History._({
     required this.id,
-    required this.hashId,
     required this.recordTime,
     required this.memo,
     required this.status,
   });
 
   final int? id;
-
-  final String hashId;
 
   /// 기록일
   final DateTime recordTime;
@@ -37,17 +34,16 @@ sealed class History extends Equatable {
 class VoidingHistory extends History {
   const VoidingHistory({
     required super.id,
-    required super.hashId,
     required super.recordTime,
     required super.memo,
     required super.status,
     required this.recordVolume,
     required this.recordUrgency,
     required this.isManual,
-    required this.isNocutria,
+    required this.isNocturia,
     required this.isLeakage,
     required this.leakageVolume,
-  });
+  }) : super._();
 
   /// 배뇨량
   final int recordVolume;
@@ -59,7 +55,7 @@ class VoidingHistory extends History {
   final bool isManual;
 
   /// 수면 중 화장실에 가려고 꺳는지 여부
-  final bool isNocutria;
+  final bool isNocturia;
 
   /// 요실금 발생 여부
   final bool isLeakage;
@@ -71,14 +67,13 @@ class VoidingHistory extends History {
   VoidingHistory setId(int id) {
     return VoidingHistory(
       id: id,
-      hashId: hashId,
       recordTime: recordTime,
       memo: memo,
       status: status,
       recordVolume: recordVolume,
       recordUrgency: recordUrgency,
       isManual: isManual,
-      isNocutria: isNocutria,
+      isNocturia: isNocturia,
       isLeakage: isLeakage,
       leakageVolume: leakageVolume,
     );
@@ -90,7 +85,7 @@ class VoidingHistory extends History {
         recordVolume,
         recordUrgency,
         isManual,
-        isNocutria,
+        isNocturia,
         isLeakage,
         leakageVolume,
       ];
@@ -99,13 +94,12 @@ class VoidingHistory extends History {
 class IntakeHistory extends History {
   const IntakeHistory({
     required super.id,
-    required super.hashId,
     required super.recordTime,
     required super.memo,
     required super.status,
     required this.beverageType,
     required this.recordVolume,
-  });
+  }) : super._();
 
   /// 섭취 종류
   final String beverageType;
@@ -117,7 +111,6 @@ class IntakeHistory extends History {
   IntakeHistory setId(int id) {
     return IntakeHistory(
       id: id,
-      hashId: hashId,
       recordTime: recordTime,
       memo: memo,
       status: status,
@@ -137,12 +130,11 @@ class IntakeHistory extends History {
 class LeakageHistory extends History {
   const LeakageHistory({
     required super.id,
-    required super.hashId,
     required super.recordTime,
     required super.memo,
     required super.status,
     required this.leakageVolume,
-  });
+  }) : super._();
 
   final LeakageVolume leakageVolume;
 
@@ -150,7 +142,6 @@ class LeakageHistory extends History {
   LeakageHistory setId(int id) {
     return LeakageHistory(
       id: id,
-      hashId: hashId,
       recordTime: recordTime,
       memo: memo,
       status: status,

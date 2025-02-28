@@ -10,11 +10,8 @@ class HistoryEntity {
 
   Id id = Isar.autoIncrement;
 
-  @Name('user_id')
-  @Index(composite: [CompositeIndex('recordTime')])
-  late String userId;
-
   @Name('record_time')
+  @Index(unique: true, replace: true)
   late DateTime recordTime;
 
   @Name('is_intake')
@@ -29,8 +26,8 @@ class HistoryEntity {
   @Name('record_volume')
   late double recordVolume;
 
-  @Name('is_nocutria')
-  bool? isNocutria;
+  @Name('is_nocturia')
+  bool? isNocturia;
 
   @Name('is_leakage')
   bool? isLeakage;
@@ -51,4 +48,30 @@ class HistoryEntity {
   late HistoryStatus status;
 
   void setId(int? id) => this.id = id ?? this.id;
+
+  bool isEqualTo(HistoryEntity entity) {
+    if (recordTime != entity.recordTime) return false;
+
+    if (isIntake != entity.isIntake) return false;
+
+    if (recordUrgency != entity.recordUrgency) return false;
+
+    if (isManual != entity.isManual) return false;
+
+    if (recordVolume != entity.recordVolume) return false;
+
+    if (isNocturia != entity.isNocturia) return false;
+
+    if (isLeakage != entity.isLeakage) return false;
+
+    if (leakageVolume != entity.leakageVolume) return false;
+
+    if (beverageType != entity.beverageType) return false;
+
+    if (leakageMemo != entity.leakageMemo) return false;
+
+    if (status != entity.status) return false;
+
+    return true;
+  }
 }

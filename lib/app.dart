@@ -1,6 +1,7 @@
 import 'package:bladderly/core/di/di.dart';
 import 'package:bladderly/domain/usecase/get_user_stream_usecase.dart';
 import 'package:bladderly/domain/usecase/get_user_usecase.dart';
+import 'package:bladderly/domain/usecase/sign_out_usecase.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/locale_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/unit_cubit.dart';
@@ -65,6 +66,7 @@ class _BladderlyAppState extends State<BladderlyApp> {
           create: (_) => UserBloc(
             getUserUsecase: getIt<GetUserUsecase>(),
             getUserStreamUsecase: getIt<GetUserStreamUsecase>(),
+            signOutUsecase: getIt<SignOutUsecase>(),
           )..add(const UserLoad()),
         ),
         BlocProvider<AppLocaleCubit>.value(

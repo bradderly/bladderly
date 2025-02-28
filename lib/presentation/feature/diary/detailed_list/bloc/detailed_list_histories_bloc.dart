@@ -24,7 +24,7 @@ class DetailedListHistoriesBloc extends Bloc<DetailedListHistoriesEvent, Detaile
   final DeleteHistoryUsecase _deleteHistoryUsecase;
 
   Future<void> _onSubscribe(DetailedListHistoriesSubscribe event, Emitter<DetailedListHistoriesState> emit) {
-    return _getHistoriesStreamUsecase(userId: event.userId, dateTime: DateUtils.dateOnly(event.dateTime)).fold(
+    return _getHistoriesStreamUsecase(dateTime: DateUtils.dateOnly(event.dateTime)).fold(
       (l) => Future.sync(
         () => emit(
           DetailedListHistoriesSubscribeFailure(

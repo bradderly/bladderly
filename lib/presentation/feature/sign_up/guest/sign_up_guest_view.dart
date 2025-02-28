@@ -42,7 +42,7 @@ class _SignUpGuestViewState extends State<SignUpGuestView> {
   }
 
   void onSignupSuccess(BuildContext context, SignupGuestSubmitSuccess state) {
-    const MainRoute().go(context..read<UserBloc>().add(UserLoad()));
+    const MainRoute().go(context..read<UserBloc>().add(const UserLoad()));
   }
 
   void signup(BuildContext context) {

@@ -29,7 +29,7 @@ class DiaryHistoryModel extends Equatable {
           type: DiaryHistoryTypeModel.voiding,
           recordTime: history.recordTime,
           recordVolume: history.recordVolume,
-          isNocturia: history.isNocutria,
+          isNocturia: history.isNocturia,
           recordUrgency: history.recordUrgency,
           leakageVolume: switch (history.leakageVolume) {
             LeakageVolume.Small => 'S',
