@@ -33,7 +33,7 @@ abstract class AuthRepository {
   Future<String> signInApple();
 
   /// 로그아웃 - 로컬 디비 초기화
-  void signOut();
+  void clearLocal();
 
   Stream<User?> get userStream;
 

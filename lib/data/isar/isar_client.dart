@@ -1,7 +1,6 @@
 import 'package:bladderly/data/isar/schema/apple_credential_entity.dart';
 import 'package:bladderly/data/isar/schema/history_entity.dart';
 import 'package:bladderly/data/isar/schema/user_entity.dart';
-import 'package:bladderly/domain/model/history_status.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 
@@ -19,8 +18,6 @@ abstract class IsarClient {
   Stream<List<HistoryEntity>> getHistoriesStreamByRecordDate({required DateTime recordDate});
 
   Stream<List<DateTime>> getHistoryDatesStream();
-
-  List<HistoryEntity> getPendingUploadHistories();
 
   AppleCredentialEntity? getAppleCredentialOrNullByUserIdentifier(String userIdentifier);
 
@@ -76,11 +73,6 @@ class _IsarClientImpl implements IsarClient {
         .where()
         .watch(fireImmediately: true)
         .map((entities) => entities.map((e) => DateUtils.dateOnly(e.recordTime)).toSet().toList());
-  }
-
-  @override
-  List<HistoryEntity> getPendingUploadHistories() {
-    return _isar.historyEntitys.filter().statusEqualTo(HistoryStatus.pendingUpload).findAllSync();
   }
 
   @override

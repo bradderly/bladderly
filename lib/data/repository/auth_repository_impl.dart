@@ -154,7 +154,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  void signOut() {
+  void clearLocal() {
     _clearUserFromLocal();
   }
 

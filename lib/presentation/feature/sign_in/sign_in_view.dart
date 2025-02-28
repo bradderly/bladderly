@@ -149,12 +149,7 @@ class SignInView extends StatelessWidget {
               BlocSelector<SignInFormCubit, SignInFormState, bool>(
                 selector: (state) => state.isValid,
                 builder: (context, isValid) => PrimaryButton.filled(
-                  onPressed: isValid
-                      ? () => _signIn(context)
-                      : () {
-                          context.read<SignInFormCubit>().setEmail('ext-test@sh.com');
-                          context.read<SignInFormCubit>().setPassword('Qwer12!@');
-                        },
+                  onPressed: isValid ? () => _signIn(context) : null,
                   backgroundColor:
                       isValid ? context.colorTheme.vermilion.primary.shade50 : context.colorTheme.neutral.shade6,
                   borderRadius: 400,

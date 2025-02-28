@@ -48,30 +48,4 @@ class HistoryEntity {
   late HistoryStatus status;
 
   void setId(int? id) => this.id = id ?? this.id;
-
-  bool isEqualTo(HistoryEntity entity) {
-    if (recordTime != entity.recordTime) return false;
-
-    if (isIntake != entity.isIntake) return false;
-
-    if (recordUrgency != entity.recordUrgency) return false;
-
-    if (isManual != entity.isManual) return false;
-
-    if (recordVolume != entity.recordVolume) return false;
-
-    if (isNocturia != entity.isNocturia) return false;
-
-    if (isLeakage != entity.isLeakage) return false;
-
-    if (leakageVolume != entity.leakageVolume) return false;
-
-    if (beverageType != entity.beverageType) return false;
-
-    if (leakageMemo != entity.leakageMemo) return false;
-
-    if (status != entity.status) return false;
-
-    return true;
-  }
 }
