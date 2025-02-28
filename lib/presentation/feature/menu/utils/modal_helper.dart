@@ -5,6 +5,7 @@ class ModalHelper {
     BuildContext context,
     Widget modalContent, {
     bool isScrollControlled = true,
+    int duration = 1,
   }) {
     // ignore: inference_failure_on_function_invocation
     showModalBottomSheet(
@@ -13,7 +14,7 @@ class ModalHelper {
       backgroundColor: Colors.transparent,
       transitionAnimationController: AnimationController(
         vsync: Navigator.of(context),
-        duration: const Duration(seconds: 10),
+        duration: Duration(seconds: duration),
       ),
       builder: (context) {
         return modalContent;

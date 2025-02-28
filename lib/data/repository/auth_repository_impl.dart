@@ -159,6 +159,19 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<String> changePassword({
+    required String email,
+    required String newPw,
+    required String oldPw,
+  }) async {
+    final request = ChagePwRequest(email: email, newPw: newPw, oldPw: oldPw);
+
+    final response = await _apiClient.changePassword(request: request).then((response) => response.body!);
+
+    return response.message ?? (throw Exception('Change Password failed'));
+  }
+
+  @override
   Stream<User?> get userStream => _userSubject.stream;
 
   @override

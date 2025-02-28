@@ -65,4 +65,13 @@ class UserBloc extends HydratedBloc<UserEvent, UserState> {
       'user_id': state._userModel?.id,
     };
   }
+
+  // 이메일만 가져오는 메소드 추가
+  String? getUserEmail(UserState state) {
+    if (state is UserLoadSuccess && state._userModel != null) {
+      //  return state._userModel.email;
+      return null;
+    }
+    return null;
+  }
 }

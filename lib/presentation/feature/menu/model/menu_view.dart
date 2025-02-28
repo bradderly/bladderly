@@ -1,5 +1,3 @@
-// ignore_for_file: inference_failure_on_function_invocation
-
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/about/about_modal.dart';
@@ -71,7 +69,7 @@ class _MenuViewState extends State<MenuView> {
                         icon: Icons.person_outline,
                         title: 'User Profile'.tr(context),
                         onTap: () {
-                          ModalHelper.showModal(context, const UserProfileModal());
+                          ModalHelper.showModal(context, const UserProfileModal(), duration: 5);
                         },
                       ),
                     ],
@@ -83,42 +81,21 @@ class _MenuViewState extends State<MenuView> {
                         icon: Icons.credit_card,
                         title: 'Plan'.tr(context),
                         onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            builder: (context) {
-                              return const PlanMainModal();
-                            },
-                          );
+                          ModalHelper.showModal(context, const PlanMainModal(), duration: 5);
                         },
                       ),
                       SettingsItem(
                         icon: Icons.ios_share,
                         title: 'Data export'.tr(context),
                         onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            builder: (context) {
-                              return const SymptomModal();
-                            },
-                          );
+                          ModalHelper.showModal(context, const SymptomModal(), duration: 5);
                         },
                       ),
                       SettingsItem(
                         icon: Icons.bar_chart,
                         title: 'Symptom score'.tr(context),
                         onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            builder: (context) {
-                              return const SymptomModal();
-                            },
-                          );
+                          ModalHelper.showModal(context, const SymptomModal(), duration: 5);
                         },
                       ),
                       SettingsItem(
@@ -126,56 +103,28 @@ class _MenuViewState extends State<MenuView> {
                         title: 'Language'.tr(context),
                         subtitle: 'English (United States)'.tr(context),
                         onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            builder: (context) {
-                              return const LanguageViewModal();
-                            },
-                          );
+                          ModalHelper.showModal(context, const LanguageViewModal(), duration: 5);
                         },
                       ),
                       SettingsItem(
                         icon: Icons.help_outline,
                         title: 'FAQ'.tr(context),
                         onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            builder: (context) {
-                              return const FaqViewModal();
-                            },
-                          );
+                          ModalHelper.showModal(context, const FaqViewModal(), duration: 5);
                         },
                       ),
                       SettingsItem(
                         icon: Icons.phone,
                         title: 'Contact Us'.tr(context),
                         onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            builder: (context) {
-                              return const ContactusModal();
-                            },
-                          );
+                          ModalHelper.showModal(context, const ContactusModal(), duration: 5);
                         },
                       ),
                       SettingsItem(
                         icon: Icons.info_outline,
                         title: 'About'.tr(context),
                         onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            builder: (context) {
-                              return const AboutModal();
-                            },
-                          );
+                          ModalHelper.showModal(context, const AboutModal(), duration: 5);
                         },
                       ),
                       Container(
@@ -243,6 +192,7 @@ class _MenuViewState extends State<MenuView> {
 
   Widget _buildButton(String unit, bool isSelected) {
     return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: () => toggleUnit(unit),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),

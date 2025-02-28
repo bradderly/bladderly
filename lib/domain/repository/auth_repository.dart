@@ -35,6 +35,12 @@ abstract class AuthRepository {
   /// 로그아웃 - 로컬 디비 초기화
   void signOut();
 
+  Future<String> changePassword({
+    required String email,
+    required String newPw,
+    required String oldPw,
+  });
+
   Stream<User?> get userStream;
 
   User? getUserOrNullByUserId(String userId);
