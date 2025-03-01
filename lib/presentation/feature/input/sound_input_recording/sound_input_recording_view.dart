@@ -1,34 +1,31 @@
+// Dart imports:
 import 'dart:async';
 
-import 'package:bladderly/core/package_device_info/src/model/device_info_model.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+import 'package:synchronized/synchronized.dart';
+
+// Project imports:
 import 'package:bladderly/core/recorder/recorder_module.dart';
-import 'package:bladderly/core/recorder/src/recorder_file.dart';
-import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/input/sound_input_recording/widget/sound_input_recording_stop_dialog.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
-import 'package:intl/intl.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:synchronized/synchronized.dart';
 
 class SoundInputRecordingView extends StatefulWidget {
   const SoundInputRecordingView({
     super.key,
     required this.recorder,
-    required this.deviceInfo,
-    required this.packageInfo,
   });
 
   final Recorder recorder;
-  final DeviceInfoModel deviceInfo;
-  final PackageInfo packageInfo;
 
   @override
   State<SoundInputRecordingView> createState() => _SoundInputRecordingViewState();
@@ -64,22 +61,14 @@ class _SoundInputRecordingViewState extends State<SoundInputRecordingView> with 
   }
 
   Future<void> startRecording() async {
-    final userModel = context.read<UserBloc>().state.userModelOrThrowException;
+    return lock.synchronized(() async {
+      await widget.recorder.start(recordTime: recordTime);
 
-    final fileName = [
-      userModel.id,
-      DateFormat('yyyyMMdd-HHmmss').format(recordTime),
-      widget.deviceInfo.name,
-      widget.packageInfo.version,
-      userModel.gender,
-      'diary-null.m4a',
-    ].join('-');
-
-    await lock.synchronized(() => widget.recorder.start(fileName: fileName));
-
-    await Future<void>.delayed(const Duration(seconds: 3));
-
-    if (widget.recorder.state is RecorderRecording && mounted) return completeRecording();
+      await Future<void>.delayed(
+        const Duration(seconds: 3),
+        () => widget.recorder.state is RecorderRecording && mounted ? completeRecording() : null,
+      );
+    });
   }
 
   Future<void> completeRecording() async {
@@ -87,11 +76,11 @@ class _SoundInputRecordingViewState extends State<SoundInputRecordingView> with 
 
     final file = await lock.synchronized(widget.recorder.stop);
 
-    if (!mounted || !widget.recorder.exist(file)) return;
+    if (!mounted || !widget.recorder.getFile(file).existsSync()) return;
 
     context.read<PendingUploadFileCubit>().setFileName(file);
 
-    final $extra = SoundInputNoteRouteExtra(file: file);
+    final $extra = SoundInputNoteRouteExtra(recordTime: file);
 
     return SoundInputNoteRoute($extra: $extra).pushReplacement(context);
   }
@@ -99,11 +88,12 @@ class _SoundInputRecordingViewState extends State<SoundInputRecordingView> with 
   Future<void> cancelRecording() async {
     if (lock.locked) return;
 
-    final file = await lock.synchronized<RecorderFile?>(() => widget.recorder.stop()).catchError((_) => null);
+    final file = await lock
+        .synchronized<DateTime?>(() => widget.recorder.stop())
+        .then((recorderFile) => recorderFile == null ? null : widget.recorder.getFile(recorderFile))
+        .catchError((_) => null);
 
-    if (file case final RecorderFile file) {
-      widget.recorder.delete(file);
-    }
+    return file?.deleteSync();
   }
 
   void startRecordingCountDown() {

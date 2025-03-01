@@ -1,9 +1,14 @@
+// Flutter imports:
+import 'package:flutter/cupertino.dart';
+
+// Package imports:
+import 'package:go_router/go_router.dart';
+
+// Project imports:
 import 'package:bladderly/presentation/feature/menu/menu_builder.dart';
 import 'package:bladderly/presentation/feature/menu/plan/plan_main_modal.dart';
 import 'package:bladderly/presentation/feature/menu/profile/user_profile_modal.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/symptom_modal.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:go_router/go_router.dart';
 
 class MenuRoute extends GoRouteData {
   const MenuRoute();

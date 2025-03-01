@@ -1,19 +1,29 @@
+// Package imports:
+
+// Package imports:
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
+
+// Project imports:
+import 'package:bladderly/core/network_checker/network_checker.dart';
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/history_status.dart';
 import 'package:bladderly/domain/model/leakage_volume.dart';
 import 'package:bladderly/domain/repository/history_repository.dart';
-import 'package:dartz/dartz.dart';
-import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class SaveVoidingHistoryUsecase {
   const SaveVoidingHistoryUsecase({
+    required NetworkChecker networkChecker,
     required HistoryRepository historyRepository,
-  }) : _historyRepository = historyRepository;
+  })  : _networkChecker = networkChecker,
+        _historyRepository = historyRepository;
 
+  final NetworkChecker _networkChecker;
   final HistoryRepository _historyRepository;
 
   Future<Either<Exception, VoidingHistory>> call({
+    required String userId,
     required int? id,
     required DateTime recordTime,
     required int recordVolume,
@@ -24,7 +34,7 @@ class SaveVoidingHistoryUsecase {
     String? memo,
   }) async {
     try {
-      final voidingHistory = await _historyRepository.saveVoidngHistory(
+      final history = await _historyRepository.saveHistory(
         VoidingHistory(
           id: id,
           recordTime: recordTime,
@@ -32,7 +42,7 @@ class SaveVoidingHistoryUsecase {
           recordUrgency: recordUrgency,
           isNocturia: isNocutria,
           isLeakage: isLeakage,
-          status: HistoryStatus.done,
+          status: HistoryStatus.pending,
           leakageVolume: leakageVolume,
           memo: switch (memo) {
             final String memo when memo.trim().isNotEmpty => memo,
@@ -42,7 +52,15 @@ class SaveVoidingHistoryUsecase {
         ),
       );
 
-      return Right(voidingHistory);
+      final isNetworkConnected = await _networkChecker.isConnected;
+
+      if (!isNetworkConnected) return Right(history);
+
+      await _historyRepository.uploadHistory(userId: userId, history: history);
+
+      final doneHistory = await _historyRepository.saveHistory(history.setStatus(HistoryStatus.done));
+
+      return Right(doneHistory);
     } on Exception catch (e) {
       return Left(e);
     } catch (e) {

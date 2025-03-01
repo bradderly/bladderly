@@ -1,4 +1,14 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
+
+// Project imports:
 import 'package:bladderly/domain/model/leakage_volume.dart';
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/input/manual_input/leakage/bloc/manual_input_leakage_bloc.dart';
@@ -8,10 +18,6 @@ import 'package:bladderly/presentation/feature/input/widget/input_field_widget.d
 import 'package:bladderly/presentation/feature/input/widget/input_save_button.dart';
 import 'package:bladderly/presentation/feature/input/widget/input_text_area_widget.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 
 class ManualInputLeakageView extends StatefulWidget {
   const ManualInputLeakageView({
@@ -42,8 +48,8 @@ class _ManualInputLeakageViewState extends State<ManualInputLeakageView> with Au
 
   void _onSave(BuildContext context, ManualInputLeakageFormState state) {
     final event = ManualInputLeakageSave(
+      userId: context.read<UserBloc>().state.userModelOrThrowException.id,
       id: state.id,
-      hashId: 'ydu3328@naver.com',
       recordTime: state.recordTime,
       leakageVolume: state.leakageVolume!,
       memo: state.memo,

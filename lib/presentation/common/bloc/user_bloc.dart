@@ -1,10 +1,13 @@
+// Package imports:
+import 'package:equatable/equatable.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+
+// Project imports:
 import 'package:bladderly/domain/model/user.dart';
 import 'package:bladderly/domain/usecase/get_user_stream_usecase.dart';
 import 'package:bladderly/domain/usecase/get_user_usecase.dart';
 import 'package:bladderly/domain/usecase/sign_out_usecase.dart';
 import 'package:bladderly/presentation/common/model/user_model.dart';
-import 'package:equatable/equatable.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'user_event.dart';
 part 'user_state.dart';

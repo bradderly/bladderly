@@ -1,12 +1,17 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:equatable/equatable.dart';
+import 'package:intl/intl.dart';
+
+// Project imports:
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/history_status.dart';
 import 'package:bladderly/domain/model/leakage_volume.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_history_type_model.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class DiaryHistoryModel extends Equatable {
   const DiaryHistoryModel({

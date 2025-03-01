@@ -1,3 +1,12 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+
+// Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/primary_background.dart';
@@ -9,10 +18,6 @@ import 'package:bladderly/presentation/feature/main/home/widget/home_intake_widg
 import 'package:bladderly/presentation/feature/main/home/widget/home_voiding_widget.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:bladderly/presentation/router/route/menu_tap_route.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({

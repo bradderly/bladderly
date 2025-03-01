@@ -1,10 +1,15 @@
+// Package imports:
+
+// Package imports:
+import 'package:bloc_concurrency/bloc_concurrency.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
 import 'package:bladderly/domain/model/sign_up_method.dart';
 import 'package:bladderly/domain/usecase/sign_in_social_usecase.dart';
 import 'package:bladderly/domain/usecase/sign_in_usecase.dart';
 import 'package:bladderly/domain/util/password_util.dart';
-import 'package:bloc_concurrency/bloc_concurrency.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'signin_event.dart';
 part 'signin_state.dart';

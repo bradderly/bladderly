@@ -1,8 +1,10 @@
+// Dart imports:
 import 'dart:io';
 
-import 'package:bladderly/core/recorder/src/recorder_file.dart';
+// Package imports:
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
+import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
@@ -21,11 +23,20 @@ abstract class RecorderModule {
     return _RecorderImpl(recorder: recorder, directory: directory);
   }
 
+  @lazySingleton
+  RecorderFileLoader getRecorderFileLoader(
+    AudioRecorder recorder,
+    Directory directory,
+  ) {
+    return _RecorderImpl(recorder: recorder, directory: directory);
+  }
+
   @factoryMethod
   AudioRecorder getAudioRecorder() {
     return AudioRecorder();
   }
 
+  @lazySingleton
   @preResolve
   Future<Directory> get directory {
     return getApplicationDocumentsDirectory()

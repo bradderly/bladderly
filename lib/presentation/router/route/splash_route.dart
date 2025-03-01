@@ -1,8 +1,11 @@
 // Flutter imports:
-import 'package:bladderly/presentation/feature/splash/splash_builder.dart';
 import 'package:flutter/cupertino.dart';
+
 // Package imports:
 import 'package:go_router/go_router.dart';
+
+// Project imports:
+import 'package:bladderly/presentation/feature/splash/splash_builder.dart';
 
 // Project imports:
 part 'splash_route.g.dart';

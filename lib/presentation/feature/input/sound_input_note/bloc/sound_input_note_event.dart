@@ -9,8 +9,7 @@ sealed class SoundInputNoteEvent extends Equatable {
 
 class SoundInputNoteUpload extends SoundInputNoteEvent {
   const SoundInputNoteUpload({
-    required this.hashId,
-    required this.file,
+    required this.userId,
     required this.recordTime,
     required this.recordUrgency,
     required this.isNocutria,
@@ -18,8 +17,7 @@ class SoundInputNoteUpload extends SoundInputNoteEvent {
     required this.memo,
   });
 
-  final String hashId;
-  final File file;
+  final String userId;
   final DateTime recordTime;
   final int recordUrgency;
   final bool isNocutria;
@@ -28,7 +26,6 @@ class SoundInputNoteUpload extends SoundInputNoteEvent {
 
   @override
   List<Object> get props => [
-        file,
         recordTime,
         recordUrgency,
         isNocutria,

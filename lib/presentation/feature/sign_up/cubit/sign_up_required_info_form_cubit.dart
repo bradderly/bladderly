@@ -1,6 +1,9 @@
-import 'package:bladderly/domain/model/sex.dart';
+// Package imports:
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
+import 'package:bladderly/domain/model/sex.dart';
 
 part 'sign_up_required_info_form_state.dart';
 

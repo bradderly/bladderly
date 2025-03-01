@@ -1,3 +1,10 @@
+// Flutter imports:
+import 'package:flutter/cupertino.dart';
+
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
 import 'package:bladderly/core/di/di.dart';
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/usecase/get_history_usecase.dart';
@@ -7,8 +14,6 @@ import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
 import 'package:bladderly/presentation/feature/input/intake_input/bloc/intake_input_bloc.dart';
 import 'package:bladderly/presentation/feature/input/intake_input/cubit/intake_input_form_cubit.dart';
 import 'package:bladderly/presentation/feature/input/intake_input/intake_input_view.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class IntakeInputBuilder extends StatefulWidget {
   const IntakeInputBuilder({

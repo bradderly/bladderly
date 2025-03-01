@@ -1,6 +1,11 @@
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:gap/gap.dart';
+
+// Project imports:
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 
 class SignInFieldWidget extends StatelessWidget {
   const SignInFieldWidget({

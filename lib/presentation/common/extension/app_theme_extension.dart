@@ -1,3 +1,10 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
 import 'package:bladderly/domain/model/unit.dart';
 import 'package:bladderly/presentation/common/cubit/locale_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/unit_cubit.dart';
@@ -5,8 +12,6 @@ import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/theme/color/color_theme.dart';
 import 'package:bladderly/presentation/theme/shadow/shadow_theme.dart';
 import 'package:bladderly/presentation/theme/text_style/text_style_theme.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 extension BuildContextExtension on BuildContext {
   BladderlyColorTheme get colorTheme => Theme.of(this).extension<BladderlyColorTheme>()!;

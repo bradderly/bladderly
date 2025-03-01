@@ -1,5 +1,8 @@
-import 'package:bladderly/domain/model/history.dart';
+// Package imports:
 import 'package:collection/collection.dart';
+
+// Project imports:
+import 'package:bladderly/domain/model/history.dart';
 
 typedef VodingHistories = Histories<VoidingHistory>;
 

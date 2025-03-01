@@ -1,5 +1,8 @@
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 
 class PrimaryBackground extends StatelessWidget {
   const PrimaryBackground({super.key});

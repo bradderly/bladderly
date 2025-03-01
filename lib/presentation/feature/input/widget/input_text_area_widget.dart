@@ -1,7 +1,10 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
-import 'package:flutter/material.dart';
 
 class InputTextAreaWidget extends StatelessWidget {
   const InputTextAreaWidget({

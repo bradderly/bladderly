@@ -1,10 +1,12 @@
 // Flutter imports:
+import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:bladderly/presentation/theme/color/neutral_color.dart';
 import 'package:bladderly/presentation/theme/color/pale_lime_color.dart';
 import 'package:bladderly/presentation/theme/color/success_color.dart';
 import 'package:bladderly/presentation/theme/color/vermilion_color.dart';
 import 'package:bladderly/presentation/theme/color/white_color.dart';
-import 'package:flutter/material.dart';
 
 class BladderlyColorTheme extends ThemeExtension<BladderlyColorTheme> {
   BladderlyColorTheme();

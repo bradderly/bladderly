@@ -1,10 +1,13 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/symptom_descript_modal.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/symptom_introduce_modal.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/symptom_moderate_modal.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
-import 'package:flutter/material.dart';
 
 class SymptomModal extends StatelessWidget {
   const SymptomModal({super.key});

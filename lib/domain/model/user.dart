@@ -1,6 +1,9 @@
+// Package imports:
+import 'package:equatable/equatable.dart';
+
+// Project imports:
 import 'package:bladderly/domain/model/sex.dart';
 import 'package:bladderly/domain/model/sign_up_method.dart';
-import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
   const User({

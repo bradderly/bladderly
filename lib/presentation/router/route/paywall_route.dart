@@ -1,8 +1,13 @@
 /*
-import 'package:bladderly/presentation/feature/menu/plan/paywall_view.dart';
+
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 
+// Package imports:
 import 'package:go_router/go_router.dart';
+
+// Project imports:
+import 'package:bladderly/presentation/feature/menu/plan/paywall_view.dart';
 
 part 'paywall_route.g.dart';
 

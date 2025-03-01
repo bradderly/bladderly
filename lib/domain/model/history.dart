@@ -1,6 +1,9 @@
+// Package imports:
+import 'package:equatable/equatable.dart';
+
+// Project imports:
 import 'package:bladderly/domain/model/history_status.dart';
 import 'package:bladderly/domain/model/leakage_volume.dart';
-import 'package:equatable/equatable.dart';
 
 sealed class History extends Equatable {
   const History._({
@@ -21,6 +24,8 @@ sealed class History extends Equatable {
   final HistoryStatus status;
 
   History setId(int id);
+
+  History setStatus(HistoryStatus status);
 
   @override
   List<Object?> get props => [
@@ -80,6 +85,22 @@ class VoidingHistory extends History {
   }
 
   @override
+  VoidingHistory setStatus(HistoryStatus status) {
+    return VoidingHistory(
+      id: id,
+      recordTime: recordTime,
+      memo: memo,
+      status: status,
+      recordVolume: recordVolume,
+      recordUrgency: recordUrgency,
+      isManual: isManual,
+      isNocturia: isNocturia,
+      isLeakage: isLeakage,
+      leakageVolume: leakageVolume,
+    );
+  }
+
+  @override
   List<Object?> get props => [
         ...super.props,
         recordVolume,
@@ -120,6 +141,18 @@ class IntakeHistory extends History {
   }
 
   @override
+  IntakeHistory setStatus(HistoryStatus status) {
+    return IntakeHistory(
+      id: id,
+      recordTime: recordTime,
+      memo: memo,
+      status: status,
+      beverageType: beverageType,
+      recordVolume: recordVolume,
+    );
+  }
+
+  @override
   List<Object?> get props => [
         ...super.props,
         beverageType,
@@ -140,6 +173,17 @@ class LeakageHistory extends History {
 
   @override
   LeakageHistory setId(int id) {
+    return LeakageHistory(
+      id: id,
+      recordTime: recordTime,
+      memo: memo,
+      status: status,
+      leakageVolume: leakageVolume,
+    );
+  }
+
+  @override
+  LeakageHistory setStatus(HistoryStatus status) {
     return LeakageHistory(
       id: id,
       recordTime: recordTime,
