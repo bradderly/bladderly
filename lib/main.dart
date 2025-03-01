@@ -1,6 +1,10 @@
+// Flutter imports:
+// Project imports:
 import 'package:bladderly/app.dart';
 import 'package:bladderly/core/di/di.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
+// Package imports:
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -11,6 +15,7 @@ Future<void> main() async {
 
   await Future.wait(
     [
+      Firebase.initializeApp(),
       FlutterLocalization.instance.ensureInitialized(),
       Translation().initialize(),
       configureDependencies(),
