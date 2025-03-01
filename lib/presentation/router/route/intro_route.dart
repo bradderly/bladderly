@@ -1,7 +1,10 @@
 // Flutter imports:
+import 'dart:async';
+
 import 'package:bladderly/presentation/feature/intro/intro_view.dart';
 import 'package:bladderly/presentation/feature/sign_in/sing_in_builder.dart';
 import 'package:bladderly/presentation/feature/sign_up/guest/sign_up_guest_builder.dart';
+import 'package:bladderly/presentation/feature/sign_up/social/sign_up_social_builder.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 // Package imports:
@@ -14,7 +17,13 @@ part 'intro_route.g.dart';
   name: 'intro',
   path: '/intro',
   routes: [
-    TypedGoRoute<SignInRoute>(name: 'sign-in', path: 'sign-in'),
+    TypedGoRoute<SignInRoute>(
+      name: 'sign-in',
+      path: 'sign-in',
+      routes: [
+        TypedGoRoute<SignUpSocialRoute>(name: 'sign-up-social', path: 'sign-up-social'),
+      ],
+    ),
     TypedGoRoute<SignUpGuestRoute>(name: 'sign-up', path: 'sign-up'),
   ],
 )
@@ -38,8 +47,18 @@ class SignInRoute extends GoRouteData {
       );
 }
 
-class SignUpGuestRouteExtra extends Equatable {
-  const SignUpGuestRouteExtra({
+class SignUpGuestRoute extends GoRouteData {
+  const SignUpGuestRoute();
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) => CupertinoPage<void>(
+        key: state.pageKey,
+        child: const SignUpGuestBuilder(),
+      );
+}
+
+class SignUpSocialRouteExtra extends Equatable {
+  const SignUpSocialRouteExtra({
     required this.email,
     required this.signUpMethod,
   });
@@ -54,19 +73,30 @@ class SignUpGuestRouteExtra extends Equatable {
       ];
 }
 
-class SignUpGuestRoute extends GoRouteData {
-  const SignUpGuestRoute({
+class SignUpSocialRoute extends GoRouteData {
+  const SignUpSocialRoute({
     this.$extra,
   });
 
-  final SignUpGuestRouteExtra? $extra;
+  final SignUpSocialRouteExtra? $extra;
 
   @override
-  Page<void> buildPage(BuildContext context, GoRouterState state) => CupertinoPage<void>(
-        key: state.pageKey,
-        child: SignUpGuestBuilder(
-          email: $extra?.email,
-          signUpMethod: $extra?.signUpMethod,
-        ),
-      );
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: SignUpSocialBuilder(
+        email: $extra!.email,
+        signUpMethod: $extra!.signUpMethod,
+      ),
+    );
+  }
+
+  @override
+  FutureOr<String?> redirect(BuildContext context, GoRouterState state) {
+    if ($extra == null) {
+      return const IntroRoute().location;
+    }
+
+    return null;
+  }
 }

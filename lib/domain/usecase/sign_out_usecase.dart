@@ -12,7 +12,7 @@ class SignOutUsecase {
 
   Either<Exception, void> call() {
     try {
-      _authRepository.signOut();
+      _authRepository.clearLocal();
       return const Right(null);
     } on Exception catch (e) {
       return Left(e);

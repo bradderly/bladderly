@@ -3,7 +3,7 @@ import 'package:bladderly/data/isar/schema/history_entity.dart';
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/history_status.dart';
 import 'package:bladderly/domain/model/leakage_volume.dart';
-import 'package:intl/intl.dart';
+import 'package:convert/convert.dart';
 
 class HistoryMapper {
   const HistoryMapper._();
@@ -46,9 +46,12 @@ class HistoryMapper {
 
   static History fromGetAllResultResponse$Records$Item(GetAllResultResponse$Records$Item record) {
     const status = HistoryStatus.done;
-    final recordTime = DateFormat('yyyyMMdd-hhmmss').parse(record.recordTime!);
+    final recordTime = FixedDateTimeFormatter('yyyyMMdd-HHmmss', isUtc: false).decode(record.recordTime!);
     final recordVolume = double.tryParse(record.recordVolume ?? '');
-    final leakageVolume = record.leakageVolume == null ? null : LeakageVolume.values.byName(record.leakageVolume!);
+    final leakageVolume = switch (record.leakageVolume) {
+      final String leakageVolume when leakageVolume.isNotEmpty => LeakageVolume.values.byName(leakageVolume),
+      _ => null,
+    };
 
     if (record.isIntake == true) {
       return IntakeHistory(

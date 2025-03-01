@@ -18,7 +18,7 @@ abstract class HistoryRepository {
   Future<LeakageHistory> saveLeakageHistory(LeakageHistory leakageHistory);
 
   /// save history to local
-  Histories saveHistories(Histories histories);
+  Future<Histories> saveHistories(Histories histories);
 
   Stream<List<DateTime>> getHistoryDatesStream();
 

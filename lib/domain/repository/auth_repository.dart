@@ -3,22 +3,30 @@ import 'package:bladderly/domain/model/sign_up_method.dart';
 import 'package:bladderly/domain/model/user.dart';
 
 abstract class AuthRepository {
-  /// 회원 가입
-  /// socialSigninMethod가 not null인 경우에 SNS 로그인 케이스
+  /// 게스트 회원 가입
   Future<User> signUpGuest({
     required Gender gender,
     required int yearOfBirth,
-    required SignUpMethod signUpMethod,
   });
 
   /// 정회원 전환
-  /// email, password가 없는 경우 SNS 로그인 케이스
   Future<User> signUp({
     required String userId,
+    required String email,
+    required String password,
     required String userName,
     required String disease,
-    String? email,
-    String? password,
+  });
+
+  /// SNS 로그인을 통한 회원가입
+  Future<User> signUpSocial({
+    required SignUpMethod signUpMethod,
+    required Gender gender,
+    required int yearOfBirth,
+    required String email,
+    required String password,
+    required String userName,
+    required String disease,
   });
 
   Future<User> signIn({
@@ -33,7 +41,7 @@ abstract class AuthRepository {
   Future<String> signInApple();
 
   /// 로그아웃 - 로컬 디비 초기화
-  void signOut();
+  void clearLocal();
 
   Stream<User?> get userStream;
 

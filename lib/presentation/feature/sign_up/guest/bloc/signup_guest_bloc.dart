@@ -20,10 +20,7 @@ class SignUpGuestBloc extends Bloc<SignUpGuestEvent, SignUpGuestState> {
   Future<void> _onSubmit(SignupGuestSubmit event, Emitter<SignUpGuestState> emit) async {
     emit(const SignupGuestSubmitInProgress());
 
-    final result = await _signupGuestUsecase(
-      gender: event.gender,
-      yearOfBirth: event.yearOfBirth,
-    );
+    final result = await _signupGuestUsecase(gender: event.gender, yearOfBirth: event.yearOfBirth);
 
     result.fold(
       (exception) => emit(SignupGuestSubmitFailure(exception: exception)),
