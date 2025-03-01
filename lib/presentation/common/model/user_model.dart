@@ -1,4 +1,5 @@
 import 'package:bladderly/domain/model/sex.dart';
+import 'package:bladderly/domain/model/sign_up_method.dart';
 import 'package:bladderly/domain/model/user.dart';
 import 'package:equatable/equatable.dart';
 
@@ -10,21 +11,21 @@ abstract class UserModel extends Equatable {
   });
 
   factory UserModel.fromDomain(User user) {
-    if (user.email != null && user.name != null && user.disease != null) {
-      return RegularUserModel(
+    if (user.signUpMethod == SignUpMethod.N) {
+      return GuestUserModel(
         id: user.id,
         gender: user.gender,
         yearOfBirth: user.yearOfBirth,
-        name: user.name!,
-        disease: user.disease!,
-        email: user.email!,
       );
     }
 
-    return GuestUserModel(
+    return RegularUserModel(
       id: user.id,
       gender: user.gender,
       yearOfBirth: user.yearOfBirth,
+      name: user.name ?? 'Bladderly User',
+      disease: user.disease ?? '',
+      email: user.email!,
     );
   }
 
