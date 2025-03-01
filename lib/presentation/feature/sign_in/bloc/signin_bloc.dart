@@ -1,6 +1,7 @@
 import 'package:bladderly/domain/model/sign_up_method.dart';
 import 'package:bladderly/domain/usecase/sign_in_social_usecase.dart';
 import 'package:bladderly/domain/usecase/sign_in_usecase.dart';
+import 'package:bladderly/domain/util/password_util.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,9 +47,18 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
 
     final result = await _signinSocialUsecase(signUpMethod: event.signUpMethod);
 
-    result.fold(
-      (exception) => emit(SignInSocialFailure(signUpMethod: event.signUpMethod, exception: exception)),
-      (email) => emit(SignInSocialSuccess(email: email, signUpMethod: event.signUpMethod)),
+    if (result.isLeft()) {
+      result.leftMap((exception) => emit(SignInSocialFailure(signUpMethod: event.signUpMethod, exception: exception)));
+      return;
+    }
+
+    final email = result.getOrElse(() => '');
+
+    final signInResult = await _signinUsecase(email: email, password: PasswordUtil.generatePassword(email));
+
+    signInResult.fold(
+      (exception) => emit(SignInSocialFailure(signUpMethod: event.signUpMethod, exception: exception, email: email)),
+      (success) => emit(const SignInSocialSuccess()),
     );
   }
 }

@@ -4,7 +4,7 @@ sealed class SignInState extends Equatable {
   const SignInState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 final class SignInInitial extends SignInState {
@@ -27,41 +27,32 @@ final class SignInEmailFailure extends SignInState {
   final Exception exception;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         ...super.props,
         exception,
       ];
 }
 
 final class SignInSocialSuccess extends SignInState {
-  const SignInSocialSuccess({
-    required this.signUpMethod,
-    required this.email,
-  });
-
-  final SignUpMethod signUpMethod;
-  final String email;
-
-  @override
-  List<Object> get props => [
-        ...super.props,
-        signUpMethod,
-      ];
+  const SignInSocialSuccess();
 }
 
 final class SignInSocialFailure extends SignInState {
   const SignInSocialFailure({
     required this.signUpMethod,
     required this.exception,
+    this.email,
   });
 
   final SignUpMethod signUpMethod;
   final Exception exception;
+  final String? email;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         ...super.props,
         signUpMethod,
         exception,
+        email,
       ];
 }

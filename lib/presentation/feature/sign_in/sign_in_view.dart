@@ -1,3 +1,5 @@
+import 'package:bladderly/domain/exception/invalid_user_exception.dart';
+import 'package:bladderly/domain/exception/not_found_user_exception.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/primary_button.dart';
@@ -23,13 +25,20 @@ class SignInView extends StatelessWidget {
     context.read<SignInBloc>().add(SignInEmail(email: state.email, password: state.password));
   }
 
-  void _onSigninSocialSuccess(BuildContext context, SignInSocialSuccess state) {
-    final extra = SignUpGuestRouteExtra(
-      email: state.email,
-      signUpMethod: state.signUpMethod.name,
-    );
+  void _onSocialFailure(BuildContext context, SignInSocialFailure state) {
+    context.pop();
 
-    SignUpGuestRoute($extra: extra).go(context);
+    if (state.email case final String email) {
+      return switch (state.exception) {
+        NotFoundUserException() =>
+          SignUpSocialRoute($extra: SignUpSocialRouteExtra(email: email, signUpMethod: state.signUpMethod.name))
+              .go(context),
+
+        // TODO(eden): 이미 가입된 이메일이고 비밀번호가 일치하지 않는 경우 처리 필요
+        InvalidUserException() => null,
+        _ => null,
+      };
+    }
   }
 
   @override
@@ -39,8 +48,8 @@ class SignInView extends StatelessWidget {
         SignInInProgress() => ProgressIndicatorModal.show(context),
         SignInEmailFailure() => context.pop(),
         SignInEmailSuccess() => const MainRoute().go(context),
-        SignInSocialSuccess() => _onSigninSocialSuccess(context, state),
-        SignInSocialFailure() => context.pop(),
+        SignInSocialSuccess() => const MainRoute().go(context),
+        SignInSocialFailure() => _onSocialFailure(context, state),
         _ => null,
       },
       child: Scaffold(

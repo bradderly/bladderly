@@ -9,9 +9,9 @@ abstract class IsarClient {
 
   HistoryEntity? getHistoryOrNullById(int id);
 
-  Future<int> saveHistory(HistoryEntity historyEntity);
+  Future<HistoryEntity> saveHistory(HistoryEntity historyEntity);
 
-  Future<List<int>> saveHistories(List<HistoryEntity> historyEntities);
+  Future<List<HistoryEntity>> saveHistories(List<HistoryEntity> historyEntities);
 
   void removeHistoryByRecordTime({required DateTime recordTime});
 
@@ -43,8 +43,11 @@ class _IsarClientImpl implements IsarClient {
   }
 
   @override
-  Future<int> saveHistory(HistoryEntity historyEntity) {
-    return _isar.writeTxn(() => _isar.historyEntitys.put(historyEntity));
+  Future<HistoryEntity> saveHistory(HistoryEntity historyEntity) {
+    return _isar.writeTxn(() async {
+      final id = await _isar.historyEntitys.put(historyEntity);
+      return _isar.historyEntitys.get(id).then((value) => value!);
+    });
   }
 
   @override
@@ -110,7 +113,10 @@ class _IsarClientImpl implements IsarClient {
   }
 
   @override
-  Future<List<int>> saveHistories(List<HistoryEntity> historyEntities) {
-    return _isar.writeTxnSync(() => _isar.historyEntitys.putAllByRecordTime(historyEntities));
+  Future<List<HistoryEntity>> saveHistories(List<HistoryEntity> historyEntities) {
+    return _isar.writeTxn(() async {
+      final ids = await _isar.historyEntitys.putAllByRecordTime(historyEntities);
+      return _isar.historyEntitys.getAll(ids).then((entities) => entities.whereType<HistoryEntity>().toList());
+    });
   }
 }

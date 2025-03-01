@@ -21,12 +21,12 @@ class SignInUsecase {
     try {
       final user = await _authRepository.signIn(email: email, password: password);
       final histories = await _historyRepository.getAllHistoriesFromServer(userId: user.id);
-      _historyRepository.saveHistories(histories);
+      await _historyRepository.saveHistories(histories);
 
       return Right(user);
     } catch (e) {
       _authRepository.clearLocal();
-      return Left(e is Exception ? e : Exception('An unknown error occurred'));
+      return Left(e is Exception ? e : Exception(e.toString()));
     }
   }
 }

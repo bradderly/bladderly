@@ -1,16 +1,16 @@
-part of 'sign_up_guest_form_cubit.dart';
+part of 'sign_up_required_info_form_cubit.dart';
 
-class SignUpGuestFormState extends Equatable {
-  const SignUpGuestFormState({
-    this.sex,
+class SignUpRequiredInfoFormState extends Equatable {
+  const SignUpRequiredInfoFormState({
+    this.gender,
     String yearOfBirth = '',
   }) : _yearOfBirth = yearOfBirth;
 
-  final Gender? sex;
+  final Gender? gender;
   final String _yearOfBirth;
 
   bool get isValid {
-    if (sex == null) return false;
+    if (gender == null) return false;
 
     final yearOfBirth = int.tryParse(_yearOfBirth) ?? 0;
 
@@ -21,19 +21,19 @@ class SignUpGuestFormState extends Equatable {
 
   int get yearOfBirth => int.parse(_yearOfBirth);
 
-  SignUpGuestFormState copyWith({
-    Gender? sex,
+  SignUpRequiredInfoFormState copyWith({
+    Gender? gender,
     String? yearOfBirth,
   }) {
-    return SignUpGuestFormState(
-      sex: sex ?? this.sex,
+    return SignUpRequiredInfoFormState(
+      gender: gender ?? this.gender,
       yearOfBirth: yearOfBirth ?? _yearOfBirth,
     );
   }
 
   @override
   List<Object?> get props => [
-        sex,
+        gender,
         _yearOfBirth,
       ];
 }

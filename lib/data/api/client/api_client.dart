@@ -24,6 +24,7 @@ abstract class ApiClient extends ChopperService {
         converter: ApiClientConverter(),
         interceptors: [
           ApiClientXApiKeyInterceptor(),
+          ApiResponseExceptionInterceptor(),
           HttpLoggingInterceptor(
             logger: chopperLogger
               ..onRecord.listen((rec) {
@@ -32,7 +33,6 @@ abstract class ApiClient extends ChopperService {
                 }
               }),
           ),
-          ApiResponseExceptionInterceptor(),
         ],
       ),
     );
