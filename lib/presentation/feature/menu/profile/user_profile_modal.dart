@@ -1,6 +1,8 @@
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/common/model/user_model.dart';
+import 'package:bladderly/presentation/feature/menu/bloc/menu_bloc.dart';
 import 'package:bladderly/presentation/feature/menu/profile/change_password_modal.dart';
 import 'package:bladderly/presentation/feature/menu/profile/delete_account_modal.dart';
 import 'package:bladderly/presentation/feature/menu/profile/setup_passcode_modal.dart';
@@ -22,90 +24,102 @@ class UserProfileModal extends StatelessWidget {
       maxChildSize: 0.95,
       minChildSize: 0.95,
       builder: (_, controller) {
-        return Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
-            ),
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 41),
-          child: Column(
-            children: [
-              ModalTitle(context, 'User Profile'.tr(context)),
-              Expanded(
-                child: ListView(
-                  controller: controller,
-                  children: [
-                    const SizedBox(height: 41),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 24),
-                      child: Text(
-                        'Personal Information'.tr(context),
-                        style: context.textStyleTheme.b20Medium.copyWith(color: context.colorTheme.neutral.shade10),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    TextViewForm('Email ID'.tr(context), '9xq8wcb4xq@privaterelay.appleid.com', context),
-                    TextViewForm('Sex'.tr(context), 'Female', context),
-                    TextViewForm('Year of Birth'.tr(context), '2000', context),
-                    InputTextForm('Preferred Name'.tr(context), 'Mila', context),
-                    const SizedBox(height: 32),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 24),
-                      child: Text(
-                        'Manage Account'.tr(context),
-                        style: context.textStyleTheme.b20Medium.copyWith(color: context.colorTheme.neutral.shade10),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    TextIconArrowForm(
-                      title: 'Set Up Passcode'.tr(context),
-                      icon: Icons.lock,
-                      onTap: () {
-                        ModalHelper.showModal(
-                          context,
-                          const SetupPasscodeModal(),
-                          duration: 5,
-                        );
-                      },
-                    ),
-                    TextIconArrowForm(
-                      title: 'Change Password'.tr(context),
-                      icon: Icons.lock_open,
-                      onTap: () {
-                        ModalHelper.showModal(
-                          context,
-                          const ChangePasswordModal(),
-                          duration: 5,
-                        );
-                      },
-                    ),
-                    TextIconArrowForm(
-                      title: 'Sign out'.tr(context),
-                      icon: Icons.logout,
-                      onTap: () {
-                        signout_dialog(context);
-                      },
-                    ),
-                    TextIconArrowForm(
-                      title: 'Delete Account'.tr(context),
-                      icon: Icons.delete_outline,
-                      onTap: () {
-                        ModalHelper.showModal(
-                          context,
-                          const DeleteAccountModal(),
-                          duration: 5,
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 40),
-                  ],
+        return BlocSelector<UserBloc, UserState, UserModel>(
+          selector: (state) => state.userModelOrThrowException,
+          builder: (context, userModel) {
+            var email = '';
+            if (userModel is RegularUserModel) {
+              email = userModel.email;
+            } else {
+              email = '게스트 회원';
+            }
+            return Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16),
+                  topRight: Radius.circular(16),
                 ),
               ),
-            ],
-          ),
+              padding: const EdgeInsets.symmetric(vertical: 41),
+              child: Column(
+                children: [
+                  ModalTitle(context, 'User Profile'.tr(context)),
+                  Expanded(
+                    child: ListView(
+                      controller: controller,
+                      children: [
+                        const SizedBox(height: 41),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 24),
+                          child: Text(
+                            'Personal Information'.tr(context),
+                            style: context.textStyleTheme.b20Medium.copyWith(color: context.colorTheme.neutral.shade10),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        TextViewForm('Email ID'.tr(context), email, context),
+                        TextViewForm('Sex'.tr(context), userModel.gender.text, context),
+                        TextViewForm('Year of Birth'.tr(context), userModel.yearOfBirth.toString(), context),
+                        InputTextForm('Preferred Name'.tr(context), '정보없음', context),
+                        const SizedBox(height: 32),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 24),
+                          child: Text(
+                            'Manage Account'.tr(context),
+                            style: context.textStyleTheme.b20Medium.copyWith(color: context.colorTheme.neutral.shade10),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        TextIconArrowForm(
+                          title: 'Set Up Passcode'.tr(context),
+                          icon: Icons.lock,
+                          onTap: () {
+                            ModalHelper.showModal(
+                              context: context,
+                              modalContent: const SetupPasscodeModal(),
+                              duration: 5,
+                            );
+                          },
+                        ),
+                        TextIconArrowForm(
+                          title: 'Change Password'.tr(context),
+                          icon: Icons.lock_open,
+                          onTap: () {
+                            ModalHelper.showModal(
+                              context: context,
+                              modalContent: const ChangePasswordModal(),
+                              duration: 5,
+                              bloc: context.read<MenuBloc>(), // Bloc을 전달
+                            );
+                          },
+                        ),
+                        TextIconArrowForm(
+                          title: 'Sign out'.tr(context),
+                          icon: Icons.logout,
+                          onTap: () {
+                            signout_dialog(context);
+                          },
+                        ),
+                        TextIconArrowForm(
+                          title: 'Delete Account'.tr(context),
+                          icon: Icons.delete_outline,
+                          onTap: () {
+                            ModalHelper.showModal(
+                              context: context,
+                              modalContent: const DeleteAccountModal(),
+                              duration: 5,
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 40),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         );
       },
     );

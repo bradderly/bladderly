@@ -1,12 +1,9 @@
-import 'package:bladderly/core/di/di.dart';
-import 'package:bladderly/domain/model/user.dart';
-import 'package:bladderly/domain/usecase/change_password_usecase.dart';
-import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/menu/bloc/menu_bloc.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 class ChangePasswordModal extends StatefulWidget {
   const ChangePasswordModal({super.key});
@@ -68,15 +65,11 @@ class _ChangePasswordModalState extends State<ChangePasswordModal> {
 
     if (!_passwordError1 && !_passwordError2 && !_passwordMismatch && _isAllFieldsFilled) {
       // API 통신을 여기서 호출
-      final changePasswordUsecase = getIt<ChangePasswordUsecase>();
       print('Valid data, proceed with API call');
 
-      final result = await changePasswordUsecase(
-        email: 'user@example.com',
-        oldPw: 'oldPassword',
-        newPw: 'newPassword',
-      );
-      print('result : $result');
+      context.read<MenuBloc>().add(ChangePassword(email: 'ext-test@sh.com', oldPw: oldPassword, newPw: newPassword));
+
+      print('result');
     }
   }
 
@@ -111,7 +104,10 @@ class _ChangePasswordModalState extends State<ChangePasswordModal> {
                       onChanged: (_) => _checkIfAllFieldsFilled(), // 필드 변경 시 체크
                     ),
                     errorText(
-                        'Your password must be at least 8 characters long.'.tr(context), context, _passwordError1),
+                      'Your password must be at least 8 characters long.'.tr(context),
+                      context,
+                      _passwordError1,
+                    ),
                     const SizedBox(height: 20),
                     PasswordField(
                       labelText: 'New Password'.tr(context),
@@ -177,6 +173,7 @@ class PasswordField extends StatefulWidget {
   final ValueChanged<String> onChanged; // 텍스트 변경 시 호출되는 콜백
 
   @override
+  // ignore: library_private_types_in_public_api
   _PasswordFieldState createState() => _PasswordFieldState();
 }
 

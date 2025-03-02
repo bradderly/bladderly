@@ -1,6 +1,7 @@
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/about/about_modal.dart';
+import 'package:bladderly/presentation/feature/menu/bloc/menu_bloc.dart';
 import 'package:bladderly/presentation/feature/menu/contactus/contactus_modal.dart';
 import 'package:bladderly/presentation/feature/menu/faq/faq_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/language/language_view_modal.dart';
@@ -10,6 +11,7 @@ import 'package:bladderly/presentation/feature/menu/symptom/symptom_modal.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MenuView extends StatefulWidget {
   const MenuView({super.key});
@@ -69,7 +71,12 @@ class _MenuViewState extends State<MenuView> {
                         icon: Icons.person_outline,
                         title: 'User Profile'.tr(context),
                         onTap: () {
-                          ModalHelper.showModal(context, const UserProfileModal(), duration: 5);
+                          ModalHelper.showModal(
+                            context: context,
+                            modalContent: const UserProfileModal(),
+                            duration: 5,
+                            bloc: context.read<MenuBloc>(),
+                          );
                         },
                       ),
                     ],
@@ -81,21 +88,21 @@ class _MenuViewState extends State<MenuView> {
                         icon: Icons.credit_card,
                         title: 'Plan'.tr(context),
                         onTap: () {
-                          ModalHelper.showModal(context, const PlanMainModal(), duration: 5);
+                          ModalHelper.showModal(context: context, modalContent: const PlanMainModal(), duration: 5);
                         },
                       ),
                       SettingsItem(
                         icon: Icons.ios_share,
                         title: 'Data export'.tr(context),
                         onTap: () {
-                          ModalHelper.showModal(context, const SymptomModal(), duration: 5);
+                          ModalHelper.showModal(context: context, modalContent: const SymptomModal(), duration: 5);
                         },
                       ),
                       SettingsItem(
                         icon: Icons.bar_chart,
                         title: 'Symptom score'.tr(context),
                         onTap: () {
-                          ModalHelper.showModal(context, const SymptomModal(), duration: 5);
+                          ModalHelper.showModal(context: context, modalContent: const SymptomModal(), duration: 5);
                         },
                       ),
                       SettingsItem(
@@ -103,28 +110,28 @@ class _MenuViewState extends State<MenuView> {
                         title: 'Language'.tr(context),
                         subtitle: 'English (United States)'.tr(context),
                         onTap: () {
-                          ModalHelper.showModal(context, const LanguageViewModal(), duration: 5);
+                          ModalHelper.showModal(context: context, modalContent: const LanguageViewModal(), duration: 5);
                         },
                       ),
                       SettingsItem(
                         icon: Icons.help_outline,
                         title: 'FAQ'.tr(context),
                         onTap: () {
-                          ModalHelper.showModal(context, const FaqViewModal(), duration: 5);
+                          ModalHelper.showModal(context: context, modalContent: const FaqViewModal(), duration: 5);
                         },
                       ),
                       SettingsItem(
                         icon: Icons.phone,
                         title: 'Contact Us'.tr(context),
                         onTap: () {
-                          ModalHelper.showModal(context, const ContactusModal(), duration: 5);
+                          ModalHelper.showModal(context: context, modalContent: const ContactusModal(), duration: 5);
                         },
                       ),
                       SettingsItem(
                         icon: Icons.info_outline,
                         title: 'About'.tr(context),
                         onTap: () {
-                          ModalHelper.showModal(context, const AboutModal(), duration: 5);
+                          ModalHelper.showModal(context: context, modalContent: const AboutModal(), duration: 5);
                         },
                       ),
                       Container(
