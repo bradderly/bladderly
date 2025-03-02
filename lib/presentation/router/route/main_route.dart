@@ -1,4 +1,6 @@
 // Flutter imports:
+
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 
 // Package imports:
@@ -15,8 +17,9 @@ import 'package:bladderly/presentation/feature/input/manual_input/manual_input_b
 import 'package:bladderly/presentation/feature/input/sound_input_note/sound_input_note_builder.dart';
 import 'package:bladderly/presentation/feature/input/sound_input_recording/sound_input_recording_builder.dart';
 import 'package:bladderly/presentation/feature/main/main_builder.dart';
+import 'package:bladderly/presentation/feature/menu/menu_builder.dart';
 import 'package:bladderly/presentation/feature/menu/plan/paywall_view.dart';
-import 'package:bladderly/presentation/router/route/menu_tap_route.dart';
+import 'package:bladderly/presentation/feature/sign_up/regular/sign_up_regular_builder.dart';
 
 part 'main_route.g.dart';
 
@@ -35,12 +38,10 @@ enum MainRouteTab {
       path: 'export',
     ),
     TypedGoRoute<MenuRoute>(
-      name: 'menu',
       path: 'menu',
+      name: 'menu',
       routes: [
-        TypedGoRoute<ProfileRoute>(name: 'profile', path: 'profile'),
-        TypedGoRoute<PlanRoute>(name: 'plan', path: 'plan'),
-        TypedGoRoute<SymptomRoute>(name: 'symptom', path: 'symptom'),
+        TypedGoRoute<SignUpRegularRoute>(path: 'sign-up', name: 'sign-up-regular'),
       ],
     ),
     TypedGoRoute<SoundInputRecordingRoute>(
@@ -252,4 +253,29 @@ class PaywallRoute extends GoRouteData {
         key: state.pageKey,
         child: const PaywallView(),
       );
+}
+
+class SignUpRegularRoute extends GoRouteData {
+  const SignUpRegularRoute();
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: const SignUpRegularBuilder(),
+    );
+  }
+}
+
+class MenuRoute extends GoRouteData {
+  const MenuRoute();
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      fullscreenDialog: true,
+      child: const MenuBuilder(),
+    );
+  }
 }

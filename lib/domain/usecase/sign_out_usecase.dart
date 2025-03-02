@@ -1,4 +1,6 @@
 // Package imports:
+
+// Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
@@ -13,8 +15,9 @@ class SignOutUsecase {
 
   final AuthRepository _authRepository;
 
-  Either<Exception, void> call() {
+  Either<Exception, void> call({required String userId}) {
     try {
+      _authRepository.signOut(userId).onError((_, __) {});
       _authRepository.clearLocal();
       return const Right(null);
     } on Exception catch (e) {
