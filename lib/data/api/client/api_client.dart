@@ -71,7 +71,7 @@ abstract class ApiClient extends ChopperService {
 
   @Post(path: '/log-out')
   Future<Response<SimpleResponse>> logOut({
-    @Body() required PostEmailRequest request,
+    @Body() required Map<String, dynamic> request,
   });
 
   @Post(path: '/sign-up')

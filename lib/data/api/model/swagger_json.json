@@ -1043,11 +1043,15 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": ["email"],
                 "type": "object",
                 "properties": {
                   "email": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "email user"
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "guest user"
                   }
                 }
               }

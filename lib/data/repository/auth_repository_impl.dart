@@ -252,6 +252,6 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> signOut(String userId) {
-    return _apiClient.logOut(request: PostEmailRequest(email: userId));
+    return _apiClient.logOut(request: {'id': userId});
   }
 }
