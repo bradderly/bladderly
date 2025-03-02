@@ -1,6 +1,9 @@
-import 'package:bladderly/presentation/feature/diary/diary/model/diary_tab_scroll_section_model.dart';
+// Package imports:
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
+import 'package:bladderly/presentation/feature/diary/diary/model/diary_tab_scroll_section_model.dart';
 
 part 'main_tab_state.dart';
 

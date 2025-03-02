@@ -1,3 +1,4 @@
+// Package imports:
 import 'package:isar/isar.dart';
 
 part 'apple_credential_entity.g.dart';

@@ -1,3 +1,12 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+import 'package:scrolls_to_top/scrolls_to_top.dart';
+
+// Project imports:
 import 'package:bladderly/presentation/feature/diary/diary/cubit/diary_cubit.dart';
 import 'package:bladderly/presentation/feature/diary/diary/cubit/diary_history_dates_cubit.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_tab_scroll_section_model.dart';
@@ -5,10 +14,6 @@ import 'package:bladderly/presentation/feature/diary/diary/widget/dairy_historie
 import 'package:bladderly/presentation/feature/diary/diary/widget/diary_app_bar.dart';
 import 'package:bladderly/presentation/feature/diary/diary/widget/diary_today_summary_widget.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
-import 'package:scrolls_to_top/scrolls_to_top.dart';
 
 class DiaryView extends StatefulWidget {
   const DiaryView({

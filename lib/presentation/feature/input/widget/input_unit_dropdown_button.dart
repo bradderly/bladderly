@@ -1,9 +1,14 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:gap/gap.dart';
+
+// Project imports:
 import 'package:bladderly/domain/model/unit.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 
 class InputUnitDropdownButton extends StatelessWidget {
   const InputUnitDropdownButton({

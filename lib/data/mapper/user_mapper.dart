@@ -1,3 +1,4 @@
+// Project imports:
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 import 'package:bladderly/data/isar/schema/user_entity.dart';
 import 'package:bladderly/domain/model/sex.dart';

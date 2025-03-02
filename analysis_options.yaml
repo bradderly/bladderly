@@ -10,6 +10,7 @@ analyzer:
     lines_longer_than_80_chars: ignore
     missing_required_param: error
     missing_return: error
+    one_member_abstracts: ignore
 
   exclude:
     - test/.test_coverage.dart

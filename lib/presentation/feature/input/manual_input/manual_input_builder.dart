@@ -1,7 +1,10 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:bladderly/core/di/di.dart';
 import 'package:bladderly/domain/usecase/get_history_usecase.dart';
 import 'package:bladderly/presentation/feature/input/manual_input/manual_input_view.dart';
-import 'package:flutter/material.dart';
 
 class ManualInputBuilder extends StatefulWidget {
   const ManualInputBuilder({

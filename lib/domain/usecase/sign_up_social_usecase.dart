@@ -1,10 +1,13 @@
+// Package imports:
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
+
+// Project imports:
 import 'package:bladderly/domain/model/sex.dart';
 import 'package:bladderly/domain/model/sign_up_method.dart';
 import 'package:bladderly/domain/model/user.dart';
 import 'package:bladderly/domain/repository/auth_repository.dart';
 import 'package:bladderly/domain/util/password_util.dart';
-import 'package:dartz/dartz.dart';
-import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class SignUpSocialUsecase {

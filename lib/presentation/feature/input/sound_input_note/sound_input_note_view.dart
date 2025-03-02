@@ -1,5 +1,15 @@
+// Flutter imports:
+
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+
+// Project imports:
 import 'package:bladderly/core/recorder/recorder_module.dart';
-import 'package:bladderly/core/recorder/src/recorder_file.dart';
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
@@ -14,25 +24,21 @@ import 'package:bladderly/presentation/feature/input/widget/input_save_button.da
 import 'package:bladderly/presentation/feature/input/widget/input_text_area_widget.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 
 class SoundInputNoteView extends StatelessWidget {
   const SoundInputNoteView({
     super.key,
-    required this.recorder,
-    required this.recorderFile,
+    required this.recorderFileLoader,
+    required this.recordTime,
   });
 
-  final Recorder recorder;
-  final RecorderFile recorderFile;
+  final RecorderFileLoader recorderFileLoader;
+  final DateTime recordTime;
 
   void _onSave(BuildContext context, SoundInputNoteFormState state) {
     final event = SoundInputNoteUpload(
-      hashId: 'ydu3328@naver.com',
-      file: recorder.getFile(recorderFile),
-      recordTime: recorderFile.recordTime,
+      userId: context.read<UserBloc>().state.userModelOrThrowException.id,
+      recordTime: recordTime,
       isLeakage: state.isLeakage!,
       isNocutria: state.isNocutria!,
       recordUrgency: state.recordUrgency!,
@@ -44,7 +50,6 @@ class SoundInputNoteView extends StatelessWidget {
 
   void _onSaveSuccess(BuildContext context) {
     context.read<PendingUploadFileCubit>().clearFileName();
-    recorder.delete(recorderFile);
     SoundInputNoteUploadSuccessModal.show(
       context,
       onGoToDiary: () => const MainRoute(tab: MainRouteTab.diary).go(context),
@@ -71,7 +76,7 @@ class SoundInputNoteView extends StatelessWidget {
             toolbarHeight: 58,
             title: Padding(
               padding: const EdgeInsets.only(top: 18),
-              child: InputRecordTimeWidget(dateTime: recorderFile.recordTime),
+              child: InputRecordTimeWidget(dateTime: recordTime),
             ),
           ),
           body: SafeArea(

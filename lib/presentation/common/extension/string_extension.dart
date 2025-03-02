@@ -1,7 +1,12 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
 import 'package:bladderly/presentation/common/cubit/locale_cubit.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 extension StringExtension on String {
   String tr(BuildContext context) {

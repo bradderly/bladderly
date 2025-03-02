@@ -363,11 +363,77 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": ["email"],
                 "type": "object",
                 "properties": {
                   "email": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "email user"
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "guest user"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or fail"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/dev/update-user-info": {
+      "post": {
+        "tags": ["register"],
+        "description": "update preferred name",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "email user"
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "guest user"
+                  },
+                  "username": {
+                    "type": "string",
+                    "description": "preferred username"
                   }
                 }
               }
@@ -622,6 +688,34 @@
                           }
                         },
                         "description": "dictionary item"
+                      }
+                    },
+                    "scores": {
+                      "type": "array",
+                      "description": "all scores",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "score_date": {
+                            "type": "string",
+                            "description": "score action time (yyyymmdd-hhmmss)"
+                          },
+                          "score_name": {
+                            "type": "string",
+                            "description": "IPSS or OABSS"
+                          },
+                          "total_score": {
+                            "type": "string",
+                            "description": "score item sum"
+                          },
+                          "score_value": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "score item value"
+                          }
+                        }
                       }
                     }
                   }
@@ -1671,6 +1765,34 @@
               },
               "description": "dictionary item"
             }
+          },
+          "scores": {
+            "type": "array",
+            "description": "all scores",
+            "items": {
+              "type": "object",
+              "properties": {
+                "score_date": {
+                  "type": "string",
+                  "description": "score action time (yyyymmdd-hhmmss)"
+                },
+                "score_name": {
+                  "type": "string",
+                  "description": "IPSS or OABSS"
+                },
+                "total_score": {
+                  "type": "string",
+                  "description": "score item sum"
+                },
+                "score_value": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "score item value"
+                }
+              }
+            }
           }
         }
       },
@@ -1840,6 +1962,36 @@
         "properties": {
           "email": {
             "type": "string"
+          }
+        }
+      },
+      "EmailAndIDRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "email user"
+          },
+          "id": {
+            "type": "string",
+            "description": "guest user"
+          }
+        }
+      },
+      "UpdateUserInfoRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "email user"
+          },
+          "id": {
+            "type": "string",
+            "description": "guest user"
+          },
+          "username": {
+            "type": "string",
+            "description": "preferred username"
           }
         }
       },
@@ -2057,7 +2209,7 @@
         },
         "description": "user profile"
       },
-      "GetAllResultResponse_records": {
+      "GetAllResultResponseList": {
         "type": "object",
         "properties": {
           "record_time": {
@@ -2122,6 +2274,30 @@
           }
         },
         "description": "dictionary item"
+      },
+      "GetAllScoreResponseList": {
+        "type": "object",
+        "properties": {
+          "score_date": {
+            "type": "string",
+            "description": "score action time (yyyymmdd-hhmmss)"
+          },
+          "score_name": {
+            "type": "string",
+            "description": "IPSS or OABSS"
+          },
+          "total_score": {
+            "type": "string",
+            "description": "score item sum"
+          },
+          "score_value": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "score item value"
+          }
+        }
       },
       "PostPayResponse_pay_info": {
         "type": "object",

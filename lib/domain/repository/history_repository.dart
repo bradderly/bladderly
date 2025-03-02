@@ -1,5 +1,7 @@
+// Dart imports:
 import 'dart:io';
 
+// Project imports:
 import 'package:bladderly/domain/model/histories.dart';
 import 'package:bladderly/domain/model/history.dart';
 
@@ -9,15 +11,9 @@ abstract class HistoryRepository {
   });
 
   /// save history to local
-  Future<VoidingHistory> saveVoidngHistory(VoidingHistory vodingHistory);
+  Future<T> saveHistory<T extends History>(T history);
 
-  /// save history to local
-  Future<IntakeHistory> saveIntakeHistory(IntakeHistory intakeHistory);
-
-  /// save history to local
-  Future<LeakageHistory> saveLeakageHistory(LeakageHistory leakageHistory);
-
-  /// save history to local
+  /// save histories to local
   Future<Histories> saveHistories(Histories histories);
 
   Stream<List<DateTime>> getHistoryDatesStream();
@@ -33,7 +29,10 @@ abstract class HistoryRepository {
     required String? clinicInformation,
   });
 
-  Future<void> uploadVoidingSoundFile(File file);
+  Future<void> uploadVoidingSoundFile({
+    required String fileName,
+    required File file,
+  });
 
   History? getHistoryById(int id);
 
@@ -44,5 +43,7 @@ abstract class HistoryRepository {
     required History history,
   });
 
-  Future<Histories> getAllHistoriesFromServer({required String userId});
+  Future<Histories> getAllHistoriesFromServer(String userId);
+
+  Future<Histories> getPendingHistories();
 }

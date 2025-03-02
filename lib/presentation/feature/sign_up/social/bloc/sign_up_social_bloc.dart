@@ -1,9 +1,12 @@
-import 'package:bladderly/domain/model/sex.dart';
-import 'package:bladderly/domain/model/sign_up_method.dart';
-import 'package:bladderly/domain/usecase/sign_up_social_usecase.dart';
+// Package imports:
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
+import 'package:bladderly/domain/model/sex.dart';
+import 'package:bladderly/domain/model/sign_up_method.dart';
+import 'package:bladderly/domain/usecase/sign_up_social_usecase.dart';
 
 part 'sign_up_social_event.dart';
 part 'sign_up_social_state.dart';

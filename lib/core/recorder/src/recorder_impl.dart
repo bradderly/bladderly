@@ -1,6 +1,6 @@
 part of '../recorder_module.dart';
 
-class _RecorderImpl extends Recorder {
+class _RecorderImpl implements Recorder, RecorderFileLoader {
   _RecorderImpl({
     required AudioRecorder recorder,
     required Directory directory,
@@ -10,9 +10,9 @@ class _RecorderImpl extends Recorder {
     _recorder.onStateChanged().listen(
           (state) => _subject.add(
             switch (state) {
-              RecordState.record => RecorderRecording(file: _subject.value.file!),
-              RecordState.stop => RecorderStopped(file: _subject.value.file!),
-              RecordState.pause => RecorderPaused(file: _subject.value.file!),
+              RecordState.record => RecorderRecording(recordTime: _subject.value.recordTime!),
+              RecordState.stop => RecorderStopped(recordTime: _subject.value.recordTime!),
+              RecordState.pause => RecorderPaused(recordTime: _subject.value.recordTime!),
             },
           ),
         );
@@ -33,12 +33,12 @@ class _RecorderImpl extends Recorder {
   }
 
   @override
-  Future<void> start({required String fileName}) async {
+  Future<void> start({required DateTime recordTime}) async {
     if (state is RecorderRecording || state is RecorderPaused) throw Exception('이미 녹음 중입니다.');
 
-    final filePath = join(_directory.path, fileName);
+    final filePath = getFile(recordTime).path;
 
-    _subject.add(RecorderReady(file: RecorderFile(name: fileName)));
+    _subject.add(RecorderReady(recordTime: recordTime));
 
     return _recorder.start(
       RecordConfig(bitRate: Platform.isAndroid ? 64000 : 128000, numChannels: 1),
@@ -47,12 +47,12 @@ class _RecorderImpl extends Recorder {
   }
 
   @override
-  Future<RecorderFile> stop() {
+  Future<DateTime> stop() {
     final state = _subject.value;
 
     if (state is! RecorderRecording) throw Exception('녹음 중이 아닙니다.');
 
-    return _recorder.stop().then((_) => state.file);
+    return _recorder.stop().then((_) => state.recordTime);
   }
 
   @override
@@ -64,15 +64,6 @@ class _RecorderImpl extends Recorder {
   RecorderState get state => _subject.value;
 
   @override
-  bool exist(RecorderFile file) => getFile(file).existsSync();
-
-  @override
-  File getFile(RecorderFile file) => File(join(_directory.path, file.name));
-
-  @override
-  void delete(RecorderFile file) {
-    if (exist(file)) {
-      getFile(file).deleteSync();
-    }
-  }
+  File getFile(DateTime recordTime) =>
+      File(join(_directory.path, '${DateFormat('yyyyMMdd-HHmmss').format(recordTime)}.m4a'));
 }

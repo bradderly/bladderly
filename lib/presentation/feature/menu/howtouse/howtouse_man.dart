@@ -1,8 +1,11 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/widget/howtouse_page.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
-import 'package:flutter/material.dart';
 
 class HowtouseMan extends StatefulWidget {
   const HowtouseMan({super.key});

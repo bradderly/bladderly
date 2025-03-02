@@ -1,11 +1,16 @@
+// Flutter imports:
+import 'package:flutter/cupertino.dart';
+
+// Package imports:
+import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
+
+// Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/datetime_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/common/widget/cupertino_date_picker_modal.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:gap/gap.dart';
-import 'package:intl/intl.dart';
 
 class InputRecordTimeWidget extends StatelessWidget {
   const InputRecordTimeWidget({

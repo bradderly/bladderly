@@ -1,7 +1,10 @@
+// Package imports:
+import 'package:equatable/equatable.dart';
+
+// Project imports:
 import 'package:bladderly/domain/model/sex.dart';
 import 'package:bladderly/domain/model/sign_up_method.dart';
 import 'package:bladderly/domain/model/user.dart';
-import 'package:equatable/equatable.dart';
 
 abstract class UserModel extends Equatable {
   const UserModel({

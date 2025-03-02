@@ -1,6 +1,9 @@
+// Package imports:
+import 'package:equatable/equatable.dart';
+
+// Project imports:
 import 'package:bladderly/domain/model/histories.dart';
 import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
-import 'package:equatable/equatable.dart';
 
 class DiaryIntakeSummaryModel extends Equatable {
   const DiaryIntakeSummaryModel({

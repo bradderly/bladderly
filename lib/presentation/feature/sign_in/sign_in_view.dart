@@ -1,3 +1,12 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
+
+// Project imports:
 import 'package:bladderly/domain/exception/invalid_user_exception.dart';
 import 'package:bladderly/domain/exception/not_found_user_exception.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
@@ -11,10 +20,6 @@ import 'package:bladderly/presentation/feature/sign_in/widget/sign_in_social_sig
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/intro_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 
 class SignInView extends StatelessWidget {
   const SignInView({super.key});

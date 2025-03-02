@@ -1,6 +1,9 @@
+// Package imports:
+import 'package:isar/isar.dart';
+
+// Project imports:
 import 'package:bladderly/domain/model/history_status.dart';
 import 'package:bladderly/domain/model/leakage_volume.dart';
-import 'package:isar/isar.dart';
 
 part 'history_entity.g.dart';
 

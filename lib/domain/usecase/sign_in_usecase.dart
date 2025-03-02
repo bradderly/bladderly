@@ -1,7 +1,12 @@
-import 'package:bladderly/domain/repository/auth_repository.dart';
-import 'package:bladderly/domain/repository/history_repository.dart';
+// Package imports:
+
+// Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+
+// Project imports:
+import 'package:bladderly/domain/repository/auth_repository.dart';
+import 'package:bladderly/domain/repository/history_repository.dart';
 
 @lazySingleton
 class SignInUsecase {
@@ -20,7 +25,7 @@ class SignInUsecase {
   }) async {
     try {
       final user = await _authRepository.signIn(email: email, password: password);
-      final histories = await _historyRepository.getAllHistoriesFromServer(userId: user.id);
+      final histories = await _historyRepository.getAllHistoriesFromServer(user.id);
       await _historyRepository.saveHistories(histories);
 
       return Right(user);

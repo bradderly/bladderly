@@ -1,4 +1,11 @@
-import 'package:bladderly/core/recorder/src/recorder_file.dart';
+// Flutter imports:
+import 'package:flutter/cupertino.dart';
+
+// Package imports:
+import 'package:equatable/equatable.dart';
+import 'package:go_router/go_router.dart';
+
+// Project imports:
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
 import 'package:bladderly/presentation/feature/diary/detailed_list/detailed_list_builder.dart';
@@ -10,9 +17,6 @@ import 'package:bladderly/presentation/feature/input/sound_input_recording/sound
 import 'package:bladderly/presentation/feature/main/main_builder.dart';
 import 'package:bladderly/presentation/feature/menu/plan/paywall_view.dart';
 import 'package:bladderly/presentation/router/route/menu_tap_route.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:go_router/go_router.dart';
 
 part 'main_route.g.dart';
 
@@ -124,7 +128,7 @@ class SoundInputNoteRoute extends GoRouteData {
       key: state.pageKey,
       fullscreenDialog: true,
       child: SoundInputNoteBuilder(
-        recorderFile: $extra!.file,
+        recordTime: $extra!.recordTime,
       ),
     );
   }
@@ -132,14 +136,14 @@ class SoundInputNoteRoute extends GoRouteData {
 
 class SoundInputNoteRouteExtra extends Equatable {
   const SoundInputNoteRouteExtra({
-    required this.file,
+    required this.recordTime,
   });
 
-  final RecorderFile file;
+  final DateTime recordTime;
 
   @override
   List<Object> get props => [
-        file.name,
+        recordTime,
       ];
 }
 

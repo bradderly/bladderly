@@ -1,9 +1,14 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:provider/provider.dart';
+
+// Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/bloc/menu_bloc.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ChangePasswordModal extends StatefulWidget {
   const ChangePasswordModal({super.key});

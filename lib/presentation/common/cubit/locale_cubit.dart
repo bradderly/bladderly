@@ -1,7 +1,11 @@
+// Dart imports:
 import 'dart:ui';
 
-import 'package:bladderly/presentation/common/locale/app_locale.dart';
+// Package imports:
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+
+// Project imports:
+import 'package:bladderly/presentation/common/locale/app_locale.dart';
 
 class AppLocaleCubit extends HydratedCubit<AppLocale> {
   AppLocaleCubit() : super(AppLocale.of(PlatformDispatcher.instance.locale.languageCode));

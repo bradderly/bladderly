@@ -1,5 +1,13 @@
+// Dart imports:
 import 'dart:convert';
 
+// Package imports:
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+
+// Project imports:
 import 'package:bladderly/core/package_device_info/src/model/device_info_model.dart';
 import 'package:bladderly/data/api/client/api_client.dart';
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
@@ -16,10 +24,6 @@ import 'package:bladderly/domain/model/sex.dart';
 import 'package:bladderly/domain/model/sign_up_method.dart';
 import 'package:bladderly/domain/model/user.dart';
 import 'package:bladderly/domain/repository/auth_repository.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {

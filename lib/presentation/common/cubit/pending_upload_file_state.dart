@@ -5,7 +5,7 @@ class PendingUploadFileState extends Equatable {
     this.recorderFile,
   });
 
-  final RecorderFile? recorderFile;
+  final DateTime? recorderFile;
 
   @override
   List<Object?> get props => [
