@@ -1,4 +1,16 @@
+// Flutter imports:
+
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
+
+// Project imports:
 import 'package:bladderly/domain/model/leakage_volume.dart';
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/common_keyboard_actions.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
@@ -12,10 +24,6 @@ import 'package:bladderly/presentation/feature/input/widget/input_record_urgency
 import 'package:bladderly/presentation/feature/input/widget/input_save_button.dart';
 import 'package:bladderly/presentation/feature/input/widget/input_text_area_widget.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 
 class ManualInputVoidingWidget extends StatefulWidget {
   const ManualInputVoidingWidget({
@@ -59,8 +67,8 @@ class _ManualInputVoidingWidgetState extends State<ManualInputVoidingWidget> wit
 
   void _onSave(BuildContext context, ManualInputVoidingFormState state) {
     final event = ManualInputVoidingSave(
+      userId: context.read<UserBloc>().state.userModelOrThrowException.id,
       id: state.id,
-      hashId: 'ydu3328@naver.com',
       recordTime: state.recordTime,
       recordVolume: state.unit.parseToMl(int.parse(state.recordVolume)),
       recordUrgency: state.recordUrgency!,
@@ -95,6 +103,7 @@ class _ManualInputVoidingWidgetState extends State<ManualInputVoidingWidget> wit
       listener: (context, state) => switch (state) {
         ManualInputVoidingSaveInProgress() => ProgressIndicatorModal.show(context),
         ManualInputVoidingSaveSuccess() => onSaveSuccess(context),
+        ManualInputVoidingSaveFailure() => context.pop(),
         _ => null,
       },
       child: Stack(

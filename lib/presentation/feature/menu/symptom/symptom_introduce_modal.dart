@@ -1,9 +1,12 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/data/symptom_dataset.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/symptom_survey_modal.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title_back.dart';
-import 'package:flutter/material.dart';
 
 class SymptomIntroduceModal extends StatelessWidget {
   // ignore: non_constant_identifier_names

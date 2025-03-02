@@ -1,12 +1,18 @@
+// Flutter imports:
+
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+
 // Package imports:
+import 'package:chopper/chopper.dart';
+import 'package:http/io_client.dart' show IOClient;
+import 'package:http/retry.dart' show RetryClient;
+
+// Project imports:
 import 'package:bladderly/data/api/client/converter/api_client_converter.dart';
 import 'package:bladderly/data/api/client/interceptor/api_client_x_api_key_interceptor.dart';
 import 'package:bladderly/data/api/client/interceptor/api_response_exception_interceptor.dart';
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
-import 'package:chopper/chopper.dart';
-import 'package:flutter/foundation.dart';
-import 'package:http/io_client.dart' show IOClient;
-import 'package:http/retry.dart' show RetryClient;
 
 part 'api_client.chopper.dart';
 
@@ -65,7 +71,7 @@ abstract class ApiClient extends ChopperService {
 
   @Post(path: '/log-out')
   Future<Response<SimpleResponse>> logOut({
-    @Body() required PostEmailRequest request,
+    @Body() required Map<String, dynamic> request,
   });
 
   @Post(path: '/sign-up')
@@ -90,16 +96,11 @@ abstract class ApiClient extends ChopperService {
     @Body() required PaymentCheckRequest request,
   });
 
-  @Post(path: '/audio-upload')
-  Future<Response<SimpleResponse>> uploadAudio({
-    @Body() required PaymentCheckRequest request,
-  });
-
   @Post(
     path: '/audio-upload',
     headers: {'Content-Type': 'audio/m4a'},
   )
-  Future<Response<SimpleResponse>> uploadAudioFile({
+  Future<Response<SimpleResponse>> uploadAudio({
     @Header('file_name') required String fileName,
     @Body() required List<int> audioBytes,
   });

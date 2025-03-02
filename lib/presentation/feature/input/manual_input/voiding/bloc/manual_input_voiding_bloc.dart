@@ -1,8 +1,11 @@
-import 'package:bladderly/domain/model/leakage_volume.dart';
-import 'package:bladderly/domain/usecase/save_voiding_history_usecase.dart';
+// Package imports:
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
+import 'package:bladderly/domain/model/leakage_volume.dart';
+import 'package:bladderly/domain/usecase/save_voiding_history_usecase.dart';
 
 part 'manual_input_voiding_event.dart';
 part 'manual_input_voiding_state.dart';
@@ -21,6 +24,7 @@ class ManualInputVoidingBloc extends Bloc<ManualInputVoidingEvent, ManualInputVo
     emit(ManualInputVoidingSaveInProgress());
 
     final result = await _saveVoidingHistoryUsecase(
+      userId: event.userId,
       id: event.id,
       recordTime: event.recordTime,
       recordVolume: event.recordVolume,

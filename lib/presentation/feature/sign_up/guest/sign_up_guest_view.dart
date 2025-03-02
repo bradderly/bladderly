@@ -1,3 +1,11 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+
+// Project imports:
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/sign_up/cubit/sign_up_required_info_form_cubit.dart';
@@ -5,9 +13,6 @@ import 'package:bladderly/presentation/feature/sign_up/guest/bloc/signup_guest_b
 import 'package:bladderly/presentation/feature/sign_up/widget/sign_up_required_info_builder.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 class SignUpGuestView extends StatefulWidget {
   const SignUpGuestView({super.key});

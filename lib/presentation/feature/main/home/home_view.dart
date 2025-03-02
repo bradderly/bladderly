@@ -1,3 +1,15 @@
+// Flutter imports:
+
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+
+// Project imports:
+import 'package:bladderly/core/recorder/recorder_module.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/primary_background.dart';
@@ -8,19 +20,16 @@ import 'package:bladderly/presentation/feature/main/home/widget/home_app_bar.dar
 import 'package:bladderly/presentation/feature/main/home/widget/home_intake_widget.dart';
 import 'package:bladderly/presentation/feature/main/home/widget/home_voiding_widget.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
-import 'package:bladderly/presentation/router/route/menu_tap_route.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({
     super.key,
+    required this.recorder,
     required this.onPressedMoreVoiding,
     required this.onPressedMoreIntake,
   });
 
+  final Recorder recorder;
   final VoidCallback onPressedMoreVoiding;
   final VoidCallback onPressedMoreIntake;
 
@@ -29,6 +38,14 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin {
+  Future<void> onTapHowToUse() async {
+    final done = await const HowToUseRoute().push(context);
+
+    if (done == true) {
+      await widget.recorder.chekcPermission();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -58,6 +75,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                         selector: (state) => state.voidingSummaryModel,
                         builder: (context, homeVoidingSummaryModel) => HomeVoidingWidget(
                           onTapMore: widget.onPressedMoreVoiding,
+                          onTapHowToUse: onTapHowToUse,
                           homeVoidingSummaryModel: homeVoidingSummaryModel,
                         ),
                       ),

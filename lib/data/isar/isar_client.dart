@@ -1,8 +1,16 @@
+// Flutter imports:
+
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:isar/isar.dart';
+
+// Project imports:
 import 'package:bladderly/data/isar/schema/apple_credential_entity.dart';
 import 'package:bladderly/data/isar/schema/history_entity.dart';
 import 'package:bladderly/data/isar/schema/user_entity.dart';
-import 'package:flutter/material.dart';
-import 'package:isar/isar.dart';
+import 'package:bladderly/domain/model/history_status.dart';
 
 abstract class IsarClient {
   factory IsarClient(Isar isar) => _IsarClientImpl(isar: isar);
@@ -30,6 +38,8 @@ abstract class IsarClient {
   void deleteUserByUserId(String userId);
 
   void clearAll();
+
+  Future<List<HistoryEntity>> getPendingHistories();
 }
 
 class _IsarClientImpl implements IsarClient {
@@ -118,5 +128,10 @@ class _IsarClientImpl implements IsarClient {
       final ids = await _isar.historyEntitys.putAllByRecordTime(historyEntities);
       return _isar.historyEntitys.getAll(ids).then((entities) => entities.whereType<HistoryEntity>().toList());
     });
+  }
+
+  @override
+  Future<List<HistoryEntity>> getPendingHistories() {
+    return _isar.historyEntitys.filter().statusEqualTo(HistoryStatus.pending).findAll();
   }
 }

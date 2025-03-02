@@ -1,3 +1,4 @@
+// Project imports:
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 import 'package:bladderly/data/isar/schema/user_entity.dart';
 import 'package:bladderly/domain/model/sex.dart';
@@ -23,7 +24,7 @@ class UserMapper {
       ..userId = user.id
       ..gender = user.gender.name
       ..yearOfBirth = user.yearOfBirth
-      ..signUpMethod = user.signUpMethod.value
+      ..signUpMethod = user.signUpMethod.name
       ..name = user.name
       ..email = user.email;
   }

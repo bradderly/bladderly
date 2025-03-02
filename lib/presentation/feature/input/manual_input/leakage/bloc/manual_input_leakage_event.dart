@@ -10,14 +10,14 @@ sealed class ManualInputLeakageEvent extends Equatable {
 final class ManualInputLeakageSave extends ManualInputLeakageEvent {
   const ManualInputLeakageSave({
     required this.id,
-    required this.hashId,
+    required this.userId,
     required this.leakageVolume,
     required this.recordTime,
     required this.memo,
   });
 
+  final String userId;
   final int? id;
-  final String hashId;
   final LeakageVolume leakageVolume;
   final DateTime recordTime;
   final String memo;
@@ -25,7 +25,7 @@ final class ManualInputLeakageSave extends ManualInputLeakageEvent {
   @override
   List<Object?> get props => [
         id,
-        hashId,
+        userId,
         leakageVolume,
         recordTime,
         memo,

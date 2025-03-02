@@ -1,8 +1,16 @@
+// Flutter imports:
+
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
 import 'package:bladderly/core/di/di.dart';
+import 'package:bladderly/core/recorder/recorder_module.dart';
 import 'package:bladderly/presentation/feature/main/home/cubit/home_summary_cubit.dart';
 import 'package:bladderly/presentation/feature/main/home/home_view.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeBuilder extends StatelessWidget {
   const HomeBuilder({
@@ -19,6 +27,7 @@ class HomeBuilder extends StatelessWidget {
     return BlocProvider<HomeSummaryCubit>(
       create: (_) => HomeSummaryCubit(getHistoriesStreamUsecase: getIt())..subscribe(DateTime.now()),
       child: HomeView(
+        recorder: getIt<Recorder>(),
         onPressedMoreVoiding: onPressedMoreVoiding,
         onPressedMoreIntake: onPressedMoreIntake,
       ),

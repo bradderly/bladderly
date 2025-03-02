@@ -1,7 +1,10 @@
-import 'package:bladderly/domain/usecase/save_intake_history_usecase.dart';
+// Package imports:
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
+import 'package:bladderly/domain/usecase/save_intake_history_usecase.dart';
 
 part 'intake_input_event.dart';
 part 'intake_input_state.dart';
@@ -21,7 +24,7 @@ class IntakeInputBloc extends Bloc<IntakeInputEvent, IntakeInputState> {
 
     final result = await _saveIntakeHistoryUsecase(
       id: event.id,
-      hashId: event.hashId,
+      userId: event.hashId,
       recordTime: event.recordTime,
       beverageType: event.beverageType,
       recordVolume: event.recordVolume,

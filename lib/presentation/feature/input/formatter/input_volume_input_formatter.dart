@@ -1,5 +1,8 @@
-import 'package:bladderly/domain/model/unit.dart';
+// Flutter imports:
 import 'package:flutter/services.dart';
+
+// Project imports:
+import 'package:bladderly/domain/model/unit.dart';
 
 class InputVolumeFormatter extends TextInputFormatter {
   InputVolumeFormatter({required this.unit});

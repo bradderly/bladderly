@@ -1,19 +1,28 @@
+// Flutter imports:
+
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:gap/gap.dart';
+
+// Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/main/home/model/home_voiding_summary_model.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
-import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 
 class HomeVoidingWidget extends StatelessWidget {
   const HomeVoidingWidget({
     super.key,
     required this.onTapMore,
+    required this.onTapHowToUse,
     required this.homeVoidingSummaryModel,
   });
 
   final VoidCallback onTapMore;
+  final VoidCallback onTapHowToUse;
   final HomeVoidingSummaryModel homeVoidingSummaryModel;
 
   @override
@@ -108,30 +117,34 @@ class HomeVoidingWidget extends StatelessWidget {
   }
 
   Widget _buildHowToUse(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Stack(
-          children: [
-            Text(
-              'How to use'.tr(context),
-              style: context.textStyleTheme.b14SemiBold.copyWith(
-                color: context.colorTheme.neutral.shade7,
+    return GestureDetector(
+      onTap: onTapHowToUse,
+      behavior: HitTestBehavior.translucent,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Stack(
+            children: [
+              Text(
+                'How to use'.tr(context),
+                style: context.textStyleTheme.b14SemiBold.copyWith(
+                  color: context.colorTheme.neutral.shade7,
+                ),
               ),
-            ),
-            Positioned.fill(
-              top: null,
-              bottom: -6,
-              child: Divider(
-                color: context.colorTheme.neutral.shade7,
-                thickness: 1.5,
+              Positioned.fill(
+                top: null,
+                bottom: -6,
+                child: Divider(
+                  color: context.colorTheme.neutral.shade7,
+                  thickness: 1.5,
+                ),
               ),
-            ),
-          ],
-        ),
-        const Gap(4),
-        Assets.icon.icHomeHelp.svg(),
-      ],
+            ],
+          ),
+          const Gap(4),
+          Assets.icon.icHomeHelp.svg(),
+        ],
+      ),
     );
   }
 

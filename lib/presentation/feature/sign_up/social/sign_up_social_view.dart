@@ -1,3 +1,13 @@
+// Flutter imports:
+
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+
+// Project imports:
 import 'package:bladderly/domain/model/sex.dart';
 import 'package:bladderly/domain/model/sign_up_method.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
@@ -6,9 +16,6 @@ import 'package:bladderly/presentation/feature/sign_up/widget/sign_up_additional
 import 'package:bladderly/presentation/feature/sign_up/widget/sign_up_required_info_builder.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 class SignUpSocialView extends StatefulWidget {
   const SignUpSocialView({
@@ -40,7 +47,7 @@ class _SignUpSocialViewState extends State<SignUpSocialView> {
         SignUpSocialSubmitInProgress() => ProgressIndicatorModal.show(context),
         SignUpSocialSubmitSuccess() => const MainRoute().go(context),
 
-        /// TODO(eden): 소셜 회원가입 실패 처리 필요
+        // TODO(eden): 소셜 회원가입 실패 처리 필요.
         SignUpSocialSubmitFailure() => context.pop(),
         _ => null,
       },

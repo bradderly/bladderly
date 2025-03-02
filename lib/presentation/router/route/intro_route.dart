@@ -1,14 +1,18 @@
-// Flutter imports:
+// Dart imports:
 import 'dart:async';
 
+// Flutter imports:
+import 'package:flutter/cupertino.dart';
+
+// Package imports:
+import 'package:equatable/equatable.dart';
+import 'package:go_router/go_router.dart';
+
+// Project imports:
 import 'package:bladderly/presentation/feature/intro/intro_view.dart';
 import 'package:bladderly/presentation/feature/sign_in/sing_in_builder.dart';
 import 'package:bladderly/presentation/feature/sign_up/guest/sign_up_guest_builder.dart';
 import 'package:bladderly/presentation/feature/sign_up/social/sign_up_social_builder.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
-// Package imports:
-import 'package:go_router/go_router.dart';
 
 // Project imports:
 part 'intro_route.g.dart';

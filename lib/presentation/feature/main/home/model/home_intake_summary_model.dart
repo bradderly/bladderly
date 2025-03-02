@@ -1,5 +1,8 @@
-import 'package:bladderly/domain/model/histories.dart';
+// Package imports:
 import 'package:equatable/equatable.dart';
+
+// Project imports:
+import 'package:bladderly/domain/model/histories.dart';
 
 class HomeIntakeSummaryModel extends Equatable {
   const HomeIntakeSummaryModel({

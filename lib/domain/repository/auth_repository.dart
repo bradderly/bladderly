@@ -1,3 +1,4 @@
+// Project imports:
 import 'package:bladderly/domain/model/sex.dart';
 import 'package:bladderly/domain/model/sign_up_method.dart';
 import 'package:bladderly/domain/model/user.dart';
@@ -52,4 +53,6 @@ abstract class AuthRepository {
   Stream<User?> get userStream;
 
   User? getUserOrNullByUserId(String userId);
+
+  Future<void> signOut(String userId);
 }

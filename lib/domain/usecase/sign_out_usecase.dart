@@ -1,6 +1,11 @@
-import 'package:bladderly/domain/repository/auth_repository.dart';
+// Package imports:
+
+// Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+
+// Project imports:
+import 'package:bladderly/domain/repository/auth_repository.dart';
 
 @lazySingleton
 class SignOutUsecase {
@@ -10,8 +15,9 @@ class SignOutUsecase {
 
   final AuthRepository _authRepository;
 
-  Either<Exception, void> call() {
+  Either<Exception, void> call({required String userId}) {
     try {
+      _authRepository.signOut(userId).onError((_, __) {});
       _authRepository.clearLocal();
       return const Right(null);
     } on Exception catch (e) {

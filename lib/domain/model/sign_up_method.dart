@@ -1,3 +1,4 @@
+// Dart imports:
 import 'dart:io';
 
 enum SignUpMethod {
@@ -12,13 +13,6 @@ enum SignUpMethod {
       (element) => element.name == name,
       orElse: () => E,
     );
-  }
-
-  String get value {
-    return switch (this) {
-      E => '',
-      _ => name,
-    };
   }
 
   static List<SignUpMethod> get socialValues {

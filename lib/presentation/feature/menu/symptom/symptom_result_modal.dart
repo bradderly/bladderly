@@ -1,10 +1,15 @@
 // ignore: library_prefixes
-import 'dart:math' as Math;
 
+// Dart imports:
+import 'dart:math' as math;
+
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
-import 'package:flutter/material.dart';
 
 class SymptomResultModal extends StatelessWidget {
   const SymptomResultModal({
@@ -299,8 +304,8 @@ class GaugePainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     // 현재 점수 위치를 둥근 원으로 표시
-    final markerX = size.width / 2 + (size.width / 2) * Math.cos(3.14 + angle);
-    final markerY = size.height + (size.width / 2) * Math.sin(3.14 + angle);
+    final markerX = size.width / 2 + (size.width / 2) * math.cos(3.14 + angle);
+    final markerY = size.height + (size.width / 2) * math.sin(3.14 + angle);
 
     canvas
       ..drawCircle(Offset(markerX, markerY), 10, fillPaint)

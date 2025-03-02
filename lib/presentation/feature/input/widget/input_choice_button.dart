@@ -1,7 +1,12 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:gap/gap.dart';
+
+// Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 
 class InputChoiceButton extends StatelessWidget {
   const InputChoiceButton({

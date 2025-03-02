@@ -1,9 +1,14 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:gap/gap.dart';
+
+// Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:bladderly/presentation/router/route/intro_route.dart';
-import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 
 class IntroView extends StatelessWidget {
   const IntroView({super.key});

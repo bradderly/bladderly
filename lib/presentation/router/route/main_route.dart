@@ -1,4 +1,13 @@
-import 'package:bladderly/core/recorder/src/recorder_file.dart';
+// Flutter imports:
+
+// Flutter imports:
+import 'package:flutter/cupertino.dart';
+
+// Package imports:
+import 'package:equatable/equatable.dart';
+import 'package:go_router/go_router.dart';
+
+// Project imports:
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
 import 'package:bladderly/presentation/feature/diary/detailed_list/detailed_list_builder.dart';
@@ -8,11 +17,10 @@ import 'package:bladderly/presentation/feature/input/manual_input/manual_input_b
 import 'package:bladderly/presentation/feature/input/sound_input_note/sound_input_note_builder.dart';
 import 'package:bladderly/presentation/feature/input/sound_input_recording/sound_input_recording_builder.dart';
 import 'package:bladderly/presentation/feature/main/main_builder.dart';
+import 'package:bladderly/presentation/feature/menu/how_to_use/how_to_use_view.dart';
+import 'package:bladderly/presentation/feature/menu/menu_builder.dart';
 import 'package:bladderly/presentation/feature/menu/plan/paywall_view.dart';
-import 'package:bladderly/presentation/router/route/menu_tap_route.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:go_router/go_router.dart';
+import 'package:bladderly/presentation/feature/sign_up/regular/sign_up_regular_builder.dart';
 
 part 'main_route.g.dart';
 
@@ -31,12 +39,10 @@ enum MainRouteTab {
       path: 'export',
     ),
     TypedGoRoute<MenuRoute>(
-      name: 'menu',
       path: 'menu',
+      name: 'menu',
       routes: [
-        TypedGoRoute<ProfileRoute>(name: 'profile', path: 'profile'),
-        TypedGoRoute<PlanRoute>(name: 'plan', path: 'plan'),
-        TypedGoRoute<SymptomRoute>(name: 'symptom', path: 'symptom'),
+        TypedGoRoute<SignUpRegularRoute>(path: 'sign-up', name: 'sign-up-regular'),
       ],
     ),
     TypedGoRoute<SoundInputRecordingRoute>(
@@ -62,6 +68,10 @@ enum MainRouteTab {
     TypedGoRoute<PaywallRoute>(
       name: 'paywall',
       path: 'paywall',
+    ),
+    TypedGoRoute<HowToUseRoute>(
+      name: 'how-to-use',
+      path: 'how-to-use',
     ),
   ],
 )
@@ -124,7 +134,7 @@ class SoundInputNoteRoute extends GoRouteData {
       key: state.pageKey,
       fullscreenDialog: true,
       child: SoundInputNoteBuilder(
-        recorderFile: $extra!.file,
+        recordTime: $extra!.recordTime,
       ),
     );
   }
@@ -132,14 +142,14 @@ class SoundInputNoteRoute extends GoRouteData {
 
 class SoundInputNoteRouteExtra extends Equatable {
   const SoundInputNoteRouteExtra({
-    required this.file,
+    required this.recordTime,
   });
 
-  final RecorderFile file;
+  final DateTime recordTime;
 
   @override
   List<Object> get props => [
-        file.name,
+        recordTime,
       ];
 }
 
@@ -248,4 +258,44 @@ class PaywallRoute extends GoRouteData {
         key: state.pageKey,
         child: const PaywallView(),
       );
+}
+
+class SignUpRegularRoute extends GoRouteData {
+  const SignUpRegularRoute();
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: const SignUpRegularBuilder(),
+    );
+  }
+}
+
+class MenuRoute extends GoRouteData {
+  const MenuRoute();
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      fullscreenDialog: true,
+      child: const MenuBuilder(),
+    );
+  }
+}
+
+class HowToUseRoute extends GoRouteData {
+  const HowToUseRoute();
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage(
+      key: state.pageKey,
+      fullscreenDialog: true,
+      child: const HowtouseView(),
+    );
+  }
+
+  Future<bool?> push(BuildContext context) => context.push<bool>(location);
 }
