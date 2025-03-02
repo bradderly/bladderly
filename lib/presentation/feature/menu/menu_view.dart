@@ -1,7 +1,6 @@
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/about/about_modal.dart';
-import 'package:bladderly/presentation/feature/menu/bloc/menu_bloc.dart';
 import 'package:bladderly/presentation/feature/menu/contactus/contactus_modal.dart';
 import 'package:bladderly/presentation/feature/menu/faq/faq_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/language/language_view_modal.dart';
@@ -11,7 +10,6 @@ import 'package:bladderly/presentation/feature/menu/symptom/symptom_modal.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MenuView extends StatefulWidget {
   const MenuView({super.key});
@@ -75,7 +73,6 @@ class _MenuViewState extends State<MenuView> {
                             context: context,
                             modalContent: const UserProfileModal(),
                             duration: 5,
-                            bloc: context.read<MenuBloc>(),
                           );
                         },
                       ),
