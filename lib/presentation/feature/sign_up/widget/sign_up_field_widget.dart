@@ -2,8 +2,8 @@ import 'package:bladderly/presentation/common/extension/app_theme_extension.dart
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-class SignUpGuestFieldWidget extends StatelessWidget {
-  const SignUpGuestFieldWidget({
+class SignUpFieldWidget extends StatelessWidget {
+  const SignUpFieldWidget({
     super.key,
     required this.text,
     required this.child,

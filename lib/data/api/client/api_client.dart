@@ -24,6 +24,7 @@ abstract class ApiClient extends ChopperService {
         converter: ApiClientConverter(),
         interceptors: [
           ApiClientXApiKeyInterceptor(),
+          ApiResponseExceptionInterceptor(),
           HttpLoggingInterceptor(
             logger: chopperLogger
               ..onRecord.listen((rec) {
@@ -32,7 +33,6 @@ abstract class ApiClient extends ChopperService {
                 }
               }),
           ),
-          ApiResponseExceptionInterceptor(),
         ],
       ),
     );
@@ -75,13 +75,13 @@ abstract class ApiClient extends ChopperService {
 
   @Get(path: '/check-promo')
   Future<Response<ResultResponse>> checkPromo({
-    @Query('user-id') required String userId,
+    @Query('user_id') required String userId,
     @Query('code') required String code,
   });
 
   @Get(path: '/get-pay-info')
   Future<Response<GetPayResponse>> getPayInfo({
-    @Query('user-id') required String userId,
+    @Query('user_id') required String userId,
     @Query('device') required String device,
   });
 
@@ -116,12 +116,12 @@ abstract class ApiClient extends ChopperService {
 
   @Get(path: '/get-all-records')
   Future<Response<GetAllResultResponse>> getAllRecords({
-    @Query('user-id') required String userId,
+    @Query('user_id') required String userId,
   });
 
   @Get(path: '/get-result')
   Future<Response<ResultResponse>> getResult({
-    @Query('user-id') required String userId,
+    @Query('user_id') required String userId,
     @Query('rec_date') required DateTime recDate,
   });
 

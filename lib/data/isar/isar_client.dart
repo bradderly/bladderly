@@ -1,7 +1,6 @@
 import 'package:bladderly/data/isar/schema/apple_credential_entity.dart';
 import 'package:bladderly/data/isar/schema/history_entity.dart';
 import 'package:bladderly/data/isar/schema/user_entity.dart';
-import 'package:bladderly/domain/model/history_status.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 
@@ -10,17 +9,15 @@ abstract class IsarClient {
 
   HistoryEntity? getHistoryOrNullById(int id);
 
-  Future<int> saveHistory(HistoryEntity historyEntity);
+  Future<HistoryEntity> saveHistory(HistoryEntity historyEntity);
 
-  Future<List<int>> saveHistories(List<HistoryEntity> historyEntities);
+  Future<List<HistoryEntity>> saveHistories(List<HistoryEntity> historyEntities);
 
   void removeHistoryByRecordTime({required DateTime recordTime});
 
   Stream<List<HistoryEntity>> getHistoriesStreamByRecordDate({required DateTime recordDate});
 
   Stream<List<DateTime>> getHistoryDatesStream();
-
-  List<HistoryEntity> getPendingUploadHistories();
 
   AppleCredentialEntity? getAppleCredentialOrNullByUserIdentifier(String userIdentifier);
 
@@ -46,8 +43,11 @@ class _IsarClientImpl implements IsarClient {
   }
 
   @override
-  Future<int> saveHistory(HistoryEntity historyEntity) {
-    return _isar.writeTxn(() => _isar.historyEntitys.put(historyEntity));
+  Future<HistoryEntity> saveHistory(HistoryEntity historyEntity) {
+    return _isar.writeTxn(() async {
+      final id = await _isar.historyEntitys.put(historyEntity);
+      return _isar.historyEntitys.get(id).then((value) => value!);
+    });
   }
 
   @override
@@ -76,11 +76,6 @@ class _IsarClientImpl implements IsarClient {
         .where()
         .watch(fireImmediately: true)
         .map((entities) => entities.map((e) => DateUtils.dateOnly(e.recordTime)).toSet().toList());
-  }
-
-  @override
-  List<HistoryEntity> getPendingUploadHistories() {
-    return _isar.historyEntitys.filter().statusEqualTo(HistoryStatus.pendingUpload).findAllSync();
   }
 
   @override
@@ -118,7 +113,10 @@ class _IsarClientImpl implements IsarClient {
   }
 
   @override
-  Future<List<int>> saveHistories(List<HistoryEntity> historyEntities) {
-    return _isar.writeTxnSync(() => _isar.historyEntitys.putAllByRecordTime(historyEntities));
+  Future<List<HistoryEntity>> saveHistories(List<HistoryEntity> historyEntities) {
+    return _isar.writeTxn(() async {
+      final ids = await _isar.historyEntitys.putAllByRecordTime(historyEntities);
+      return _isar.historyEntitys.getAll(ids).then((entities) => entities.whereType<HistoryEntity>().toList());
+    });
   }
 }

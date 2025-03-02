@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bladderly/core/package_device_info/src/model/device_info_model.dart';
 import 'package:bladderly/data/api/client/api_client.dart';
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
@@ -5,9 +7,11 @@ import 'package:bladderly/data/isar/isar_client.dart';
 import 'package:bladderly/data/isar/schema/apple_credential_entity.dart';
 import 'package:bladderly/data/isar/schema/user_entity.dart';
 import 'package:bladderly/data/mapper/user_mapper.dart';
+import 'package:bladderly/domain/exception/invalid_user_exception.dart';
 import 'package:bladderly/domain/exception/not_found_apple_credential_exception.dart';
 import 'package:bladderly/domain/exception/not_found_user_exception.dart';
 import 'package:bladderly/domain/exception/not_found_user_identifier_exception.dart';
+import 'package:bladderly/domain/exception/unknown_exception.dart';
 import 'package:bladderly/domain/model/sex.dart';
 import 'package:bladderly/domain/model/sign_up_method.dart';
 import 'package:bladderly/domain/model/user.dart';
@@ -41,28 +45,63 @@ class AuthRepositoryImpl implements AuthRepository {
   }) async {
     final request = LoginRequest(email: email, pw: password);
 
-    final response = await _apiClient.logIn(request: request).then((response) => response.body!);
+    final response = await _apiClient.logIn(request: request).then(
+          (response) => response.body == null
+              ? LoginResponse.fromJson((jsonDecode(response.bodyString) as Map).cast<String, dynamic>())
+              : response.body!,
+        );
 
     final userInfo = response.userInfo;
 
     if (userInfo == null) {
-      throw const NotFoundUserException(message: 'not found user');
+      if (response.message!.contains('UserNotFoundException')) {
+        throw const NotFoundUserException(message: 'not found user');
+      }
+
+      if (response.message!.contains('NotAuthorizedException')) {
+        throw const InvalidUserException(message: 'invalid user');
+      }
+
+      throw UnknownException(message: response.message!);
     }
 
     final user = UserMapper.fromLoginResponse$UserInfo(userInfo: userInfo, email: email);
 
-    _saveUserToLocal(user);
+    return _saveUserToLocal(user);
+  }
 
-    return user;
+  @override
+  Future<User> signUpGuest({
+    required Gender gender,
+    required int yearOfBirth,
+  }) async {
+    final signUpRequest = SignUpRequest(
+      gender: gender.name,
+      birthyear: '$yearOfBirth',
+      device: _deviceInfoModel.name,
+      region: _deviceInfoModel.region,
+      social: SignUpMethod.N.value,
+    );
+
+    final response = await _apiClient.signUp(request: signUpRequest).then((response) => response.body!);
+
+    final user = User(
+      id: response.id!,
+      gender: gender,
+      yearOfBirth: yearOfBirth,
+      signUpMethod: SignUpMethod.N,
+    );
+
+    return _saveUserToLocal(user);
   }
 
   @override
   Future<User> signUp({
     required String userId,
+    required String email,
+    required String password,
     required String userName,
     required String disease,
-    String? email,
-    String? password,
   }) async {
     final user = switch (_isarClient.getUserOrNullByUserId(userId)) {
       final UserEntity userEntity =>
@@ -88,31 +127,40 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<User> signUpGuest({
+  Future<User> signUpSocial({
+    required SignUpMethod signUpMethod,
     required Gender gender,
     required int yearOfBirth,
-    required SignUpMethod signUpMethod,
+    required String email,
+    required String password,
+    required String userName,
+    required String disease,
   }) async {
     final signUpRequest = SignUpRequest(
       gender: gender.name,
       birthyear: '$yearOfBirth',
+      social: signUpMethod.value,
+      disease: disease,
+      email: email,
+      pw: password,
       device: _deviceInfoModel.name,
       region: _deviceInfoModel.region,
-      social: signUpMethod.value,
+      username: userName,
     );
 
     final response = await _apiClient.signUp(request: signUpRequest).then((response) => response.body!);
 
     final user = User(
       id: response.id!,
+      signUpMethod: signUpMethod,
       gender: gender,
       yearOfBirth: yearOfBirth,
-      signUpMethod: signUpMethod,
+      email: email,
+      name: userName,
+      disease: disease,
     );
 
-    _saveUserToLocal(user);
-
-    return user;
+    return _saveUserToLocal(user);
   }
 
   @override
@@ -154,7 +202,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  void signOut() {
+  void clearLocal() {
     _clearUserFromLocal();
   }
 
@@ -182,16 +230,14 @@ class AuthRepositoryImpl implements AuthRepository {
       return null;
     }
 
-    final user = UserMapper.fromUserEntity(userEntity);
-
-    _saveUserToLocal(user);
-
-    return user;
+    return _saveUserToLocal(UserMapper.fromUserEntity(userEntity));
   }
 
-  void _saveUserToLocal(User user) {
+  User _saveUserToLocal(User user) {
     _isarClient.saveUser(UserMapper.toUserEntity(user));
     _userSubject.add(user);
+
+    return user;
   }
 
   void _clearUserFromLocal() {

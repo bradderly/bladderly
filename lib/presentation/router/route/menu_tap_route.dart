@@ -1,5 +1,4 @@
 import 'package:bladderly/presentation/feature/menu/menu_builder.dart';
-import 'package:bladderly/presentation/feature/menu/menu_view.dart';
 import 'package:bladderly/presentation/feature/menu/plan/plan_main_modal.dart';
 import 'package:bladderly/presentation/feature/menu/profile/user_profile_modal.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/symptom_modal.dart';

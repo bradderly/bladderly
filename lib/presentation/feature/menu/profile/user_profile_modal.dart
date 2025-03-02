@@ -24,171 +24,158 @@ class UserProfileModal extends StatelessWidget {
       maxChildSize: 0.95,
       minChildSize: 0.95,
       builder: (_, controller) {
-        return BlocSelector<UserBloc, UserState, UserModel>(
-          selector: (state) => state.userModelOrThrowException,
-          builder: (context, userModel) {
-            var email = '';
-            if (userModel is RegularUserModel) {
-              email = userModel.email;
-            } else {
-              email = '게스트 회원';
-            }
-            return Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16),
-                ),
-              ),
-              padding: const EdgeInsets.symmetric(vertical: 41),
-              child: Column(
-                children: [
-                  ModalTitle(context, 'User Profile'.tr(context)),
-                  Expanded(
-                    child: ListView(
-                      controller: controller,
-                      children: [
-                        const SizedBox(height: 41),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 24),
-                          child: Text(
-                            'Personal Information'.tr(context),
-                            style: context.textStyleTheme.b20Medium.copyWith(color: context.colorTheme.neutral.shade10),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        TextViewForm('Email ID'.tr(context), email, context),
-                        TextViewForm('Sex'.tr(context), userModel.gender.text, context),
-                        TextViewForm('Year of Birth'.tr(context), userModel.yearOfBirth.toString(), context),
-                        InputTextForm('Preferred Name'.tr(context), '정보없음', context),
-                        const SizedBox(height: 32),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 24),
-                          child: Text(
-                            'Manage Account'.tr(context),
-                            style: context.textStyleTheme.b20Medium.copyWith(color: context.colorTheme.neutral.shade10),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        TextIconArrowForm(
-                          title: 'Set Up Passcode'.tr(context),
-                          icon: Icons.lock,
-                          onTap: () {
-                            ModalHelper.showModal(
-                              context: context,
-                              modalContent: const SetupPasscodeModal(),
-                              duration: 5,
-                            );
-                          },
-                        ),
-                        TextIconArrowForm(
-                          title: 'Change Password'.tr(context),
-                          icon: Icons.lock_open,
-                          onTap: () {
-                            ModalHelper.showModal(
-                              context: context,
-                              modalContent: const ChangePasswordModal(),
-                              duration: 5,
-                              bloc: context.read<MenuBloc>(), // Bloc을 전달
-                            );
-                          },
-                        ),
-                        TextIconArrowForm(
-                          title: 'Sign out'.tr(context),
-                          icon: Icons.logout,
-                          onTap: () {
-                            signout_dialog(context);
-                          },
-                        ),
-                        TextIconArrowForm(
-                          title: 'Delete Account'.tr(context),
-                          icon: Icons.delete_outline,
-                          onTap: () {
-                            ModalHelper.showModal(
-                              context: context,
-                              modalContent: const DeleteAccountModal(),
-                              duration: 5,
-                            );
-                          },
-                        ),
-                        const SizedBox(height: 40),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
-
-  // ignore: non_constant_identifier_names
-  void signout_dialog(BuildContext context) {
-    // ignore: inference_failure_on_function_invocation
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          backgroundColor: context.colorTheme.neutral.shade0,
-          insetPadding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            height: 300,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 60,
-                  child: Text(
-                    'Sign out Message'.tr(context),
-                    style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
-                  ),
-                ),
-                const SizedBox(height: 24),
-                GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: () {
-                    Navigator.pop(context);
-                    context.read<UserBloc>().add(const UserSignOut());
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 56,
-                    decoration: BoxDecoration(
-                      color: context.colorTheme.neutral.shade2,
-                      borderRadius: BorderRadius.circular(400),
-                    ),
-                    child: Text(
-                      'Yes, Sign Out'.tr(context),
-                      style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 56,
-                    decoration: BoxDecoration(
-                      color: context.colorTheme.vermilion.primary.shade50,
-                      borderRadius: BorderRadius.circular(400),
-                    ),
-                    child: Text(
-                      'No, Keep Me Signed In'.tr(context),
-                      style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade0),
-                    ),
-                  ),
-                ),
-              ],
+        return Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
             ),
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 41),
+          child: ListView(
+            controller: controller,
+            children: [
+              ModalTitle(context, 'User Profile'.tr(context)),
+              const SizedBox(height: 41),
+              Padding(
+                padding: const EdgeInsets.only(left: 24),
+                child: Text(
+                  'Personal Information'.tr(context),
+                  style: context.textStyleTheme.b20Medium.copyWith(color: context.colorTheme.neutral.shade10),
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextViewForm('Email ID'.tr(context), '9xq8wcb4xq@privaterelay.appleid.com', context),
+              TextViewForm('Sex'.tr(context), 'Female', context),
+              TextViewForm('Year of Birth'.tr(context), '2000', context),
+              InputTextForm('Preferred Name'.tr(context), 'Mila', context),
+              const SizedBox(height: 32),
+              Padding(
+                padding: const EdgeInsets.only(left: 24),
+                child: Text(
+                  'Manage Account'.tr(context),
+                  style: context.textStyleTheme.b20Medium.copyWith(color: context.colorTheme.neutral.shade10),
+                ),
+              ),
+              const SizedBox(height: 20),
+              TextIconArrowForm(
+                title: 'Set Up Passcode'.tr(context),
+                icon: Icons.lock,
+                onTap: () {
+                  // ignore: inference_failure_on_function_invocation
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) {
+                      return const SetupPasscodeModal();
+                    },
+                  );
+                },
+              ),
+              TextIconArrowForm(
+                title: 'Change Password'.tr(context),
+                icon: Icons.lock_open,
+                onTap: () {
+                  // ignore: inference_failure_on_function_invocation
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) {
+                      return const ChangePasswordModal();
+                    },
+                  );
+                },
+              ),
+              TextIconArrowForm(
+                title: 'Sign out'.tr(context),
+                icon: Icons.logout,
+                onTap: () {
+                  // ignore: inference_failure_on_function_invocation
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        backgroundColor: context.colorTheme.neutral.shade0,
+                        content: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          height: 300,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: 60,
+                                child: Text(
+                                  'Sign out Message'.tr(context),
+                                  style: context.textStyleTheme.b16SemiBold
+                                      .copyWith(color: context.colorTheme.neutral.shade10),
+                                ),
+                              ),
+                              const SizedBox(height: 24),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 56,
+                                  decoration: BoxDecoration(
+                                    color: context.colorTheme.neutral.shade2,
+                                    borderRadius: BorderRadius.circular(400),
+                                  ),
+                                  child: Text(
+                                    'Yes, Sign Out'.tr(context),
+                                    style: context.textStyleTheme.b16SemiBold
+                                        .copyWith(color: context.colorTheme.neutral.shade10),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 56,
+                                  decoration: BoxDecoration(
+                                    color: context.colorTheme.vermilion.primary.shade50,
+                                    borderRadius: BorderRadius.circular(400),
+                                  ),
+                                  child: Text(
+                                    'No, Keep Me Signed In'.tr(context),
+                                    style: context.textStyleTheme.b16SemiBold
+                                        .copyWith(color: context.colorTheme.neutral.shade0),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+              TextIconArrowForm(
+                title: 'Delete Account'.tr(context),
+                icon: Icons.delete_outline,
+                onTap: () {
+                  // ignore: inference_failure_on_function_invocation
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) {
+                      return const DeleteAccountModal();
+                    },
+                  );
+                },
+              ),
+              const SizedBox(height: 40),
+            ],
           ),
         );
       },

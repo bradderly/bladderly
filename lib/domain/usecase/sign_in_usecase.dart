@@ -1,4 +1,5 @@
 import 'package:bladderly/domain/repository/auth_repository.dart';
+import 'package:bladderly/domain/repository/history_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
@@ -6,22 +7,26 @@ import 'package:injectable/injectable.dart';
 class SignInUsecase {
   const SignInUsecase({
     required AuthRepository authRepository,
-  }) : _authRepository = authRepository;
+    required HistoryRepository historyRepository,
+  })  : _authRepository = authRepository,
+        _historyRepository = historyRepository;
 
   final AuthRepository _authRepository;
+  final HistoryRepository _historyRepository;
 
   Future<Either<Exception, void>> call({
     required String email,
     required String password,
   }) async {
     try {
-      final result = await _authRepository.signIn(email: email, password: password);
+      final user = await _authRepository.signIn(email: email, password: password);
+      final histories = await _historyRepository.getAllHistoriesFromServer(userId: user.id);
+      await _historyRepository.saveHistories(histories);
 
-      return Right(result);
-    } on Exception catch (e) {
-      return Left(e);
+      return Right(user);
     } catch (e) {
-      return Left(Exception('An unknown error occurred'));
+      _authRepository.clearLocal();
+      return Left(e is Exception ? e : Exception(e.toString()));
     }
   }
 }

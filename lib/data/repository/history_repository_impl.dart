@@ -33,25 +33,27 @@ class HistoryRepositoryImpl implements HistoryRepository {
 
   @override
   Future<VoidingHistory> saveVoidngHistory(VoidingHistory vodingHistory) async {
-    final id = await _isarClient.saveHistory(HistoryMapper.toHistoryEntity(vodingHistory));
-    return vodingHistory.setId(id);
+    final history = await _isarClient.saveHistory(HistoryMapper.toHistoryEntity(vodingHistory));
+    return vodingHistory.setId(history.id);
   }
 
   @override
   Future<IntakeHistory> saveIntakeHistory(IntakeHistory intakeHistory) async {
-    final id = await _isarClient.saveHistory(HistoryMapper.toHistoryEntity(intakeHistory));
-    return intakeHistory.setId(id);
+    final history = await _isarClient.saveHistory(HistoryMapper.toHistoryEntity(intakeHistory));
+    return intakeHistory.setId(history.id);
   }
 
   @override
   Future<LeakageHistory> saveLeakageHistory(LeakageHistory leakageHistory) async {
-    final id = await _isarClient.saveHistory(HistoryMapper.toHistoryEntity(leakageHistory));
-    return leakageHistory.setId(id);
+    final history = await _isarClient.saveHistory(HistoryMapper.toHistoryEntity(leakageHistory));
+    return leakageHistory.setId(history.id);
   }
 
   @override
-  Histories<History> saveHistories(Histories<History> histories) {
-    throw UnimplementedError();
+  Future<Histories> saveHistories(Histories<History> histories) {
+    return _isarClient
+        .saveHistories(histories.map(HistoryMapper.toHistoryEntity).toList())
+        .then((histories) => Histories(list: histories.map(HistoryMapper.fromHistoryEntity).toList()));
   }
 
   @override
