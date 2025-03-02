@@ -17,6 +17,7 @@ import 'package:bladderly/presentation/feature/input/manual_input/manual_input_b
 import 'package:bladderly/presentation/feature/input/sound_input_note/sound_input_note_builder.dart';
 import 'package:bladderly/presentation/feature/input/sound_input_recording/sound_input_recording_builder.dart';
 import 'package:bladderly/presentation/feature/main/main_builder.dart';
+import 'package:bladderly/presentation/feature/menu/how_to_use/how_to_use_view.dart';
 import 'package:bladderly/presentation/feature/menu/menu_builder.dart';
 import 'package:bladderly/presentation/feature/menu/plan/paywall_view.dart';
 import 'package:bladderly/presentation/feature/sign_up/regular/sign_up_regular_builder.dart';
@@ -67,6 +68,10 @@ enum MainRouteTab {
     TypedGoRoute<PaywallRoute>(
       name: 'paywall',
       path: 'paywall',
+    ),
+    TypedGoRoute<HowToUseRoute>(
+      name: 'how-to-use',
+      path: 'how-to-use',
     ),
   ],
 )
@@ -278,4 +283,19 @@ class MenuRoute extends GoRouteData {
       child: const MenuBuilder(),
     );
   }
+}
+
+class HowToUseRoute extends GoRouteData {
+  const HowToUseRoute();
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage(
+      key: state.pageKey,
+      fullscreenDialog: true,
+      child: const HowtouseView(),
+    );
+  }
+
+  Future<bool?> push(BuildContext context) => context.push<bool>(location);
 }
