@@ -1,4 +1,6 @@
 // Package imports:
+
+// Package imports:
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
@@ -44,10 +46,12 @@ class UserBloc extends HydratedBloc<UserEvent, UserState> {
   }
 
   void _onSignOut(UserSignOut event, Emitter<UserState> emit) {
-    return _signOutUsecase().fold(
-      (exception) => state,
-      (_) => emit(const UserInitial()),
-    );
+    if (state._userModel case final UserModel userModel) {
+      return _signOutUsecase(userId: userModel.id).fold(
+        (exception) => state,
+        (_) => emit(const UserInitial()),
+      );
+    }
   }
 
   @override

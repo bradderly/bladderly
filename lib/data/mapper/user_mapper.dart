@@ -24,7 +24,7 @@ class UserMapper {
       ..userId = user.id
       ..gender = user.gender.name
       ..yearOfBirth = user.yearOfBirth
-      ..signUpMethod = user.signUpMethod.value
+      ..signUpMethod = user.signUpMethod.name
       ..name = user.name
       ..email = user.email;
   }

@@ -84,7 +84,7 @@ class AuthRepositoryImpl implements AuthRepository {
       birthyear: '$yearOfBirth',
       device: _deviceInfoModel.name,
       region: _deviceInfoModel.region,
-      social: SignUpMethod.N.value,
+      social: SignUpMethod.N.name,
     );
 
     final response = await _apiClient.signUp(request: signUpRequest).then((response) => response.body!);
@@ -114,9 +114,10 @@ class AuthRepositoryImpl implements AuthRepository {
     };
 
     final signUpRequest = SignUpRequest(
+      id: user.id,
       gender: user.gender.name,
       birthyear: '${user.yearOfBirth}',
-      social: user.signUpMethod.value,
+      social: SignUpMethod.E.name,
       email: user.email,
       pw: password,
       device: _deviceInfoModel.name,
@@ -143,7 +144,7 @@ class AuthRepositoryImpl implements AuthRepository {
     final signUpRequest = SignUpRequest(
       gender: gender.name,
       birthyear: '$yearOfBirth',
-      social: signUpMethod.value,
+      social: signUpMethod.name,
       disease: disease,
       email: email,
       pw: password,
@@ -247,5 +248,10 @@ class AuthRepositoryImpl implements AuthRepository {
   void _clearUserFromLocal() {
     _isarClient.clearAll();
     _userSubject.add(null);
+  }
+
+  @override
+  Future<void> signOut(String userId) {
+    return _apiClient.logOut(request: PostEmailRequest(email: userId));
   }
 }

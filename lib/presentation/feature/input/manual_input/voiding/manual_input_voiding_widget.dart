@@ -1,4 +1,6 @@
 // Flutter imports:
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -101,6 +103,7 @@ class _ManualInputVoidingWidgetState extends State<ManualInputVoidingWidget> wit
       listener: (context, state) => switch (state) {
         ManualInputVoidingSaveInProgress() => ProgressIndicatorModal.show(context),
         ManualInputVoidingSaveSuccess() => onSaveSuccess(context),
+        ManualInputVoidingSaveFailure() => context.pop(),
         _ => null,
       },
       child: Stack(

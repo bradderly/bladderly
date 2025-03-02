@@ -1,4 +1,6 @@
 // Flutter imports:
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -168,7 +170,7 @@ class SignInView extends StatelessWidget {
                       isValid ? context.colorTheme.vermilion.primary.shade50 : context.colorTheme.neutral.shade6,
                   borderRadius: 400,
                   shape: BoxShape.rectangle,
-                  text: 'Next',
+                  text: 'Next'.tr(context),
                   textColor: context.colorTheme.neutral.shade0,
                   size: const Size.fromHeight(56),
                 ),

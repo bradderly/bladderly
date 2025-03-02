@@ -15,13 +15,6 @@ enum SignUpMethod {
     );
   }
 
-  String get value {
-    return switch (this) {
-      E => '',
-      _ => name,
-    };
-  }
-
   static List<SignUpMethod> get socialValues {
     return [
       if (Platform.isIOS) SignUpMethod.A,

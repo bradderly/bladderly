@@ -53,4 +53,6 @@ abstract class AuthRepository {
   Stream<User?> get userStream;
 
   User? getUserOrNullByUserId(String userId);
+
+  Future<void> signOut(String userId);
 }
