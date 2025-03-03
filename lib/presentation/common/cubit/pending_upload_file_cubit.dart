@@ -7,27 +7,30 @@ part 'pending_upload_file_state.dart';
 class PendingUploadFileCubit extends HydratedCubit<PendingUploadFileState> {
   PendingUploadFileCubit() : super(const PendingUploadFileState());
 
-  void setFileName(DateTime recorderFile) {
-    emit(PendingUploadFileState(recorderFile: recorderFile));
+  final _recordTimeKey = 'record_time';
+
+  void setRecordTime(DateTime recordTime) {
+    emit(PendingUploadFileState(recordTime: recordTime));
   }
 
-  void clearFileName() {
+  void clearRecordTime() {
     emit(const PendingUploadFileState());
   }
 
   @override
   PendingUploadFileState? fromJson(Map<String, dynamic> json) {
-    // if (json['recorder_file_name'] case final String fileName) {
-    //   return PendingUploadFileState(recorderFile: RecorderFile(recordTime: fileName));
-    // }
+    final recordTime = switch (json[_recordTimeKey]) {
+      final int recordTime => DateTime.fromMillisecondsSinceEpoch(recordTime),
+      _ => null,
+    };
 
-    return null;
+    return PendingUploadFileState(recordTime: recordTime);
   }
 
   @override
   Map<String, dynamic>? toJson(PendingUploadFileState state) {
-    // if (state.recorderFile?.recordTime case final String fileName) return {'recorder_file_name': fileName};
-
-    return null;
+    return {
+      _recordTimeKey: state.recordTime?.millisecondsSinceEpoch,
+    };
   }
 }

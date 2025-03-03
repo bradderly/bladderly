@@ -1,14 +1,5 @@
 // Flutter imports:
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
-
-// Project imports:
-import 'package:bladderly/core/recorder/recorder_module.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
@@ -24,15 +15,18 @@ import 'package:bladderly/presentation/feature/input/widget/input_save_button.da
 import 'package:bladderly/presentation/feature/input/widget/input_text_area_widget.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 
 class SoundInputNoteView extends StatelessWidget {
   const SoundInputNoteView({
     super.key,
-    required this.recorderFileLoader,
     required this.recordTime,
   });
 
-  final RecorderFileLoader recorderFileLoader;
   final DateTime recordTime;
 
   void _onSave(BuildContext context, SoundInputNoteFormState state) {
@@ -49,7 +43,7 @@ class SoundInputNoteView extends StatelessWidget {
   }
 
   void _onSaveSuccess(BuildContext context) {
-    context.read<PendingUploadFileCubit>().clearFileName();
+    context.read<PendingUploadFileCubit>().clearRecordTime();
     SoundInputNoteUploadSuccessModal.show(
       context,
       onGoToDiary: () => const MainRoute(tab: MainRouteTab.diary).go(context),

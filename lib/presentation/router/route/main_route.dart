@@ -123,18 +123,17 @@ class SoundInputRecordingRoute extends GoRouteData {
 
 class SoundInputNoteRoute extends GoRouteData {
   const SoundInputNoteRoute({
-    this.$extra,
+    required this.recordTime,
   });
 
-  final SoundInputNoteRouteExtra? $extra;
-
+  final DateTime recordTime;
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
     return CupertinoPage<void>(
       key: state.pageKey,
       fullscreenDialog: true,
       child: SoundInputNoteBuilder(
-        recordTime: $extra!.recordTime,
+        recordTime: recordTime,
       ),
     );
   }
