@@ -1,12 +1,10 @@
 // Flutter imports:
-import 'package:flutter/services.dart';
-
+// Project imports:
+import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 // Package imports:
 import 'package:collection/collection.dart';
 import 'package:csv/csv.dart';
-
-// Project imports:
-import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
+import 'package:flutter/services.dart';
 
 enum AppLocale {
   en,
@@ -21,6 +19,13 @@ enum AppLocale {
     return switch (this) {
       AppLocale.en => ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][index],
       AppLocale.ko => ['월', '화', '수', '목', '금', '토', '일'][index],
+    };
+  }
+
+  String getMonth(int index) {
+    return switch (this) {
+      AppLocale.en => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][index],
+      AppLocale.ko => ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'][index],
     };
   }
 
