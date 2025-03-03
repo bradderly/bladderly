@@ -1,20 +1,20 @@
 // Dart imports:
 import 'dart:math' as math;
 
+// Project imports:
+import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/datetime_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/diary/diary/cubit/diary_history_dates_cubit.dart';
+import 'package:bladderly/presentation/feature/diary/diary/modal/diary_calendar_modal.dart';
+import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:flutter/services.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-
-// Project imports:
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bladderly/presentation/common/extension/datetime_extension.dart';
-import 'package:bladderly/presentation/feature/diary/diary/cubit/diary_history_dates_cubit.dart';
-import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 
 class DiaryAppBar extends StatefulWidget implements PreferredSizeWidget {
   const DiaryAppBar({
@@ -36,6 +36,8 @@ class DiaryAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _DiaryAppBarState extends State<DiaryAppBar> {
+  final minDate = DateTime(2022).subtract(const Duration(days: 3));
+
   late final itemExtent = MediaQuery.sizeOf(context).width / 7;
   late final scrollController = ScrollController();
 
@@ -64,16 +66,36 @@ class _DiaryAppBarState extends State<DiaryAppBar> {
     required DateTime date,
   }) {
     if (date.isAfter(widget.today)) return;
+    scrollToIndex(index);
+  }
 
+  void scrollToIndex(int index, {bool jumpTo = false}) {
     final offset = (index - 3) * itemExtent;
 
-    if (offset >= 0) {
+    if (jumpTo) {
+      scrollController.jumpTo(offset);
+    } else {
       scrollController.animateTo(
         offset,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     }
+  }
+
+  Future<void> onTapCalendar() async {
+    final dateTime = await DiaryCalendarBottomSheet.show(
+      context,
+      minDate: minDate.add(const Duration(days: 3)),
+      maxDate: maxDate.subtract(const Duration(days: 3)),
+      today: widget.today,
+      selectedDate: selectedDate,
+      highlightedDates: context.read<DiaryHistoryDatesCubit>().state.dates,
+    );
+
+    if (dateTime == null) return;
+
+    scrollToIndex(maxDate.difference(dateTime).inDays, jumpTo: true);
   }
 
   @override
@@ -83,13 +105,51 @@ class _DiaryAppBarState extends State<DiaryAppBar> {
       child: ColoredBox(
         color: context.colorTheme.neutral.shade0,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Assets.icon.icDialryCalendar.svg(),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: onTapCalendar,
+                        child: Assets.icon.icDiaryCalendar.svg(),
+                      ),
+                      const Gap(8),
+                      Builder(
+                        builder: (context) {
+                          final isTodaySelected = widget.today == selectedDate;
+                          final color = isTodaySelected
+                              ? context.colorTheme.vermilion.secondary.shade30
+                              : context.colorTheme.neutral.shade5;
+
+                          return Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: color,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                            child: Text(
+                              'Today'.tr(context),
+                              style: context.textStyleTheme.b16SemiBold.copyWith(color: color),
+                            ),
+                          );
+                        },
+                      ),
+                      const Spacer(),
+                      GestureDetector(
+                        onTap: widget.onTapExport,
+                        child: Assets.icon.icDiaryExport.svg(),
+                      ),
+                    ],
+                  ),
                   const Gap(8),
                   Text(
                     selectedDate.getCalendarHeader(context),
@@ -97,16 +157,11 @@ class _DiaryAppBarState extends State<DiaryAppBar> {
                       color: context.colorTheme.neutral.shade10,
                     ),
                   ),
-                  const Spacer(),
-                  GestureDetector(
-                    onTap: widget.onTapExport,
-                    child: Assets.icon.icDiaryExport.svg(),
-                  ),
                 ],
               ),
             ),
             Container(
-              margin: const EdgeInsets.symmetric(vertical: 24),
+              margin: const EdgeInsets.symmetric(vertical: 8),
               height: 64,
               child: Stack(
                 fit: StackFit.expand,
@@ -139,9 +194,12 @@ class _DiaryAppBarState extends State<DiaryAppBar> {
                       controller: scrollController,
                       reverse: true,
                       scrollDirection: Axis.horizontal,
+                      itemCount: maxDate.difference(minDate).inDays + 1,
                       itemBuilder: (context, index) {
                         final date = maxDate.subtract(Duration(days: index));
-                        final isOutdated = date.isAfter(widget.today);
+
+                        final isOutdated = date.isBefore(minDate.add(const Duration(days: 3))) ||
+                            date.isAfter(maxDate.subtract(const Duration(days: 3)));
 
                         return _buildDay(isOutdated, index, date, context);
                       },

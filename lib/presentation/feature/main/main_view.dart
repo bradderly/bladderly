@@ -1,12 +1,5 @@
 // Flutter imports:
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-
 // Project imports:
 import 'package:bladderly/core/recorder/recorder_module.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
@@ -19,6 +12,11 @@ import 'package:bladderly/presentation/feature/main/home/home_builder.dart';
 import 'package:bladderly/presentation/feature/main/widget/main_bottom_navigation_bar.dart';
 import 'package:bladderly/presentation/router/route/intro_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class MainView extends StatefulWidget {
   const MainView({
@@ -63,15 +61,14 @@ class _MainViewState extends State<MainView> {
   }
 
   void checkPendingUploadFile() {
-    final recorderFile = context.read<PendingUploadFileCubit>().state.recorderFile;
+    final recordTime = context.read<PendingUploadFileCubit>().state.recordTime;
 
-    if (recorderFile == null) return;
+    if (recordTime == null) return;
 
-    final file = widget.recorderFileLoader.getFile(recorderFile);
+    final file = widget.recorderFileLoader.getFile(recordTime);
 
     if (file.existsSync()) {
-      final extra = SoundInputNoteRouteExtra(recordTime: recorderFile);
-      SoundInputNoteRoute($extra: extra).push<void>(context);
+      SoundInputNoteRoute(recordTime: recordTime).push<void>(context);
     }
   }
 

@@ -1,15 +1,6 @@
 // Dart imports:
 import 'dart:async';
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
-import 'package:synchronized/synchronized.dart';
-
 // Project imports:
 import 'package:bladderly/core/recorder/recorder_module.dart';
 import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
@@ -18,6 +9,13 @@ import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/input/sound_input_recording/widget/sound_input_recording_stop_dialog.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+import 'package:synchronized/synchronized.dart';
 
 class SoundInputRecordingView extends StatefulWidget {
   const SoundInputRecordingView({
@@ -74,15 +72,13 @@ class _SoundInputRecordingViewState extends State<SoundInputRecordingView> with 
   Future<void> completeRecording() async {
     if (lock.locked) return;
 
-    final file = await lock.synchronized(widget.recorder.stop);
+    final recordTime = await lock.synchronized(widget.recorder.stop);
 
-    if (!mounted || !widget.recorder.getFile(file).existsSync()) return;
+    if (!mounted || !widget.recorder.getFile(recordTime).existsSync()) return;
 
-    context.read<PendingUploadFileCubit>().setFileName(file);
+    context.read<PendingUploadFileCubit>().setRecordTime(recordTime);
 
-    final $extra = SoundInputNoteRouteExtra(recordTime: file);
-
-    return SoundInputNoteRoute($extra: $extra).pushReplacement(context);
+    return SoundInputNoteRoute(recordTime: recordTime).pushReplacement(context);
   }
 
   Future<void> cancelRecording() async {
