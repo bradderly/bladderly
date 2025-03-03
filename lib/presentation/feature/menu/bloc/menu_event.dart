@@ -7,21 +7,15 @@ sealed class MenuEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class ChangePassword extends MenuEvent {
-  const ChangePassword({
-    required this.email,
-    required this.newPw,
-    required this.oldPw,
+class GetVersion extends MenuEvent {
+  const GetVersion({
+    required this.device,
   });
 
-  final String email;
-  final String newPw;
-  final String oldPw;
+  final String device;
 
   @override
   List<Object> get props => [
-        email,
-        newPw,
-        oldPw,
+        device,
       ];
 }

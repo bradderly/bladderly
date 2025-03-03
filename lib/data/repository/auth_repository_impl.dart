@@ -225,6 +225,60 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<String> changeName({
+    required String name,
+  }) async {
+    final request = ChagePwRequest(email: name, newPw: name, oldPw: name);
+
+    final response = await _apiClient.changePassword(request: request).then((response) => response.body!);
+
+    return response.message ?? (throw Exception('Change Password failed'));
+  }
+
+  @override
+  Future<String> deleteAccount({
+    required String email,
+  }) async {
+    final request = PostEmailRequest(email: email);
+
+    final response = await _apiClient.deleteAccount(request: request).then((response) => response.body!);
+
+    return response.message ?? (throw Exception('Delete Account failed'));
+  }
+
+  @override
+  Future<GetVersionResponse> getVersion({
+    required String device,
+  }) async {
+    final response = await _apiClient.getVersion(device: device).then((response) => response.body!);
+
+    return response;
+  }
+
+  @override
+  Future<String> contactUs({
+    required String email,
+    required String firstName,
+    required String lastName,
+    required String message,
+    required String subject,
+  }) async {
+    final response = await _apiClient
+        .contactUs(
+          request: ContactUsRequest(
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            message: message,
+            subject: subject,
+          ),
+        )
+        .then((response) => response.body!);
+
+    return response.message ?? (throw Exception('Contact Us failed'));
+  }
+
+  @override
   Stream<User?> get userStream => _userSubject.stream;
 
   @override

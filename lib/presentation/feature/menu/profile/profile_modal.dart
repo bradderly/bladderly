@@ -1,25 +1,35 @@
 // Flutter imports:
+// ignore_for_file: deprecated_member_use
+
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
+import 'package:bladderly/presentation/common/model/user_model.dart';
 import 'package:bladderly/presentation/feature/menu/profile/change_password/change_password_builder.dart';
+import 'package:bladderly/presentation/feature/menu/profile/delete_account/delete_account_builder.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/feature/menu/profile/delete_account_modal.dart';
 import 'package:bladderly/presentation/feature/menu/profile/setup_passcode_modal.dart';
 import 'package:bladderly/presentation/feature/menu/widget/input_text_form.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:bladderly/presentation/feature/menu/widget/text_icon_arrow_form.dart';
 import 'package:bladderly/presentation/feature/menu/widget/text_view_form.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 // Package imports:
 
-class UserProfileModal extends StatelessWidget {
-  const UserProfileModal({super.key});
+class ProfileModal extends StatelessWidget {
+  const ProfileModal({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final userModel = context.read<UserBloc>().state.userModelOrThrowException;
+
+    final emailText = userModel is RegularUserModel ? userModel.email : '게스트 회원';
+    final nameText = userModel is RegularUserModel ? userModel.name : '게스트 회원';
     return DraggableScrollableSheet(
       initialChildSize: 0.95,
       maxChildSize: 0.95,
@@ -42,6 +52,71 @@ class UserProfileModal extends StatelessWidget {
                 child: ListView(
                   controller: controller,
                   children: [
+                    if (userModel is! RegularUserModel)
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+                        margin: const EdgeInsets.only(left: 24, right: 24, bottom: 32),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF9F8F7),
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFFF4F2EC).withOpacity(0.08),
+                              offset: const Offset(0, 2),
+                              blurRadius: 5,
+                            ),
+                            BoxShadow(
+                              color: const Color(0xFF615737).withOpacity(0.09),
+                              offset: const Offset(0, 4),
+                              blurRadius: 8,
+                              spreadRadius: 3,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.save_outlined,
+                                  color: context.colorTheme.vermilion.primary.shade50,
+                                ),
+                                Text(
+                                  'Save your data?'.tr(context),
+                                  style: context.textStyleTheme.b16SemiBold
+                                      .copyWith(color: context.colorTheme.neutral.shade10),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            GestureDetector(
+                              behavior: HitTestBehavior.translucent,
+                              onTap: () {
+                                context.goNamed('sign-up-regular');
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 17,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: context.colorTheme.vermilion.primary.shade50,
+                                  borderRadius: BorderRadius.circular(400),
+                                ),
+                                child: Text(
+                                  'Create an Account or Sign In'.tr(context),
+                                  textAlign: TextAlign.center,
+                                  style: context.textStyleTheme.b16SemiBold
+                                      .copyWith(color: context.colorTheme.neutral.shade0),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    else
+                      Container(),
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: Text(
@@ -50,10 +125,22 @@ class UserProfileModal extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    TextViewForm('Email ID'.tr(context), '9xq8wcb4xq@privaterelay.appleid.com', context),
-                    TextViewForm('Sex'.tr(context), 'Female', context),
-                    TextViewForm('Year of Birth'.tr(context), '2000', context),
-                    InputTextForm('Preferred Name'.tr(context), 'Mila', context),
+                    TextViewForm('Email ID'.tr(context), emailText, context),
+                    TextViewForm(
+                      'Sex'.tr(context),
+                      context.read<UserBloc>().state.userModelOrThrowException.gender.text,
+                      context,
+                    ),
+                    TextViewForm(
+                      'Year of Birth'.tr(context),
+                      context.read<UserBloc>().state.userModelOrThrowException.yearOfBirth.toString(),
+                      context,
+                    ),
+                    InputTextForm(
+                      'Preferred Name'.tr(context),
+                      nameText,
+                      context,
+                    ),
                     const SizedBox(height: 32),
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
@@ -117,6 +204,7 @@ class UserProfileModal extends StatelessWidget {
                                     GestureDetector(
                                       onTap: () {
                                         Navigator.pop(context);
+                                        context.read<UserBloc>().add(const UserSignOut());
                                       },
                                       child: Container(
                                         alignment: Alignment.center,
@@ -163,14 +251,10 @@ class UserProfileModal extends StatelessWidget {
                       title: 'Delete Account'.tr(context),
                       icon: Icons.delete_outline,
                       onTap: () {
-                        // ignore: inference_failure_on_function_invocation
-                        showModalBottomSheet(
+                        ModalHelper.showModal(
                           context: context,
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-                          builder: (context) {
-                            return const DeleteAccountModal();
-                          },
+                          modalContent: const DeleteAccountBuilder(),
+                          duration: 5,
                         );
                       },
                     ),

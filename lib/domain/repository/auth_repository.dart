@@ -1,4 +1,5 @@
 // Project imports:
+import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 import 'package:bladderly/domain/model/sex.dart';
 import 'package:bladderly/domain/model/sign_up_method.dart';
 import 'package:bladderly/domain/model/user.dart';
@@ -55,4 +56,24 @@ abstract class AuthRepository {
   User? getUserOrNullByUserId(String userId);
 
   Future<void> signOut(String userId);
+
+  Future<String> changeName({
+    required String name,
+  });
+
+  Future<String> deleteAccount({
+    required String email,
+  });
+
+  Future<GetVersionResponse> getVersion({
+    required String device,
+  });
+
+  Future<String> contactUs({
+    required String email,
+    required String firstName,
+    required String lastName,
+    required String message,
+    required String subject,
+  });
 }

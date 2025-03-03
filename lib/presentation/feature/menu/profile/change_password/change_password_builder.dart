@@ -22,7 +22,7 @@ class ChangePasswordBuilder extends StatelessWidget {
           create: (_) => ChangePasswordFormCubit(),
         ),
       ],
-      child: ChangePasswordModal(),
+      child: const ChangePasswordModal(),
     );
   }
 }

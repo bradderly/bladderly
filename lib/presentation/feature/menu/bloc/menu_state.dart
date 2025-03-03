@@ -15,12 +15,13 @@ final class MenuInProgress extends MenuState {
   const MenuInProgress();
 }
 
-final class ChangePasswordSuccess extends MenuState {
-  const ChangePasswordSuccess();
+class GetVersionSuccess extends MenuState {
+  const GetVersionSuccess({required this.latestVersion});
+  final String latestVersion;
 }
 
-final class ChangePasswordFailure extends MenuState {
-  const ChangePasswordFailure({
+final class GetVersionFailure extends MenuState {
+  const GetVersionFailure({
     required this.exception,
   });
 

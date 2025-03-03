@@ -1,4 +1,11 @@
 // Flutter imports:
+import 'dart:io';
+
+import 'package:bladderly/domain/model/unit.dart';
+import 'package:bladderly/presentation/common/cubit/unit_cubit.dart';
+import 'package:bladderly/presentation/feature/menu/bloc/menu_bloc.dart';
+import 'package:bladderly/presentation/feature/menu/contact_us/contact_us_builder.dart';
+import 'package:bladderly/presentation/feature/menu/profile/profile_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -6,220 +13,268 @@ import 'package:flutter/services.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/about/about_modal.dart';
-import 'package:bladderly/presentation/feature/menu/contactus/contactus_modal.dart';
 import 'package:bladderly/presentation/feature/menu/faq/faq_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/language/language_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/plan/plan_main_modal.dart';
-import 'package:bladderly/presentation/feature/menu/profile/user_profile_modal.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/symptom_modal.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class MenuView extends StatefulWidget {
+class MenuView extends StatelessWidget {
   const MenuView({super.key});
 
   @override
-  State<MenuView> createState() => _MenuViewState();
-}
-
-class _MenuViewState extends State<MenuView> {
-  String selectedUnit = 'ml'; // 초기 선택 값
-
-  void toggleUnit(String unit) {
-    setState(() {
-      selectedUnit = unit;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark,
-      child: Scaffold(
-        backgroundColor: context.colorTheme.neutral.shade2,
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 18),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Menu'.tr(context),
-                          style: context.textStyleTheme.b24BoldOutfit.copyWith(
-                            color: context.colorTheme.neutral.shade10,
+    //context.read<MenuBloc>().add(GetVersion(device: Platform.operatingSystem));
+
+    return BlocProvider(
+      create: (context) => context.read<MenuBloc>()..add(GetVersion(device: Platform.operatingSystem)),
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.dark,
+        child: Scaffold(
+          backgroundColor: context.colorTheme.neutral.shade2,
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 18),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Menu'.tr(context),
+                            style: context.textStyleTheme.b24BoldOutfit.copyWith(
+                              color: context.colorTheme.neutral.shade10,
+                            ),
                           ),
-                        ),
-                        IconButton(
-                          icon: Icon(
-                            Icons.close,
-                            color: context.colorTheme.neutral.shade8,
+                          IconButton(
+                            icon: Icon(
+                              Icons.close,
+                              color: context.colorTheme.neutral.shade8,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                           ),
-                          onPressed: () {
-                            Navigator.pop(context);
+                        ],
+                      ),
+                    ),
+                    SettingsSection(
+                      title: 'Profile'.tr(context),
+                      items: [
+                        SettingsItem(
+                          icon: Icons.person_outline,
+                          title: 'User Profile'.tr(context),
+                          onTap: () {
+                            ModalHelper.showModal(
+                              context: context,
+                              modalContent: const ProfileBuilder(),
+                              duration: 5,
+                            );
                           },
                         ),
                       ],
                     ),
-                  ),
-                  SettingsSection(
-                    title: 'Profile'.tr(context),
-                    items: [
-                      SettingsItem(
-                        icon: Icons.person_outline,
-                        title: 'User Profile'.tr(context),
-                        onTap: () {
-                          ModalHelper.showModal(
-                            context: context,
-                            modalContent: const UserProfileModal(),
-                            duration: 5,
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  SettingsSection(
-                    title: 'General'.tr(context),
-                    items: [
-                      SettingsItem(
-                        icon: Icons.credit_card,
-                        title: 'Plan'.tr(context),
-                        onTap: () {
-                          ModalHelper.showModal(context: context, modalContent: const PlanMainModal(), duration: 5);
-                        },
-                      ),
-                      SettingsItem(
-                        icon: Icons.ios_share,
-                        title: 'Data export'.tr(context),
-                        onTap: () {
-                          ModalHelper.showModal(context: context, modalContent: const SymptomModal(), duration: 5);
-                        },
-                      ),
-                      SettingsItem(
-                        icon: Icons.bar_chart,
-                        title: 'Symptom score'.tr(context),
-                        onTap: () {
-                          ModalHelper.showModal(context: context, modalContent: const SymptomModal(), duration: 5);
-                        },
-                      ),
-                      SettingsItem(
-                        icon: Icons.language,
-                        title: 'Language'.tr(context),
-                        subtitle: 'English (United States)'.tr(context),
-                        onTap: () {
-                          ModalHelper.showModal(context: context, modalContent: const LanguageViewModal(), duration: 5);
-                        },
-                      ),
-                      SettingsItem(
-                        icon: Icons.help_outline,
-                        title: 'FAQ'.tr(context),
-                        onTap: () {
-                          ModalHelper.showModal(context: context, modalContent: const FaqViewModal(), duration: 5);
-                        },
-                      ),
-                      SettingsItem(
-                        icon: Icons.phone,
-                        title: 'Contact Us'.tr(context),
-                        onTap: () {
-                          ModalHelper.showModal(context: context, modalContent: const ContactusModal(), duration: 5);
-                        },
-                      ),
-                      SettingsItem(
-                        icon: Icons.info_outline,
-                        title: 'About'.tr(context),
-                        onTap: () {
-                          ModalHelper.showModal(context: context, modalContent: const AboutModal(), duration: 5);
-                        },
-                      ),
-                      Container(
-                        height: 60,
-                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                    SettingsSection(
+                      title: 'General'.tr(context),
+                      items: [
+                        SettingsItem(
+                          icon: Icons.credit_card,
+                          title: 'Plan'.tr(context),
+                          onTap: () {
+                            ModalHelper.showModal(context: context, modalContent: const PlanMainModal(), duration: 5);
+                          },
+                        ),
+                        SettingsItem(
+                          icon: Icons.ios_share,
+                          title: 'Data export'.tr(context),
+                          onTap: () {
+                            ModalHelper.showModal(context: context, modalContent: const SymptomModal(), duration: 5);
+                          },
+                        ),
+                        SettingsItem(
+                          icon: Icons.bar_chart,
+                          title: 'Symptom score'.tr(context),
+                          onTap: () {
+                            ModalHelper.showModal(context: context, modalContent: const SymptomModal(), duration: 5);
+                          },
+                        ),
+                        SettingsItem(
+                          icon: Icons.language,
+                          title: 'Language'.tr(context),
+                          subtitle: 'English (United States)'.tr(context),
+                          onTap: () {
+                            ModalHelper.showModal(
+                              context: context,
+                              modalContent: const LanguageViewModal(),
+                              duration: 5,
+                            );
+                          },
+                        ),
+                        SettingsItem(
+                          icon: Icons.help_outline,
+                          title: 'FAQ'.tr(context),
+                          onTap: () {
+                            ModalHelper.showModal(context: context, modalContent: const FaqViewModal(), duration: 5);
+                          },
+                        ),
+                        SettingsItem(
+                          icon: Icons.phone,
+                          title: 'Contact Us'.tr(context),
+                          onTap: () {
+                            ModalHelper.showModal(
+                              context: context,
+                              modalContent: const ContactUsBuilder(),
+                              duration: 5,
+                            );
+                          },
+                        ),
+                        SettingsItem(
+                          icon: Icons.info_outline,
+                          title: 'About'.tr(context),
+                          onTap: () {
+                            ModalHelper.showModal(context: context, modalContent: const AboutModal(), duration: 5);
+                          },
+                        ),
+                        BlocBuilder<MenuBloc, MenuState>(
+                          builder: (context, state) {
+                            var latestVersion = '1.0.0'; // 기본값 설정 (로딩 중일 때)
+                            if (state is GetVersionSuccess) {
+                              latestVersion = state.latestVersion; // 상태가 성공일 때 최신 버전 업데이트
+                            }
+                            return Container(
+                              height: 60,
+                              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    'App Version'.tr(context),
-                                    style: context.textStyleTheme.b16Regular.copyWith(
-                                      color: context.colorTheme.neutral.shade10,
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'App Version'.tr(context),
+                                          style: context.textStyleTheme.b16Regular.copyWith(
+                                            color: context.colorTheme.neutral.shade10,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Lastest : 2025.01',
+                                          style: context.textStyleTheme.b12Medium.copyWith(
+                                            color: context.colorTheme.neutral.shade7,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                   Text(
-                                    'Lastest : 2025.01',
-                                    style: context.textStyleTheme.b12Medium.copyWith(
-                                      color: context.colorTheme.neutral.shade7,
-                                    ),
+                                    latestVersion,
+                                    style: context.textStyleTheme.b14Medium
+                                        .copyWith(color: context.colorTheme.vermilion.primary.shade50),
                                   ),
                                 ],
                               ),
-                            ),
-                            Text(
-                              '3.1.0',
-                              style: context.textStyleTheme.b14Medium
-                                  .copyWith(color: context.colorTheme.vermilion.primary.shade50),
-                            ),
-                          ],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.only(top: 20, bottom: 16),
+                      child: Text(
+                        'Unit setting'.tr(context),
+                        style: context.textStyleTheme.b20Bold.copyWith(
+                          color: context.colorTheme.neutral.shade10,
                         ),
                       ),
-                    ],
-                  ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.only(top: 20, bottom: 16),
-                    child: Text(
-                      'Unit setting'.tr(context),
-                      style: context.textStyleTheme.b20Bold.copyWith(
-                        color: context.colorTheme.neutral.shade10,
-                      ),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(child: _buildButton('ml', selectedUnit == 'ml')),
-                      const SizedBox(width: 8), // 버튼 간 간격
-                      Expanded(child: _buildButton('oz', selectedUnit == 'oz')),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                ],
+                    BlocBuilder<UnitCubit, Unit>(
+                      builder: (context, state) {
+                        final unit = state.name;
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onTap: () {
+                                  context.read<UnitCubit>().change(Unit.ml);
+                                }, //toggleUnit(unit),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                                  height: 43,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: unit == 'ml'
+                                        ? context.colorTheme.vermilion.secondary.shade10
+                                        : context.colorTheme.neutral.shade4, // 선택된 버튼 색상
+                                    borderRadius: BorderRadius.circular(12), // 둥근 모서리
+                                    border: Border.all(
+                                      color: unit == 'ml'
+                                          ? context.colorTheme.vermilion.secondary.shade20
+                                          : Colors.transparent, // 선택된 버튼 테두리 색상
+                                      width: 3, // 테두리 두께
+                                    ),
+                                  ),
+                                  child: Text(
+                                    'ml',
+                                    style: context.textStyleTheme.b16SemiBold.copyWith(
+                                      color: unit == 'ml'
+                                          ? context.colorTheme.vermilion.primary.shade50
+                                          : context.colorTheme.neutral.shade6, // 텍스트 색상
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            const SizedBox(width: 8), // 버튼 간 간격
+                            Expanded(
+                              child: GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onTap: () {
+                                  context.read<UnitCubit>().change(Unit.oz);
+                                }, //toggleUnit(unit),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                                  height: 43,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: unit == 'oz'
+                                        ? context.colorTheme.vermilion.secondary.shade10
+                                        : context.colorTheme.neutral.shade4, // 선택된 버튼 색상
+                                    borderRadius: BorderRadius.circular(12), // 둥근 모서리
+                                    border: Border.all(
+                                      color: unit == 'oz'
+                                          ? context.colorTheme.vermilion.secondary.shade20
+                                          : Colors.transparent, // 선택된 버튼 테두리 색상
+                                      width: 3, // 테두리 두께
+                                    ),
+                                  ),
+                                  child: Text(
+                                    'oz',
+                                    style: context.textStyleTheme.b16SemiBold.copyWith(
+                                      color: unit == 'oz'
+                                          ? context.colorTheme.vermilion.primary.shade50
+                                          : context.colorTheme.neutral.shade6, // 텍스트 색상
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 4),
+                  ],
+                ),
               ),
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildButton(String unit, bool isSelected) {
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: () => toggleUnit(unit),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-        height: 43,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: isSelected
-              ? context.colorTheme.vermilion.secondary.shade10
-              : context.colorTheme.neutral.shade4, // 선택된 버튼 색상
-          borderRadius: BorderRadius.circular(12), // 둥근 모서리
-          border: Border.all(
-            color: isSelected ? context.colorTheme.vermilion.secondary.shade20 : Colors.transparent, // 선택된 버튼 테두리 색상
-            width: 3, // 테두리 두께
-          ),
-        ),
-        child: Text(
-          unit,
-          style: context.textStyleTheme.b16SemiBold.copyWith(
-            color:
-                isSelected ? context.colorTheme.vermilion.primary.shade50 : context.colorTheme.neutral.shade6, // 텍스트 색상
           ),
         ),
       ),

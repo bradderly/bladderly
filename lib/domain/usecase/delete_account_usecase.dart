@@ -6,8 +6,8 @@ import 'package:injectable/injectable.dart';
 import 'package:bladderly/domain/repository/auth_repository.dart';
 
 @lazySingleton
-class ChangePasswordUsecase {
-  const ChangePasswordUsecase({
+class DeleteAccountUsecase {
+  const DeleteAccountUsecase({
     required AuthRepository authRepository,
   }) : _authRepository = authRepository;
 
@@ -15,14 +15,10 @@ class ChangePasswordUsecase {
 
   Future<Either<Exception, String>> call({
     required String email,
-    required String newPw,
-    required String oldPw,
   }) async {
     try {
-      final result = await _authRepository.changePassword(
+      final result = await _authRepository.deleteAccount(
         email: email,
-        newPw: newPw,
-        oldPw: oldPw,
       );
       return Right(result);
     } on Exception catch (e) {
