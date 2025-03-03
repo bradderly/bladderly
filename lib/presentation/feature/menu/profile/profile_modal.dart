@@ -204,6 +204,7 @@ class ProfileModal extends StatelessWidget {
                                     GestureDetector(
                                       onTap: () {
                                         Navigator.pop(context);
+                                        context.read<UserBloc>().add(const UserSignOut());
                                       },
                                       child: Container(
                                         alignment: Alignment.center,
