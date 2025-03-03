@@ -1,7 +1,10 @@
-import 'package:bladderly/domain/usecase/change_password_usecase.dart';
+// Package imports:
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
+import 'package:bladderly/domain/usecase/change_password_usecase.dart';
 
 part 'change_password_event.dart';
 part 'change_password_state.dart';

@@ -1,17 +1,18 @@
 // Flutter imports:
-import 'package:bladderly/presentation/feature/menu/profile/change_password/change_password_builder.dart';
-import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
-import 'package:flutter/material.dart';
-
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/feature/menu/profile/change_password/change_password_builder.dart';
 import 'package:bladderly/presentation/feature/menu/profile/delete_account_modal.dart';
 import 'package:bladderly/presentation/feature/menu/profile/setup_passcode_modal.dart';
+import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 import 'package:bladderly/presentation/feature/menu/widget/input_text_form.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:bladderly/presentation/feature/menu/widget/text_icon_arrow_form.dart';
 import 'package:bladderly/presentation/feature/menu/widget/text_view_form.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Package imports:
 
@@ -115,9 +116,7 @@ class UserProfileModal extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 24),
                                     GestureDetector(
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                      },
+                                      onTap: () => context.read<UserBloc>().add(const UserSignOut()),
                                       child: Container(
                                         alignment: Alignment.center,
                                         height: 56,
