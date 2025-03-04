@@ -1,9 +1,13 @@
 // Flutter imports:
 
+// Project imports:
+import 'package:bladderly/presentation/common/bloc/history_result_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
+// Flutter imports:
+import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/input/sound_input_note/bloc/sound_input_note_bloc.dart';
 import 'package:bladderly/presentation/feature/input/sound_input_note/cubit/sound_input_note_form_cubit.dart';
 import 'package:bladderly/presentation/feature/input/sound_input_note/modal/sound_input_note_upload_success_modal.dart';
@@ -15,11 +19,11 @@ import 'package:bladderly/presentation/feature/input/widget/input_save_button.da
 import 'package:bladderly/presentation/feature/input/widget/input_text_area_widget.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
-// Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 class SoundInputNoteView extends StatelessWidget {
   const SoundInputNoteView({
@@ -31,7 +35,7 @@ class SoundInputNoteView extends StatelessWidget {
 
   void _onSave(BuildContext context, SoundInputNoteFormState state) {
     final event = SoundInputNoteUpload(
-      userId: context.read<UserBloc>().state.userModelOrThrowException.id,
+      userId: _getUserId(context),
       recordTime: recordTime,
       isLeakage: state.isLeakage!,
       isNocutria: state.isNocutria!,
@@ -42,8 +46,12 @@ class SoundInputNoteView extends StatelessWidget {
     context.read<SoundInputNoteBloc>().add(event);
   }
 
-  void _onSaveSuccess(BuildContext context) {
+  void _onSaveSuccess(BuildContext context, SoundInputUploadSuccess state) {
+    context.pop();
+
     context.read<PendingUploadFileCubit>().clearRecordTime();
+    context.read<HistoryResultBloc>().add(HistoryResultGet(userId: _getUserId(context), historyId: state.historyId));
+
     SoundInputNoteUploadSuccessModal.show(
       context,
       onGoToDiary: () => const MainRoute(tab: MainRouteTab.diary).go(context),
@@ -52,9 +60,15 @@ class SoundInputNoteView extends StatelessWidget {
 
   void _onSoundInputNoteBlocListener(BuildContext context, SoundInputNoteState state) {
     return switch (state) {
-      SoundInputUploadSuccess() => _onSaveSuccess(context),
+      SoundInputUploadInProgress() => ProgressIndicatorModal.show(context),
+      SoundInputUploadSuccess() => _onSaveSuccess(context, state),
+      SoundInputUploadFailure() => context.pop(),
       _ => null,
     };
+  }
+
+  String _getUserId(BuildContext context) {
+    return context.read<UserBloc>().state.userModelOrThrowException.id;
   }
 
   @override

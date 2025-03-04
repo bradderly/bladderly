@@ -1,12 +1,17 @@
 // Flutter imports:
+
 // Project imports:
+import 'package:bladderly/presentation/common/bloc/history_result_bloc.dart';
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/feature/diary/diary/cubit/diary_cubit.dart';
 import 'package:bladderly/presentation/feature/diary/diary/cubit/diary_history_dates_cubit.dart';
+import 'package:bladderly/presentation/feature/diary/diary/model/diary_history_status_model.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_tab_scroll_section_model.dart';
 import 'package:bladderly/presentation/feature/diary/diary/widget/dairy_histories_widget.dart';
 import 'package:bladderly/presentation/feature/diary/diary/widget/diary_app_bar.dart';
 import 'package:bladderly/presentation/feature/diary/diary/widget/diary_today_summary_widget.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -127,7 +132,15 @@ class _DiaryViewState extends State<DiaryView> with AutomaticKeepAliveClientMixi
               const Gap(37),
               BlocBuilder<DiaryCubit, DiaryState>(
                 builder: (context, state) => DiaryHistoriesWidget(
-                  onTapHistory: (id) => DetailedListRoute(historyId: id, date: state.dateTime).go(context),
+                  onTapHistory: (diaryHistoryModel) => switch (diaryHistoryModel.status) {
+                    DiaryHistoryStatusModel.failed => context.read<HistoryResultBloc>().add(
+                          HistoryResultRefresh(
+                            userId: context.read<UserBloc>().state.userModelOrThrowException.id,
+                            historyId: diaryHistoryModel.id,
+                          ),
+                        ),
+                    _ => DetailedListRoute(historyId: diaryHistoryModel.id, date: state.dateTime).go(context),
+                  },
                   diaryHistoryModels: state.diaryHistoryModels,
                 ),
               ),

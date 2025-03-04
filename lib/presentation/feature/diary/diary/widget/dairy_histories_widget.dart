@@ -1,18 +1,17 @@
 // Dart imports:
 import 'dart:math';
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:gap/gap.dart';
-
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_history_model.dart';
+import 'package:bladderly/presentation/feature/diary/diary/model/diary_history_status_model.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_history_type_model.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:gap/gap.dart';
 
 class DiaryHistoriesWidget extends StatelessWidget {
   const DiaryHistoriesWidget({
@@ -21,7 +20,7 @@ class DiaryHistoriesWidget extends StatelessWidget {
     required this.diaryHistoryModels,
   });
 
-  final void Function(int) onTapHistory;
+  final void Function(DiaryHistoryModel) onTapHistory;
   final List<DiaryHistoryModel> diaryHistoryModels;
 
   @override
@@ -62,52 +61,62 @@ class DiaryHistoriesWidget extends StatelessWidget {
           ],
         ),
         const Gap(24),
-        if (diaryHistoryModels.isEmpty)
-          Container(
-            height: 138,
-            alignment: Alignment.center,
-            child: Text(
-              'List Na Message'.tr(context),
-              style: context.textStyleTheme.b16Medium.copyWith(
-                color: context.colorTheme.neutral.shade6,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          )
-        else
-          Column(
-            children: [
-              Row(
-                children: List.generate(
-                  _DiaryHistoryColumn.values.length,
-                  (index) {
-                    final column = _DiaryHistoryColumn.values[index];
-                    return Container(
-                      alignment: Alignment.center,
-                      width: column.getWidth(context),
-                      child: Text(
-                        column.text.tr(context),
-                        style: context.textStyleTheme.b12Medium.copyWith(
-                          color: context.colorTheme.neutral.shade6,
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              const Gap(8),
-              const Divider(color: Color(0xFFE6E6E6), height: 1),
-              for (final diaryHistoryModel in diaryHistoryModels) ...[
-                GestureDetector(
-                  onTap: () => onTapHistory(diaryHistoryModel.id),
-                  behavior: HitTestBehavior.translucent,
-                  child: _HistoryWidget(diaryHistoryModel: diaryHistoryModel),
-                ),
-                const Divider(color: Color(0xFFE6E6E6), height: 1),
-              ],
-            ],
-          ),
+        if (diaryHistoryModels.isEmpty) _buildEmptyHistories(context) else _buildHistories(context),
       ],
+    );
+  }
+
+  Widget _buildHistories(BuildContext context) {
+    return Column(
+      children: [
+        Semantics(
+          label: 'Header of List',
+          child: Row(
+            children: List.generate(
+              _DiaryHistoryColumn.values.length,
+              (index) {
+                final column = _DiaryHistoryColumn.values[index];
+                return Container(
+                  alignment: Alignment.center,
+                  width: column.getWidth(context),
+                  child: Text(
+                    column.text.tr(context),
+                    style: context.textStyleTheme.b12Medium.copyWith(
+                      color: context.colorTheme.neutral.shade6,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+        const Gap(8),
+        const Divider(color: Color(0xFFE6E6E6), height: 1),
+        for (final diaryHistoryModel in diaryHistoryModels) ...[
+          GestureDetector(
+            onTap: () => onTapHistory(diaryHistoryModel),
+            behavior: HitTestBehavior.translucent,
+            child: _HistoryWidget(
+              diaryHistoryModel: diaryHistoryModel,
+            ),
+          ),
+          const Divider(color: Color(0xFFE6E6E6), height: 1),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildEmptyHistories(BuildContext context) {
+    return Container(
+      height: 138,
+      alignment: Alignment.center,
+      child: Text(
+        'List Na Message'.tr(context),
+        style: context.textStyleTheme.b16Medium.copyWith(
+          color: context.colorTheme.neutral.shade6,
+        ),
+        textAlign: TextAlign.center,
+      ),
     );
   }
 }
@@ -152,68 +161,132 @@ class _HistoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        children: List.generate(
-          _DiaryHistoryColumn.values.length,
-          (index) {
-            final column = _DiaryHistoryColumn.values[index];
-            return Container(
-              alignment: Alignment.center,
-              width: column.getWidth(context),
-              child: switch (column) {
-                _DiaryHistoryColumn.time => Row(
-                    children: [
-                      Container(
-                        width: 4,
-                        height: 4,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: diaryHistoryModel.type.getColor(context),
-                        ),
-                      ),
-                      const Gap(4),
-                      Text(
-                        diaryHistoryModel.getRecordTime(context),
-                        style: context.textStyleTheme.b14Medium.copyWith(
-                          color: context.colorTheme.neutral.shade10,
-                        ),
-                      ),
-                      const Gap(8),
-                      if (diaryHistoryModel.isNocturia)
-                        Assets.icon.icDiaryNighttime
-                            .svg(colorFilter: ColorFilter.mode(context.colorTheme.neutral.shade6, BlendMode.srcIn)),
-                    ],
-                  ),
-                _DiaryHistoryColumn.amount => Text(
-                    diaryHistoryModel.getRecordVolume(context),
-                    style: context.textStyleTheme.b14Medium.copyWith(
-                      color: diaryHistoryModel.type.getColor(context),
-                    ),
-                  ),
-                _DiaryHistoryColumn.urge => Text(
-                    diaryHistoryModel.recordUrgency?.toString() ?? '',
-                    style: context.textStyleTheme.b14Medium.copyWith(
-                      color: context.colorTheme.neutral.shade8,
-                    ),
-                  ),
-                _DiaryHistoryColumn.leak => Text(
-                    diaryHistoryModel.leakageVolume?.tr(context) ?? '',
-                    style: context.textStyleTheme.b14Medium.copyWith(
-                      color: context.colorTheme.neutral.shade8,
-                    ),
-                  ),
-                _DiaryHistoryColumn.type => Text(
-                    diaryHistoryModel.beverageType?.tr(context) ?? '',
-                    style: context.textStyleTheme.b14Medium.copyWith(
-                      color: context.colorTheme.neutral.shade8,
-                    ),
-                  ),
-              },
-            );
-          },
+      color: switch (diaryHistoryModel.status) {
+        DiaryHistoryStatusModel.processing => context.colorTheme.vermilion.secondary.shade5,
+        DiaryHistoryStatusModel.failed => context.colorTheme.vermilion.secondary.shade5,
+        DiaryHistoryStatusModel.done => null,
+      },
+      child: switch (diaryHistoryModel.status) {
+        DiaryHistoryStatusModel.processing => _buildProcessingRow(context),
+        DiaryHistoryStatusModel.failed => _buildFailedRow(context),
+        DiaryHistoryStatusModel.done => _buildDefaultRow(context),
+      },
+    );
+  }
+
+  Widget _buildTimeColumn(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 4,
+          height: 4,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: diaryHistoryModel.type.getColor(context),
+          ),
         ),
+        const Gap(4),
+        Text(
+          diaryHistoryModel.getRecordTime(context),
+          style: context.textStyleTheme.b14Medium.copyWith(
+            color: context.colorTheme.neutral.shade10,
+          ),
+        ),
+        const Gap(8),
+        if (diaryHistoryModel.isNocturia)
+          Assets.icon.icDiaryNighttime
+              .svg(colorFilter: ColorFilter.mode(context.colorTheme.neutral.shade6, BlendMode.srcIn)),
+      ],
+    );
+  }
+
+  Widget _buildProcessingRow(BuildContext context) {
+    return Row(
+      children: [
+        _buildTimeColumn(context),
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Assets.icon.icDiaryUploadProgress.svg(),
+              const Gap(4),
+              Text(
+                'Pending Message'.tr(context),
+                style: context.textStyleTheme.b12SemiBold.copyWith(
+                  color: context.colorTheme.vermilion.primary.shade50,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFailedRow(BuildContext context) {
+    return Row(
+      children: [
+        _buildTimeColumn(context),
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Assets.icon.icDiaryRefresh.svg(),
+              const Gap(4),
+              Text(
+                'Refresh'.tr(context),
+                style: context.textStyleTheme.b12SemiBold.copyWith(
+                  color: context.colorTheme.vermilion.primary.shade50,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDefaultRow(BuildContext context) {
+    return Row(
+      children: List.generate(
+        _DiaryHistoryColumn.values.length,
+        (index) {
+          final column = _DiaryHistoryColumn.values[index];
+
+          return Container(
+            alignment: Alignment.center,
+            width: column.getWidth(context),
+            child: switch (column) {
+              _DiaryHistoryColumn.time => _buildTimeColumn(context),
+              _DiaryHistoryColumn.amount => Text(
+                  diaryHistoryModel.getRecordVolume(context),
+                  style: context.textStyleTheme.b14Medium.copyWith(
+                    color: diaryHistoryModel.type.getColor(context),
+                  ),
+                ),
+              _DiaryHistoryColumn.urge => Text(
+                  diaryHistoryModel.recordUrgency?.toString() ?? '',
+                  style: context.textStyleTheme.b14Medium.copyWith(
+                    color: context.colorTheme.neutral.shade8,
+                  ),
+                ),
+              _DiaryHistoryColumn.leak => Text(
+                  diaryHistoryModel.leakageVolume?.tr(context) ?? '',
+                  style: context.textStyleTheme.b14Medium.copyWith(
+                    color: context.colorTheme.neutral.shade8,
+                  ),
+                ),
+              _DiaryHistoryColumn.type => Text(
+                  diaryHistoryModel.beverageType?.tr(context) ?? '',
+                  style: context.textStyleTheme.b14Medium.copyWith(
+                    color: context.colorTheme.neutral.shade8,
+                  ),
+                ),
+            },
+          );
+        },
       ),
     );
   }

@@ -1,7 +1,10 @@
-import 'package:bladderly/domain/usecase/promo_code_usecase.dart';
+// Package imports:
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
+import 'package:bladderly/domain/usecase/promo_code_usecase.dart';
 
 part 'promo_code_event.dart';
 part 'promo_code_state.dart';

@@ -1,6 +1,15 @@
 // Dart imports:
 import 'dart:math' as math;
 
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:flutter/physics.dart';
+import 'package:flutter/services.dart';
+
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/datetime_extension.dart';
@@ -8,13 +17,6 @@ import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/diary/diary/cubit/diary_history_dates_cubit.dart';
 import 'package:bladderly/presentation/feature/diary/diary/modal/diary_calendar_modal.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
-// Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:flutter/physics.dart';
-import 'package:flutter/services.dart';
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 
 class DiaryAppBar extends StatefulWidget implements PreferredSizeWidget {
   const DiaryAppBar({

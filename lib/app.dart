@@ -1,15 +1,12 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localization/flutter_localization.dart';
-
 // Project imports:
 import 'package:bladderly/core/di/di.dart';
+import 'package:bladderly/domain/usecase/get_history_result_usecase.dart';
 import 'package:bladderly/domain/usecase/get_user_stream_usecase.dart';
 import 'package:bladderly/domain/usecase/get_user_usecase.dart';
+import 'package:bladderly/domain/usecase/refresh_history_result_usecase.dart';
 import 'package:bladderly/domain/usecase/sign_out_usecase.dart';
+import 'package:bladderly/presentation/common/bloc/history_result_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/locale_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/unit_cubit.dart';
@@ -20,6 +17,10 @@ import 'package:bladderly/presentation/router/app_router.dart';
 import 'package:bladderly/presentation/theme/color/color_theme.dart';
 import 'package:bladderly/presentation/theme/shadow/shadow_theme.dart';
 import 'package:bladderly/presentation/theme/text_style/text_style_theme.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 
 class _ScrollBehavior extends ScrollBehavior {
   const _ScrollBehavior();
@@ -76,6 +77,12 @@ class _BladderlyAppState extends State<BladderlyApp> {
         ),
         BlocProvider<AppLocaleCubit>.value(
           value: appLocaleCubit,
+        ),
+        BlocProvider<HistoryResultBloc>(
+          create: (_) => HistoryResultBloc(
+            getHistoryProcessingResultUsecase: getIt<GetHistoryResultUsecase>(),
+            refreshHistoryResultUsecase: getIt<RefreshHistoryResultUsecase>(),
+          ),
         ),
       ],
       child: BlocListener<AppLocaleCubit, AppLocale>(

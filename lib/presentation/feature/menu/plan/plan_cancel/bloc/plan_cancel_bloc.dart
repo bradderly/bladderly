@@ -1,7 +1,10 @@
-import 'package:bladderly/domain/usecase/plan_cancel_usecase.dart';
+// Package imports:
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
+import 'package:bladderly/domain/usecase/plan_cancel_usecase.dart';
 
 part 'plan_cancel_event.dart';
 part 'plan_cancel_state.dart';

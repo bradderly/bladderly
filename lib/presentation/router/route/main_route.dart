@@ -1,7 +1,6 @@
 // Flutter imports:
 
 // Flutter imports:
-import 'package:bladderly/presentation/feature/menu/plan/paywall/paywall_builder.dart';
 import 'package:flutter/cupertino.dart';
 
 // Package imports:
@@ -18,9 +17,10 @@ import 'package:bladderly/presentation/feature/input/manual_input/manual_input_b
 import 'package:bladderly/presentation/feature/input/sound_input_note/sound_input_note_builder.dart';
 import 'package:bladderly/presentation/feature/input/sound_input_recording/sound_input_recording_builder.dart';
 import 'package:bladderly/presentation/feature/main/main_builder.dart';
-import 'package:bladderly/presentation/feature/menu/how_to_use/how_to_use_view.dart';
 import 'package:bladderly/presentation/feature/menu/menu_builder.dart';
+import 'package:bladderly/presentation/feature/menu/plan/paywall/paywall_builder.dart';
 import 'package:bladderly/presentation/feature/sign_up/regular/sign_up_regular_builder.dart';
+import 'package:bladderly/presentation/feature/tutorial/how_to_use/how_to_use_view.dart';
 
 part 'main_route.g.dart';
 

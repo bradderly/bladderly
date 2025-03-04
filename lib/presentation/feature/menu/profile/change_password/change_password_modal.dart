@@ -1,3 +1,10 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
@@ -6,8 +13,6 @@ import 'package:bladderly/presentation/common/widget/progress_indicator_modal.da
 import 'package:bladderly/presentation/feature/menu/profile/change_password/bloc/change_password_bloc.dart';
 import 'package:bladderly/presentation/feature/menu/profile/change_password/cubit/change_password_form_cubit.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class ChangePasswordModal extends StatelessWidget {

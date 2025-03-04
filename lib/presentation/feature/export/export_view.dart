@@ -1,10 +1,9 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:bladderly/presentation/feature/export/calendar/export_calendar_builder.dart';
 import 'package:bladderly/presentation/feature/export/report/export_report_builder.dart';
-import 'package:bladderly/presentation/feature/export/term/export_term_view.dart';
+import 'package:bladderly/presentation/feature/export/term/export_term_builder.dart';
+import 'package:flutter/material.dart';
 
 class ExportView extends StatefulWidget {
   const ExportView({
@@ -51,10 +50,9 @@ class _ExportViewState extends State<ExportView> {
             },
             historyDates: widget.historyDates,
           ),
-          ExportTermView(
+          ExportTermBuilder(
             onExport: () => animateToPage(2),
             dates: selectedDates,
-            email: 'ydu3328@naver.com',
           ),
           const ExportReportBuilder(),
         ],

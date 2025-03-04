@@ -47,7 +47,7 @@ class SaveVoidingHistoryWithFileUsecase {
       final user = _authRepository.getUserOrNullByUserId(userId) ??
           (throw const NotFoundUserException(message: 'User not found'));
 
-      final file = _recorderFileLoader.getFile(recordTime);
+      final file = _recorderFileLoader.getFile(recordTime)..readAsBytesSync();
 
       if (!file.existsSync()) {
         throw const NotFoundVoidingSoundFileException(message: 'Voiding sound file not found');

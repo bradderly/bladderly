@@ -1,4 +1,5 @@
 // Package imports:
+// Project imports:
 import 'package:bladderly/domain/usecase/get_version_usecase.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
@@ -34,7 +35,7 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
     result.fold(
       (exception) => emit(GetVersionFailure(exception: exception)),
       (success) {
-        final latestVersion = success.latestVersion.toString(); // success에서 latest_version 추출
+        final latestVersion = success.latestVer.toString(); // success에서 latest_version 추출
         emit(GetVersionSuccess(latestVersion: latestVersion)); // 최신 버전 상태로 emit
       },
     );

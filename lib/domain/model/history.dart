@@ -1,4 +1,6 @@
 // Package imports:
+
+// Package imports:
 import 'package:equatable/equatable.dart';
 
 // Project imports:
@@ -86,6 +88,21 @@ class VoidingHistory extends History {
 
   @override
   VoidingHistory setStatus(HistoryStatus status) {
+    return VoidingHistory(
+      id: id,
+      recordTime: recordTime,
+      memo: memo,
+      status: status,
+      recordVolume: recordVolume,
+      recordUrgency: recordUrgency,
+      isManual: isManual,
+      isNocturia: isNocturia,
+      isLeakage: isLeakage,
+      leakageVolume: leakageVolume,
+    );
+  }
+
+  VoidingHistory setRecordVolume(int recordVolume) {
     return VoidingHistory(
       id: id,
       recordTime: recordTime,

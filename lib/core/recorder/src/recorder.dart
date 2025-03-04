@@ -77,4 +77,6 @@ abstract class Recorder {
   RecorderState get state;
 
   File getFile(DateTime recordTime);
+
+  void delete(DateTime recordTime);
 }

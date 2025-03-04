@@ -1,4 +1,6 @@
 // Flutter imports:
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -9,7 +11,7 @@ import 'package:go_router/go_router.dart';
 // Project imports:
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bladderly/presentation/feature/menu/how_to_use/widget/howtouse_page_view.dart';
+import 'package:bladderly/presentation/feature/tutorial/how_to_use/widget/howtouse_page_view.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 
 class HowtouseView extends StatefulWidget {

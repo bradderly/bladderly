@@ -1,12 +1,11 @@
 // Package imports:
 
-// Package imports:
-import 'package:dartz/dartz.dart';
-import 'package:injectable/injectable.dart';
-
 // Project imports:
 import 'package:bladderly/domain/repository/auth_repository.dart';
 import 'package:bladderly/domain/repository/history_repository.dart';
+// Package imports:
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class SignInUsecase {

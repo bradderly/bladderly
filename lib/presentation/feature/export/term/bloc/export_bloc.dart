@@ -1,10 +1,9 @@
 // Package imports:
+// Project imports:
+import 'package:bladderly/domain/usecase/export_histories_usecase.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-// Project imports:
-import 'package:bladderly/domain/usecase/export_histories_usecase.dart';
 
 part 'export_event.dart';
 part 'export_state.dart';
@@ -25,6 +24,7 @@ class ExportBloc extends Bloc<ExportEvent, ExportState> {
     await Future<void>.delayed(const Duration(seconds: 1));
 
     final result = await _exportHistoriesUsecase(
+      userId: event.userId,
       email: event.email,
       dates: state.selectedDates,
     );

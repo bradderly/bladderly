@@ -16,7 +16,17 @@ final class SoundInputUploadInProgress extends SoundInputNoteState {
 }
 
 final class SoundInputUploadSuccess extends SoundInputNoteState {
-  const SoundInputUploadSuccess();
+  const SoundInputUploadSuccess({
+    required this.historyId,
+  });
+
+  final int historyId;
+
+  @override
+  List<Object> get props => [
+        ...super.props,
+        historyId,
+      ];
 }
 
 final class SoundInputUploadFailure extends SoundInputNoteState {
