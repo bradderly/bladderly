@@ -1,4 +1,3 @@
-import 'package:bladderly/domain/usecase/contact_us_usecase.dart';
 import 'package:bladderly/domain/usecase/paywall_usecase.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';

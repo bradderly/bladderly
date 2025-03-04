@@ -1,10 +1,6 @@
 // Dart imports:
 import 'dart:io';
 
-// Package imports:
-import 'package:injectable/injectable.dart';
-import 'package:intl/intl.dart';
-
 // Project imports:
 import 'package:bladderly/data/api/client/api_client.dart';
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
@@ -14,6 +10,9 @@ import 'package:bladderly/data/mapper/history_mapper.dart';
 import 'package:bladderly/domain/model/histories.dart';
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/repository/history_repository.dart';
+// Package imports:
+import 'package:injectable/injectable.dart';
+import 'package:intl/intl.dart';
 
 @LazySingleton(as: HistoryRepository)
 class HistoryRepositoryImpl implements HistoryRepository {
@@ -158,7 +157,9 @@ class HistoryRepositoryImpl implements HistoryRepository {
     final response = await _apiClient.getAllRecords(userId: userId).then((response) => response.body!);
     final records = response.records ?? [];
 
-    return Histories(list: records.map(HistoryMapper.fromGetAllResultResponse$Records$Item).toList());
+    return Histories(
+      list: records.map(HistoryMapper.fromGetAllResultResponse$Records$Item).whereType<History>().toList(),
+    );
   }
 
   @override
