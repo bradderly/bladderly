@@ -1,10 +1,14 @@
 // Flutter imports:
+
+// Flutter imports:
+import 'package:flutter/widgets.dart';
+
+// Package imports:
+import 'package:intl/intl.dart';
+
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
-import 'package:flutter/widgets.dart';
-// Package imports:
-import 'package:intl/intl.dart';
 
 extension DatetimeExtension on DateTime {
   String getCalendarHeader(BuildContext context) {

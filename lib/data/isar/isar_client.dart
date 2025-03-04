@@ -40,6 +40,8 @@ abstract class IsarClient {
   void clearAll();
 
   Future<List<HistoryEntity>> getPendingHistories();
+
+  Future<List<HistoryEntity>> getProcessingHistories();
 }
 
 class _IsarClientImpl implements IsarClient {
@@ -133,5 +135,10 @@ class _IsarClientImpl implements IsarClient {
   @override
   Future<List<HistoryEntity>> getPendingHistories() {
     return _isar.historyEntitys.filter().statusEqualTo(HistoryStatus.pending).findAll();
+  }
+
+  @override
+  Future<List<HistoryEntity>> getProcessingHistories() {
+    return _isar.historyEntitys.filter().statusEqualTo(HistoryStatus.processing).findAll();
   }
 }

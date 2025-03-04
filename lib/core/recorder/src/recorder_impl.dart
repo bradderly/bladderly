@@ -66,4 +66,9 @@ class _RecorderImpl implements Recorder, RecorderFileLoader {
   @override
   File getFile(DateTime recordTime) =>
       File(join(_directory.path, '${DateFormat('yyyyMMdd-HHmmss').format(recordTime)}.m4a'));
+
+  @override
+  void delete(DateTime recordTime) {
+    if (getFile(recordTime) case final File file) file.deleteSync();
+  }
 }

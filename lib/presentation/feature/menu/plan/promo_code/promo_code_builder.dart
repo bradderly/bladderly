@@ -1,8 +1,6 @@
 // Flutter imports:
-import 'package:bladderly/domain/usecase/promo_code_usecase.dart';
-import 'package:bladderly/presentation/feature/menu/plan/promo_code/bloc/promo_code_bloc.dart';
-import 'package:bladderly/presentation/feature/menu/plan/promo_code/cubit/promo_code_form_cubit.dart';
-import 'package:bladderly/presentation/feature/menu/plan/promo_code/promo_code_modal.dart';
+
+// Flutter imports:
 import 'package:flutter/widgets.dart';
 
 // Package imports:
@@ -10,6 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
 import 'package:bladderly/core/di/di.dart';
+import 'package:bladderly/domain/usecase/promo_code_usecase.dart';
+import 'package:bladderly/presentation/feature/menu/plan/promo_code/bloc/promo_code_bloc.dart';
+import 'package:bladderly/presentation/feature/menu/plan/promo_code/cubit/promo_code_form_cubit.dart';
+import 'package:bladderly/presentation/feature/menu/plan/promo_code/promo_code_modal.dart';
 
 class PromoCodeBuilder extends StatelessWidget {
   const PromoCodeBuilder({super.key});

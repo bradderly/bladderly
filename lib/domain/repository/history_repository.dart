@@ -4,6 +4,7 @@ import 'dart:io';
 // Project imports:
 import 'package:bladderly/domain/model/histories.dart';
 import 'package:bladderly/domain/model/history.dart';
+import 'package:bladderly/domain/model/history_result.dart';
 
 abstract class HistoryRepository {
   Stream<Histories> getHistoriesStream({
@@ -20,6 +21,7 @@ abstract class HistoryRepository {
 
   Future<void> exportHistories({
     required String userId,
+    required String email,
     required List<DateTime> dates,
   });
 
@@ -46,4 +48,11 @@ abstract class HistoryRepository {
   Future<Histories> getAllHistoriesFromServer(String userId);
 
   Future<Histories> getPendingHistories();
+
+  Future<HistoryResult> getHistoryResult({
+    required String userId,
+    required DateTime recordTime,
+  });
+
+  Future<Histories<VoidingHistory>> getProcessingHistories();
 }

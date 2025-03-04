@@ -24,9 +24,7 @@
   "paths": {
     "/dev/audio-upload": {
       "post": {
-        "tags": [
-          "file upload"
-        ],
+        "tags": ["file upload"],
         "description": "m4a audio file upload",
         "operationId": "audioUpload",
         "parameters": [
@@ -92,9 +90,7 @@
     },
     "/dev/change-pw": {
       "post": {
-        "tags": [
-          "register"
-        ],
+        "tags": ["register"],
         "description": "change log in passwoard",
         "operationId": "changePw",
         "parameters": [
@@ -113,11 +109,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": [
-                  "email",
-                  "new_pw",
-                  "old_pw"
-                ],
+                "required": ["email", "new_pw", "old_pw"],
                 "type": "object",
                 "properties": {
                   "email": {
@@ -162,9 +154,7 @@
     },
     "/dev/check-promo": {
       "get": {
-        "tags": [
-          "payment"
-        ],
+        "tags": ["payment"],
         "description": "check promotion/redeem/study code",
         "operationId": "checkPromo",
         "parameters": [
@@ -228,9 +218,7 @@
     },
     "/dev/confirm-pw": {
       "post": {
-        "tags": [
-          "register"
-        ],
+        "tags": ["register"],
         "description": "confirm password with verification code",
         "operationId": "confirmPw",
         "parameters": [
@@ -249,11 +237,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": [
-                  "email",
-                  "new_pw",
-                  "verification_code"
-                ],
+                "required": ["email", "new_pw", "verification_code"],
                 "type": "object",
                 "properties": {
                   "email": {
@@ -313,11 +297,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": [
-                  "email",
-                  "message",
-                  "subject"
-                ],
+                "required": ["email", "message", "subject"],
                 "type": "object",
                 "properties": {
                   "email": {
@@ -365,9 +345,7 @@
     },
     "/dev/delete-account": {
       "post": {
-        "tags": [
-          "register"
-        ],
+        "tags": ["register"],
         "description": "delete account",
         "parameters": [
           {
@@ -394,6 +372,10 @@
                   "id": {
                     "type": "string",
                     "description": "guest user"
+                  },
+                  "reason": {
+                    "type": "string",
+                    "description": "delete account reason"
                   }
                 }
               }
@@ -425,9 +407,7 @@
     },
     "/dev/update-user-info": {
       "post": {
-        "tags": [
-          "register"
-        ],
+        "tags": ["register"],
         "description": "update preferred name",
         "parameters": [
           {
@@ -507,10 +487,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": [
-                  "export_date",
-                  "user_id"
-                ],
+                "required": ["export_date", "user_id", "email"],
                 "type": "object",
                 "properties": {
                   "export_date": {
@@ -520,7 +497,12 @@
                     }
                   },
                   "user_id": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "hashed id for data exporting"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "email address for report receiving"
                   },
                   "language": {
                     "type": "string"
@@ -555,9 +537,7 @@
     },
     "/dev/forgot-pw": {
       "post": {
-        "tags": [
-          "register"
-        ],
+        "tags": ["register"],
         "description": "request password reset when forgot password",
         "operationId": "forgotPw",
         "parameters": [
@@ -576,9 +556,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": [
-                  "email"
-                ],
+                "required": ["email"],
                 "type": "object",
                 "properties": {
                   "email": {
@@ -767,9 +745,7 @@
     },
     "/dev/get-pay-info": {
       "get": {
-        "tags": [
-          "payment"
-        ],
+        "tags": ["payment"],
         "description": "get payment information",
         "operationId": "getPayInfo",
         "parameters": [
@@ -817,10 +793,7 @@
                       "description": "success or fail"
                     },
                     "pay_info": {
-                      "required": [
-                        "is_pause",
-                        "remain_count"
-                      ],
+                      "required": ["is_pause", "remain_count"],
                       "type": "object",
                       "properties": {
                         "remain_count": {
@@ -950,11 +923,11 @@
                       "type": "string",
                       "description": "success or fail"
                     },
-                    "min_version": {
+                    "min_ver": {
                       "type": "string",
                       "description": "support minimum app version"
                     },
-                    "latest_version": {
+                    "latest_ver": {
                       "type": "string",
                       "description": "latest app version"
                     }
@@ -971,9 +944,7 @@
     },
     "/dev/log-in": {
       "post": {
-        "tags": [
-          "register"
-        ],
+        "tags": ["register"],
         "description": "log in using email and password",
         "operationId": "logIn",
         "parameters": [
@@ -992,10 +963,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": [
-                  "email",
-                  "pw"
-                ],
+                "required": ["email", "pw"],
                 "type": "object",
                 "properties": {
                   "email": {
@@ -1064,9 +1032,7 @@
     },
     "/dev/log-out": {
       "post": {
-        "tags": [
-          "register"
-        ],
+        "tags": ["register"],
         "summary": "log-out",
         "description": "log-out",
         "operationId": "logOut",
@@ -1144,10 +1110,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": [
-                  "from_id",
-                  "to_id"
-                ],
+                "required": ["from_id", "to_id"],
                 "type": "object",
                 "properties": {
                   "from_id": {
@@ -1188,9 +1151,7 @@
     },
     "/dev/post-pay-info": {
       "post": {
-        "tags": [
-          "payment"
-        ],
+        "tags": ["payment"],
         "summary": "post-pay-info",
         "description": "post-pay-info",
         "operationId": "postPayInfo",
@@ -1210,9 +1171,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": [
-                  "user_id"
-                ],
+                "required": ["user_id"],
                 "type": "object",
                 "properties": {
                   "user_id": {
@@ -1331,10 +1290,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": [
-                  "select",
-                  "user_id"
-                ],
+                "required": ["select", "user_id"],
                 "type": "object",
                 "properties": {
                   "clinic": {
@@ -1457,9 +1413,7 @@
     },
     "/dev/sign-up": {
       "post": {
-        "tags": [
-          "register"
-        ],
+        "tags": ["register"],
         "description": "sign up",
         "operationId": "signUp",
         "parameters": [
@@ -1579,10 +1533,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": [
-                  "rec_date",
-                  "user_id"
-                ],
+                "required": ["rec_date", "user_id"],
                 "type": "object",
                 "properties": {
                   "user_id": {
@@ -1741,11 +1692,11 @@
             "type": "string",
             "description": "success or fail"
           },
-          "min_version": {
+          "min_ver": {
             "type": "string",
             "description": "support minimum app version"
           },
-          "latest_version": {
+          "latest_ver": {
             "type": "string",
             "description": "latest app version"
           }
@@ -1935,10 +1886,7 @@
             "description": "success or fail"
           },
           "pay_info": {
-            "required": [
-              "is_pause",
-              "remain_count"
-            ],
+            "required": ["is_pause", "remain_count"],
             "type": "object",
             "properties": {
               "remain_count": {
@@ -1959,10 +1907,7 @@
         }
       },
       "LoginRequest": {
-        "required": [
-          "email",
-          "pw"
-        ],
+        "required": ["email", "pw"],
         "type": "object",
         "properties": {
           "email": {
@@ -1974,11 +1919,7 @@
         }
       },
       "ChagePwRequest": {
-        "required": [
-          "email",
-          "new_pw",
-          "old_pw"
-        ],
+        "required": ["email", "new_pw", "old_pw"],
         "type": "object",
         "properties": {
           "email": {
@@ -1993,11 +1934,7 @@
         }
       },
       "ConfirmPwRequest": {
-        "required": [
-          "email",
-          "new_pw",
-          "verification_code"
-        ],
+        "required": ["email", "new_pw", "verification_code"],
         "type": "object",
         "properties": {
           "email": {
@@ -2012,11 +1949,7 @@
         }
       },
       "ContactUsRequest": {
-        "required": [
-          "email",
-          "message",
-          "subject"
-        ],
+        "required": ["email", "message", "subject"],
         "type": "object",
         "properties": {
           "email": {
@@ -2037,9 +1970,7 @@
         }
       },
       "PostEmailRequest": {
-        "required": [
-          "email"
-        ],
+        "required": ["email"],
         "type": "object",
         "properties": {
           "email": {
@@ -2057,6 +1988,23 @@
           "id": {
             "type": "string",
             "description": "guest user"
+          }
+        }
+      },
+      "DeleteAccRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "email user"
+          },
+          "id": {
+            "type": "string",
+            "description": "guest user"
+          },
+          "reason": {
+            "type": "string",
+            "description": "delete account reason"
           }
         }
       },
@@ -2078,10 +2026,7 @@
         }
       },
       "ExportReportRequest": {
-        "required": [
-          "export_date",
-          "user_id"
-        ],
+        "required": ["export_date", "user_id", "email"],
         "type": "object",
         "properties": {
           "export_date": {
@@ -2091,7 +2036,12 @@
             }
           },
           "user_id": {
-            "type": "string"
+            "type": "string",
+            "description": "hashed id for data exporting"
+          },
+          "email": {
+            "type": "string",
+            "description": "email address for report receiving"
           },
           "language": {
             "type": "string"
@@ -2099,10 +2049,7 @@
         }
       },
       "DataMigrationRequest": {
-        "required": [
-          "from_id",
-          "to_id"
-        ],
+        "required": ["from_id", "to_id"],
         "type": "object",
         "properties": {
           "from_id": {
@@ -2116,9 +2063,7 @@
         }
       },
       "PaymentCheckRequest": {
-        "required": [
-          "user_id"
-        ],
+        "required": ["user_id"],
         "type": "object",
         "properties": {
           "user_id": {
@@ -2132,10 +2077,7 @@
         }
       },
       "DataExportSurveyRequest": {
-        "required": [
-          "select",
-          "user_id"
-        ],
+        "required": ["select", "user_id"],
         "type": "object",
         "properties": {
           "clinic": {
@@ -2156,12 +2098,7 @@
         }
       },
       "SaveSurveyRequest": {
-        "required": [
-          "score_date",
-          "score_name",
-          "score_value",
-          "user_id"
-        ],
+        "required": ["score_date", "score_name", "score_value", "user_id"],
         "type": "object",
         "properties": {
           "user_id": {
@@ -2186,13 +2123,7 @@
         }
       },
       "SignUpRequest": {
-        "required": [
-          "gender",
-          "birthyear",
-          "social",
-          "device",
-          "region"
-        ],
+        "required": ["gender", "birthyear", "social", "device", "region"],
         "type": "object",
         "properties": {
           "email": {
@@ -2238,10 +2169,7 @@
         }
       },
       "RecordUpdateRequest": {
-        "required": [
-          "rec_date",
-          "user_id"
-        ],
+        "required": ["rec_date", "user_id"],
         "type": "object",
         "properties": {
           "user_id": {
@@ -2467,10 +2395,7 @@
         "description": "payment information"
       },
       "GetPayResponse_pay_info": {
-        "required": [
-          "is_pause",
-          "remain_count"
-        ],
+        "required": ["is_pause", "remain_count"],
         "type": "object",
         "properties": {
           "remain_count": {

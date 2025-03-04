@@ -1,4 +1,6 @@
 // Flutter imports:
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -59,12 +61,15 @@ class DetailedListHistoriesWidget extends StatelessWidget {
               child: Column(
                 children: List.generate(
                   histories.length * 2 - 1,
-                  (index) => DetailedListHistoryWidget(
-                    key: historyKeys.firstWhereOrNull((element) => element.value == histories[index ~/ 2].id),
-                    onTapEdit: onTapEdit,
-                    onTapDelete: onTapDelete,
-                    historyModel: histories[index ~/ 2],
-                  ),
+                  (index) {
+                    if (index.isOdd) return const Gap(16);
+                    return DetailedListHistoryWidget(
+                      key: historyKeys.firstWhereOrNull((element) => element.value == histories[index ~/ 2].id),
+                      onTapEdit: onTapEdit,
+                      onTapDelete: onTapDelete,
+                      historyModel: histories[index ~/ 2],
+                    );
+                  },
                 ),
               ),
             ),

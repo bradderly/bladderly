@@ -1,9 +1,9 @@
 // Package imports:
-import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
 // Project imports:
+import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 import 'package:bladderly/domain/repository/auth_repository.dart';
 
 @lazySingleton

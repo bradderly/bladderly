@@ -11,6 +11,7 @@ import 'package:http/retry.dart' show RetryClient;
 // Project imports:
 import 'package:bladderly/data/api/client/converter/api_client_converter.dart';
 import 'package:bladderly/data/api/client/interceptor/api_client_x_api_key_interceptor.dart';
+import 'package:bladderly/data/api/client/interceptor/api_logging_interceptor.dart';
 import 'package:bladderly/data/api/client/interceptor/api_response_exception_interceptor.dart';
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 
@@ -31,7 +32,7 @@ abstract class ApiClient extends ChopperService {
         interceptors: [
           ApiClientXApiKeyInterceptor(),
           ApiResponseExceptionInterceptor(),
-          HttpLoggingInterceptor(
+          ApiLoggingInterceptor(
             logger: chopperLogger
               ..onRecord.listen((rec) {
                 if (kDebugMode) {
@@ -123,7 +124,7 @@ abstract class ApiClient extends ChopperService {
   @Get(path: '/get-result')
   Future<Response<ResultResponse>> getResult({
     @Query('user_id') required String userId,
-    @Query('rec_date') required DateTime recDate,
+    @Query('rec_date') required String recDate,
   });
 
   @Get(path: '/get-version')

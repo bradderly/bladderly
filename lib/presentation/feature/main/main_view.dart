@@ -6,7 +6,7 @@ import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
 import 'package:bladderly/presentation/feature/diary/diary/diary_builder.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_tab_scroll_section_model.dart';
-import 'package:bladderly/presentation/feature/main/bloc/main_pending_history_bloc.dart';
+import 'package:bladderly/presentation/feature/main/bloc/main_history_bloc.dart';
 import 'package:bladderly/presentation/feature/main/cubit/main_tab_cubit.dart';
 import 'package:bladderly/presentation/feature/main/home/home_builder.dart';
 import 'package:bladderly/presentation/feature/main/widget/main_bottom_navigation_bar.dart';
@@ -40,7 +40,7 @@ class _MainViewState extends State<MainView> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       checkPendingUploadFile();
-      uploadPendingHistory();
+      initializeHistories();
     });
   }
 
@@ -72,12 +72,25 @@ class _MainViewState extends State<MainView> {
     }
   }
 
-  void uploadPendingHistory() {
+  void initializeHistories() {
+    uploadPendingHistories();
+    getProcessingHistoryResults();
+  }
+
+  void uploadPendingHistories() {
     if (!mounted) return;
 
     final userId = context.read<UserBloc>().state.userModelOrThrowException.id;
 
-    context.read<MainPendingHistoryBloc>().add(MainPendingHistoryUpload(userId: userId));
+    context.read<MainHistoryBloc>().add(MainHistoryUploadPendingHistories(userId: userId));
+  }
+
+  void getProcessingHistoryResults() {
+    if (!mounted) return;
+
+    final userId = context.read<UserBloc>().state.userModelOrThrowException.id;
+
+    context.read<MainHistoryBloc>().add(MainHistoryGetHistoryResults(userId: userId));
   }
 
   @override

@@ -9,6 +9,7 @@ import 'package:bladderly/data/isar/schema/history_entity.dart';
 import 'package:bladderly/data/mapper/history_mapper.dart';
 import 'package:bladderly/domain/model/histories.dart';
 import 'package:bladderly/domain/model/history.dart';
+import 'package:bladderly/domain/model/history_result.dart';
 import 'package:bladderly/domain/repository/history_repository.dart';
 // Package imports:
 import 'package:injectable/injectable.dart';
@@ -56,11 +57,13 @@ class HistoryRepositoryImpl implements HistoryRepository {
   @override
   Future<void> exportHistories({
     required String userId,
+    required String email,
     required List<DateTime> dates,
   }) {
     return _apiClient.exportRecord(
       request: ExportReportRequest(
         userId: userId,
+        email: email,
         exportDate: [
           for (final date in dates) DateFormat('yyyyMMdd').format(date),
         ],
@@ -167,5 +170,32 @@ class HistoryRepositoryImpl implements HistoryRepository {
     return _isarClient
         .getPendingHistories()
         .then((histories) => Histories(list: histories.map(HistoryMapper.fromHistoryEntity).toList()));
+  }
+
+  @override
+  Future<HistoryResult> getHistoryResult({
+    required String userId,
+    required DateTime recordTime,
+  }) async {
+    final response = await _apiClient
+        .getResult(recDate: DateFormat('yyyyMMdd-hhmmss').format(recordTime), userId: userId)
+        .then((response) => response.body!);
+
+    final isDone = switch (response.message) {
+      'success' => true,
+      _ => false,
+    };
+
+    return HistoryResult(
+      isDone: isDone,
+      result: response.result,
+    );
+  }
+
+  @override
+  Future<Histories<VoidingHistory>> getProcessingHistories() async {
+    final entities = await _isarClient.getProcessingHistories();
+
+    return Histories(list: entities.map(HistoryMapper.fromHistoryEntity).whereType<VoidingHistory>().toList());
   }
 }

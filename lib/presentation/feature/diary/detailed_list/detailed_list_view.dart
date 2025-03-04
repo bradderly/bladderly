@@ -1,4 +1,6 @@
 // Flutter imports:
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -41,6 +43,7 @@ class _DetailedListViewState extends State<DetailedListView> {
 
   void _onHistoiresLoadSuccess(BuildContext context, DetailedListHistoriesLoadSuccess state) {
     final historyKeys = this.historyKeys.toList();
+
     GlobalObjectKey? scrollTargetKey;
 
     for (final historyId in state.groupedHistoriesModel.historyIds) {
@@ -120,7 +123,6 @@ class _DetailedListViewState extends State<DetailedListView> {
               itemCount: state.groupedHistoriesModel.keyCount,
               itemBuilder: (context, index) {
                 final groupedHistories = state.groupedHistoriesModel.groupedHistories;
-
                 return DetailedListHistoriesWidget(
                   onTapEdit: (id) =>
                       switch (groupedHistories.values.flattened.firstWhere((element) => element.id == id)) {

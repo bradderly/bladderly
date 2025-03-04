@@ -6,8 +6,9 @@ class ApiClientXApiKeyInterceptor implements RequestInterceptor {
   Future<Request> onRequest(Request request) async {
     return request.copyWith(
       headers: {
+        ...request.headers,
         'x-api-key': '3rXDcDwBhc18isTzhlsZd8JnmYU4Plkp3pGf5hiN',
-        'Content-Type': 'application/json',
+        if (!request.uri.path.contains('audio-upload')) 'Content-Type': 'application/json',
       },
     );
   }

@@ -15,7 +15,9 @@ class SignOutUsecase {
 
   final AuthRepository _authRepository;
 
-  Either<Exception, void> call({required String userId}) {
+  Either<Exception, void> call({
+    required String userId,
+  }) {
     try {
       _authRepository.signOut(userId).onError((_, __) {});
       _authRepository.clearLocal();

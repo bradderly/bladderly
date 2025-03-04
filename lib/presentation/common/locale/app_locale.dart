@@ -1,10 +1,14 @@
 // Flutter imports:
-// Project imports:
-import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
+
+// Flutter imports:
+import 'package:flutter/services.dart';
+
 // Package imports:
 import 'package:collection/collection.dart';
 import 'package:csv/csv.dart';
-import 'package:flutter/services.dart';
+
+// Project imports:
+import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 
 enum AppLocale {
   en,

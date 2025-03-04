@@ -1,20 +1,19 @@
 // Flutter imports:
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 // Project imports:
 import 'package:bladderly/core/di/di.dart';
 import 'package:bladderly/core/recorder/recorder_module.dart';
+import 'package:bladderly/domain/usecase/get_history_results_usecase.dart';
 import 'package:bladderly/domain/usecase/upload_pending_upload_histories_usecase.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
-import 'package:bladderly/presentation/feature/main/bloc/main_pending_history_bloc.dart';
+import 'package:bladderly/presentation/feature/main/bloc/main_history_bloc.dart';
 import 'package:bladderly/presentation/feature/main/cubit/main_tab_cubit.dart';
 import 'package:bladderly/presentation/feature/main/main_view.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainBuilder extends StatelessWidget {
   const MainBuilder({
@@ -34,8 +33,11 @@ class MainBuilder extends StatelessWidget {
         BlocProvider<UserBloc>.value(
           value: context.read<UserBloc>(),
         ),
-        BlocProvider<MainPendingHistoryBloc>.value(
-          value: MainPendingHistoryBloc(uploadPendingHistoriesUsecase: getIt<UploadPendingHistoriesUsecase>()),
+        BlocProvider<MainHistoryBloc>(
+          create: (_) => MainHistoryBloc(
+            uploadPendingHistoriesUsecase: getIt<UploadPendingHistoriesUsecase>(),
+            getProcessingHistoryResultsUsecase: getIt<GetHistoryResultsUsecase>(),
+          ),
         ),
       ],
       child: MainView(

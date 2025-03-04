@@ -1,11 +1,12 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/widget/input_text_border_form.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 
 class PromoCodeModal extends StatefulWidget {
   const PromoCodeModal({super.key});
@@ -29,7 +30,7 @@ class _PromoCodeModalState extends State<PromoCodeModal> {
     });
 
     if (_showErrorDialog) {
-      showDialog(
+      showDialog<void>(
         context: context,
         builder: (context) => AlertDialog(
           shape: RoundedRectangleBorder(
@@ -135,92 +136,88 @@ class _PromoCodeModalState extends State<PromoCodeModal> {
               ),
               Center(
                 child: GestureDetector(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          backgroundColor: context.colorTheme.neutral.shade0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16), // 둥근 모서리
-                          ),
-                          contentPadding: const EdgeInsets.only(top: 48, bottom: 48),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 24),
-                                child: Text(
-                                  'Having trouble finding the code?'.tr(context),
-                                  style: context.textStyleTheme.b20Bold
-                                      .copyWith(color: context.colorTheme.neutral.shade10),
-                                ),
+                  onTap: () => showDialog<void>(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        backgroundColor: context.colorTheme.neutral.shade0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16), // 둥근 모서리
+                        ),
+                        contentPadding: const EdgeInsets.only(top: 48, bottom: 48),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 24),
+                              child: Text(
+                                'Having trouble finding the code?'.tr(context),
+                                style:
+                                    context.textStyleTheme.b20Bold.copyWith(color: context.colorTheme.neutral.shade10),
                               ),
-                              const SizedBox(height: 16),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 24),
-                                child: Text(
-                                  'Leave us a message, and we’ll get back to you.'.tr(context),
-                                  style: context.textStyleTheme.b16Medium
-                                      .copyWith(color: context.colorTheme.neutral.shade7),
-                                ),
+                            ),
+                            const SizedBox(height: 16),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 24),
+                              child: Text(
+                                'Leave us a message, and we’ll get back to you.'.tr(context),
+                                style:
+                                    context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade7),
                               ),
-                              const SizedBox(height: 24),
-                              InputTextBorderForm(
-                                'First Name'.tr(context),
-                                '',
-                                1,
-                                context,
-                              ),
-                              InputTextBorderForm(
-                                'Last Name'.tr(context),
-                                '',
-                                1,
-                                context,
-                              ),
-                              InputTextBorderForm(
-                                'Email Adress'.tr(context),
-                                '',
-                                1,
-                                context,
-                              ),
-                              InputTextBorderForm(
-                                'Message'.tr(context),
-                                'promo code message text'.tr(context),
-                                3,
-                                context,
-                              ),
-                              Column(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Container(
-                                      margin: const EdgeInsets.only(left: 24, top: 28, right: 24),
-                                      height: 56,
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                        color: context.colorTheme.vermilion.primary.shade50,
-                                        borderRadius: BorderRadius.circular(400),
-                                      ),
-                                      child: Text(
-                                        'Okay'.tr(context),
-                                        style: context.textStyleTheme.b16SemiBold.copyWith(
-                                          color: context.colorTheme.neutral.shade0,
-                                        ),
+                            ),
+                            const SizedBox(height: 24),
+                            InputTextBorderForm(
+                              'First Name'.tr(context),
+                              '',
+                              1,
+                              context,
+                            ),
+                            InputTextBorderForm(
+                              'Last Name'.tr(context),
+                              '',
+                              1,
+                              context,
+                            ),
+                            InputTextBorderForm(
+                              'Email Adress'.tr(context),
+                              '',
+                              1,
+                              context,
+                            ),
+                            InputTextBorderForm(
+                              'Message'.tr(context),
+                              'promo code message text'.tr(context),
+                              3,
+                              context,
+                            ),
+                            Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () => Navigator.of(context).pop(),
+                                  child: Container(
+                                    margin: const EdgeInsets.only(left: 24, top: 28, right: 24),
+                                    height: 56,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: context.colorTheme.vermilion.primary.shade50,
+                                      borderRadius: BorderRadius.circular(400),
+                                    ),
+                                    child: Text(
+                                      'Okay'.tr(context),
+                                      style: context.textStyleTheme.b16SemiBold.copyWith(
+                                        color: context.colorTheme.neutral.shade0,
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                   child: Text(
                     'Having trouble finding the code?'.tr(context),
                     style: context.textStyleTheme.b14Medium.copyWith(
