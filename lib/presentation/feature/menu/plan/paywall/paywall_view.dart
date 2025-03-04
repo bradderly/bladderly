@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/plan/privacy_view.dart';
-import 'package:bladderly/presentation/feature/menu/plan/promo_code_modal.dart';
+import 'package:bladderly/presentation/feature/menu/plan/promo_code/promo_code_modal.dart';
 import 'package:bladderly/presentation/feature/menu/plan/terms_view.dart';
 
 class PaywallView extends StatefulWidget {
@@ -58,7 +58,7 @@ class _PaywallViewState extends State<PaywallView> {
                         Icon(Icons.check, color: context.colorTheme.vermilion.primary.shade50),
                         const SizedBox(width: 8),
                         Text(
-                          'Automatic Voiding Volume Measurement'.tr(context),
+                          'Automatic voiding volume measurement'.tr(context),
                           style: context.textStyleTheme.b14Medium.copyWith(
                             color: context.colorTheme.neutral.shade10,
                           ),
@@ -72,7 +72,7 @@ class _PaywallViewState extends State<PaywallView> {
                         Icon(Icons.check, color: context.colorTheme.vermilion.primary.shade50),
                         const SizedBox(width: 8),
                         Text(
-                          'PDF Export reports'.tr(context),
+                          'PDF export reports'.tr(context),
                           style: context.textStyleTheme.b14Medium.copyWith(
                             color: context.colorTheme.neutral.shade10,
                           ),
@@ -266,7 +266,7 @@ class _PaywallViewState extends State<PaywallView> {
                         ),
                         if (monthPrice != null)
                           Text(
-                            r'$' + monthPrice + ' / Month', // ignore: prefer_interpolation_to_compose_strings
+                            '$monthPrice / Month'.tr(context),
                             style: context.textStyleTheme.b12SemiBold.copyWith(
                               color: context.colorTheme.neutral.shade7,
                             ),

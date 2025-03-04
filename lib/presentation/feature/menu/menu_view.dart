@@ -5,6 +5,7 @@ import 'package:bladderly/domain/model/unit.dart';
 import 'package:bladderly/presentation/common/cubit/unit_cubit.dart';
 import 'package:bladderly/presentation/feature/menu/bloc/menu_bloc.dart';
 import 'package:bladderly/presentation/feature/menu/contact_us/contact_us_builder.dart';
+import 'package:bladderly/presentation/feature/menu/plan/plan_builder.dart';
 import 'package:bladderly/presentation/feature/menu/profile/profile_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,7 +16,7 @@ import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/about/about_modal.dart';
 import 'package:bladderly/presentation/feature/menu/faq/faq_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/language/language_view_modal.dart';
-import 'package:bladderly/presentation/feature/menu/plan/plan_main_modal.dart';
+import 'package:bladderly/presentation/feature/menu/plan/plan_modal.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/symptom_modal.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -85,7 +86,7 @@ class MenuView extends StatelessWidget {
                           icon: Icons.credit_card,
                           title: 'Plan'.tr(context),
                           onTap: () {
-                            ModalHelper.showModal(context: context, modalContent: const PlanMainModal(), duration: 5);
+                            ModalHelper.showModal(context: context, modalContent: const PlanBuilder(), duration: 5);
                           },
                         ),
                         SettingsItem(

@@ -22,54 +22,60 @@ class TermsView extends StatelessWidget {
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(height: 43),
-                ModalTitle(context, 'Terms of Use'.tr(context)),
-                const SizedBox(height: 20),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.only(left: 24, top: 25, right: 24),
-                  child: Text(
-                    date,
-                    style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
+          child: Column(
+            children: [
+              const SizedBox(height: 43),
+              ModalTitle(context, 'Terms of Use'.tr(context)),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.only(left: 24, top: 25, right: 24),
+                        child: Text(
+                          date,
+                          style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.only(left: 24, top: 40, right: 24),
+                        child: Text(
+                          title,
+                          style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade10),
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.only(left: 24, top: 16, right: 24),
+                        child: Text(
+                          content,
+                          style: context.textStyleTheme.b16Regular.copyWith(color: context.colorTheme.neutral.shade8),
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.only(left: 24, top: 16, right: 24),
+                        child: Text(
+                          content,
+                          style: context.textStyleTheme.b16Regular.copyWith(color: context.colorTheme.neutral.shade8),
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.only(left: 24, top: 16, right: 24),
+                        child: Text(
+                          content,
+                          style: context.textStyleTheme.b16Regular.copyWith(color: context.colorTheme.neutral.shade8),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.only(left: 24, top: 40, right: 24),
-                  child: Text(
-                    title,
-                    style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade10),
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.only(left: 24, top: 16, right: 24),
-                  child: Text(
-                    content,
-                    style: context.textStyleTheme.b16Regular.copyWith(color: context.colorTheme.neutral.shade8),
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.only(left: 24, top: 16, right: 24),
-                  child: Text(
-                    content,
-                    style: context.textStyleTheme.b16Regular.copyWith(color: context.colorTheme.neutral.shade8),
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.only(left: 24, top: 16, right: 24),
-                  child: Text(
-                    content,
-                    style: context.textStyleTheme.b16Regular.copyWith(color: context.colorTheme.neutral.shade8),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

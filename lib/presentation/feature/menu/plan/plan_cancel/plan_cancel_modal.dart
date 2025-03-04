@@ -43,16 +43,16 @@ class _PlanCancelModalState extends State<PlanCancelModal> {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
           child: Column(
             children: [
+              ModalTitle(context, 'Cancel plan'.tr(context)),
+              const SizedBox(height: 58),
               Expanded(
                 child: ListView(
                   controller: controller,
                   children: [
-                    ModalTitle(context, 'Cancel Plan'.tr(context)),
-                    const SizedBox(height: 58),
                     Padding(
                       padding: const EdgeInsets.only(left: 16, right: 32),
                       child: Text(
-                        'Sorry to see you go, please tell us why you are canceling your plan.'.tr(context),
+                        'Delete account Message'.tr(context),
                         style: context.textStyleTheme.b16Medium.copyWith(
                           color: context.colorTheme.neutral.shade10,
                         ),

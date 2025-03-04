@@ -94,40 +94,45 @@ class _PromoCodeModalState extends State<PromoCodeModal> {
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ModalTitle(context, 'Promo Code'.tr(context)),
               const SizedBox(height: 40),
-              Text(
-                'Enter your code'.tr(context),
-                style: context.textStyleTheme.b24Bold.copyWith(
-                  color: context.colorTheme.neutral.shade10,
+              Expanded(
+                child: ListView(
+                  controller: controller,
+                  children: [
+                    Text(
+                      'Enter your code'.tr(context),
+                      style: context.textStyleTheme.b24Bold.copyWith(
+                        color: context.colorTheme.neutral.shade10,
+                      ),
+                    ),
+                    const SizedBox(height: 40),
+                    Text(
+                      'Promo Code'.tr(context),
+                      style: context.textStyleTheme.b14Medium.copyWith(
+                        color: context.colorTheme.neutral.shade6,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
+                      controller: _controller,
+                      decoration: InputDecoration(
+                        hintText: 'XXX-XXX',
+                        filled: true,
+                        fillColor: context.colorTheme.neutral.shade2,
+                        hintStyle: context.textStyleTheme.b16Medium.copyWith(
+                          color: context.colorTheme.neutral.shade9,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 40),
-              Text(
-                'Promo Code'.tr(context),
-                style: context.textStyleTheme.b14Medium.copyWith(
-                  color: context.colorTheme.neutral.shade6,
-                ),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _controller,
-                decoration: InputDecoration(
-                  hintText: 'XXX-XXX',
-                  filled: true,
-                  fillColor: context.colorTheme.neutral.shade2,
-                  hintStyle: context.textStyleTheme.b16Medium.copyWith(
-                    color: context.colorTheme.neutral.shade9,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-              const Spacer(),
               Center(
                 child: GestureDetector(
                   onTap: () {
@@ -182,14 +187,16 @@ class _PromoCodeModalState extends State<PromoCodeModal> {
                               ),
                               InputTextBorderForm(
                                 'Message'.tr(context),
-                                'Add any notes or details here'.tr(context),
+                                'promo code message text'.tr(context),
                                 3,
                                 context,
                               ),
                               Column(
                                 children: [
                                   GestureDetector(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                    },
                                     child: Container(
                                       margin: const EdgeInsets.only(left: 24, top: 28, right: 24),
                                       height: 56,

@@ -1,17 +1,23 @@
 // Flutter imports:
+import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
+import 'package:bladderly/presentation/feature/menu/plan/bloc/plan_bloc.dart';
+import 'package:bladderly/presentation/feature/menu/plan/paywall/paywall_builder.dart';
+import 'package:bladderly/presentation/feature/menu/plan/plan_cancel/plan_cancel_builder.dart';
+import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
+import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/feature/menu/plan/paywall_view.dart';
-import 'package:bladderly/presentation/feature/menu/plan/plan_cancel_modal.dart';
-import 'package:bladderly/presentation/feature/menu/plan/promo_code_modal.dart';
+import 'package:bladderly/presentation/feature/menu/plan/paywall/paywall_view.dart';
+import 'package:bladderly/presentation/feature/menu/plan/promo_code/promo_code_modal.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:bladderly/presentation/feature/menu/widget/text_arrow_form.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PlanMainModal extends StatelessWidget {
-  const PlanMainModal({super.key});
+class PlanModal extends StatelessWidget {
+  const PlanModal({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,92 +26,96 @@ class PlanMainModal extends StatelessWidget {
       maxChildSize: 0.95,
       minChildSize: 0.95,
       builder: (_, controller) {
-        return Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
-            ),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  controller: controller,
-                  children: [
-                    ModalTitle(context, 'Plan'.tr(context)),
-                    const SizedBox(height: 42),
-                    // FreeUser(context),
-                    NonFreeUser(context),
-                    const SizedBox(height: 40),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 24),
-                      child: Text(
-                        'Setting'.tr(context),
-                        style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
-                      ),
-                    ),
-
-                    TextArrow(
-                      title: 'Change Plan'.tr(context),
-                      onTap: () {
-                        //return const PaywallRoute().go(context);
-                        Navigator.push(
-                          context,
-                          // ignore: inference_failure_on_instance_creation
-                          MaterialPageRoute(
-                            builder: (context) => const PaywallView(),
-                          ),
-                        );
-                      },
-                    ),
-                    TextArrow(
-                      title: 'Cancel Plan'.tr(context),
-                      onTap: () {
-                        // ignore: inference_failure_on_function_invocation
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-                          builder: (context) {
-                            return const PlanCancelModal();
-                          },
-                        );
-                      },
-                    ),
-                    TextArrow(
-                      title: 'Enter Promo Code'.tr(context),
-                      onTap: () {
-                        // ignore: inference_failure_on_function_invocation
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-                          builder: (context) {
-                            return const PromoCodeModal();
-                          },
-                        );
-                      },
-                    ),
-                  ],
-                ),
+        return BlocListener<PlanBloc, PlanState>(
+          listener: (context, state) => switch (state) {
+            PlanInitial() => ProgressIndicatorModal.show(context),
+            PlanSuccess() => {
+                Navigator.of(context).pop(),
+              },
+            PlanFailure() => {},
+            _ => null,
+          },
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
-                decoration: BoxDecoration(
-                  color: context.colorTheme.neutral.shade6,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  'Restore'.tr(context),
-                  style: context.textStyleTheme.b16SemiBold.copyWith(
-                    color: context.colorTheme.neutral.shade0,
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
+            child: Column(
+              children: [
+                ModalTitle(context, 'Plan'.tr(context)),
+                const SizedBox(height: 42),
+                Expanded(
+                  child: ListView(
+                    controller: controller,
+                    children: [
+                      FreeUser(context),
+                      //      NonFreeUser(context),
+                      const SizedBox(height: 40),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 24),
+                        child: Text(
+                          'Setting plan'.tr(context),
+                          style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
+                        ),
+                      ),
+
+                      TextArrow(
+                        title: 'Change plan'.tr(context),
+                        onTap: () {
+                          return const PaywallRoute().go(context);
+                          /*
+                          Navigator.push(
+                            context,
+                            // ignore: inference_failure_on_instance_creation
+                            MaterialPageRoute(
+                              builder: (context) => const PaywallBuilder(),
+                            ),
+                          );
+                          */
+                        },
+                      ),
+                      TextArrow(
+                        title: 'Cancel plan'.tr(context),
+                        onTap: () {
+                          ModalHelper.showModal(
+                            context: context,
+                            modalContent: const PlanCancelBuilder(),
+                            duration: 5,
+                          );
+                        },
+                      ),
+                      TextArrow(
+                        title: 'Enter Promo Code'.tr(context),
+                        onTap: () {
+                          ModalHelper.showModal(
+                            context: context,
+                            modalContent: const PromoCodeModal(),
+                            duration: 5,
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ),
-              ),
-            ],
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: context.colorTheme.neutral.shade6,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    'Retrieve purchase data'.tr(context),
+                    style: context.textStyleTheme.b16SemiBold.copyWith(
+                      color: context.colorTheme.neutral.shade0,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -126,7 +136,7 @@ Widget FreeUser(BuildContext context) {
         ),
         const SizedBox(height: 8),
         Text(
-          'Bladderly user'.tr(context),
+          'Bladderly User'.tr(context),
           style: context.textStyleTheme.b20Bold.copyWith(color: context.colorTheme.neutral.shade10),
         ),
         const SizedBox(height: 16),
@@ -170,7 +180,7 @@ Widget FreeUser(BuildContext context) {
                   const SizedBox(width: 6),
                   Expanded(
                     child: Text(
-                      'PDF export reports',
+                      'PDF export reports'.tr(context),
                       style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade10),
                     ),
                   ),
@@ -186,7 +196,7 @@ Widget FreeUser(BuildContext context) {
                 ),
                 alignment: Alignment.center,
                 child: Text(
-                  'Learn more',
+                  'Learn more'.tr(context),
                   style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade0),
                 ),
               ),

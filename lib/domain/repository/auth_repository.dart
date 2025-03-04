@@ -76,4 +76,9 @@ abstract class AuthRepository {
     required String message,
     required String subject,
   });
+
+  Future<String> checkPromo({
+    required String userId,
+    required String code,
+  });
 }
