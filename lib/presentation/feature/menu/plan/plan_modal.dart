@@ -1,7 +1,6 @@
 // Flutter imports:
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/menu/plan/bloc/plan_bloc.dart';
-import 'package:bladderly/presentation/feature/menu/plan/paywall/paywall_builder.dart';
 import 'package:bladderly/presentation/feature/menu/plan/plan_cancel/plan_cancel_builder.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
@@ -10,7 +9,6 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/feature/menu/plan/paywall/paywall_view.dart';
 import 'package:bladderly/presentation/feature/menu/plan/promo_code/promo_code_modal.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:bladderly/presentation/feature/menu/widget/text_arrow_form.dart';

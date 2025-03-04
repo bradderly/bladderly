@@ -44,48 +44,52 @@ class HistoryMapper {
     );
   }
 
-  static History fromGetAllResultResponse$Records$Item(GetAllResultResponse$Records$Item record) {
-    const status = HistoryStatus.done;
-    final recordTime = DateTime.parse(record.recordTime!.replaceAll('-', ' '));
-    final recordVolume = double.tryParse(record.recordVolume ?? '');
-    final leakageVolume = switch (record.leakageVolume) {
-      final String leakageVolume when leakageVolume.isNotEmpty => LeakageVolume.values.byName(leakageVolume),
-      _ => null,
-    };
+  static History? fromGetAllResultResponse$Records$Item(GetAllResultResponse$Records$Item record) {
+    try {
+      const status = HistoryStatus.done;
+      final recordTime = DateTime.parse(record.recordTime!.replaceAll('-', ' '));
+      final recordVolume = double.tryParse(record.recordVolume ?? '');
+      final leakageVolume = switch (record.leakageVolume) {
+        final String leakageVolume when leakageVolume.isNotEmpty => LeakageVolume.values.byName(leakageVolume),
+        _ => null,
+      };
 
-    if (record.isIntake == true) {
-      return IntakeHistory(
+      if (record.isIntake == true) {
+        return IntakeHistory(
+          id: null,
+          recordTime: recordTime,
+          beverageType: record.beverageType!,
+          recordVolume: recordVolume!.toInt(),
+          memo: record.leakageMemo,
+          status: status,
+        );
+      }
+
+      if (recordVolume == 0.1) {
+        return LeakageHistory(
+          id: null,
+          recordTime: recordTime,
+          leakageVolume: leakageVolume!,
+          memo: record.leakageMemo,
+          status: status,
+        );
+      }
+
+      return VoidingHistory(
         id: null,
         recordTime: recordTime,
-        beverageType: record.beverageType!,
         recordVolume: recordVolume!.toInt(),
+        recordUrgency: int.parse(record.recordUrgency!),
+        isManual: record.isManual ?? false,
+        isNocturia: record.isNocturia ?? false,
+        isLeakage: record.isLeakage ?? false,
+        leakageVolume: leakageVolume,
         memo: record.leakageMemo,
         status: status,
       );
+    } catch (e) {
+      return null;
     }
-
-    if (recordVolume == 0.1) {
-      return LeakageHistory(
-        id: null,
-        recordTime: recordTime,
-        leakageVolume: leakageVolume!,
-        memo: record.leakageMemo,
-        status: status,
-      );
-    }
-
-    return VoidingHistory(
-      id: null,
-      recordTime: recordTime,
-      recordVolume: recordVolume!.toInt(),
-      recordUrgency: int.parse(record.recordUrgency!),
-      isManual: record.isManual ?? false,
-      isNocturia: record.isNocturia ?? false,
-      isLeakage: record.isLeakage ?? false,
-      leakageVolume: leakageVolume,
-      memo: record.leakageMemo,
-      status: status,
-    );
   }
 
   static HistoryEntity toHistoryEntity(History history) {

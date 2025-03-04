@@ -16,7 +16,6 @@ import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/about/about_modal.dart';
 import 'package:bladderly/presentation/feature/menu/faq/faq_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/language/language_view_modal.dart';
-import 'package:bladderly/presentation/feature/menu/plan/plan_modal.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/symptom_modal.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

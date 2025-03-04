@@ -20,7 +20,6 @@ import 'package:bladderly/presentation/feature/input/sound_input_recording/sound
 import 'package:bladderly/presentation/feature/main/main_builder.dart';
 import 'package:bladderly/presentation/feature/menu/how_to_use/how_to_use_view.dart';
 import 'package:bladderly/presentation/feature/menu/menu_builder.dart';
-import 'package:bladderly/presentation/feature/menu/plan/paywall/paywall_view.dart';
 import 'package:bladderly/presentation/feature/sign_up/regular/sign_up_regular_builder.dart';
 
 part 'main_route.g.dart';
