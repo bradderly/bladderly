@@ -2,6 +2,7 @@
 // ignore_for_file: deprecated_member_use
 
 // Flutter imports:
+import 'package:bladderly/presentation/feature/menu/profile/passcode/password_builder.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -14,7 +15,6 @@ import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/model/user_model.dart';
 import 'package:bladderly/presentation/feature/menu/profile/change_password/change_password_builder.dart';
 import 'package:bladderly/presentation/feature/menu/profile/delete_account/delete_account_builder.dart';
-import 'package:bladderly/presentation/feature/menu/profile/setup_passcode_modal.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 import 'package:bladderly/presentation/feature/menu/widget/input_text_form.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
@@ -163,7 +163,7 @@ class ProfileModal extends StatelessWidget {
                             isScrollControlled: true,
                             backgroundColor: Colors.transparent,
                             builder: (context) {
-                              return const SetupPasscodeModal();
+                              return const PasscodeBuilder();
                             },
                           );
                         },
