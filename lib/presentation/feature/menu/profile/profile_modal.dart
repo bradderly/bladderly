@@ -1,13 +1,3 @@
-// Flutter imports:
-// ignore_for_file: deprecated_member_use
-
-// Flutter imports:
-import 'package:bladderly/presentation/feature/menu/profile/passcode/password_builder.dart';
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 // Project imports:
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
@@ -15,12 +5,17 @@ import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/model/user_model.dart';
 import 'package:bladderly/presentation/feature/menu/profile/change_password/change_password_builder.dart';
 import 'package:bladderly/presentation/feature/menu/profile/delete_account/delete_account_builder.dart';
+import 'package:bladderly/presentation/feature/menu/profile/passcode/password_builder.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 import 'package:bladderly/presentation/feature/menu/widget/input_text_form.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:bladderly/presentation/feature/menu/widget/text_icon_arrow_form.dart';
 import 'package:bladderly/presentation/feature/menu/widget/text_view_form.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Package imports:
 
@@ -47,8 +42,9 @@ class ProfileModal extends StatelessWidget {
           builder: (context, state) {
             final userModel = state.userModelOrThrowException;
 
-            final emailText = userModel is RegularUserModel ? userModel.email : '게스트 회원';
-            final nameText = userModel is RegularUserModel ? userModel.name : '게스트 회원';
+            final emailOrId = userModel is RegularUserModel ? userModel.email : userModel.id;
+            final nameText = userModel is RegularUserModel ? userModel.name : 'Bladderly User'.tr(context);
+
             return Column(
               children: [
                 ModalTitle(context, 'User Profile'.tr(context)),
@@ -66,12 +62,12 @@ class ProfileModal extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0xFFF4F2EC).withOpacity(0.08),
+                                color: const Color(0xFFF4F2EC).withValues(alpha: 0.08),
                                 offset: const Offset(0, 2),
                                 blurRadius: 5,
                               ),
                               BoxShadow(
-                                color: const Color(0xFF615737).withOpacity(0.09),
+                                color: const Color(0xFF615737).withValues(alpha: 0.09),
                                 offset: const Offset(0, 4),
                                 blurRadius: 8,
                                 spreadRadius: 3,
@@ -128,7 +124,11 @@ class ProfileModal extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      TextViewForm('Email ID'.tr(context), emailText, context),
+                      TextViewForm(
+                        'Email ID'.tr(context),
+                        emailOrId,
+                        context,
+                      ),
                       TextViewForm(
                         'Sex'.tr(context),
                         userModel.gender.text,
@@ -156,110 +156,91 @@ class ProfileModal extends StatelessWidget {
                       TextIconArrowForm(
                         title: 'Set Up Passcode'.tr(context),
                         icon: Icons.lock,
-                        onTap: () {
-                          // ignore: inference_failure_on_function_invocation
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            builder: (context) {
-                              return const PasscodeBuilder();
-                            },
-                          );
-                        },
+                        onTap: () => showModalBottomSheet<void>(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (_) => const PasscodeBuilder(),
+                        ),
                       ),
                       TextIconArrowForm(
                         title: 'Change Password'.tr(context),
                         icon: Icons.lock_open,
-                        onTap: () {
-                          ModalHelper.showModal(
-                            context: context,
-                            modalContent: const ChangePasswordBuilder(),
-                            duration: 5,
-                          );
-                        },
+                        onTap: () => ModalHelper.showModal(
+                          context: context,
+                          modalContent: const ChangePasswordBuilder(),
+                          duration: 5,
+                        ),
                       ),
                       TextIconArrowForm(
                         title: 'Sign out'.tr(context),
                         icon: Icons.logout,
-                        onTap: () {
-                          // ignore: inference_failure_on_function_invocation
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Dialog(
-                                backgroundColor: context.colorTheme.neutral.shade0,
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                                  height: 300,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        height: 60,
-                                        child: Text(
-                                          'Sign out Message'.tr(context),
-                                          style: context.textStyleTheme.b16SemiBold
-                                              .copyWith(color: context.colorTheme.neutral.shade10),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 24),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                          context.read<UserBloc>().add(const UserSignOut());
-                                        },
-                                        child: Container(
-                                          alignment: Alignment.center,
-                                          height: 56,
-                                          decoration: BoxDecoration(
-                                            color: context.colorTheme.neutral.shade2,
-                                            borderRadius: BorderRadius.circular(400),
-                                          ),
-                                          child: Text(
-                                            'Yes, Sign Out'.tr(context),
-                                            style: context.textStyleTheme.b16SemiBold
-                                                .copyWith(color: context.colorTheme.neutral.shade10),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 16),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Container(
-                                          alignment: Alignment.center,
-                                          height: 56,
-                                          decoration: BoxDecoration(
-                                            color: context.colorTheme.vermilion.primary.shade50,
-                                            borderRadius: BorderRadius.circular(400),
-                                          ),
-                                          child: Text(
-                                            'No, Keep Me Signed In'.tr(context),
-                                            style: context.textStyleTheme.b16SemiBold
-                                                .copyWith(color: context.colorTheme.neutral.shade0),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                        onTap: () => showDialog<void>(
+                          context: context,
+                          builder: (context) => Dialog(
+                            backgroundColor: context.colorTheme.neutral.shade0,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 24),
+                              height: 300,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 60,
+                                    child: Text(
+                                      'Sign out Message'.tr(context),
+                                      style: context.textStyleTheme.b16SemiBold
+                                          .copyWith(color: context.colorTheme.neutral.shade10),
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                          );
-                        },
+                                  const SizedBox(height: 24),
+                                  GestureDetector(
+                                    onTap: () => context.read<UserBloc>().add(const UserSignOut()),
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      height: 56,
+                                      decoration: BoxDecoration(
+                                        color: context.colorTheme.neutral.shade2,
+                                        borderRadius: BorderRadius.circular(400),
+                                      ),
+                                      child: Text(
+                                        'Yes, Sign Out'.tr(context),
+                                        style: context.textStyleTheme.b16SemiBold
+                                            .copyWith(color: context.colorTheme.neutral.shade10),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  GestureDetector(
+                                    onTap: () => Navigator.of(context).pop(),
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      height: 56,
+                                      decoration: BoxDecoration(
+                                        color: context.colorTheme.vermilion.primary.shade50,
+                                        borderRadius: BorderRadius.circular(400),
+                                      ),
+                                      child: Text(
+                                        'No, Keep Me Signed In'.tr(context),
+                                        style: context.textStyleTheme.b16SemiBold
+                                            .copyWith(color: context.colorTheme.neutral.shade0),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                       TextIconArrowForm(
                         title: 'Delete Account'.tr(context),
                         icon: Icons.delete_outline,
-                        onTap: () {
-                          ModalHelper.showModal(
-                            context: context,
-                            modalContent: const DeleteAccountBuilder(),
-                            duration: 5,
-                          );
-                        },
+                        onTap: () => ModalHelper.showModal(
+                          context: context,
+                          modalContent: const DeleteAccountBuilder(),
+                          duration: 5,
+                        ),
                       ),
                       const SizedBox(height: 40),
                     ],
