@@ -58,7 +58,9 @@ abstract class AuthRepository {
   Future<void> signOut(String userId);
 
   Future<String> changeName({
-    required String name,
+    required String userId,
+    required String userName,
+    String? userEmail,
   });
 
   Future<String> deleteAccount({

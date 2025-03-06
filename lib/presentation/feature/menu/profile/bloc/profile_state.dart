@@ -11,16 +11,16 @@ final class ProfileInitial extends ProfileState {
   const ProfileInitial();
 }
 
-final class ProfileProgress extends ProfileState {
-  const ProfileProgress();
+final class ProfileChangeNameInProgress extends ProfileState {
+  const ProfileChangeNameInProgress();
 }
 
-final class ProfileSuccess extends ProfileState {
-  const ProfileSuccess();
+final class ProfileChangeNameSuccess extends ProfileState {
+  const ProfileChangeNameSuccess();
 }
 
-final class ProfileFailure extends ProfileState {
-  const ProfileFailure({
+final class ProfileChangeNameFailure extends ProfileState {
+  const ProfileChangeNameFailure({
     required this.exception,
   });
 

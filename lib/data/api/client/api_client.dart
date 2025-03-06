@@ -1,19 +1,17 @@
 // Flutter imports:
 
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-
-// Package imports:
-import 'package:chopper/chopper.dart';
-import 'package:http/io_client.dart' show IOClient;
-import 'package:http/retry.dart' show RetryClient;
-
 // Project imports:
 import 'package:bladderly/data/api/client/converter/api_client_converter.dart';
 import 'package:bladderly/data/api/client/interceptor/api_client_x_api_key_interceptor.dart';
 import 'package:bladderly/data/api/client/interceptor/api_logging_interceptor.dart';
 import 'package:bladderly/data/api/client/interceptor/api_response_exception_interceptor.dart';
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
+// Package imports:
+import 'package:chopper/chopper.dart';
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+import 'package:http/io_client.dart' show IOClient;
+import 'package:http/retry.dart' show RetryClient;
 
 part 'api_client.chopper.dart';
 
@@ -150,5 +148,10 @@ abstract class ApiClient extends ChopperService {
   @Post(path: '/update-record')
   Future<Response<SimpleResponse>> updateRecord({
     @Body() required RecordUpdateRequest request,
+  });
+
+  @Post(path: '/update-user-info')
+  Future<Response<SimpleResponse>> updateUserName({
+    @Body() required UpdateUserInfoRequest request,
   });
 }
