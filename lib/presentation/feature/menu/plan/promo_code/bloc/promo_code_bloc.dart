@@ -1,17 +1,16 @@
 // Package imports:
+// Project imports:
+import 'package:bladderly/domain/usecase/check_promo_code_usecase.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-// Project imports:
-import 'package:bladderly/domain/usecase/promo_code_usecase.dart';
 
 part 'promo_code_event.dart';
 part 'promo_code_state.dart';
 
 class PromoCodeBloc extends Bloc<PromoCodeEvent, PromoCodeState> {
   PromoCodeBloc({
-    required PromoCodeUsecase promoCodeUsecase,
+    required CheckPromoCodeUsecase promoCodeUsecase,
   })  : _promoCodeUsecase = promoCodeUsecase,
         super(const PromoCodeInitial()) {
     on<PromoCodeEvent>(
@@ -22,7 +21,7 @@ class PromoCodeBloc extends Bloc<PromoCodeEvent, PromoCodeState> {
     );
   }
 
-  final PromoCodeUsecase _promoCodeUsecase;
+  final CheckPromoCodeUsecase _promoCodeUsecase;
 
   Future<void> _checkPromo(PromoCode event, Emitter<PromoCodeState> emit) async {
     emit(const PromoCodeProgress());
