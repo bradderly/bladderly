@@ -1,79 +1,103 @@
 // Flutter imports:
+import 'package:bladderly/core/di/di.dart';
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
+import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/bloc/symptom_history_bloc.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/symptom_descript_modal.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/symptom_introduce_modal.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/symptom_moderate_modal.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/symptom_descript/symptom_descript_modal.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/symptom_introduce/symptom_introduce_modal.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/symptom_morderate/symptom_moderate_modal.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SymptomModal extends StatelessWidget {
   const SymptomModal({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final userBlocState = context.read<UserBloc>().state;
+    final userId = userBlocState.userModelOrThrowException.id;
+    context.read<SymptomHistoryBloc>().add(SymptomHistory(userId: userId));
     return DraggableScrollableSheet(
       initialChildSize: 0.95,
       maxChildSize: 0.95,
       minChildSize: 0.95,
       builder: (_, controller) {
-        return Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
-            ),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  controller: controller,
-                  children: [
-                    ModalTitle(context, 'Symptom Scores'.tr(context)),
-                    const SizedBox(height: 40),
-                    SurveyItem(
-                      title: 'I-PSS',
-                      subtitle: 'International Prostate Symptom Score'.tr(context),
-                      score: 2,
-                    ),
-                    SurveyItem(
-                      title: 'OABSS',
-                      subtitle: 'Overactive Bladder Symptom Score'.tr(context),
-                      // ignore: avoid_redundant_argument_values
-                      score: 0,
-                    ),
-                  ],
+        return BlocListener<SymptomHistoryBloc, SymptomHistoryState>(listener: (context, state) {
+          switch (state) {
+            case SymptomHistoryProgress():
+              ProgressIndicatorModal.show(context);
+            case SymptomHistorySuccess():
+              print('LOGTAG 4444');
+            case SymptomHistoryFailure():
+              print('Error loading scores: scores history : ${state.exception}');
+            default:
+              break;
+          }
+        }, child: BlocBuilder<SymptomHistoryBloc, SymptomHistoryState>(
+          builder: (context, state) {
+            return Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16),
+                  topRight: Radius.circular(16),
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  // ignore: inference_failure_on_function_invocation
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    builder: (context) {
-                      return const SymptomDescriptModal();
-                    },
-                  );
-                },
-                child: Text(
-                  'References'.tr(context),
-                  style: context.textStyleTheme.b16SemiBold.copyWith(
-                    color: context.colorTheme.vermilion.primary.shade50,
-                    decoration: TextDecoration.underline,
-                    decorationColor: context.colorTheme.vermilion.primary.shade50,
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
+              child: Column(
+                children: [
+                  ModalTitle(context, 'Symptom Score'.tr(context)),
+                  const SizedBox(height: 40),
+                  Expanded(
+                    child: ListView(
+                      controller: controller,
+                      children: [
+                        SurveyItem(
+                          title: 'I-PSS',
+                          subtitle: 'International Prostate Symptom Score'.tr(context),
+                          score: 2,
+                        ),
+                        SurveyItem(
+                          title: 'OABSS',
+                          subtitle: 'Overactive Bladder Symptom Score'.tr(context),
+                          // ignore: avoid_redundant_argument_values
+                          score: 0,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                  GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () {
+                      // ignore: inference_failure_on_function_invocation
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        builder: (context) {
+                          return const SymptomDescriptModal();
+                        },
+                      );
+                    },
+                    child: Text(
+                      'References'.tr(context),
+                      style: context.textStyleTheme.b16SemiBold.copyWith(
+                        color: context.colorTheme.vermilion.primary.shade50,
+                        decoration: TextDecoration.underline,
+                        decorationColor: context.colorTheme.vermilion.primary.shade50,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        );
+            );
+          },
+        ));
       },
     );
   }
@@ -118,6 +142,7 @@ class _SurveyItemState extends State<SurveyItem> {
                 style: context.textStyleTheme.b12Medium.copyWith(color: context.colorTheme.neutral.shade7),
               ),
               trailing: GestureDetector(
+                behavior: HitTestBehavior.translucent,
                 onTap: () {
                   // ignore: inference_failure_on_function_invocation
                   showModalBottomSheet(
@@ -170,6 +195,7 @@ class _SurveyItemState extends State<SurveyItem> {
                 child: const Divider(),
               ),
             GestureDetector(
+              behavior: HitTestBehavior.translucent,
               onTap: () {
                 setState(() {
                   isExpanded = !isExpanded;
@@ -232,6 +258,7 @@ class _SurveyItemState extends State<SurveyItem> {
                   ),
                   const SizedBox(width: 19),
                   GestureDetector(
+                    behavior: HitTestBehavior.translucent,
                     onTap: () {
                       // ignore: inference_failure_on_function_invocation
                       showModalBottomSheet(

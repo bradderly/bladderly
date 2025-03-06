@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:bladderly/presentation/feature/menu/symptom/symptom_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -95,14 +96,14 @@ class MenuView extends StatelessWidget {
                           icon: Icons.ios_share,
                           title: 'Data export'.tr(context),
                           onTap: () {
-                            ModalHelper.showModal(context: context, modalContent: const SymptomModal(), duration: 5);
+                            ModalHelper.showModal(context: context, modalContent: const SymptomBuilder(), duration: 5);
                           },
                         ),
                         SettingsItem(
                           icon: Icons.bar_chart,
                           title: 'Symptom score'.tr(context),
                           onTap: () {
-                            ModalHelper.showModal(context: context, modalContent: const SymptomModal(), duration: 5);
+                            ModalHelper.showModal(context: context, modalContent: const SymptomBuilder(), duration: 5);
                           },
                         ),
                         SettingsItem(
