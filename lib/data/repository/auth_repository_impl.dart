@@ -13,6 +13,7 @@ import 'package:bladderly/domain/exception/invalid_user_exception.dart';
 import 'package:bladderly/domain/exception/not_found_apple_credential_exception.dart';
 import 'package:bladderly/domain/exception/not_found_user_exception.dart';
 import 'package:bladderly/domain/exception/not_found_user_identifier_exception.dart';
+import 'package:bladderly/domain/exception/password_attempts_exceeded_exception.dart';
 import 'package:bladderly/domain/exception/unknown_exception.dart';
 import 'package:bladderly/domain/model/sex.dart';
 import 'package:bladderly/domain/model/sign_up_method.dart';
@@ -57,12 +58,16 @@ class AuthRepositoryImpl implements AuthRepository {
     final userInfo = response.userInfo;
 
     if (userInfo == null) {
-      if (response.message!.contains('UserNotFoundException')) {
+      if (response.message!.contains('User does not exist')) {
         throw const NotFoundUserException(message: 'not found user');
       }
 
-      if (response.message!.contains('NotAuthorizedException')) {
+      if (response.message!.contains('Incorrect username or password')) {
         throw const InvalidUserException(message: 'invalid user');
+      }
+
+      if (response.message!.contains('Password attempts exceeded')) {
+        throw const PasswordAttemptsExceededException();
       }
 
       throw UnknownException(message: response.message!);

@@ -7,6 +7,8 @@ import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/history_result.dart';
 
 abstract class HistoryRepository {
+  const HistoryRepository._();
+
   Stream<Histories> getHistoriesStream({
     required DateTime recordDate,
   });

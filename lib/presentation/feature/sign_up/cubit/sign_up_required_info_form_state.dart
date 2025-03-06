@@ -10,11 +10,17 @@ class SignUpRequiredInfoFormState extends Equatable {
   final String _yearOfBirth;
 
   bool get isValid {
-    if (gender == null) return false;
+    return _isValidGender && _isValidYearOfBirth;
+  }
 
-    final yearOfBirth = int.tryParse(_yearOfBirth) ?? 0;
+  bool get _isValidGender {
+    return gender != null;
+  }
 
-    if (yearOfBirth < 1900 || yearOfBirth > DateTime.now().year) return false;
+  bool get _isValidYearOfBirth {
+    final yearOfBirth = int.tryParse(_yearOfBirth);
+
+    if (yearOfBirth == null) return false;
 
     return true;
   }

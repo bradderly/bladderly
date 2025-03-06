@@ -5,6 +5,8 @@ import 'package:bladderly/domain/model/sign_up_method.dart';
 import 'package:bladderly/domain/model/user.dart';
 
 abstract class AuthRepository {
+  const AuthRepository._();
+
   /// 게스트 회원 가입
   Future<User> signUpGuest({
     required Gender gender,

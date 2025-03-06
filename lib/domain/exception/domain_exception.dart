@@ -2,8 +2,12 @@
 import 'package:equatable/equatable.dart';
 
 abstract class DomainException implements Exception {
-  const DomainException({required this.message});
+  const DomainException({
+    required this.message,
+    this.title,
+  });
 
+  final String? title;
   final String message;
 
   String _mapPropsToString(Type runtimeType, List<Object?> props) {
@@ -11,6 +15,7 @@ abstract class DomainException implements Exception {
   }
 
   List<Object?> get props => [
+        title,
         message,
       ];
 

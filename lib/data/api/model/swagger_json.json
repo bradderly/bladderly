@@ -923,11 +923,11 @@
                       "type": "string",
                       "description": "success or fail"
                     },
-                    "min_ver": {
+                    "min_version": {
                       "type": "string",
                       "description": "support minimum app version"
                     },
-                    "latest_ver": {
+                    "latest_version": {
                       "type": "string",
                       "description": "latest app version"
                     }
@@ -1692,11 +1692,11 @@
             "type": "string",
             "description": "success or fail"
           },
-          "min_ver": {
+          "min_version": {
             "type": "string",
             "description": "support minimum app version"
           },
-          "latest_ver": {
+          "latest_version": {
             "type": "string",
             "description": "latest app version"
           }
