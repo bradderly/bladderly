@@ -3,11 +3,12 @@ import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/model/user_model.dart';
+import 'package:bladderly/presentation/feature/menu/profile/bloc/profile_bloc.dart';
 import 'package:bladderly/presentation/feature/menu/profile/change_password/change_password_builder.dart';
 import 'package:bladderly/presentation/feature/menu/profile/delete_account/delete_account_builder.dart';
 import 'package:bladderly/presentation/feature/menu/profile/passcode/password_builder.dart';
+import 'package:bladderly/presentation/feature/menu/profile/widget/profile_name_input_field.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
-import 'package:bladderly/presentation/feature/menu/widget/input_text_form.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:bladderly/presentation/feature/menu/widget/text_icon_arrow_form.dart';
 import 'package:bladderly/presentation/feature/menu/widget/text_view_form.dart';
@@ -16,6 +17,7 @@ import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 
 // Package imports:
 
@@ -36,17 +38,20 @@ class ProfileModal extends StatelessWidget {
             topRight: Radius.circular(16),
           ),
         ),
-        padding: const EdgeInsets.symmetric(vertical: 41),
         child: BlocBuilder<UserBloc, UserState>(
           buildWhen: (prev, curr) => curr is UserLoadSuccess,
           builder: (context, state) {
             final userModel = state.userModelOrThrowException;
 
             final emailOrId = userModel is RegularUserModel ? userModel.email : userModel.id;
-            final nameText = userModel is RegularUserModel ? userModel.name : 'Bladderly User'.tr(context);
+            final nameText = switch (userModel) {
+              RegularUserModel() when userModel.name.isNotEmpty => userModel.name,
+              _ => 'Bladderly User'.tr(context),
+            };
 
             return Column(
               children: [
+                const Gap(40),
                 ModalTitle(context, 'User Profile'.tr(context)),
                 const SizedBox(height: 41),
                 Expanded(
@@ -113,9 +118,7 @@ class ProfileModal extends StatelessWidget {
                               ),
                             ],
                           ),
-                        )
-                      else
-                        Container(),
+                        ),
                       Padding(
                         padding: const EdgeInsets.only(left: 24),
                         child: Text(
@@ -139,10 +142,15 @@ class ProfileModal extends StatelessWidget {
                         userModel.yearOfBirth.toString(),
                         context,
                       ),
-                      InputTextForm(
-                        'Preferred Name'.tr(context),
-                        nameText,
-                        context,
+                      const Gap(8),
+                      ProfileNameInputField(
+                        onSubmit: (name) => context.read<ProfileBloc>().add(
+                              ProfileChangeName(
+                                userId: userModel.id,
+                                userName: name,
+                              ),
+                            ),
+                        value: nameText,
                       ),
                       const SizedBox(height: 32),
                       Padding(
@@ -212,7 +220,7 @@ class ProfileModal extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 16),
                                   GestureDetector(
-                                    onTap: () => Navigator.of(context).pop(),
+                                    onTap: Navigator.of(context).pop,
                                     child: Container(
                                       alignment: Alignment.center,
                                       height: 56,

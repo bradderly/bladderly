@@ -1,8 +1,7 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:flutter/material.dart';
 
 // ignore: non_constant_identifier_names
 Widget InputTextForm(String title, String value, BuildContext context) {

@@ -1,14 +1,5 @@
 // Flutter imports:
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:collection/collection.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
-import 'package:intl/intl.dart';
-
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
@@ -18,6 +9,13 @@ import 'package:bladderly/presentation/feature/diary/detailed_list/model/detaile
 import 'package:bladderly/presentation/feature/diary/detailed_list/widget/detailed_list_histories_widget.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+// Package imports:
+import 'package:collection/collection.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 
 class DetailedListView extends StatefulWidget {
   const DetailedListView({
@@ -104,7 +102,7 @@ class _DetailedListViewState extends State<DetailedListView> {
             Padding(
               padding: const EdgeInsets.only(top: 34),
               child: GestureDetector(
-                onTap: Navigator.of(context).pop,
+                onTap: () => Navigator.of(context).pop(),
                 child: Assets.icon.icExportClose.svg(
                   colorFilter: ColorFilter.mode(
                     context.colorTheme.neutral.shade8,

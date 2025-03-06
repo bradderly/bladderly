@@ -1,17 +1,12 @@
 // Flutter imports:
-import 'package:flutter/widgets.dart';
-
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-// Project imports:
 import 'package:bladderly/core/di/di.dart';
-import 'package:bladderly/domain/usecase/get_user_stream_usecase.dart';
-import 'package:bladderly/domain/usecase/get_user_usecase.dart';
-import 'package:bladderly/domain/usecase/sign_out_usecase.dart';
-import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
+import 'package:bladderly/domain/usecase/change_user_name_usecase.dart';
+import 'package:bladderly/presentation/feature/menu/profile/bloc/profile_bloc.dart';
 import 'package:bladderly/presentation/feature/menu/profile/cubit/profile_form_cubit.dart';
 import 'package:bladderly/presentation/feature/menu/profile/profile_modal.dart';
+import 'package:flutter/widgets.dart';
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileBuilder extends StatelessWidget {
   const ProfileBuilder({super.key});
@@ -23,12 +18,8 @@ class ProfileBuilder extends StatelessWidget {
         BlocProvider<ProfileFormCubit>(
           create: (_) => ProfileFormCubit(),
         ),
-        BlocProvider<UserBloc>(
-          create: (_) => UserBloc(
-            getUserUsecase: getIt<GetUserUsecase>(),
-            getUserStreamUsecase: getIt<GetUserStreamUsecase>(),
-            signOutUsecase: getIt<SignOutUsecase>(),
-          )..add(const UserLoad()),
+        BlocProvider<ProfileBloc>(
+          create: (_) => ProfileBloc(changeUserNameUsecase: getIt<ChangeUserNameUsecase>()),
         ),
       ],
       child: const ProfileModal(),

@@ -1,39 +1,34 @@
 // Package imports:
+// Project imports:
+import 'package:bladderly/domain/usecase/change_user_name_usecase.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-// Project imports:
-import 'package:bladderly/domain/usecase/profile_usecase.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc({
-    required ProfileUsecase chagnePasswordUsecase,
-  })  : _chagneName = chagnePasswordUsecase,
+    required ChangeUserNameUsecase changeUserNameUsecase,
+  })  : _changeUserNameUsecase = changeUserNameUsecase,
         super(const ProfileInitial()) {
-    on<ProfileEvent>(
-      (event, emit) => switch (event) {
-        Profile() => _onChangePassord(event, emit),
-      },
-      transformer: droppable(),
-    );
+    on<ProfileChangeName>(_onChangeName, transformer: droppable());
   }
 
-  final ProfileUsecase _chagneName;
+  final ChangeUserNameUsecase _changeUserNameUsecase;
 
-  Future<void> _onChangePassord(Profile event, Emitter<ProfileState> emit) async {
-    emit(const ProfileProgress());
+  Future<void> _onChangeName(ProfileChangeName event, Emitter<ProfileState> emit) async {
+    emit(const ProfileChangeNameInProgress());
 
-    final result = await _chagneName(
-      name: event.email,
+    final result = await _changeUserNameUsecase(
+      userId: event.userId,
+      userName: event.userName,
     );
 
     result.fold(
-      (exception) => emit(ProfileFailure(exception: exception)),
-      (success) => emit(const ProfileSuccess()),
+      (exception) => emit(ProfileChangeNameFailure(exception: exception)),
+      (_) => emit(const ProfileChangeNameSuccess()),
     );
   }
 }

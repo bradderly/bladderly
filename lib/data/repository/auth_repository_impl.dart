@@ -1,12 +1,6 @@
 // Dart imports:
 import 'dart:convert';
 
-// Package imports:
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-
 // Project imports:
 import 'package:bladderly/core/package_device_info/src/model/device_info_model.dart';
 import 'package:bladderly/data/api/client/api_client.dart';
@@ -24,6 +18,11 @@ import 'package:bladderly/domain/model/sex.dart';
 import 'package:bladderly/domain/model/sign_up_method.dart';
 import 'package:bladderly/domain/model/user.dart';
 import 'package:bladderly/domain/repository/auth_repository.dart';
+// Package imports:
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
@@ -226,11 +225,17 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<String> changeName({
-    required String name,
+    required String userId,
+    required String userName,
+    String? userEmail,
   }) async {
-    final request = ChagePwRequest(email: name, newPw: name, oldPw: name);
+    final request = UpdateUserInfoRequest(
+      id: userId,
+      email: userEmail,
+      username: userName,
+    );
 
-    final response = await _apiClient.changePassword(request: request).then((response) => response.body!);
+    final response = await _apiClient.updateUserName(request: request).then((response) => response.body!);
 
     return response.message ?? (throw Exception('Change Password failed'));
   }

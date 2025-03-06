@@ -7,21 +7,18 @@ sealed class ProfileEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class Profile extends ProfileEvent {
-  const Profile({
-    required this.email,
-    required this.newPw,
-    required this.oldPw,
+final class ProfileChangeName extends ProfileEvent {
+  const ProfileChangeName({
+    required this.userId,
+    required this.userName,
   });
 
-  final String email;
-  final String newPw;
-  final String oldPw;
+  final String userId;
+  final String userName;
 
   @override
   List<Object> get props => [
-        email,
-        newPw,
-        oldPw,
+        userId,
+        userName,
       ];
 }
