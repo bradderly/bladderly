@@ -1,12 +1,11 @@
 // Dart imports:
 import 'dart:async';
 
-// Package imports:
-import 'package:chopper/chopper.dart';
-
 // Project imports:
 import 'package:bladderly/data/api/client/exception/api_response_body_empty_exception.dart';
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
+// Package imports:
+import 'package:chopper/chopper.dart';
 
 class ApiResponseExceptionInterceptor implements ResponseInterceptor {
   @override

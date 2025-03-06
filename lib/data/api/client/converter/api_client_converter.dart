@@ -2,11 +2,10 @@
 import 'dart:async';
 import 'dart:convert';
 
-// Package imports:
-import 'package:chopper/chopper.dart' as chopper;
-
 // Project imports:
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
+// Package imports:
+import 'package:chopper/chopper.dart' as chopper;
 
 typedef $JsonFactory<T> = T Function(Map<String, dynamic> json);
 

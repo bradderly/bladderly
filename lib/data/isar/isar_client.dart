@@ -1,16 +1,14 @@
 // Flutter imports:
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:isar/isar.dart';
-
 // Project imports:
 import 'package:bladderly/data/isar/schema/apple_credential_entity.dart';
 import 'package:bladderly/data/isar/schema/history_entity.dart';
 import 'package:bladderly/data/isar/schema/user_entity.dart';
 import 'package:bladderly/domain/model/history_status.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:isar/isar.dart';
 
 abstract class IsarClient {
   factory IsarClient(Isar isar) => _IsarClientImpl(isar: isar);

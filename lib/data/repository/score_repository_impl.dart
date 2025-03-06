@@ -1,6 +1,4 @@
 // Dart imports:
-import 'dart:io';
-
 // Project imports:
 import 'package:bladderly/data/api/client/api_client.dart';
 import 'package:bladderly/data/isar/isar_client.dart';
@@ -21,33 +19,20 @@ class ScoreRepositoryImpl implements ScoreRepository {
   final ApiClient _apiClient;
 
   @override
-  Future<List<Score>> getScoreHistoriesFromServer(String userId) async {
-    print('LOGTAG API Request ${userId}'); // API 응답 데이터 출력
-    final response = await _apiClient.getAllRecords(userId: userId);
+  Score saveScore(Score score) {
+    // TODO: implement saveScore
+    throw UnimplementedError();
+  }
 
-    print('LOGTAG 1212');
-    print('LOGTAG API Response Body: ${response.body}'); // API 응답 데이터 출력
+  @override
+  Future<void> uploadScore(Score score) {
+    // TODO: implement uploadScore
+    throw UnimplementedError();
+  }
 
-    final scores = response.body!.scores ?? [];
-
-    print('LOGTAG Parsed Score: $scores'); // scores 리스트 출력
-    /*
-    final response = await _apiClient.getAllRecords(userId: userId).then((response) => response.body!);     
-    final scores = response.scores ?? [];
-*/
-    final scoresScore = <Score>[];
-
-    for (var i = 0; i < scores.length; i++) {
-      scoresScore.add(
-        Score.fromValues(
-          scoreDate: scores[i].scoreDate?.toString(),
-          scoreName: scores[i].scoreName?.toString(),
-          totalScore: scores[i].totalScore?.toString(),
-          scoreValue: scores[i].scoreValue?.map((e) => e.toString()).toList() ?? [],
-        ),
-      );
-    }
-
-    return scoresScore;
+  @override
+  Stream<List<Score>> getScoresStream() {
+    // TODO: implement getScoresStream
+    throw UnimplementedError();
   }
 }

@@ -1,7 +1,7 @@
 // Package imports:
 // Project imports:
 import 'package:bladderly/domain/usecase/get_history_results_usecase.dart';
-import 'package:bladderly/domain/usecase/upload_pending_upload_histories_usecase.dart';
+import 'package:bladderly/domain/usecase/upload_pending_histories_usecase.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
