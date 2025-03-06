@@ -21,7 +21,6 @@ import 'package:bladderly/presentation/feature/menu/faq/faq_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/language/language_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/plan/plan_builder.dart';
 import 'package:bladderly/presentation/feature/menu/profile/profile_builder.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/symptom_modal.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 
 class MenuView extends StatelessWidget {

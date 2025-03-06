@@ -155,6 +155,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
     return response.body?.message;
   }
 
+  // TODO(eden): 레코드, 스코어 둘다 불러오기 때문에 레포지토리 분리해야함
   @override
   Future<Histories> getAllHistoriesFromServer(String userId) async {
     final response = await _apiClient.getAllRecords(userId: userId).then((response) => response.body!);

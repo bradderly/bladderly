@@ -1,28 +1,22 @@
-// Package imports:
-
-// Project imports:
 import 'package:bladderly/domain/model/score.dart';
 import 'package:bladderly/domain/repository/score_repository.dart';
-// Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
-class SymptomHistoryUsecase {
-  const SymptomHistoryUsecase({
+class GetScoresStreamUsecase {
+  const GetScoresStreamUsecase({
     required ScoreRepository scoreRepository,
   }) : _scoreRepository = scoreRepository;
 
+  // 사용 시나리오
+  // 로컬 디비에 있는 스코어들을 구독하는 스트림을 가져온다.
+
   final ScoreRepository _scoreRepository;
 
-  Future<Either<Exception, List<Score>>> call({
-    required String userId,
-  }) async {
+  Future<Either<Exception, Stream<List<Score>>>> call() async {
     try {
-      print('LOGTAG 0000  $userId');
-      final scores = await _scoreRepository.getScoreHistoriesFromServer(userId);
-      print('LOGTAG 222222');
-      return Right(scores);
+      return Right(_scoreRepository.getScoresStream());
     } catch (e) {
       return Left(e is Exception ? e : Exception(e.toString()));
     }
