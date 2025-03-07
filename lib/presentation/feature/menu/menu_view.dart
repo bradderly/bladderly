@@ -1,6 +1,5 @@
 // Dart imports:
 // Flutter imports:
-import 'package:bladderly/domain/model/app_version.dart';
 // Project imports:
 import 'package:bladderly/domain/model/unit.dart';
 import 'package:bladderly/presentation/common/bloc/app_config_bloc.dart';
@@ -25,8 +24,6 @@ class MenuView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //context.read<MenuBloc>().add(GetVersion(device: Platform.operatingSystem));
-
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
@@ -130,9 +127,8 @@ class MenuView extends StatelessWidget {
                         onTap: () =>
                             ModalHelper.showModal(context: context, modalContent: const AboutModal(), duration: 5),
                       ),
-                      BlocSelector<AppConfigBloc, AppConfigState, AppVersion>(
-                        selector: (state) => state.appVersion,
-                        builder: (context, appVersion) => Container(
+                      BlocBuilder<AppConfigBloc, AppConfigState>(
+                        builder: (context, state) => Container(
                           height: 60,
                           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                           child: Row(
@@ -148,17 +144,23 @@ class MenuView extends StatelessWidget {
                                         color: context.colorTheme.neutral.shade10,
                                       ),
                                     ),
-                                    Text(
-                                      'Lastest : 2025.01',
-                                      style: context.textStyleTheme.b12Medium.copyWith(
-                                        color: context.colorTheme.neutral.shade7,
+                                    RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          TextSpan(text: 'Latest :'.tr(context)),
+                                          const TextSpan(text: ' '),
+                                          TextSpan(text: state.updatedDate),
+                                        ],
+                                        style: context.textStyleTheme.b12Medium.copyWith(
+                                          color: context.colorTheme.neutral.shade7,
+                                        ),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                               Text(
-                                appVersion.currentVersion,
+                                state.currentVersion,
                                 style: context.textStyleTheme.b14Medium
                                     .copyWith(color: context.colorTheme.vermilion.primary.shade50),
                               ),
