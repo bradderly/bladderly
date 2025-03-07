@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ModalHelper {
   static void showModal<T extends BlocBase<Object?>>({
     required BuildContext context,
-    required Widget modalContent,
+    required Widget Function(BuildContext context) modalBuilder,
     bool isScrollControlled = true,
     int duration = 1,
   }) {
@@ -15,7 +15,7 @@ class ModalHelper {
       context: context,
       isScrollControlled: isScrollControlled,
       backgroundColor: Colors.transparent,
-      builder: (context) => modalContent,
+      builder: modalBuilder,
     );
   }
 }
