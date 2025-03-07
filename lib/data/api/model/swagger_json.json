@@ -3,7 +3,7 @@
   "info": {
     "title": "Bladderly for Flutter",
     "contact": {},
-    "version": "1.0.0"
+    "version": "0.0.1"
   },
   "servers": [
     {
@@ -297,22 +297,21 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": ["email", "message", "subject"],
+                "required": ["id", "email", "message"],
                 "type": "object",
                 "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "guest id or email address(signup user)"
+                  },
+                  "preferred_name": {
+                    "type": "string"
+                  },
                   "email": {
-                    "type": "string"
-                  },
-                  "first_name": {
-                    "type": "string"
-                  },
-                  "last_name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "email address for email sending"
                   },
                   "message": {
-                    "type": "string"
-                  },
-                  "subject": {
                     "type": "string"
                   }
                 }
@@ -714,13 +713,13 @@
                             "description": "IPSS or OABSS"
                           },
                           "total_score": {
-                            "type": "string",
+                            "type": "integer",
                             "description": "score item sum"
                           },
                           "score_value": {
                             "type": "array",
                             "items": {
-                              "type": "string"
+                              "type": "integer"
                             },
                             "description": "score item value"
                           }
@@ -923,13 +922,79 @@
                       "type": "string",
                       "description": "success or fail"
                     },
-                    "min_version": {
+                    "min_ver": {
                       "type": "string",
                       "description": "support minimum app version"
                     },
-                    "latest_version": {
+                    "latest_ver": {
                       "type": "string",
                       "description": "latest app version"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/dev/support-models": {
+      "get": {
+        "description": "get support models information",
+        "operationId": "supprtModels",
+        "parameters": [
+          {
+            "name": "device",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "gender",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "success or fail"
+                    },
+                    "models": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "support ios model name"
                     }
                   }
                 }
@@ -1171,12 +1236,16 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": ["user_id"],
+                "required": ["user_id", "device"],
                 "type": "object",
                 "properties": {
                   "user_id": {
                     "type": "string",
                     "description": "user_id"
+                  },
+                  "device": {
+                    "type": "string",
+                    "description": "device info (ex) android or iphone)"
                   },
                   "receipt": {
                     "type": "string",
@@ -1692,13 +1761,29 @@
             "type": "string",
             "description": "success or fail"
           },
-          "min_version": {
+          "min_ver": {
             "type": "string",
             "description": "support minimum app version"
           },
-          "latest_version": {
+          "latest_ver": {
             "type": "string",
             "description": "latest app version"
+          }
+        }
+      },
+      "GetSupportModelsResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "success or fail"
+          },
+          "models": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "support ios model name"
           }
         }
       },
@@ -1794,13 +1879,13 @@
                   "description": "IPSS or OABSS"
                 },
                 "total_score": {
-                  "type": "string",
+                  "type": "integer",
                   "description": "score item sum"
                 },
                 "score_value": {
                   "type": "array",
                   "items": {
-                    "type": "string"
+                    "type": "integer"
                   },
                   "description": "score item value"
                 }
@@ -1949,22 +2034,21 @@
         }
       },
       "ContactUsRequest": {
-        "required": ["email", "message", "subject"],
+        "required": ["id", "email", "message"],
         "type": "object",
         "properties": {
+          "id": {
+            "type": "string",
+            "description": "guest id or email address(signup user)"
+          },
+          "preferred_name": {
+            "type": "string"
+          },
           "email": {
-            "type": "string"
-          },
-          "first_name": {
-            "type": "string"
-          },
-          "last_name": {
-            "type": "string"
+            "type": "string",
+            "description": "email address for email sending"
           },
           "message": {
-            "type": "string"
-          },
-          "subject": {
             "type": "string"
           }
         }
@@ -2063,12 +2147,16 @@
         }
       },
       "PaymentCheckRequest": {
-        "required": ["user_id"],
+        "required": ["user_id", "device"],
         "type": "object",
         "properties": {
           "user_id": {
             "type": "string",
             "description": "user_id"
+          },
+          "device": {
+            "type": "string",
+            "description": "device info (ex) android or iphone)"
           },
           "receipt": {
             "type": "string",
@@ -2322,13 +2410,13 @@
             "description": "IPSS or OABSS"
           },
           "total_score": {
-            "type": "string",
+            "type": "integer",
             "description": "score item sum"
           },
           "score_value": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "integer"
             },
             "description": "score item value"
           }

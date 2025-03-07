@@ -9,25 +9,22 @@ sealed class ContactUsEvent extends Equatable {
 
 class ContactUs extends ContactUsEvent {
   const ContactUs({
-    required this.email,
-    required this.firstName,
-    required this.lastName,
+    required this.userId,
+    required this.userEmail,
+    required this.userName,
     required this.message,
-    required this.subject,
   });
 
-  final String email;
-  final String firstName;
-  final String lastName;
+  final String userId;
+  final String userEmail;
+  final String userName;
   final String message;
-  final String subject;
 
   @override
   List<Object> get props => [
-        email,
-        firstName,
-        lastName,
+        userId,
+        userEmail,
+        userName,
         message,
-        subject,
       ];
 }

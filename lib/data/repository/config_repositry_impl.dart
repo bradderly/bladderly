@@ -20,8 +20,8 @@ class ConfigRepositryImpl implements ConfigRepository {
     final response = await _apiClient.getVersion(device: 'ios').then((value) => value.body!);
 
     return AppVersion(
-      minVersion: response.minVersion!,
-      latestVersion: response.latestVersion!,
+      minVersion: response.minVer!,
+      latestVersion: response.latestVer!,
       currentVersion: _packageInfo.version,
     );
   }

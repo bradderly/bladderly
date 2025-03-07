@@ -1,9 +1,4 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 // Project imports:
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
@@ -13,6 +8,9 @@ import 'package:bladderly/presentation/common/widget/progress_indicator_modal.da
 import 'package:bladderly/presentation/feature/menu/contact_us/bloc/contact_us_bloc.dart';
 import 'package:bladderly/presentation/feature/menu/contact_us/cubit/contact_us_form_cubit.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ContactUsModal extends StatelessWidget {
   const ContactUsModal({super.key});
@@ -20,15 +18,16 @@ class ContactUsModal extends StatelessWidget {
   void _onSendMessage(
     BuildContext context,
   ) {
-    context.read<ContactUsBloc>().add(
-          ContactUs(
-            firstName: context.read<ContactUsFormCubit>().state.firstName,
-            lastName: context.read<ContactUsFormCubit>().state.lastName,
-            email: context.read<ContactUsFormCubit>().state.email,
-            subject: context.read<ContactUsFormCubit>().state.subject,
-            message: context.read<ContactUsFormCubit>().state.message,
-          ),
-        );
+    /// TODO(김원응): cubit 수정 및 블록 호출부 구현 필요
+    // context.read<ContactUsBloc>().add(
+    //       ContactUs(
+    //         firstName: context.read<ContactUsFormCubit>().state.firstName,
+    //         lastName: context.read<ContactUsFormCubit>().state.lastName,
+    //         email: context.read<ContactUsFormCubit>().state.email,
+    //         subject: context.read<ContactUsFormCubit>().state.subject,
+    //         message: context.read<ContactUsFormCubit>().state.message,
+    //       ),
+    //     );
   }
 
   @override

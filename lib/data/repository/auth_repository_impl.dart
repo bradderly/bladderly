@@ -267,22 +267,13 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<String> contactUs({
-    required String email,
-    required String firstName,
-    required String lastName,
+    required String userId,
+    required String userEmail,
+    required String userName,
     required String message,
-    required String subject,
   }) async {
     final response = await _apiClient
-        .contactUs(
-          request: ContactUsRequest(
-            email: email,
-            firstName: firstName,
-            lastName: lastName,
-            message: message,
-            subject: subject,
-          ),
-        )
+        .contactUs(request: ContactUsRequest(id: userId, email: userEmail, preferredName: userName, message: message))
         .then((response) => response.body!);
 
     return response.message ?? (throw Exception('Contact Us failed'));
