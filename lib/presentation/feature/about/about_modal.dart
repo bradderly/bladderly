@@ -1,12 +1,11 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/feature/menu/plan/privacy_view.dart';
-import 'package:bladderly/presentation/feature/menu/plan/terms_view.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:bladderly/presentation/feature/menu/widget/text_arrow_form.dart';
+import 'package:bladderly/presentation/feature/policy/privacy/privacy_view.dart';
+import 'package:bladderly/presentation/feature/policy/terms/terms_view.dart';
+import 'package:flutter/material.dart';
 
 class AboutModal extends StatelessWidget {
   const AboutModal({super.key});
