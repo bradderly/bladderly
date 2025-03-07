@@ -66,7 +66,7 @@ class MenuView extends StatelessWidget {
                         onTap: () {
                           ModalHelper.showModal(
                             context: context,
-                            modalContent: const ProfileBuilder(),
+                            modalBuilder: (_) => const ProfileBuilder(),
                             duration: 5,
                           );
                         },
@@ -79,20 +79,29 @@ class MenuView extends StatelessWidget {
                       SettingsItem(
                         icon: Icons.credit_card,
                         title: 'Plan'.tr(context),
-                        onTap: () =>
-                            ModalHelper.showModal(context: context, modalContent: const PlanBuilder(), duration: 5),
+                        onTap: () => ModalHelper.showModal(
+                          context: context,
+                          modalBuilder: (_) => const PlanBuilder(),
+                          duration: 5,
+                        ),
                       ),
                       SettingsItem(
                         icon: Icons.ios_share,
                         title: 'Data export'.tr(context),
-                        onTap: () =>
-                            ModalHelper.showModal(context: context, modalContent: const SymptomBuilder(), duration: 5),
+                        onTap: () => ModalHelper.showModal(
+                          context: context,
+                          modalBuilder: (_) => const SymptomBuilder(),
+                          duration: 5,
+                        ),
                       ),
                       SettingsItem(
                         icon: Icons.bar_chart,
                         title: 'Symptom score'.tr(context),
-                        onTap: () =>
-                            ModalHelper.showModal(context: context, modalContent: const SymptomBuilder(), duration: 5),
+                        onTap: () => ModalHelper.showModal(
+                          context: context,
+                          modalBuilder: (_) => const SymptomBuilder(),
+                          duration: 5,
+                        ),
                       ),
                       SettingsItem(
                         icon: Icons.language,
@@ -101,7 +110,7 @@ class MenuView extends StatelessWidget {
                         onTap: () {
                           ModalHelper.showModal(
                             context: context,
-                            modalContent: const LanguageViewModal(),
+                            modalBuilder: (_) => const LanguageViewModal(),
                             duration: 5,
                           );
                         },
@@ -109,23 +118,29 @@ class MenuView extends StatelessWidget {
                       SettingsItem(
                         icon: Icons.help_outline,
                         title: 'FAQ'.tr(context),
-                        onTap: () =>
-                            ModalHelper.showModal(context: context, modalContent: const FaqViewModal(), duration: 5),
+                        onTap: () => ModalHelper.showModal(
+                          context: context,
+                          modalBuilder: (_) => const FaqViewModal(),
+                          duration: 5,
+                        ),
                       ),
                       SettingsItem(
                         icon: Icons.phone,
                         title: 'Contact Us'.tr(context),
                         onTap: () => ModalHelper.showModal(
                           context: context,
-                          modalContent: const ContactUsBuilder(),
+                          modalBuilder: (_) => const ContactUsBuilder(),
                           duration: 5,
                         ),
                       ),
                       SettingsItem(
                         icon: Icons.info_outline,
                         title: 'About'.tr(context),
-                        onTap: () =>
-                            ModalHelper.showModal(context: context, modalContent: const AboutModal(), duration: 5),
+                        onTap: () => ModalHelper.showModal(
+                          context: context,
+                          modalBuilder: (_) => const AboutModal(),
+                          duration: 5,
+                        ),
                       ),
                       BlocBuilder<AppConfigBloc, AppConfigState>(
                         builder: (context, state) => Container(

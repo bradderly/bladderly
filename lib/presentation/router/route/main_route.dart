@@ -3,6 +3,8 @@
 // Project imports:
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
+import 'package:bladderly/presentation/feature/about/privacy/privacy_view.dart';
+import 'package:bladderly/presentation/feature/about/terms/terms_view.dart';
 import 'package:bladderly/presentation/feature/diary/detailed_list/detailed_list_builder.dart';
 import 'package:bladderly/presentation/feature/export/export_builder.dart';
 import 'package:bladderly/presentation/feature/input/intake_input/intake_input_builder.dart';
@@ -41,6 +43,8 @@ enum MainRouteTab {
       name: 'menu',
       routes: [
         TypedGoRoute<SignUpRegularRoute>(path: 'sign-up', name: 'sign-up-regular'),
+        TypedGoRoute<TermsRoute>(path: 'terms', name: 'terms'),
+        TypedGoRoute<PrivacyRoute>(path: 'privacy', name: 'privacy'),
       ],
     ),
     TypedGoRoute<SoundInputRecordingRoute>(
@@ -295,4 +299,28 @@ class HowToUseRoute extends GoRouteData {
   }
 
   Future<bool?> push(BuildContext context) => context.push<bool>(location);
+}
+
+class TermsRoute extends GoRouteData {
+  const TermsRoute();
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: const TermsView(),
+    );
+  }
+}
+
+class PrivacyRoute extends GoRouteData {
+  const PrivacyRoute();
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: const PrivacyView(),
+    );
+  }
 }

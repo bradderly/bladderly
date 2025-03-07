@@ -176,7 +176,7 @@ class ProfileModal extends StatelessWidget {
                         icon: Icons.lock_open,
                         onTap: () => ModalHelper.showModal(
                           context: context,
-                          modalContent: const ChangePasswordBuilder(),
+                          modalBuilder: (_) => const ChangePasswordBuilder(),
                           duration: 5,
                         ),
                       ),
@@ -246,7 +246,7 @@ class ProfileModal extends StatelessWidget {
                         icon: Icons.delete_outline,
                         onTap: () => ModalHelper.showModal(
                           context: context,
-                          modalContent: const DeleteAccountBuilder(),
+                          modalBuilder: (_) => const DeleteAccountBuilder(),
                           duration: 5,
                         ),
                       ),
