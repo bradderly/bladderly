@@ -6,7 +6,7 @@ import 'package:bladderly/presentation/common/bloc/app_config_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/unit_cubit.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/feature/menu/about/about_modal.dart';
+import 'package:bladderly/presentation/feature/about/about_modal.dart';
 import 'package:bladderly/presentation/feature/menu/contact_us/contact_us_builder.dart';
 import 'package:bladderly/presentation/feature/menu/faq/faq_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/language/language_view_modal.dart';
