@@ -1,12 +1,5 @@
 // Flutter imports:
 
-// Flutter imports:
-import 'package:flutter/cupertino.dart';
-
-// Package imports:
-import 'package:equatable/equatable.dart';
-import 'package:go_router/go_router.dart';
-
 // Project imports:
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
@@ -18,9 +11,14 @@ import 'package:bladderly/presentation/feature/input/sound_input_note/sound_inpu
 import 'package:bladderly/presentation/feature/input/sound_input_recording/sound_input_recording_builder.dart';
 import 'package:bladderly/presentation/feature/main/main_builder.dart';
 import 'package:bladderly/presentation/feature/menu/menu_builder.dart';
-import 'package:bladderly/presentation/feature/menu/plan/paywall/paywall_builder.dart';
+import 'package:bladderly/presentation/feature/plan/paywall/paywall_builder.dart';
 import 'package:bladderly/presentation/feature/sign_up/regular/sign_up_regular_builder.dart';
 import 'package:bladderly/presentation/feature/tutorial/how_to_use/how_to_use_view.dart';
+// Package imports:
+import 'package:equatable/equatable.dart';
+// Flutter imports:
+import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 
 part 'main_route.g.dart';
 

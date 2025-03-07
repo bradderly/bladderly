@@ -1,13 +1,12 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/feature/menu/plan/privacy_view.dart';
-import 'package:bladderly/presentation/feature/menu/plan/promo_code/promo_code_modal.dart';
-import 'package:bladderly/presentation/feature/menu/plan/terms_view.dart';
+import 'package:bladderly/presentation/feature/about/privacy/privacy_view.dart';
+import 'package:bladderly/presentation/feature/about/terms/terms_view.dart';
+import 'package:bladderly/presentation/feature/plan/promo_code/promo_code_modal.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class PaywallView extends StatefulWidget {
   const PaywallView({super.key});

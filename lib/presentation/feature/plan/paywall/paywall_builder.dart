@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:bladderly/presentation/feature/menu/plan/paywall/paywall_view.dart';
+import 'package:bladderly/presentation/feature/plan/paywall/paywall_view.dart';
 import 'package:flutter/widgets.dart';
 
 class PaywallBuilder extends StatelessWidget {
