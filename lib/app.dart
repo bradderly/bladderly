@@ -4,8 +4,10 @@ import 'package:bladderly/core/di/di.dart';
 import 'package:bladderly/domain/usecase/get_history_result_usecase.dart';
 import 'package:bladderly/domain/usecase/get_user_stream_usecase.dart';
 import 'package:bladderly/domain/usecase/get_user_usecase.dart';
+import 'package:bladderly/domain/usecase/load_app_config_usecase.dart';
 import 'package:bladderly/domain/usecase/refresh_history_result_usecase.dart';
 import 'package:bladderly/domain/usecase/sign_out_usecase.dart';
+import 'package:bladderly/presentation/common/bloc/app_config_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/history_result_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/locale_cubit.dart';
@@ -85,7 +87,13 @@ class _BladderlyAppState extends State<BladderlyApp> {
             refreshHistoryResultUsecase: getIt<RefreshHistoryResultUsecase>(),
           ),
         ),
-        BlocProvider(create: (context) => PasscodeCubit()), // PasscodeCubit을 전체 앱에서 제공
+        // PasscodeCubit을 전체 앱에서 제공
+        BlocProvider<PasscodeCubit>(create: (_) => PasscodeCubit()),
+        BlocProvider<AppConfigBloc>(
+          create: (_) => AppConfigBloc(
+            loadAppConfigUsecase: getIt<LoadAppConfigUsecase>(),
+          ),
+        ),
       ],
       child: BlocListener<AppLocaleCubit, AppLocale>(
         listener: (context, state) => FlutterLocalization.instance.translate(state.name),

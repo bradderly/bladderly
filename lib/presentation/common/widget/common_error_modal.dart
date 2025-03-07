@@ -1,3 +1,4 @@
+import 'package:bladderly/domain/exception/domain_exception.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/common_modal.dart';
@@ -31,6 +32,21 @@ class CommonErrorModal extends StatelessWidget {
         onTap: onTap,
         title: title,
       ),
+    );
+  }
+
+  static Future<T?> showFromDominException<T>(
+    BuildContext context, {
+    required DomainException exception,
+    VoidCallback? onTap,
+    bool barrierDismissible = false,
+  }) {
+    return show<T>(
+      context,
+      onTap: onTap,
+      title: exception.title,
+      content: exception.message,
+      barrierDismissible: barrierDismissible,
     );
   }
 
