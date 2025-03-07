@@ -74,11 +74,10 @@ abstract class AuthRepository {
   });
 
   Future<String> contactUs({
-    required String email,
-    required String firstName,
-    required String lastName,
+    required String userId,
+    required String userEmail,
+    required String userName,
     required String message,
-    required String subject,
   });
 
   Future<String> checkPromo({

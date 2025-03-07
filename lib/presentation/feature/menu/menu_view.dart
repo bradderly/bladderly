@@ -13,7 +13,7 @@ import 'package:bladderly/presentation/feature/menu/language/language_view_modal
 import 'package:bladderly/presentation/feature/menu/profile/profile_builder.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/symptom_builder.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
-import 'package:bladderly/presentation/feature/plan/plan_builder.dart';
+import 'package:bladderly/presentation/feature/payment/plan/plan_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // Package imports:
