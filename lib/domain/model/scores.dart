@@ -7,8 +7,6 @@ class Scores<T extends Score> {
 
   final List<T> _list;
 
-  get scores => null;
-
   Iterable<A> map<A>(A Function(T e) toElement) {
     return _list.map(toElement);
   }

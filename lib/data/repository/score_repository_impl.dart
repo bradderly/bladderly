@@ -1,19 +1,13 @@
 // Dart imports:
-import 'dart:io';
 // Project imports:
 import 'package:bladderly/data/api/client/api_client.dart';
 import 'package:bladderly/data/isar/isar_client.dart';
-import 'package:bladderly/data/isar/schema/score_entity.dart';
 import 'package:bladderly/data/mapper/score_mapper.dart';
 import 'package:bladderly/domain/model/score.dart';
 import 'package:bladderly/domain/model/scores.dart';
 import 'package:bladderly/domain/repository/score_repository.dart';
 // Package imports:
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/subjects.dart';
-
-import 'package:injectable/injectable.dart';
-import 'package:intl/intl.dart';
 
 @LazySingleton(as: ScoreRepository)
 class ScoreRepositoryImpl implements ScoreRepository {
@@ -28,9 +22,8 @@ class ScoreRepositoryImpl implements ScoreRepository {
 
   @override
   Future<void> saveScores(Scores scores) {
-    print('5555');
     return _isarClient
-        .saveScores(scores)
+        .saveScores(scores.map(ScoreMapper.toScoreEntity).toList())
         .then((histories) => Scores(list: histories.map(ScoreMapper.fromScoreEntity).toList()));
   }
 

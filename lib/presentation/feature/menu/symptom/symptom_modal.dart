@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:bladderly/domain/model/scores.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
@@ -117,7 +116,7 @@ class _SymptomModalState extends State<SymptomModal> {
                 ],
               ),
             );
-          });
+          },);
         },
       ),
     );

@@ -5,9 +5,7 @@ import 'package:bladderly/data/isar/schema/apple_credential_entity.dart';
 import 'package:bladderly/data/isar/schema/history_entity.dart';
 import 'package:bladderly/data/isar/schema/score_entity.dart';
 import 'package:bladderly/data/isar/schema/user_entity.dart';
-import 'package:bladderly/data/mapper/score_mapper.dart';
 import 'package:bladderly/domain/model/history_status.dart';
-import 'package:bladderly/domain/model/scores.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
@@ -44,7 +42,7 @@ abstract class IsarClient {
 
   Future<List<HistoryEntity>> getProcessingHistories();
 
-  Future<List<ScoreEntity>> saveScores(Scores scores);
+  Future<List<ScoreEntity>> saveScores(List<ScoreEntity> scoreEntities);
 
   Stream<List<ScoreEntity>> getScoresStream();
 }
@@ -131,6 +129,8 @@ class _IsarClientImpl implements IsarClient {
 
   @override
   Future<List<HistoryEntity>> saveHistories(List<HistoryEntity> historyEntities) {
+    if (historyEntities.isEmpty) return Future.value([]);
+
     return _isar.writeTxn(() async {
       final ids = await _isar.historyEntitys.putAllByRecordTime(historyEntities);
       return _isar.historyEntitys.getAll(ids).then((entities) => entities.whereType<HistoryEntity>().toList());
@@ -148,28 +148,13 @@ class _IsarClientImpl implements IsarClient {
   }
 
   @override
-  Future<List<ScoreEntity>> saveScores(Scores scores) {
-    print('saveScores' + scores.toString());
+  Future<List<ScoreEntity>> saveScores(List<ScoreEntity> scoreEntities) {
+    if (scoreEntities.isEmpty) return Future.value([]);
+
     return _isar.writeTxn(() async {
-      final ids = await _isar.scoreEntitys.putAll(scores.map(ScoreMapper.toScoreEntity).toList());
+      final ids = await _isar.scoreEntitys.putAll(scoreEntities);
 
-      print('Stored IDs: $ids'); // ids 값 확인
-      if (ids.isEmpty) {
-        throw Exception('No IDs returned from putAll');
-      }
-      return _isar.scoreEntitys.getAll(ids).then((entities) {
-        if (entities.isEmpty) {
-          throw Exception('No entities found for the given IDs');
-        }
-        final scoreEntities = entities.whereType<ScoreEntity>().toList();
-        print('Filtered ScoreEntities Dates: ${scoreEntities.map((e) => e.date).toList()}'); // 필터링 후 출력
-
-        if (scoreEntities.isEmpty) {
-          throw Exception('No ScoreEntity found in the fetched entities');
-        }
-
-        return scoreEntities;
-      });
+      return _isar.scoreEntitys.getAll(ids).then((entities) => entities.whereType<ScoreEntity>().toList());
     });
   }
 
