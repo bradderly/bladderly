@@ -17,7 +17,6 @@ class DetailedListDeleteHistoryModal extends StatelessWidget {
   static Future<bool> show(BuildContext context) async {
     return CommonModal.show<bool>(
       context,
-      barrierDismissible: false,
       child: const DetailedListDeleteHistoryModal(),
     ).then((value) => value ?? false);
   }

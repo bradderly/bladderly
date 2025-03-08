@@ -20,10 +20,8 @@ class GetScoresServerUsecase {
     try {
       final scores = await _scoreRepository.getAllScoreHistoriesFromServer(userId);
 
-      print('save1 : ' + scores.printScoreCount()); // 이제 정상적으로 출력
       await _scoreRepository.saveScores(scores);
 
-      print('save2 : '); // 이제 정상적으로 출력
       return Right(scores);
     } catch (e) {
       return Left(e is Exception ? e : Exception(e.toString()));

@@ -30,7 +30,7 @@ class ScoreMapper {
   static ScoreEntity toScoreEntity(Score score) {
     return ScoreEntity()
       ..date = score.date.toIso8601String()
-      ..name = score.type.toString()
+      ..name = score.type.name
       ..totalScore = score.totalScore
       ..scorevalue = score.values
       ..status = score.status;
@@ -39,7 +39,7 @@ class ScoreMapper {
   static Score fromScoreEntity(ScoreEntity entity) {
     return Score(
       date: DateTime.parse(entity.date),
-      type: ScoreType.values.firstWhere((e) => e.toString() == 'ScoreType.${entity.name}'),
+      type: ScoreType.values.byName(entity.name),
       totalScore: entity.totalScore,
       values: entity.scorevalue,
       status: entity.status,

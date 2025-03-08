@@ -66,7 +66,7 @@ class ConfigRepositryImpl implements ConfigRepository {
         'iPhone17_1',
         'iPhone17_2',
         'iPhone17_3',
-        'iPhone17_4'
+        'iPhone17_4',
       ],
     );
   }
