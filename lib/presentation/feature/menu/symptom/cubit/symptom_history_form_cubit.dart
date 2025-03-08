@@ -1,33 +1,50 @@
 // Package imports:
+import 'dart:async';
+
+import 'package:bladderly/domain/model/scores.dart';
+import 'package:bladderly/domain/usecase/get_scores_stream_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'symptom_history_form_state.dart';
 
 class SymptomHistoryFormCubit extends Cubit<SymptomHistoryFormState> {
-  SymptomHistoryFormCubit() : super(const SymptomHistoryFormState());
+  SymptomHistoryFormCubit({
+    required GetScoresStreamUsecase getScoresStreamUsecase,
+  })  : _getScoresStreamUsecase = getScoresStreamUsecase,
+        super(const SymptomHistoryFormState());
 
-  void setOldPassword(String oldPassword) {
-    emit(state.copyWith(oldPassword: oldPassword));
+  final GetScoresStreamUsecase _getScoresStreamUsecase;
+
+  StreamSubscription<Scores>? _subscription;
+
+  void setData() {
+    _getScoresStreamUsecase().then(
+      (result) => result.fold(
+        (l) => null,
+        (r) => _subscription = r.listen(_listener),
+      ),
+    );
   }
 
-  void setNewPassword(String newPassword) {
-    emit(state.copyWith(newPassword: newPassword));
+  void _clearSubscription() {
+    _subscription?.cancel();
+    _subscription = null;
   }
 
-  void setConfirmPassword(String confirmPassword) {
-    emit(state.copyWith(confirmPassword: confirmPassword));
+  @override
+  Future<void> close() {
+    _clearSubscription();
+    return super.close();
   }
 
-  void toggleOldPasswordVisibility() {
-    emit(state.copyWith(obscureOldPassword: !state.obscureOldPassword));
-  }
+  void _listener(Scores scores) {
+    if (isClosed) return;
 
-  void toggleNewPasswordVisibility() {
-    emit(state.copyWith(obscureNewPassword: !state.obscureNewPassword));
-  }
-
-  void toggleConfirmPasswordVisibility() {
-    emit(state.copyWith(obscureConfirmPassword: !state.obscureConfirmPassword));
+    emit(
+      SymptomHistoryFormState(
+        scores: scores,
+      ),
+    );
   }
 }
