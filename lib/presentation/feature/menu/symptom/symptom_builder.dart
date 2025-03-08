@@ -1,7 +1,6 @@
 // Flutter imports:
 // Project imports:
 import 'package:bladderly/core/di/di.dart';
-import 'package:bladderly/domain/usecase/get_scores_server_usecase.dart';
 import 'package:bladderly/domain/usecase/get_scores_stream_usecase.dart';
 import 'package:bladderly/domain/usecase/save_score_usecase.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/bloc/symptom_history_bloc.dart';
@@ -24,7 +23,6 @@ class SymptomBuilder extends StatelessWidget {
         BlocProvider<SymptomHistoryBloc>(
           create: (context) => SymptomHistoryBloc(
             getScoresStreamUsecase: getIt<GetScoresStreamUsecase>(),
-            getScoresServerUsecase: getIt<GetScoresServerUsecase>(),
             saveScoreUsecase: getIt<SaveScoreUsecase>(),
           ),
         ),
