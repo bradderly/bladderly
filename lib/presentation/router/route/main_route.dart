@@ -13,7 +13,7 @@ import 'package:bladderly/presentation/feature/input/sound_input_note/sound_inpu
 import 'package:bladderly/presentation/feature/input/sound_input_recording/sound_input_recording_builder.dart';
 import 'package:bladderly/presentation/feature/main/main_builder.dart';
 import 'package:bladderly/presentation/feature/menu/menu_builder.dart';
-import 'package:bladderly/presentation/feature/payment/paywall/paywall_builder.dart';
+import 'package:bladderly/presentation/feature/plan/paywall/paywall_builder.dart';
 import 'package:bladderly/presentation/feature/sign_up/regular/sign_up_regular_builder.dart';
 import 'package:bladderly/presentation/feature/tutorial/how_to_use/how_to_use_view.dart';
 // Package imports:
