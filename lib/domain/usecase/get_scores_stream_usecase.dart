@@ -1,4 +1,4 @@
-import 'package:bladderly/domain/model/score.dart';
+import 'package:bladderly/domain/model/scores.dart';
 import 'package:bladderly/domain/repository/score_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
@@ -14,9 +14,10 @@ class GetScoresStreamUsecase {
 
   final ScoreRepository _scoreRepository;
 
-  Future<Either<Exception, Stream<List<Score>>>> call() async {
+  Future<Either<Exception, Stream<Scores>>> call() async {
     try {
-      return Right(_scoreRepository.getScoresStream());
+      final scores = _scoreRepository.getScoresStream();
+      return Right(scores);
     } catch (e) {
       return Left(e is Exception ? e : Exception(e.toString()));
     }

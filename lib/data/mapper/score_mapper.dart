@@ -4,6 +4,7 @@ import 'package:bladderly/data/isar/schema/score_entity.dart';
 import 'package:bladderly/domain/model/score.dart';
 import 'package:bladderly/domain/model/score_status.dart';
 import 'package:bladderly/domain/model/score_type.dart';
+import 'package:flutter/foundation.dart';
 
 class ScoreMapper {
   const ScoreMapper._();
@@ -12,13 +13,16 @@ class ScoreMapper {
     try {
       const status = ScoreStatus.done;
       return Score(
-        date: DateTime.parse(score.scoreDate!),
+        date: DateTime.parse(score.scoreDate!.split('-')[0]),
         type: ScoreType.values.firstWhere((e) => e.toString() == 'ScoreType.${score.scoreName}'),
         totalScore: score.totalScore ?? 0,
         values: score.scoreValue?.map((e) => e as int).toList() ?? [],
         status: status,
       );
     } catch (e) {
+      if (kDebugMode) {
+        print('error : $e');
+      }
       return null;
     }
   }

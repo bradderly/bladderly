@@ -3,8 +3,11 @@
 // Project imports:
 import 'package:bladderly/data/isar/schema/apple_credential_entity.dart';
 import 'package:bladderly/data/isar/schema/history_entity.dart';
+import 'package:bladderly/data/isar/schema/score_entity.dart';
 import 'package:bladderly/data/isar/schema/user_entity.dart';
+import 'package:bladderly/data/mapper/score_mapper.dart';
 import 'package:bladderly/domain/model/history_status.dart';
+import 'package:bladderly/domain/model/scores.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
@@ -40,6 +43,10 @@ abstract class IsarClient {
   Future<List<HistoryEntity>> getPendingHistories();
 
   Future<List<HistoryEntity>> getProcessingHistories();
+
+  Future<List<ScoreEntity>> saveScores(Scores scores);
+
+  Stream<List<ScoreEntity>> getScoresStream();
 }
 
 class _IsarClientImpl implements IsarClient {
@@ -138,5 +145,36 @@ class _IsarClientImpl implements IsarClient {
   @override
   Future<List<HistoryEntity>> getProcessingHistories() {
     return _isar.historyEntitys.filter().statusEqualTo(HistoryStatus.processing).findAll();
+  }
+
+  @override
+  Future<List<ScoreEntity>> saveScores(Scores scores) {
+    print('saveScores' + scores.toString());
+    return _isar.writeTxn(() async {
+      final ids = await _isar.scoreEntitys.putAll(scores.map(ScoreMapper.toScoreEntity).toList());
+
+      print('Stored IDs: $ids'); // ids 값 확인
+      if (ids.isEmpty) {
+        throw Exception('No IDs returned from putAll');
+      }
+      return _isar.scoreEntitys.getAll(ids).then((entities) {
+        if (entities.isEmpty) {
+          throw Exception('No entities found for the given IDs');
+        }
+        final scoreEntities = entities.whereType<ScoreEntity>().toList();
+        print('Filtered ScoreEntities Dates: ${scoreEntities.map((e) => e.date).toList()}'); // 필터링 후 출력
+
+        if (scoreEntities.isEmpty) {
+          throw Exception('No ScoreEntity found in the fetched entities');
+        }
+
+        return scoreEntities;
+      });
+    });
+  }
+
+  @override
+  Stream<List<ScoreEntity>> getScoresStream() {
+    return _isar.scoreEntitys.where().sortByDate().watch(fireImmediately: true);
   }
 }
