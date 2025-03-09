@@ -40,6 +40,8 @@ abstract class IsarClient {
   Future<List<HistoryEntity>> getPendingHistories();
 
   Future<List<HistoryEntity>> getProcessingHistories();
+
+  Stream<UserEntity?> get userStream;
 }
 
 class _IsarClientImpl implements IsarClient {
@@ -139,4 +141,8 @@ class _IsarClientImpl implements IsarClient {
   Future<List<HistoryEntity>> getProcessingHistories() {
     return _isar.historyEntitys.filter().statusEqualTo(HistoryStatus.processing).findAll();
   }
+
+  @override
+  Stream<UserEntity?> get userStream =>
+      _isar.userEntitys.where().watch(fireImmediately: true).map((entities) => entities.firstOrNull);
 }

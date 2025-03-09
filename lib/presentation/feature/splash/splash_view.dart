@@ -63,7 +63,6 @@ class _SplashViewState extends State<SplashView> {
 
   @override
   Widget build(BuildContext context) {
-    context.read<AppConfigBloc>().add(const AppConfigLoad());
     return MultiBlocListener(
       listeners: [
         BlocListener<AppConfigBloc, AppConfigState>(

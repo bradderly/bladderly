@@ -1,41 +1,40 @@
 // Package imports:
 
-// Package imports:
-import 'package:dartz/dartz.dart';
-import 'package:injectable/injectable.dart';
-
 // Project imports:
 import 'package:bladderly/core/recorder/recorder_module.dart';
 import 'package:bladderly/domain/exception/not_found_user_exception.dart';
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/history_status.dart';
 import 'package:bladderly/domain/model/user.dart';
-import 'package:bladderly/domain/repository/auth_repository.dart';
 import 'package:bladderly/domain/repository/history_repository.dart';
+// Package imports:
+import 'package:bladderly/domain/repository/user_repository.dart';
 import 'package:bladderly/domain/util/recorded_file_util.dart';
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class UploadPendingHistoriesUsecase {
   const UploadPendingHistoriesUsecase({
     required RecorderFileLoader recorderFileLoader,
     required RecordedFileUtil recordedFileUtil,
-    required AuthRepository authRepository,
+    required UserRepository userRepository,
     required HistoryRepository historyRepository,
   })  : _recorderFileLoader = recorderFileLoader,
         _recordedFileUtil = recordedFileUtil,
-        _authRepository = authRepository,
+        _userRepository = userRepository,
         _historyRepository = historyRepository;
 
   final RecorderFileLoader _recorderFileLoader;
   final RecordedFileUtil _recordedFileUtil;
-  final AuthRepository _authRepository;
+  final UserRepository _userRepository;
   final HistoryRepository _historyRepository;
 
   Future<Either<Exception, void>> call({
     required String userId,
   }) async {
     try {
-      final user = _authRepository.getUserOrNullByUserId(userId) ??
+      final user = _userRepository.getUserOrNullByUserId(userId) ??
           (throw const NotFoundUserException(message: 'User not found'));
 
       final histories = await _historyRepository.getPendingHistories();

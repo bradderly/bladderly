@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bladderly/core/package_device_info/src/model/device_info_model.dart';
 import 'package:bladderly/domain/exception/not_supported_device_exception.dart';
 import 'package:bladderly/domain/repository/config_repository.dart';
@@ -21,7 +23,9 @@ class CheckSupportedDeviceUsecase {
 
       final isSupportedDevice = devices.contains(_deviceInfoModel.name);
 
-      final isSoonSupportedDevice = devices.contains('${_deviceInfoModel.name}-soon');
+      final isSoonSupportedDevice = Platform.isAndroid
+          ? _deviceInfoModel.name.toLowerCase().contains('moto')
+          : devices.contains('${_deviceInfoModel.name}-soon');
 
       if (isSoonSupportedDevice) {
         return const Left(NotSupportedDeviceException.soon());

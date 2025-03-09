@@ -28,6 +28,7 @@ class UserBloc extends HydratedBloc<UserEvent, UserState> {
 
   final GetUserUsecase _getUserUsecase;
   final GetUserStreamUsecase _getUserStreamUsecase;
+
   final SignOutUsecase _signOutUsecase;
 
   void _onLoad(UserLoad event, Emitter<UserState> emit) {
