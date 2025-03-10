@@ -31,7 +31,7 @@ class PasscodeModal extends StatelessWidget {
           );
           if (didAuthenticate) {
             // 생체 인증 성공 -> 비밀번호 입력 화면으로 이동
-            final result = await showModalBottomSheet<bool>(
+            final result = await showModalBottomSheet<String>(
               context: context,
               isScrollControlled: true, // 컨텐츠 크기에 맞춰서 스크롤
               backgroundColor: Colors.transparent, // 배경 투명 설정
@@ -39,9 +39,10 @@ class PasscodeModal extends StatelessWidget {
                 return const PasscodeInputScreen();
               },
             );
-            if (result == true) {
+            if (result != null) {
               // 비밀번호 설정 성공
               context.read<PasscodeCubit>().toggleBiometric(true);
+              context.read<PasscodeCubit>().setPasscode(result);
             }
           }
         } catch (e) {
@@ -56,7 +57,7 @@ class PasscodeModal extends StatelessWidget {
       }
     } else {
       // Android일 때는 생체 인증 건너뛰기
-      final result = await showModalBottomSheet<bool>(
+      final result = await showModalBottomSheet<String>(
         context: context,
         isScrollControlled: true, // 컨텐츠 크기에 맞춰서 스크롤
         backgroundColor: Colors.transparent, // 배경 투명 설정
@@ -64,9 +65,10 @@ class PasscodeModal extends StatelessWidget {
           return const PasscodeInputScreen();
         },
       );
-      if (result == true) {
+      if (result != null) {
         // 비밀번호 설정 성공
         context.read<PasscodeCubit>().toggleBiometric(true);
+        context.read<PasscodeCubit>().setPasscode(result);
       }
     }
   }
@@ -184,6 +186,42 @@ class PasscodeModal extends StatelessWidget {
                           ),
                         ),
                       ],
+                    ),
+                  ),
+                  GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () async {
+                      if (context.read<PasscodeCubit>().state.isBiometricEnabled) {
+                        final result = await showModalBottomSheet<String>(
+                          context: context,
+                          isScrollControlled: true, // 컨텐츠 크기에 맞춰서 스크롤
+                          backgroundColor: Colors.transparent, // 배경 투명 설정
+                          builder: (BuildContext context) {
+                            return const PasscodeInputScreen();
+                          },
+                        );
+                        if (result != null) {
+                          // 비밀번호 설정 성공
+                          context.read<PasscodeCubit>().setPasscode(result);
+                        }
+                      }
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.symmetric(horizontal: 67),
+                      padding: const EdgeInsets.symmetric(vertical: 14.5),
+                      decoration: BoxDecoration(
+                        color: context.read<PasscodeCubit>().state.isBiometricEnabled
+                            ? context.colorTheme.vermilion.primary.shade50
+                            : context.colorTheme.neutral.shade6,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        'Change passcode'.tr(context),
+                        style: context.textStyleTheme.b16SemiBold.copyWith(
+                          color: context.colorTheme.neutral.shade0,
+                        ),
+                      ),
                     ),
                   ),
                 ],
