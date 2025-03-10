@@ -7,6 +7,7 @@ import 'package:bladderly/domain/exception/not_found_user_exception.dart';
 import 'package:bladderly/domain/exception/not_found_voiding_sound_file_exception.dart';
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/history_status.dart';
+import 'package:bladderly/domain/model/leakage_volume.dart';
 import 'package:bladderly/domain/repository/history_repository.dart';
 // Package imports:
 import 'package:bladderly/domain/repository/user_repository.dart';
@@ -40,6 +41,7 @@ class SaveVoidingHistoryWithFileUsecase {
     required int recordUrgency,
     required bool isNocutria,
     required bool isLeakage,
+    LeakageVolume? leakageVolume,
     String? memo,
   }) async {
     try {
@@ -62,7 +64,7 @@ class SaveVoidingHistoryWithFileUsecase {
           memo: memo,
           isManual: false,
           recordVolume: 0,
-          leakageVolume: null,
+          leakageVolume: leakageVolume,
           status: HistoryStatus.pending,
         ),
       );

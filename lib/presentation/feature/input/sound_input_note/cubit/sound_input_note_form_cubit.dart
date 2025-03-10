@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:bladderly/domain/model/leakage_volume.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,6 +18,10 @@ class SoundInputNoteFormCubit extends Cubit<SoundInputNoteFormState> {
 
   void setIsLeakage(bool isLeakage) {
     emit(state.copyWith(isLeakage: isLeakage));
+  }
+
+  void setLeakageVolume(LeakageVolume leakageVolume) {
+    emit(state.copyWith(leakageVolume: leakageVolume));
   }
 
   void setMemo(String memo) {
