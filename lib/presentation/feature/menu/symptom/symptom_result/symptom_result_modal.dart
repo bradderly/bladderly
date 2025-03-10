@@ -127,6 +127,7 @@ class SymptomResultModal extends StatelessWidget {
               ),
             ),
             GestureDetector(
+              behavior: HitTestBehavior.translucent,
               onTap: context.pop,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),

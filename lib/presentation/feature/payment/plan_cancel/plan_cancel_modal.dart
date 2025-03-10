@@ -74,6 +74,7 @@ class _PlanCancelModalState extends State<PlanCancelModal> {
                 ),
               ),
               GestureDetector(
+                behavior: HitTestBehavior.translucent,
                 onTap: () {
                   if (selectedReason == null) {
                     return;
@@ -140,6 +141,7 @@ void showDeletePlanDialog(
             Column(
               children: [
                 GestureDetector(
+                  behavior: HitTestBehavior.translucent,
                   onTap: onConfirm,
                   child: Container(
                     height: 56,

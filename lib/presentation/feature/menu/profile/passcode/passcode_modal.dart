@@ -120,6 +120,7 @@ class PasscodeModal extends StatelessWidget {
                                       ),
                                     ),
                                     GestureDetector(
+                                      behavior: HitTestBehavior.translucent,
                                       onTap: () {
                                         if (context.read<PasscodeCubit>().state.isBiometricEnabled) {
                                           context.read<PasscodeCubit>().toggleBiometric(false);

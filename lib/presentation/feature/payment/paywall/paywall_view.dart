@@ -146,6 +146,7 @@ class _PaywallViewState extends State<PaywallView> {
                     Column(
                       children: [
                         GestureDetector(
+                          behavior: HitTestBehavior.translucent,
                           onTap: () => showModalBottomSheet<void>(
                             context: context,
                             isScrollControlled: true,
@@ -211,6 +212,7 @@ class _PaywallViewState extends State<PaywallView> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             GestureDetector(
+                              behavior: HitTestBehavior.translucent,
                               onTap: () => const TermsRoute().push<void>(context),
                               child: Text(
                                 'Terms of Use'.tr(context),
@@ -222,6 +224,7 @@ class _PaywallViewState extends State<PaywallView> {
                             ),
                             const Gap(40),
                             GestureDetector(
+                              behavior: HitTestBehavior.translucent,
                               onTap: () => const PrivacyRoute().push<void>(context),
                               child: Text(
                                 'Privacy Policy'.tr(context),

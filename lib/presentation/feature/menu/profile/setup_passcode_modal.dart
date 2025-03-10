@@ -65,6 +65,7 @@ class _SetupPasscodeModalState extends State<SetupPasscodeModal> {
                                   ),
                                 ),
                                 GestureDetector(
+                                  behavior: HitTestBehavior.translucent,
                                   onTap: () {
                                     setState(() {
                                       isSwitched = !isSwitched;

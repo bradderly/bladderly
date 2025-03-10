@@ -101,6 +101,7 @@ class _DeleteAccountModalState extends State<DeleteAccountModal> {
                   ),
                 ),
                 GestureDetector(
+                  behavior: HitTestBehavior.translucent,
                   onTap: () {
                     if (selectedReason == null) {
                       return;
@@ -163,6 +164,7 @@ void showDeleteAccountDialog(
             Column(
               children: [
                 GestureDetector(
+                  behavior: HitTestBehavior.translucent,
                   onTap: onConfirm,
                   child: Container(
                     alignment: Alignment.center,
@@ -179,6 +181,7 @@ void showDeleteAccountDialog(
                 ),
                 const SizedBox(height: 16),
                 GestureDetector(
+                  behavior: HitTestBehavior.translucent,
                   onTap: () {
                     Navigator.pop(context);
                   },

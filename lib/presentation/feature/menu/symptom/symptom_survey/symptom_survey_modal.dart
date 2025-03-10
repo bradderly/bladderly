@@ -138,6 +138,7 @@ class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
                     children: [
                       Expanded(
                         child: GestureDetector(
+                          behavior: HitTestBehavior.translucent,
                           onTap: onPreviousQuestion,
                           child: Container(
                             alignment: Alignment.center,
@@ -160,6 +161,7 @@ class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
                         selector: (state) => state.hasAnswer,
                         builder: (context, hasAnswer) => Expanded(
                           child: GestureDetector(
+                            behavior: HitTestBehavior.translucent,
                             onTap: hasAnswer ? onNextQuestion : null,
                             child: Container(
                               alignment: Alignment.center,

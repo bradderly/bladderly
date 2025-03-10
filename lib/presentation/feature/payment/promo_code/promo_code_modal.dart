@@ -21,6 +21,55 @@ class PromoCodeModal extends StatefulWidget {
 }
 
 class _PromoCodeModalState extends State<PromoCodeModal> {
+  void failToast() {
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        content: IntrinsicHeight(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Invalid Code',
+                style: context.textStyleTheme.b18Bold.copyWith(
+                  color: context.colorTheme.neutral.shade10,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                'That promo code didn’t work. Try entering it again, and if you’re still having trouble, email us at hello@bladderly.com for assistance.',
+                style: context.textStyleTheme.b14SemiBold.copyWith(
+                  color: context.colorTheme.neutral.shade10,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 8),
+              const Divider(),
+              const SizedBox(height: 5),
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () => Navigator.of(context).pop(),
+                child: Container(
+                  width: 300,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Okay',
+                    style: context.textStyleTheme.b14SemiBold.copyWith(
+                      color: const Color(0xFF007AFF),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<PromoCodeBloc, PromoCodeState>(
@@ -32,9 +81,7 @@ class _PromoCodeModalState extends State<PromoCodeModal> {
           Navigator.of(context).pop(); // 화면 뒤로가기
         } else if (state is PromoCodeFailure) {
           // 실패 시 에러 처리
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed: ${state.exception}')),
-          );
+          failToast();
         }
       },
       child: DraggableScrollableSheet(
@@ -116,6 +163,7 @@ class _PromoCodeModalState extends State<PromoCodeModal> {
                 ),
                 const SizedBox(height: 36),
                 GestureDetector(
+                  behavior: HitTestBehavior.translucent,
                   onTap: () {
                     // PromoCodeBloc에 이벤트를 전달
                     final tempCode = context.read<PromoCodeFormCubit>().state.code;

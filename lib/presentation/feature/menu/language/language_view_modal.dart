@@ -56,6 +56,7 @@ class _LanguageViewModalState extends State<LanguageViewModal> {
             ),
             const SizedBox(height: 16),
             GestureDetector(
+              behavior: HitTestBehavior.translucent,
               onTap: () => Navigator.of(context).pop(appLocale),
               child: Container(
                 width: double.infinity,

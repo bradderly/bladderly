@@ -232,8 +232,7 @@ class ChangePasswordModal extends StatelessWidget {
                 BlocSelector<ChangePasswordFormCubit, ChangePasswordFormState, bool>(
                   selector: (state) => state.isValid,
                   builder: (context, isValid) => GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-
+                    behavior: HitTestBehavior.translucent,
                     onTap: (isValid &&
                             context.watch<ChangePasswordFormCubit>().state.newPassword ==
                                 context.watch<ChangePasswordFormCubit>().state.confirmPassword &&

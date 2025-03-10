@@ -201,6 +201,7 @@ class ProfileModal extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 24),
                                   GestureDetector(
+                                    behavior: HitTestBehavior.translucent,
                                     onTap: () => context.read<UserBloc>().add(const UserSignOut()),
                                     child: Container(
                                       alignment: Alignment.center,
@@ -218,6 +219,7 @@ class ProfileModal extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 16),
                                   GestureDetector(
+                                    behavior: HitTestBehavior.translucent,
                                     onTap: Navigator.of(context).pop,
                                     child: Container(
                                       alignment: Alignment.center,

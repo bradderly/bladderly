@@ -119,6 +119,7 @@ class SymptomIntroduceModal extends StatelessWidget {
                 ),
               ),
               GestureDetector(
+                behavior: HitTestBehavior.translucent,
                 onTap: () => ModalHelper.showModal<void>(
                   context: context,
                   modalBuilder: (_) => SymptomSurveyBuilder(symptomSurveyModel: symptomSurveyModel),

@@ -77,6 +77,7 @@ class PromoContactUsView extends StatelessWidget {
                           isMessage: true,
                         ),
                         GestureDetector(
+                          behavior: HitTestBehavior.translucent,
                           onTap: () {
                             if (formState.email.isEmpty || formState.message.isEmpty) {
                               return;
