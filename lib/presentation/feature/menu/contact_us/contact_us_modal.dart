@@ -1,54 +1,85 @@
-// Flutter imports:
-// Project imports:
-import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/model/user_model.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/menu/contact_us/bloc/contact_us_bloc.dart';
 import 'package:bladderly/presentation/feature/menu/contact_us/cubit/contact_us_form_cubit.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
-import 'package:flutter/material.dart';
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ContactUsModal extends StatelessWidget {
+class ContactUsModal extends StatefulWidget {
   const ContactUsModal({super.key});
 
-  void _onSendMessage(
-    BuildContext context,
-  ) {
-    /// TODO(김원응): cubit 수정 및 블록 호출부 구현 필요
-    // context.read<ContactUsBloc>().add(
-    //       ContactUs(
-    //         firstName: context.read<ContactUsFormCubit>().state.firstName,
-    //         lastName: context.read<ContactUsFormCubit>().state.lastName,
-    //         email: context.read<ContactUsFormCubit>().state.email,
-    //         subject: context.read<ContactUsFormCubit>().state.subject,
-    //         message: context.read<ContactUsFormCubit>().state.message,
-    //       ),
-    //     );
+  @override
+  State<ContactUsModal> createState() => _ContactUsModalState();
+}
+
+class _ContactUsModalState extends State<ContactUsModal> {
+  bool _isEmptyCheck = false;
+  @override
+  void initState() {
+    super.initState();
+    _setInitData();
+  }
+
+  void _setInitData() {
+    final userModel = context.read<UserBloc>().state.userModelOrThrowException;
+    if (userModel is RegularUserModel) {
+      context.read<ContactUsFormCubit>().initializeForm(
+            id: userModel.id,
+            name: userModel.name,
+            email: userModel.email,
+          );
+    } else {
+      context.read<ContactUsFormCubit>().setId(
+            userModel.id,
+          );
+    }
+  }
+
+  bool _isEmailValid(String email) {
+    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+    return emailRegex.hasMatch(email);
+  }
+
+  void _onSendMessage(BuildContext context) {
+    final formState = context.read<ContactUsFormCubit>().state;
+
+    if (!_isEmailValid(formState.email)) {
+      return;
+    }
+    context.read<ContactUsBloc>().add(
+          ContactUs(
+            userId: formState.id,
+            userEmail: formState.email,
+            userName: formState.name,
+            message: formState.message,
+          ),
+        );
+  }
+
+  void _errorCheck() {
+    setState(() {
+      _isEmptyCheck = true;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final userModel = context.read<UserBloc>().state.userModelOrThrowException;
-    final userName = userModel is RegularUserModel ? userModel.name : '';
-    final userEmail = userModel is RegularUserModel ? userModel.email : '';
-
     return DraggableScrollableSheet(
       initialChildSize: 0.95,
       maxChildSize: 0.95,
       minChildSize: 0.95,
       builder: (_, controller) {
         return BlocListener<ContactUsBloc, ContactUsState>(
-          listener: (context, state) => switch (state) {
-            ContactUsInitial() => ProgressIndicatorModal.show(context),
-            ContactUsSuccess() => {
-                Navigator.of(context).pop(),
-              },
-            ContactUsFailure() => {},
-            _ => null,
+          listener: (context, state) {
+            if (state is ContactUsInitial) {
+              ProgressIndicatorModal.show(context);
+            } else if (state is ContactUsSuccess) {
+              Navigator.of(context).pop();
+            }
           },
           child: Container(
             decoration: const BoxDecoration(
@@ -64,202 +95,56 @@ class ContactUsModal extends StatelessWidget {
                 ModalTitle(context, 'Contact us'.tr(context)),
                 const SizedBox(height: 42.5),
                 Expanded(
-                  child: BlocSelector<ContactUsFormCubit, ContactUsFormState, ContactUsFormState>(
-                    selector: (state) => state,
-                    builder: (_, obscureOldPassword) => ListView(
+                  child: BlocBuilder<ContactUsFormCubit, ContactUsFormState>(
+                    builder: (_, formState) => ListView(
                       controller: controller,
                       children: [
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 8),
-                          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 24),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'First Name'.tr(context),
-                                style: context.textStyleTheme.b14Medium.copyWith(
-                                  color: context.colorTheme.neutral.shade6,
-                                ),
-                              ),
-                              TextFormField(
-                                onChanged: (value) => context.read<ContactUsFormCubit>().setFirstName(value),
-                                initialValue: userName.substring(1),
-                                style: context.textStyleTheme.b16Medium.copyWith(
-                                  color: context.colorTheme.neutral.shade10,
-                                ),
-                                decoration: InputDecoration(
-                                  isDense: true,
-                                  contentPadding: const EdgeInsets.only(
-                                    bottom: 8,
-                                    top: 2,
-                                  ), // Adjust this value to move the underline closer
-                                  border: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: context.colorTheme.neutral.shade5,
-                                      width: 0.5,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                        _buildInputField(context, 'Bladderly ID', formState.id, isModified: true),
+                        _buildInputField(
+                          context,
+                          'Preferred Name',
+                          formState.name,
+                          onChanged: (value) => context.read<ContactUsFormCubit>().setName(value),
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 8),
-                          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 24),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Last Name'.tr(context),
-                                style: context.textStyleTheme.b14Medium.copyWith(
-                                  color: context.colorTheme.neutral.shade6,
-                                ),
-                              ),
-                              TextFormField(
-                                onChanged: (value) => context.read<ContactUsFormCubit>().setLastName(value),
-                                initialValue: userName.substring(0, 1),
-                                style: context.textStyleTheme.b16Medium.copyWith(
-                                  color: context.colorTheme.neutral.shade10,
-                                ),
-                                decoration: InputDecoration(
-                                  isDense: true,
-                                  contentPadding: const EdgeInsets.only(
-                                    bottom: 8,
-                                    top: 2,
-                                  ), // Adjust this value to move the underline closer
-                                  border: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: context.colorTheme.neutral.shade5,
-                                      width: 0.5,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                        const SizedBox(height: 8),
+                        _buildTextArea(
+                          context,
+                          'Email Address',
+                          formState.email,
+                          1,
+                          _isEmptyCheck && (formState.email.isEmpty || !_isEmailValid(formState.email)),
+                          onChanged: (value) => context.read<ContactUsFormCubit>().setEmail(value),
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 8),
-                          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 24),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '${'Email Address'.tr(context)} *',
-                                style: context.textStyleTheme.b14Medium.copyWith(
-                                  color: context.colorTheme.neutral.shade6,
-                                ),
-                              ),
-                              TextFormField(
-                                onChanged: (value) => context.read<ContactUsFormCubit>().setEmail(value),
-                                initialValue: userEmail,
-                                style: context.textStyleTheme.b16Medium.copyWith(
-                                  color: context.colorTheme.neutral.shade10,
-                                ),
-                                decoration: InputDecoration(
-                                  isDense: true,
-                                  contentPadding: const EdgeInsets.only(
-                                    bottom: 8,
-                                    top: 2,
-                                  ), // Adjust this value to move the underline closer
-                                  border: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: context.colorTheme.neutral.shade5,
-                                      width: 0.5,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                        if (_isEmptyCheck && (formState.email.isEmpty || !_isEmailValid(formState.email)))
+                          Padding(
+                            padding: const EdgeInsets.only(left: 24, top: 8),
+                            child: Text(
+                              'Please enter a properly formatted email address.'.tr(context),
+                              style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.warning),
+                            ),
                           ),
+                        _buildTextArea(
+                          context,
+                          'Message',
+                          formState.message,
+                          5,
+                          _isEmptyCheck && formState.message.isEmpty,
+                          onChanged: (value) => context.read<ContactUsFormCubit>().setMessage(value),
                         ),
-                        const SizedBox(height: 36),
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 8),
-                          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 24),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '${'Subject'.tr(context)} *',
-                                style:
-                                    context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
-                              ),
-                              const SizedBox(height: 11),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: context.colorTheme.neutral.shade2,
-                                  border: Border.all(
-                                    color: context.colorTheme.neutral.shade5,
-                                    width: 0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: TextFormField(
-                                  onChanged: (value) => context.read<ContactUsFormCubit>().setSubject(value),
-                                  style: context.textStyleTheme.b16Medium
-                                      .copyWith(color: context.colorTheme.neutral.shade10),
-                                  decoration: InputDecoration(
-                                    hintText: 'Please enter the subject'.tr(context),
-                                    isDense: true,
-                                    contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                                    hintStyle: context.textStyleTheme.b16Medium.copyWith(
-                                      color: context.colorTheme.neutral.shade6,
-                                    ),
-                                    border: InputBorder.none,
-                                  ),
-                                ),
-                              ),
-                            ],
+                        if (_isEmptyCheck && formState.message.isEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(left: 24, top: 8),
+                            child: Text(
+                              'Please enter a message.'.tr(context),
+                              style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.warning),
+                            ),
                           ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 8),
-                          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 24),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '${'Message'.tr(context)} *',
-                                style:
-                                    context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
-                              ),
-                              const SizedBox(height: 11),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: context.colorTheme.neutral.shade2,
-                                  border: Border.all(
-                                    color: context.colorTheme.neutral.shade5,
-                                    width: 0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: TextFormField(
-                                  onChanged: (value) => context.read<ContactUsFormCubit>().setMessage(value),
-                                  style: context.textStyleTheme.b16Medium
-                                      .copyWith(color: context.colorTheme.neutral.shade10),
-                                  decoration: InputDecoration(
-                                    hintText: 'Please enter the message'.tr(context),
-                                    isDense: true,
-                                    contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                                    hintStyle: context.textStyleTheme.b16Medium.copyWith(
-                                      color: context.colorTheme.neutral.shade6,
-                                    ),
-                                    border: InputBorder.none,
-                                  ),
-                                  maxLines: 5,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 8),
                         Padding(
                           padding: const EdgeInsets.only(left: 24),
                           child: Text(
-                            '* Required fields',
-                            style: context.textStyleTheme.b16Medium.copyWith(
+                            '* ${'Required fields'.tr(context)}',
+                            style: context.textStyleTheme.b14Medium.copyWith(
                               color: context.colorTheme.neutral.shade6,
                             ),
                           ),
@@ -272,7 +157,7 @@ class ContactUsModal extends StatelessWidget {
                   selector: (state) => state.isValid,
                   builder: (context, isValid) => GestureDetector(
                     behavior: HitTestBehavior.translucent,
-                    onTap: isValid ? () => _onSendMessage(context) : null,
+                    onTap: isValid ? () => _onSendMessage(context) : _errorCheck,
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
                       decoration: BoxDecoration(
@@ -294,6 +179,103 @@ class ContactUsModal extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildInputField(
+    BuildContext context,
+    String label,
+    String? value, {
+    bool isRequired = false,
+    bool isModified = false,
+    void Function(String)? onChanged,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '${label.tr(context)}${isRequired ? ' *' : ''}',
+            style: context.textStyleTheme.b14Medium.copyWith(
+              color: context.colorTheme.neutral.shade6,
+            ),
+          ),
+          const SizedBox(height: 8),
+          TextFormField(
+            readOnly: isModified,
+            initialValue: value,
+            style: context.textStyleTheme.b16Medium.copyWith(
+              color: context.colorTheme.neutral.shade10,
+            ),
+            decoration: InputDecoration(
+              isDense: true,
+              contentPadding: const EdgeInsets.only(bottom: 8, top: 2),
+              border: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: context.colorTheme.neutral.shade5,
+                  width: 0.5,
+                ),
+              ),
+            ),
+            onChanged: onChanged,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTextArea(
+    BuildContext context,
+    String label,
+    String? value,
+    int maxLines,
+    bool isOk, {
+    void Function(String)? onChanged,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(top: 24),
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '${label.tr(context)} *',
+            style: context.textStyleTheme.b14Medium.copyWith(
+              color: context.colorTheme.neutral.shade6,
+            ),
+          ),
+          const SizedBox(height: 11),
+          Container(
+            decoration: BoxDecoration(
+              color: context.colorTheme.neutral.shade2,
+              border: Border.all(
+                color: isOk ? context.colorTheme.warning : Colors.transparent,
+                width: 2,
+              ),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: TextFormField(
+              initialValue: value,
+              style: context.textStyleTheme.b16Medium.copyWith(
+                color: context.colorTheme.neutral.shade10,
+              ),
+              decoration: InputDecoration(
+                hintText: 'Please enter the message'.tr(context),
+                isDense: true,
+                contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                hintStyle: context.textStyleTheme.b16Medium.copyWith(
+                  color: context.colorTheme.neutral.shade6,
+                ),
+                border: InputBorder.none,
+              ),
+              maxLines: maxLines,
+              onChanged: onChanged,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -18,7 +19,7 @@ Widget InputTextBorderForm(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          title,
+          title.tr(context),
           style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
         ),
         const SizedBox(height: 11),

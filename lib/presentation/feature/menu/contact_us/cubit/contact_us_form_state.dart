@@ -2,44 +2,38 @@ part of 'contact_us_form_cubit.dart';
 
 class ContactUsFormState extends Equatable {
   const ContactUsFormState({
+    this.id = '',
+    this.name = '',
     this.email = '',
-    this.firstName = '',
-    this.lastName = '',
     this.message = '',
-    this.subject = '',
   });
 
+  final String id;
+  final String name;
   final String email;
-  final String firstName;
-  final String lastName;
   final String message;
-  final String subject;
 
   ContactUsFormState copyWith({
+    String? id,
+    String? name,
     String? email,
-    String? firstName,
-    String? lastName,
     String? message,
-    String? subject,
   }) {
     return ContactUsFormState(
+      id: id ?? this.id,
+      name: name ?? this.name,
       email: email ?? this.email,
-      firstName: firstName ?? this.firstName,
-      lastName: lastName ?? this.lastName,
       message: message ?? this.message,
-      subject: subject ?? this.subject,
     );
   }
 
-  bool get isValid =>
-      email.isNotEmpty && firstName.isNotEmpty && lastName.isNotEmpty && message.isNotEmpty && subject.isNotEmpty;
+  bool get isValid => id.isNotEmpty && name.isNotEmpty && email.isNotEmpty && message.isNotEmpty;
 
   @override
   List<Object> get props => [
+        id,
+        name,
         email,
-        firstName,
-        lastName,
         message,
-        subject,
       ];
 }

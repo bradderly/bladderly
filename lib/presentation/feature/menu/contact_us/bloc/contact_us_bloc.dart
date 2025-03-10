@@ -15,7 +15,7 @@ class ContactUsBloc extends Bloc<ContactUsEvent, ContactUsState> {
         super(const ContactUsInitial()) {
     on<ContactUsEvent>(
       (event, emit) => switch (event) {
-        ContactUs() => _onChangePassord(event, emit),
+        ContactUs() => _sendContactUsMessage(event, emit),
       },
       transformer: droppable(),
     );
@@ -23,7 +23,7 @@ class ContactUsBloc extends Bloc<ContactUsEvent, ContactUsState> {
 
   final ContactUsUsecase _contactUsUsecase;
 
-  Future<void> _onChangePassord(ContactUs event, Emitter<ContactUsState> emit) async {
+  Future<void> _sendContactUsMessage(ContactUs event, Emitter<ContactUsState> emit) async {
     emit(const ContactUsProgress());
 
     final result = await _contactUsUsecase(
