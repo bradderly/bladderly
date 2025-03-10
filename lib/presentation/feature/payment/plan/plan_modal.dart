@@ -9,6 +9,7 @@ import 'package:bladderly/presentation/feature/menu/widget/text_arrow_form.dart'
 import 'package:bladderly/presentation/feature/payment/plan/bloc/plan_bloc.dart';
 import 'package:bladderly/presentation/feature/payment/plan/widget/plan_free_user_widget.dart';
 import 'package:bladderly/presentation/feature/payment/plan_cancel/plan_cancel_builder.dart';
+import 'package:bladderly/presentation/feature/payment/promo_code/promo_code_builder.dart';
 import 'package:bladderly/presentation/feature/payment/promo_code/promo_code_modal.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 // Flutter imports:
@@ -75,7 +76,7 @@ class PlanModal extends StatelessWidget {
                           title: 'Enter Promo Code'.tr(context),
                           onTap: () => ModalHelper.showModal<void>(
                             context: context,
-                            modalBuilder: (_) => const PromoCodeModal(),
+                            modalBuilder: (_) => const PromoCodeBuilder(),
                           ),
                         ),
                         const Gap(130),

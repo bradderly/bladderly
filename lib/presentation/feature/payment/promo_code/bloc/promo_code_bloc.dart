@@ -10,23 +10,23 @@ part 'promo_code_state.dart';
 
 class PromoCodeBloc extends Bloc<PromoCodeEvent, PromoCodeState> {
   PromoCodeBloc({
-    required CheckPromoCodeUsecase promoCodeUsecase,
-  })  : _promoCodeUsecase = promoCodeUsecase,
+    required CheckPromoCodeUsecase checkPromoCodeUsecase,
+  })  : _checkPromoCodeUsecase = checkPromoCodeUsecase,
         super(const PromoCodeInitial()) {
     on<PromoCodeEvent>(
       (event, emit) => switch (event) {
-        PromoCode() => null //_onChangePassord(event, emit),
+        PromoCode() => _onCheckPromo(event, emit),
       },
       transformer: droppable(),
     );
   }
 
-  final CheckPromoCodeUsecase _promoCodeUsecase;
+  final CheckPromoCodeUsecase _checkPromoCodeUsecase;
 
-  Future<void> _checkPromo(PromoCode event, Emitter<PromoCodeState> emit) async {
+  Future<void> _onCheckPromo(PromoCode event, Emitter<PromoCodeState> emit) async {
     emit(const PromoCodeProgress());
 
-    final result = await _promoCodeUsecase(userId: event.userId, code: event.code);
+    final result = await _checkPromoCodeUsecase(userId: event.userId, code: event.code);
 
     result.fold(
       (exception) => emit(PromoCodeFailure(exception: exception)),
