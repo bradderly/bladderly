@@ -94,7 +94,7 @@ class PasscodeModal extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
               child: Column(
                 children: [
-                  ModalTitle(context, 'Set Up Passcode'.tr(context)),
+                  ModalTitle(title: 'Set Up Passcode'.tr(context)),
                   const SizedBox(height: 38),
                   Expanded(
                     child: ListView(

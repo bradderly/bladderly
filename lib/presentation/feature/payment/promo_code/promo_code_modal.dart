@@ -33,7 +33,7 @@ class _PromoCodeModalState extends State<PromoCodeModal> {
         } else if (state is PromoCodeFailure) {
           // 실패 시 에러 처리
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed: ${state.exception.toString()}')),
+            SnackBar(content: Text('Failed: ${state.exception}')),
           );
         }
       },
@@ -53,7 +53,7 @@ class _PromoCodeModalState extends State<PromoCodeModal> {
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
             child: Column(
               children: [
-                ModalTitle(context, 'Promo Code'.tr(context)),
+                ModalTitle(title: 'Promo Code'.tr(context)),
                 const SizedBox(height: 40),
                 Expanded(
                   child: ListView(

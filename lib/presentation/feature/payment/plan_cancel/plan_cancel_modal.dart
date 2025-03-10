@@ -43,7 +43,7 @@ class _PlanCancelModalState extends State<PlanCancelModal> {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
           child: Column(
             children: [
-              ModalTitle(context, 'Cancel plan'.tr(context)),
+              ModalTitle(title: 'Cancel plan'.tr(context)),
               const SizedBox(height: 58),
               Expanded(
                 child: ListView(

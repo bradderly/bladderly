@@ -14,7 +14,6 @@ import 'package:bladderly/presentation/feature/menu/profile/change_password/bloc
 import 'package:bladderly/presentation/feature/menu/profile/change_password/cubit/change_password_form_cubit.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 
-// ignore: must_be_immutable
 class ChangePasswordModal extends StatelessWidget {
   const ChangePasswordModal({super.key});
 
@@ -73,7 +72,7 @@ class ChangePasswordModal extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
             child: Column(
               children: [
-                ModalTitle(context, 'Change Password'.tr(context)),
+                ModalTitle(title: 'Change Password'.tr(context)),
                 Expanded(
                   child: ListView(
                     controller: controller,

@@ -11,7 +11,6 @@ import 'package:bladderly/presentation/feature/payment/paywall/cubit/paywall_cub
 import 'package:bladderly/presentation/feature/payment/paywall/model/paywall_plans_model.dart';
 import 'package:bladderly/presentation/feature/payment/paywall/widget/paywall_plan_widget.dart';
 import 'package:bladderly/presentation/feature/payment/promo_code/promo_code_builder.dart';
-import 'package:bladderly/presentation/feature/payment/promo_code/promo_code_modal.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';

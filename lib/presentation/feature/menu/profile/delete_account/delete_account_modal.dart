@@ -70,7 +70,7 @@ class _DeleteAccountModalState extends State<DeleteAccountModal> {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
             child: Column(
               children: [
-                ModalTitle(context, 'Delete Account'.tr(context)),
+                ModalTitle(title: 'Delete Account'.tr(context)),
                 const SizedBox(height: 58),
                 Expanded(
                   child: ListView(

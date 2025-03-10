@@ -31,7 +31,7 @@ class SymptomIntroduceModal extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
           child: Column(
             children: [
-              ModalTitleBack(context, symptomSurveyModel.scoreType.name.tr(context)),
+              ModalTitleBack(title: symptomSurveyModel.scoreType.name.tr(context)),
               const SizedBox(height: 39.5),
               Expanded(
                 child: SingleChildScrollView(

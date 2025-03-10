@@ -92,7 +92,7 @@ class _ContactUsModalState extends State<ContactUsModal> {
             padding: const EdgeInsets.symmetric(vertical: 41),
             child: Column(
               children: [
-                ModalTitle(context, 'Contact us'.tr(context)),
+                ModalTitle(title: 'Contact us'.tr(context)),
                 const SizedBox(height: 42.5),
                 Expanded(
                   child: BlocBuilder<ContactUsFormCubit, ContactUsFormState>(

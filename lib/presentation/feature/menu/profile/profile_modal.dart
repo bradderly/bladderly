@@ -11,7 +11,6 @@ import 'package:bladderly/presentation/feature/menu/profile/widget/profile_name_
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:bladderly/presentation/feature/menu/widget/text_icon_arrow_form.dart';
-import 'package:bladderly/presentation/feature/menu/widget/text_view_form.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -52,7 +51,7 @@ class ProfileModal extends StatelessWidget {
             return Column(
               children: [
                 const Gap(40),
-                ModalTitle(context, 'User Profile'.tr(context)),
+                ModalTitle(title: 'User Profile'.tr(context)),
                 const SizedBox(height: 41),
                 Expanded(
                   child: ListView(
@@ -256,6 +255,31 @@ class ProfileModal extends StatelessWidget {
             );
           },
         ),
+      ),
+    );
+  }
+
+  Widget TextViewForm(String title, String value, BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: context.textStyleTheme.b14Medium.copyWith(
+              color: context.colorTheme.neutral.shade6,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            value,
+            style: context.textStyleTheme.b16Medium.copyWith(
+              color: context.colorTheme.neutral.shade10,
+            ),
+          ),
+        ],
       ),
     );
   }

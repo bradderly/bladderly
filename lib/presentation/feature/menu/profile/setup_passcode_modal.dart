@@ -38,7 +38,7 @@ class _SetupPasscodeModalState extends State<SetupPasscodeModal> {
                 child: ListView(
                   controller: controller,
                   children: [
-                    ModalTitle(context, 'Set Up Passcode'.tr(context)),
+                    ModalTitle(title: 'Set Up Passcode'.tr(context)),
                     const SizedBox(height: 38),
                     Padding(
                       padding: const EdgeInsets.only(left: 24, right: 24),

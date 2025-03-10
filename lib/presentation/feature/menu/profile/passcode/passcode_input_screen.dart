@@ -93,7 +93,7 @@ class _PasscodeInputScreenState extends State<PasscodeInputScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
           child: Column(
             children: [
-              ModalTitle(context, 'Passcode'.tr(context)),
+              ModalTitle(title: 'Passcode'.tr(context)),
               const SizedBox(height: 38),
               Expanded(
                 child: Column(

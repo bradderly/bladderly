@@ -27,7 +27,7 @@ class SymptomDescriptModal extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
           child: Column(
             children: [
-              ModalTitleBack(context, 'IPSS & OABSS'.tr(context)),
+              ModalTitleBack(title: 'IPSS & OABSS'.tr(context)),
               const SizedBox(height: 39.5),
               Expanded(
                 child: ListView(
