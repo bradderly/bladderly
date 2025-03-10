@@ -4,45 +4,32 @@ import 'package:bladderly/data/isar/schema/score_entity.dart';
 import 'package:bladderly/domain/model/score.dart';
 import 'package:bladderly/domain/model/score_status.dart';
 import 'package:bladderly/domain/model/score_type.dart';
-import 'package:flutter/foundation.dart';
 
 class ScoreMapper {
   const ScoreMapper._();
 
   static Score? fromGetAllResultResponse$Scores$Item(GetAllResultResponse$Scores$Item score) {
-    try {
-      const status = ScoreStatus.done;
-      return Score(
-        date: DateTime.parse(score.scoreDate!.replaceFirst('-', 'T')),
-        // date: DateTime.parse(score.scoreDate!.split('-')[0]),
-        type: ScoreType.values.firstWhere((e) => e.toString() == 'ScoreType.${score.scoreName}'),
-        totalScore: score.totalScore ?? 0,
-        values: score.scoreValue?.map((e) => e as int).toList() ?? [],
-        status: status,
-      );
-    } catch (e) {
-      if (kDebugMode) {
-        print('error : $e');
-      }
-      return null;
-    }
+    return Score(
+      date: DateTime.parse(score.scoreDate!.replaceFirst('-', 'T')),
+      type: ScoreType.values.byName(score.scoreName!),
+      answers: score.scoreValue?.map((e) => e as int).toList() ?? [],
+      status: ScoreStatus.done,
+    );
   }
 
   static ScoreEntity toScoreEntity(Score score) {
     return ScoreEntity()
-      ..date = score.date.toIso8601String()
-      ..name = score.type.toString().split('.').last
-      ..totalScore = score.totalScore
-      ..scorevalue = score.values
+      ..date = score.date
+      ..name = score.type.name
+      ..scorevalue = score.answers
       ..status = score.status;
   }
 
   static Score fromScoreEntity(ScoreEntity entity) {
     return Score(
-      date: DateTime.parse(entity.date),
+      date: entity.date,
       type: ScoreType.values.byName(entity.name),
-      totalScore: entity.totalScore,
-      values: entity.scorevalue,
+      answers: entity.scorevalue,
       status: entity.status,
     );
   }

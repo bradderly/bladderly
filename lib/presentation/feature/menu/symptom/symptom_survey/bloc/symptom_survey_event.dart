@@ -7,18 +7,21 @@ sealed class SymptomSurveyEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class SymptomSurvey extends SymptomSurveyEvent {
-  const SymptomSurvey({
+class SymptomSurveySubmit extends SymptomSurveyEvent {
+  const SymptomSurveySubmit({
     required this.userId,
-    required this.score,
+    required this.scoreType,
+    required this.answers,
   });
 
   final String userId;
-  final Score score;
+  final ScoreType scoreType;
+  final List<int> answers;
 
   @override
   List<Object> get props => [
         userId,
-        score,
+        scoreType,
+        answers,
       ];
 }

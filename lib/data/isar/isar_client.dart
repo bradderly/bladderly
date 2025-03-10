@@ -46,6 +46,8 @@ abstract class IsarClient {
 
   Future<List<ScoreEntity>> saveScores(List<ScoreEntity> scoreEntities);
 
+  Future<ScoreEntity> saveScore(ScoreEntity scoreEntity);
+
   Stream<List<ScoreEntity>> getScoresStream();
 }
 
@@ -165,7 +167,16 @@ class _IsarClientImpl implements IsarClient {
   }
 
   @override
+  Future<ScoreEntity> saveScore(ScoreEntity scoreEntity) {
+    return _isar.writeTxn(() async {
+      final id = await _isar.scoreEntitys.put(scoreEntity);
+
+      return _isar.scoreEntitys.get(id).then((value) => value!);
+    });
+  }
+
+  @override
   Stream<List<ScoreEntity>> getScoresStream() {
-    return _isar.scoreEntitys.where().sortByDate().watch(fireImmediately: true);
+    return _isar.scoreEntitys.where().sortByDateDesc().watch(fireImmediately: true);
   }
 }

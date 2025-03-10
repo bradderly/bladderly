@@ -124,7 +124,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
     final response = await _apiClient.updateRecord(
       request: RecordUpdateRequest(
         userId: userId,
-        recDate: DateFormat('yyyyMMdd-hhmmss').format(history.recordTime),
+        recDate: DateFormat('yyyyMMdd-HHmmss').format(history.recordTime),
         record: switch (history) {
           VoidingHistory() => RecordUpdateRequest$Record(
               isLeakage: history.isLeakage,
@@ -179,7 +179,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
     required DateTime recordTime,
   }) async {
     final response = await _apiClient
-        .getResult(recDate: DateFormat('yyyyMMdd-hhmmss').format(recordTime), userId: userId)
+        .getResult(recDate: DateFormat('yyyyMMdd-HHmmss').format(recordTime), userId: userId)
         .then((response) => response.body!);
 
     final isDone = switch (response.message) {

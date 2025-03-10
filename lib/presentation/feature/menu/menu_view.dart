@@ -13,7 +13,7 @@ import 'package:bladderly/presentation/feature/menu/language/language_view_modal
 import 'package:bladderly/presentation/feature/menu/profile/profile_builder.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/symptom_builder.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
-import 'package:bladderly/presentation/feature/plan/plan_builder.dart';
+import 'package:bladderly/presentation/feature/payment/plan/plan_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // Package imports:
@@ -67,7 +67,6 @@ class MenuView extends StatelessWidget {
                           ModalHelper.showModal(
                             context: context,
                             modalBuilder: (_) => const ProfileBuilder(),
-                            duration: 5,
                           );
                         },
                       ),
@@ -82,7 +81,6 @@ class MenuView extends StatelessWidget {
                         onTap: () => ModalHelper.showModal(
                           context: context,
                           modalBuilder: (_) => const PlanBuilder(),
-                          duration: 5,
                         ),
                       ),
                       SettingsItem(
@@ -91,7 +89,6 @@ class MenuView extends StatelessWidget {
                         onTap: () => ModalHelper.showModal(
                           context: context,
                           modalBuilder: (_) => const SymptomBuilder(),
-                          duration: 5,
                         ),
                       ),
                       SettingsItem(
@@ -100,20 +97,16 @@ class MenuView extends StatelessWidget {
                         onTap: () => ModalHelper.showModal(
                           context: context,
                           modalBuilder: (_) => const SymptomBuilder(),
-                          duration: 5,
                         ),
                       ),
                       SettingsItem(
                         icon: Icons.language,
                         title: 'Language'.tr(context),
                         subtitle: 'English (United States)'.tr(context),
-                        onTap: () {
-                          ModalHelper.showModal(
-                            context: context,
-                            modalBuilder: (_) => const LanguageViewModal(),
-                            duration: 5,
-                          );
-                        },
+                        onTap: () => ModalHelper.showModal(
+                          context: context,
+                          modalBuilder: (_) => const LanguageViewModal(),
+                        ),
                       ),
                       SettingsItem(
                         icon: Icons.help_outline,
@@ -121,7 +114,6 @@ class MenuView extends StatelessWidget {
                         onTap: () => ModalHelper.showModal(
                           context: context,
                           modalBuilder: (_) => const FaqViewModal(),
-                          duration: 5,
                         ),
                       ),
                       SettingsItem(
@@ -130,7 +122,6 @@ class MenuView extends StatelessWidget {
                         onTap: () => ModalHelper.showModal(
                           context: context,
                           modalBuilder: (_) => const ContactUsBuilder(),
-                          duration: 5,
                         ),
                       ),
                       SettingsItem(
@@ -139,7 +130,6 @@ class MenuView extends StatelessWidget {
                         onTap: () => ModalHelper.showModal(
                           context: context,
                           modalBuilder: (_) => const AboutModal(),
-                          duration: 5,
                         ),
                       ),
                       BlocBuilder<AppConfigBloc, AppConfigState>(

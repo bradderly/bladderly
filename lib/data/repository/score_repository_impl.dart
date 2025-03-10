@@ -9,6 +9,7 @@ import 'package:bladderly/domain/model/scores.dart';
 import 'package:bladderly/domain/repository/score_repository.dart';
 // Package imports:
 import 'package:injectable/injectable.dart';
+import 'package:intl/intl.dart';
 
 @LazySingleton(as: ScoreRepository)
 class ScoreRepositoryImpl implements ScoreRepository {
@@ -29,14 +30,16 @@ class ScoreRepositoryImpl implements ScoreRepository {
   }
 
   @override
-  Future<void> uploadScoreResult(Score score, String userId) {
+  Future<void> uploadScoreResult({
+    required String userId,
+    required Score score,
+  }) {
     return _apiClient.saveScore(
       request: SaveSurveyRequest(
         userId: userId,
         scoreName: score.type.name,
-        scoreDate:
-            '${score.date.year}${score.date.month.toString().padLeft(2, '0')}${score.date.day.toString().padLeft(2, '0')}-${score.date.hour.toString().padLeft(2, '0')}${score.date.minute.toString().padLeft(2, '0')}${score.date.second.toString().padLeft(2, '0')}',
-        scoreValue: score.values.map((e) => e.toDouble()).toList(),
+        scoreDate: DateFormat('yyyyMMdd-HHmmss').format(score.date),
+        scoreValue: score.answers,
       ),
     );
   }
@@ -53,11 +56,14 @@ class ScoreRepositoryImpl implements ScoreRepository {
   }
 
   @override
-  Stream<Scores<Score>> getScoresStream() {
-    return _isarClient.getScoresStream().map(
-          (scoreEntities) => Scores(
-            list: scoreEntities.map(ScoreMapper.fromScoreEntity).toList(),
-          ),
-        );
+  Stream<Scores> getScoresStream() {
+    return _isarClient
+        .getScoresStream()
+        .map((scoreEntities) => Scores(list: scoreEntities.map(ScoreMapper.fromScoreEntity).toList()));
+  }
+
+  @override
+  Future<Score> saveScore(Score score) {
+    return _isarClient.saveScore(ScoreMapper.toScoreEntity(score)).then(ScoreMapper.fromScoreEntity);
   }
 }

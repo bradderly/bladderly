@@ -177,7 +177,6 @@ class ProfileModal extends StatelessWidget {
                         onTap: () => ModalHelper.showModal(
                           context: context,
                           modalBuilder: (_) => const ChangePasswordBuilder(),
-                          duration: 5,
                         ),
                       ),
                       TextIconArrowForm(
@@ -247,7 +246,6 @@ class ProfileModal extends StatelessWidget {
                         onTap: () => ModalHelper.showModal(
                           context: context,
                           modalBuilder: (_) => const DeleteAccountBuilder(),
-                          duration: 5,
                         ),
                       ),
                       const SizedBox(height: 40),

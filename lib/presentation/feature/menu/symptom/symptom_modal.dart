@@ -5,28 +5,21 @@ import 'package:bladderly/domain/model/scores.dart';
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/cubit/symptom_history_form_cubit.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/model/symptom_survey_model.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/model/symptom_survey_result_model.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/symptom_descript/symptom_descript_modal.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/symptom_introduce/symptom_introduce_modal.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/symptom_result/symptom_result_detail_modal.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/symtom_detail/symptom_detail_modal.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 
-class SymptomModal extends StatefulWidget {
+class SymptomModal extends StatelessWidget {
   const SymptomModal({super.key});
-
-  @override
-  State<SymptomModal> createState() => _SymptomModalState();
-}
-
-class _SymptomModalState extends State<SymptomModal> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,71 +30,46 @@ class _SymptomModalState extends State<SymptomModal> {
       builder: (_, controller) {
         return BlocSelector<SymptomHistoryFormCubit, SymptomHistoryFormState, Scores>(
           selector: (state) => state.scores,
-          builder: (context, scores) {
-            if (kDebugMode) {
-              print('Scores 값 업데이트됨: ${scores.printScoreCount()}');
-            }
-            // ScoreType 기준으로 분리
-            final ipssScores = scores.map((s) => s).where((s) => s.type == ScoreType.IPSS).toList();
-            final oabssScores = scores.map((s) => s).where((s) => s.type == ScoreType.OABSS).toList();
-
-            return Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16),
+          builder: (context, scores) => Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
+            child: Column(
+              children: [
+                ModalTitle(context, 'Symptom Score'.tr(context)),
+                const SizedBox(height: 40),
+                Expanded(
+                  child: ListView.builder(
+                    controller: controller,
+                    itemCount: ScoreType.values.length,
+                    itemBuilder: (context, index) => SurveyItem(
+                      symptomSurvey: SymptomSurveyModel.getByScoreType(ScoreType.values[index]),
+                      scores: scores.whereByScoreType(ScoreType.values[index]),
+                    ),
+                  ),
                 ),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
-              child: Column(
-                children: [
-                  ModalTitle(context, 'Symptom Score'.tr(context)),
-                  const SizedBox(height: 40),
-                  Expanded(
-                    child: ListView(
-                      controller: controller,
-                      children: [
-                        SurveyItem(
-                          title: 'I-PSS',
-                          subtitle: 'International Prostate Symptom Score'.tr(context),
-                          scores: ipssScores,
-                        ),
-                        SurveyItem(
-                          title: 'OABSS',
-                          subtitle: 'Overactive Bladder Symptom Score'.tr(context),
-                          // ignore: avoid_redundant_argument_values
-                          scores: oabssScores,
-                        ),
-                      ],
+                GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onTap: () => showModalBottomSheet<void>(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) => const SymptomDescriptModal(),
+                  ),
+                  child: Text(
+                    'References'.tr(context),
+                    style: context.textStyleTheme.b16SemiBold.copyWith(
+                      color: context.colorTheme.vermilion.primary.shade50,
+                      decoration: TextDecoration.underline,
+                      decorationColor: context.colorTheme.vermilion.primary.shade50,
                     ),
                   ),
-                  GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {
-                      // ignore: inference_failure_on_function_invocation
-                      showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        builder: (context) {
-                          return const SymptomDescriptModal();
-                        },
-                      );
-                    },
-                    child: Text(
-                      'References'.tr(context),
-                      style: context.textStyleTheme.b16SemiBold.copyWith(
-                        color: context.colorTheme.vermilion.primary.shade50,
-                        decoration: TextDecoration.underline,
-                        decorationColor: context.colorTheme.vermilion.primary.shade50,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
+                ),
+              ],
+            ),
+          ),
         );
       },
     );
@@ -111,17 +79,15 @@ class _SymptomModalState extends State<SymptomModal> {
 class SurveyItem extends StatefulWidget {
   const SurveyItem({
     super.key,
-    required this.title,
-    required this.subtitle,
+    required this.symptomSurvey,
     required this.scores,
   });
-  final String title;
-  final String subtitle;
-  final List<Score> scores;
+
+  final SymptomSurveyModel symptomSurvey;
+  final Scores scores;
 
   @override
-  // ignore: library_private_types_in_public_api
-  _SurveyItemState createState() => _SurveyItemState();
+  State<SurveyItem> createState() => _SurveyItemState();
 }
 
 class _SurveyItemState extends State<SurveyItem> {
@@ -139,28 +105,21 @@ class _SurveyItemState extends State<SurveyItem> {
             ListTile(
               contentPadding: const EdgeInsets.only(left: 16, top: 24, right: 16),
               title: Text(
-                widget.title,
+                widget.symptomSurvey.title.tr(context),
                 style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
               ),
               subtitle: Text(
-                widget.subtitle.tr(context),
+                widget.symptomSurvey.description.tr(context),
                 style: context.textStyleTheme.b12Medium.copyWith(color: context.colorTheme.neutral.shade7),
               ),
               trailing: GestureDetector(
                 behavior: HitTestBehavior.translucent,
-                onTap: () {
-                  // ignore: inference_failure_on_function_invocation
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    builder: (context) {
-                      return SymptomIntroduceModal(
-                        symptom_type: widget.title.replaceAll('-', ''),
-                      );
-                    },
-                  );
-                },
+                onTap: () => showModalBottomSheet<void>(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) => SymptomIntroduceModal(symptomSurveyModel: widget.symptomSurvey),
+                ),
                 child: Container(
                   decoration: BoxDecoration(
                     color: context.colorTheme.vermilion.primary.shade50,
@@ -189,24 +148,15 @@ class _SurveyItemState extends State<SurveyItem> {
                             final score = widget.scores[index];
                             return GestureDetector(
                               behavior: HitTestBehavior.translucent,
-                              onTap: () {
-                                // ignore: inference_failure_on_function_invocation
-                                showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  builder: (context) {
-                                    return SymptomResultDetailModal(
-                                      score: score,
-                                    );
-                                  },
-                                );
-                              },
-                              child: _buildScoreRow(
-                                DateFormat('MMM d, yyyy', 'en_US').format(score.date),
-                                score.totalScore,
-                                score.type.toString(),
+                              onTap: () => showModalBottomSheet<void>(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                builder: (context) => SymptomDetailModal(
+                                  score: score,
+                                ),
                               ),
+                              child: _buildScoreRow(score: score),
                             );
                           },
                         ),
@@ -264,19 +214,9 @@ class _SurveyItemState extends State<SurveyItem> {
     );
   }
 
-  Widget _buildScoreRow(String date, int score, String symptomType) {
-    String severityText;
-    if (score == 0) {
-      severityText = 'No Symptom';
-    } else if (score >= 1 && score <= 7) {
-      severityText = 'Mild';
-    } else if (score >= 8 && score <= 19) {
-      severityText = 'Moderate';
-    } else if (score >= 20 && score <= 35) {
-      severityText = 'Severe';
-    } else {
-      severityText = 'Unknown';
-    }
+  Widget _buildScoreRow({
+    required Score score,
+  }) {
     return Column(
       children: [
         Container(
@@ -286,27 +226,32 @@ class _SurveyItemState extends State<SurveyItem> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                date,
-                style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade8),
+              Expanded(
+                child: Text(
+                  switch (context.locale) {
+                    AppLocale.en => DateFormat('MMMM dd, yyyy').format(score.date),
+                    AppLocale.ko => DateFormat('yyyy년 MM월 dd일').format(score.date),
+                  },
+                  style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade8),
+                ),
               ),
+              const Gap(20),
               Row(
                 children: [
                   Text(
-                    score.toString(),
+                    '${score.totalScore}',
                     style: context.textStyleTheme.b14Medium.copyWith(
                       color: context.colorTheme.vermilion.primary.shade50,
                     ),
                   ),
-                  const SizedBox(width: 19),
+                  const SizedBox(width: 20),
                   Container(
                     width: 65,
                     margin: const EdgeInsets.only(left: 11),
                     alignment: Alignment.center,
                     child: Text(
-                      severityText.tr(context),
+                      SymptomSurveyResultModel.fromTotalScore(score.totalScore).name.tr(context),
                       style: context.textStyleTheme.b14Medium.copyWith(
                         color: context.colorTheme.vermilion.primary.shade50,
                       ),

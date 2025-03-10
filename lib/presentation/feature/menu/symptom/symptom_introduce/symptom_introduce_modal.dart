@@ -1,30 +1,20 @@
 // Flutter imports:
-import 'package:bladderly/presentation/feature/menu/symptom/symptom_survey/symptom_survey_builder.dart';
-import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/data/symptom_dataset.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/model/symptom_survey_model.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/symptom_survey/symptom_survey_builder.dart';
+import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title_back.dart';
+import 'package:flutter/material.dart';
 
 class SymptomIntroduceModal extends StatelessWidget {
-  // ignore: non_constant_identifier_names
-  const SymptomIntroduceModal({super.key, required this.symptom_type});
+  const SymptomIntroduceModal({super.key, required this.symptomSurveyModel});
 
-  // ignore: non_constant_identifier_names
-  final String symptom_type;
+  final SymptomSurveyModel symptomSurveyModel;
 
   @override
   Widget build(BuildContext context) {
-    var symptomData = <String, dynamic>{};
-
-    if (symptom_type == 'IPSS') {
-      symptomData = Symptom_information[0];
-    } else if (symptom_type == 'OABSS') {
-      symptomData = Symptom_information[1];
-    }
     return DraggableScrollableSheet(
       initialChildSize: 0.95,
       maxChildSize: 0.95,
@@ -41,7 +31,7 @@ class SymptomIntroduceModal extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
           child: Column(
             children: [
-              ModalTitleBack(context, symptom_type.tr(context)),
+              ModalTitleBack(context, symptomSurveyModel.scoreType.name.tr(context)),
               const SizedBox(height: 39.5),
               Expanded(
                 child: SingleChildScrollView(
@@ -51,7 +41,7 @@ class SymptomIntroduceModal extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 16),
                         child: Text(
-                          symptom_type.tr(context),
+                          symptomSurveyModel.scoreType.name.tr(context),
                           style: context.textStyleTheme.b28Bold.copyWith(
                             color: context.colorTheme.neutral.shade10,
                           ),
@@ -61,7 +51,7 @@ class SymptomIntroduceModal extends StatelessWidget {
                         width: 225,
                         margin: const EdgeInsets.only(left: 16),
                         child: Text(
-                          symptomData['descript'].toString().tr(context),
+                          symptomSurveyModel.subtitle.tr(context),
                           style: context.textStyleTheme.b14Medium.copyWith(
                             color: context.colorTheme.neutral.shade7,
                           ),
@@ -81,7 +71,7 @@ class SymptomIntroduceModal extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
-                                '${symptomData['time']} min'.tr(context),
+                                '${symptomSurveyModel.duration} min'.tr(context),
                                 style: context.textStyleTheme.b14SemiBold.copyWith(
                                   color: context.colorTheme.neutral.shade0,
                                 ),
@@ -100,7 +90,7 @@ class SymptomIntroduceModal extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
-                                '${symptomData['qustion_count']} questions'.tr(context),
+                                '${symptomSurveyModel.questionCount} questions'.tr(context),
                                 style: context.textStyleTheme.b14SemiBold.copyWith(
                                   color: context.colorTheme.neutral.shade0,
                                 ),
@@ -120,7 +110,7 @@ class SymptomIntroduceModal extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
-                          symptomData['content'].toString().tr(context),
+                          symptomSurveyModel.description.tr(context),
                           style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade9),
                         ),
                       ),
@@ -132,8 +122,7 @@ class SymptomIntroduceModal extends StatelessWidget {
                 onTap: () {
                   ModalHelper.showModal(
                     context: context,
-                    modalBuilder: (_) => SymptomSurveyBuilder(symptomType: symptom_type),
-                    duration: 5,
+                    modalBuilder: (_) => SymptomSurveyBuilder(symptomSurveyModel: symptomSurveyModel),
                   );
                 },
                 child: Container(

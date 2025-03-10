@@ -2,33 +2,24 @@
 // ignore_for_file: lines_longer_than_80_chars, avoid_dynamic_calls
 
 import 'package:bladderly/domain/model/score.dart';
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/data/symptom_dataset.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/model/symptom_survey_model.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/model/symptom_survey_question_model.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/model/symptom_survey_result_model.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title_date_back.dart';
+import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 
-class SymptomResultDetailModal extends StatelessWidget {
-  const SymptomResultDetailModal({super.key, required this.score});
+class SymptomDetailModal extends StatelessWidget {
+  const SymptomDetailModal({super.key, required this.score});
 
   final Score score;
+
   @override
   Widget build(BuildContext context) {
-    String severityText;
-    if (score.totalScore == 0) {
-      severityText = 'No Symptom';
-    } else if (score.totalScore >= 1 && score.totalScore <= 7) {
-      severityText = 'Mild';
-    } else if (score.totalScore >= 8 && score.totalScore <= 19) {
-      severityText = 'Moderate';
-    } else if (score.totalScore >= 20 && score.totalScore <= 35) {
-      severityText = 'Severe';
-    } else {
-      severityText = 'Unknown';
-    }
     return DraggableScrollableSheet(
       initialChildSize: 0.95,
       maxChildSize: 0.95,
@@ -52,7 +43,7 @@ class SymptomResultDetailModal extends StatelessWidget {
                 formattedDate.tr(context),
                 formattedTime.tr(context),
               ),
-              const SizedBox(height: 24),
+              const Gap(24),
               Expanded(
                 child: ListView(
                   controller: controller,
@@ -71,9 +62,9 @@ class SymptomResultDetailModal extends StatelessWidget {
                                     color: context.colorTheme.neutral.shade7,
                                   ),
                                 ),
-                                const SizedBox(height: 4),
+                                const Gap(4),
                                 Text(
-                                  severityText.tr(context),
+                                  SymptomSurveyResultModel.fromTotalScore(score.totalScore).name.tr(context),
                                   style: context.textStyleTheme.b28Bold.copyWith(
                                     color: context.colorTheme.neutral.shade10,
                                   ),
@@ -90,7 +81,7 @@ class SymptomResultDetailModal extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
-                              score.totalScore.toString(),
+                              '${score.totalScore}',
                               style: context.textStyleTheme.b28Bold.copyWith(
                                 color: context.colorTheme.neutral.shade0,
                               ),
@@ -99,21 +90,18 @@ class SymptomResultDetailModal extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 30),
-                    for (var i = 0; i < score.values.length; i++)
-                      if (score.type.name == 'IPSS')
-                        _buildScoreRow(
-                          context,
-                          IPSS_Q[i],
-                          score.values[i],
-                        )
-                      else if (score.type.name == 'OABSS')
-                        _buildScoreRow(
-                          context,
-                          OABSS_Q[i],
-                          score.values[i],
-                        ),
-                    const SizedBox(height: 24),
+                    const Gap(30),
+                    ...List.generate(score.answers.length * 2 - 1, (index) {
+                      if (index.isOdd) return const Gap(24);
+
+                      return _buildAnswer(
+                        context,
+                        question: SymptomSurveyModel.getByScoreType(score.type).questions[index ~/ 2],
+                        answer: score.answers[index ~/ 2],
+                        score: score.getScoreByAnswerIndex(index ~/ 2),
+                      );
+                    }),
+                    const Gap(24),
                   ],
                 ),
               ),
@@ -124,14 +112,14 @@ class SymptomResultDetailModal extends StatelessWidget {
     );
   }
 
-  Widget _buildScoreRow(
-    BuildContext context,
-    Map<String, dynamic> symptomData,
-    int result,
-  ) {
+  Widget _buildAnswer(
+    BuildContext context, {
+    required SymptomSurveyQuestionModel question,
+    required int answer,
+    required int score,
+  }) {
     return Container(
-      margin: const EdgeInsets.only(left: 20, right: 28, bottom: 20),
-      padding: const EdgeInsets.only(left: 16, top: 24, right: 16, bottom: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       decoration: BoxDecoration(
         color: context.colorTheme.neutral.shade2,
         borderRadius: BorderRadius.circular(8),
@@ -140,22 +128,22 @@ class SymptomResultDetailModal extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Q${symptomData['num']}',
+            'Q${question.id + 1}',
             style: context.textStyleTheme.b16SemiBold.copyWith(
               color: context.colorTheme.neutral.shade10,
             ),
           ),
-          const SizedBox(width: 16),
+          const Gap(16),
           Expanded(
             child: Column(
               children: [
                 Text(
-                  symptomData['content'].toString().tr(context),
+                  question.content.tr(context),
                   style: context.textStyleTheme.b14Medium.copyWith(
                     color: context.colorTheme.neutral.shade9,
                   ),
                 ),
-                const SizedBox(height: 24),
+                const Gap(24),
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 16,
@@ -169,13 +157,13 @@ class SymptomResultDetailModal extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        symptomData['answer'][result]['content'].toString().tr(context),
+                        question.answers[answer].text.tr(context),
                         style: context.textStyleTheme.b14Medium.copyWith(
                           color: context.colorTheme.neutral.shade7,
                         ),
                       ),
                       Text(
-                        result.toString(),
+                        '$score',
                         style: context.textStyleTheme.b16SemiBold.copyWith(
                           color: context.colorTheme.vermilion.primary.shade50,
                         ),

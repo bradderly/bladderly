@@ -112,17 +112,20 @@ class _BladderlyAppState extends State<BladderlyApp> {
           routeInformationProvider: AppRouter.goRouter.routeInformationProvider,
           supportedLocales: FlutterLocalization.instance.supportedLocales,
           localizationsDelegates: FlutterLocalization.instance.localizationsDelegates,
-          builder: (context, child) => Theme(
-            data: Theme.of(context).copyWith(
-              textSelectionTheme: TextSelectionThemeData(
-                cursorColor: context.colorTheme.neutral.shade7,
+          builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+            child: Theme(
+              data: Theme.of(context).copyWith(
+                textSelectionTheme: TextSelectionThemeData(
+                  cursorColor: context.colorTheme.neutral.shade7,
+                ),
               ),
-            ),
-            child: ScrollConfiguration(
-              behavior: const _ScrollBehavior(),
-              child: GestureDetector(
-                onTap: FocusScope.of(context).unfocus,
-                child: child,
+              child: ScrollConfiguration(
+                behavior: const _ScrollBehavior(),
+                child: GestureDetector(
+                  onTap: FocusScope.of(context).unfocus,
+                  child: child,
+                ),
               ),
             ),
           ),

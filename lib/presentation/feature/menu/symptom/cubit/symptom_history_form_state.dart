@@ -6,5 +6,7 @@ class SymptomHistoryFormState extends Equatable {
   final Scores scores;
 
   @override
-  List<Object> get props => [scores];
+  List<Object> get props => [
+        scores,
+      ];
 }

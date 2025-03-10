@@ -1,14 +1,12 @@
 // Flutter imports:
 
-// Flutter imports:
-import 'package:flutter/widgets.dart';
-
-// Package imports:
-import 'package:intl/intl.dart';
-
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
+// Flutter imports:
+import 'package:flutter/widgets.dart';
+// Package imports:
+import 'package:intl/intl.dart';
 
 extension DatetimeExtension on DateTime {
   String getCalendarHeader(BuildContext context) {
@@ -34,6 +32,13 @@ extension DatetimeExtension on DateTime {
 
   String getDayOfweek(BuildContext context) {
     return context.locale.getDayOfWeek(weekday - 1);
+  }
+
+  String formatHourMinute(BuildContext context) {
+    return switch (context.locale) {
+      AppLocale.en => DateFormat('hh:mm a').format(this),
+      AppLocale.ko => DateFormat('a hh:mm').format(this),
+    };
   }
 
   bool isBetween(

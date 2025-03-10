@@ -11,16 +11,26 @@ final class SymptomSurveyInitial extends SymptomSurveyState {
   const SymptomSurveyInitial();
 }
 
-final class SymptomSurveyProgress extends SymptomSurveyState {
-  const SymptomSurveyProgress();
+final class SymptomSurveySubmitInProgress extends SymptomSurveyState {
+  const SymptomSurveySubmitInProgress();
 }
 
-final class SymptomSurveySuccess extends SymptomSurveyState {
-  const SymptomSurveySuccess();
+final class SymptomSurveySubmitSuccess extends SymptomSurveyState {
+  const SymptomSurveySubmitSuccess({
+    required this.score,
+  });
+
+  final Score score;
+
+  @override
+  List<Object> get props => [
+        ...super.props,
+        score,
+      ];
 }
 
-final class SymptomSurveyFailure extends SymptomSurveyState {
-  const SymptomSurveyFailure({
+final class SymptomSurveySubmitFailure extends SymptomSurveyState {
+  const SymptomSurveySubmitFailure({
     required this.exception,
   });
 

@@ -1,18 +1,21 @@
 import 'package:bladderly/domain/model/score.dart';
+import 'package:bladderly/domain/model/score_type.dart';
 
-class Scores<T extends Score> {
-  Scores({required List<T> list}) : _list = List<T>.unmodifiable(list);
+class Scores {
+  Scores({required List<Score> list}) : _list = List<Score>.unmodifiable(list);
 
   const Scores.empty() : _list = const [];
 
-  final List<T> _list;
+  final List<Score> _list;
 
-  Iterable<A> map<A>(A Function(T e) toElement) {
-    return _list.map(toElement);
-  }
+  Scores whereByScoreType(ScoreType scoreType) =>
+      Scores(list: _list.where((scroe) => scroe.type == scoreType).toList());
 
-  // 수정된 부분: String을 반환하도록 변경
-  String printScoreCount() {
-    return 'Number of scores: ${_list.length}';
-  }
+  bool get isNotEmpty => _list.isNotEmpty;
+
+  int get length => _list.length;
+
+  Score operator [](int index) => _list[index];
+
+  List<T> map<T>(T Function(Score) f) => _list.map(f).toList();
 }

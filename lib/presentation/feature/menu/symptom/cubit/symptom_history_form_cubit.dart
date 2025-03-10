@@ -41,8 +41,6 @@ class SymptomHistoryFormCubit extends Cubit<SymptomHistoryFormState> {
   void _listener(Scores scores) {
     if (isClosed) return;
 
-    emit(
-      SymptomHistoryFormState(scores),
-    );
+    emit(SymptomHistoryFormState(scores));
   }
 }

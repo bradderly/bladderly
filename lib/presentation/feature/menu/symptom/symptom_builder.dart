@@ -1,6 +1,7 @@
 // Flutter imports:
 // Project imports:
 import 'package:bladderly/core/di/di.dart';
+import 'package:bladderly/domain/usecase/get_scores_stream_usecase.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/cubit/symptom_history_form_cubit.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/symptom_modal.dart';
 import 'package:flutter/widgets.dart';
@@ -13,7 +14,7 @@ class SymptomBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SymptomHistoryFormCubit>(
-      create: (_) => SymptomHistoryFormCubit(getScoresStreamUsecase: getIt())..setData(),
+      create: (_) => SymptomHistoryFormCubit(getScoresStreamUsecase: getIt<GetScoresStreamUsecase>())..setData(),
       child: const SymptomModal(),
     );
   }

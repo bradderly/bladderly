@@ -7,14 +7,12 @@ part 'score_entity.g.dart';
 class ScoreEntity {
   Id id = Isar.autoIncrement;
 
-  @Name('score_date')
-  late String date;
-
+  @Index(unique: true, replace: true, composite: [CompositeIndex('date')])
   @Name('score_name')
   late String name;
 
-  @Name('total_score')
-  late int totalScore;
+  @Name('score_date')
+  late DateTime date;
 
   @Name('score_value')
   late List<int> scorevalue;
