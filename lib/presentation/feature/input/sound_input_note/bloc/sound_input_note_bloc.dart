@@ -30,6 +30,7 @@ class SoundInputNoteBloc extends Bloc<SoundInputNoteEvent, SoundInputNoteState> 
       recordUrgency: event.recordUrgency,
       isLeakage: event.isLeakage,
       isNocutria: event.isNocutria,
+      leakageVolume: event.leakageVolume,
       memo: event.memo,
     );
 

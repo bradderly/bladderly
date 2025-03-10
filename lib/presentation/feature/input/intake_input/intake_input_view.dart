@@ -1,12 +1,6 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
-
 // Project imports:
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/common_keyboard_actions.dart';
@@ -22,6 +16,11 @@ import 'package:bladderly/presentation/feature/input/widget/input_save_button.da
 import 'package:bladderly/presentation/feature/input/widget/input_text_area_widget.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 class IntakeInputView extends StatefulWidget {
   const IntakeInputView({
@@ -47,7 +46,7 @@ class _IntakeInputViewState extends State<IntakeInputView> {
   void _onSave(BuildContext context, IntakeInputFormState state) {
     final event = IntakeInputSave(
       id: state.id,
-      hashId: 'ydu3328@naver.com',
+      hashId: context.read<UserBloc>().state.userModelOrThrowException.id,
       recordTime: state.recordTime,
       beverageType: state.beverageModel!.value,
       recordVolume: state.recordVolumeModel!.volume,

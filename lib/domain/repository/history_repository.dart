@@ -40,6 +40,8 @@ abstract class HistoryRepository {
 
   History? getHistoryById(int id);
 
+  History? getHistoryByRecordTime(DateTime recordTime);
+
   void deleteHistoryById(int id);
 
   Future<String?> uploadHistory({

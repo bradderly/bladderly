@@ -16,6 +16,8 @@ abstract class IsarClient {
 
   HistoryEntity? getHistoryOrNullById(int id);
 
+  HistoryEntity? getHistoryOrNullByRecordTime(DateTime recordTime);
+
   Future<HistoryEntity> saveHistory(HistoryEntity historyEntity);
 
   Future<List<HistoryEntity>> saveHistories(List<HistoryEntity> historyEntities);
@@ -59,6 +61,11 @@ class _IsarClientImpl implements IsarClient {
   @override
   HistoryEntity? getHistoryOrNullById(int id) {
     return _isar.historyEntitys.getSync(id);
+  }
+
+  @override
+  HistoryEntity? getHistoryOrNullByRecordTime(DateTime recordTime) {
+    return _isar.historyEntitys.getByRecordTimeSync(recordTime);
   }
 
   @override

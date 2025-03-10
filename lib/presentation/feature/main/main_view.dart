@@ -2,8 +2,11 @@
 
 // Project imports:
 import 'package:bladderly/core/recorder/recorder_module.dart';
+import 'package:bladderly/domain/exception/get_history_result_failure_exception.dart';
+import 'package:bladderly/presentation/common/bloc/history_result_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
+import 'package:bladderly/presentation/common/widget/get_history_result_failure_modal.dart';
 import 'package:bladderly/presentation/feature/diary/diary/diary_builder.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_tab_scroll_section_model.dart';
 import 'package:bladderly/presentation/feature/main/bloc/main_history_bloc.dart';
@@ -103,6 +106,20 @@ class _MainViewState extends State<MainView> {
     context.read<PaymentBloc>().add(PaymentInitializeHandler(userId: userId));
   }
 
+  void onHistoryResultGetFailure(BuildContext context, HistoryResultGetFailure state) {
+    if (!context.mounted) return;
+
+    if (state.exception case final GetHistoryResultFailureException exception) {
+      GetHistoryResultFailureModal.show(
+        context,
+        onEdit: () => ManualInputRoute(recordTime: exception.recordTime).go(context..pop()),
+        onMaintain: context.pop,
+        message: exception.message,
+        recordTime: exception.recordTime,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
@@ -114,6 +131,12 @@ class _MainViewState extends State<MainView> {
         BlocListener<UserBloc, UserState>(
           listener: (context, state) => switch (state) {
             UserInitial() => const IntroRoute().go(context),
+            _ => null,
+          },
+        ),
+        BlocListener<HistoryResultBloc, HistoryResultState>(
+          listener: (context, state) => switch (state) {
+            HistoryResultGetFailure() => onHistoryResultGetFailure(context, state),
             _ => null,
           },
         ),

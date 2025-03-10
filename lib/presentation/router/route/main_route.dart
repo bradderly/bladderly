@@ -172,10 +172,10 @@ class ManualInputRouteExtra extends Equatable {
 
 class ManualInputRoute extends GoRouteData {
   const ManualInputRoute({
-    this.historyId,
+    this.recordTime,
   });
 
-  final int? historyId;
+  final DateTime? recordTime;
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
@@ -183,7 +183,7 @@ class ManualInputRoute extends GoRouteData {
       key: state.pageKey,
       fullscreenDialog: true,
       child: ManualInputBuilder(
-        historyId: historyId,
+        recordTime: recordTime,
       ),
     );
   }
@@ -205,19 +205,19 @@ class IntakeInputRouteExtra extends Equatable {
 class IntakeInputRoute extends GoRouteData {
   const IntakeInputRoute({
     required this.beverageType,
-    required this.historyId,
+    required this.recordTime,
   });
 
   const IntakeInputRoute.fromBeverageType({
     required BeverageTypeModel beverageType,
-  }) : this(beverageType: beverageType, historyId: null);
+  }) : this(beverageType: beverageType, recordTime: null);
 
-  const IntakeInputRoute.fromHistoryId({
-    required int historyId,
-  }) : this(beverageType: null, historyId: historyId);
+  const IntakeInputRoute.fromRecordTime({
+    required DateTime recordTime,
+  }) : this(beverageType: null, recordTime: recordTime);
 
   final BeverageTypeModel? beverageType;
-  final int? historyId;
+  final DateTime? recordTime;
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
@@ -226,7 +226,7 @@ class IntakeInputRoute extends GoRouteData {
       fullscreenDialog: true,
       child: IntakeInputBuilder(
         beverageTypeModel: beverageType,
-        historyId: historyId,
+        recordTime: recordTime,
       ),
     );
   }

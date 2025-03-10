@@ -1,29 +1,42 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:gap/gap.dart';
-
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/common/widget/common_modal.dart';
 import 'package:bladderly/presentation/common/widget/primary_button.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:gap/gap.dart';
 
 class SoundInputRecordingCancelDialog extends StatelessWidget {
-  const SoundInputRecordingCancelDialog({
-    super.key,
+  const SoundInputRecordingCancelDialog._({
     required this.onCancel,
     required this.onContinue,
   });
+
+  static Future<bool?> show(
+    BuildContext context, {
+    required VoidCallback onCancel,
+    required VoidCallback onContinue,
+  }) {
+    return CommonModal.show<bool>(
+      context,
+      child: SoundInputRecordingCancelDialog._(
+        onCancel: onCancel,
+        onContinue: onContinue,
+      ),
+    );
+  }
 
   final VoidCallback onCancel;
   final VoidCallback onContinue;
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      insetPadding: const EdgeInsets.symmetric(horizontal: 24).copyWith(top: 48, bottom: 72),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(

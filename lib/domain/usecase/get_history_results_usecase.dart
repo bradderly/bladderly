@@ -1,6 +1,7 @@
 // Package imports:
 // Project imports:
 import 'package:bladderly/domain/mixin/history_result_usecase_mixin.dart';
+import 'package:bladderly/domain/model/history_status.dart';
 import 'package:bladderly/domain/repository/history_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
@@ -19,7 +20,12 @@ class GetHistoryResultsUsecase with HistoryResultUsecaseMixin {
     try {
       final histories = await historyRepository.getProcessingHistories();
 
-      await Future.wait(histories.map((history) => getResult(userId: userId, history: history)));
+      await Future.wait(
+        histories.map(
+          (history) => getResult(userId: userId, history: history)
+              .onError((e, s) => historyRepository.saveHistory(history.setStatus(HistoryStatus.failed))),
+        ),
+      );
 
       return const Right(null);
     } catch (e) {

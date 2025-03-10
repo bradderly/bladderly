@@ -1,17 +1,17 @@
 // Package imports:
 
-// Package imports:
-import 'package:equatable/equatable.dart';
-
 // Project imports:
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/leakage_volume.dart';
 import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
+// Package imports:
+import 'package:equatable/equatable.dart';
 
 sealed class DetailedListHistoryModel extends Equatable {
   const DetailedListHistoryModel._({
     required this.id,
+    required this.recordTime,
     required this.memo,
   });
 
@@ -19,6 +19,7 @@ sealed class DetailedListHistoryModel extends Equatable {
     return switch (history) {
       final VoidingHistory history => DetailedListVoidingHistoryModel._(
           id: history.id!,
+          recordTime: history.recordTime,
           memo: history.memo,
           recordVolume: history.recordVolume,
           recordUrgency: history.recordUrgency,
@@ -32,11 +33,13 @@ sealed class DetailedListHistoryModel extends Equatable {
         ),
       final LeakageHistory history => DetailedListLeakageHistoryModel._(
           id: history.id!,
+          recordTime: history.recordTime,
           memo: history.memo,
           leakageVolume: history.leakageVolume.name,
         ),
       final IntakeHistory history => DetailedListIntakeHistoryModel._(
           id: history.id!,
+          recordTime: history.recordTime,
           memo: history.memo,
           beverageType: history.beverageType,
           recordVolume: history.recordVolume,
@@ -45,11 +48,13 @@ sealed class DetailedListHistoryModel extends Equatable {
   }
 
   final int id;
+  final DateTime recordTime;
   final String? memo;
 
   @override
   List<Object?> get props => [
         id,
+        recordTime,
         memo,
       ];
 }
@@ -57,6 +62,7 @@ sealed class DetailedListHistoryModel extends Equatable {
 class DetailedListVoidingHistoryModel extends DetailedListHistoryModel {
   const DetailedListVoidingHistoryModel._({
     required super.id,
+    required super.recordTime,
     required super.memo,
     required this.recordVolume,
     required this.recordUrgency,
@@ -81,6 +87,7 @@ class DetailedListVoidingHistoryModel extends DetailedListHistoryModel {
 class DetailedListLeakageHistoryModel extends DetailedListHistoryModel {
   const DetailedListLeakageHistoryModel._({
     required super.id,
+    required super.recordTime,
     required super.memo,
     required this.leakageVolume,
   }) : super._();
@@ -97,6 +104,7 @@ class DetailedListLeakageHistoryModel extends DetailedListHistoryModel {
 class DetailedListIntakeHistoryModel extends DetailedListHistoryModel {
   const DetailedListIntakeHistoryModel._({
     required super.id,
+    required super.recordTime,
     required super.memo,
     required this.beverageType,
     required this.recordVolume,

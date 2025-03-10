@@ -1,10 +1,9 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
+import 'package:flutter/material.dart';
 
 class InputTextAreaWidget extends StatelessWidget {
   const InputTextAreaWidget({
@@ -35,7 +34,7 @@ class InputTextAreaWidget extends StatelessWidget {
           border: InputBorder.none,
           isDense: true,
           contentPadding: const EdgeInsets.all(19),
-          hintText: 'Add any notes or details here.'.tr(context),
+          hintText: 'memo text voiding'.tr(context),
           hintStyle: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
           counter: const SizedBox.shrink(),
         ),

@@ -62,6 +62,7 @@ dependencies:
   flutter_inappwebview: 6.1.5
   in_app_purchase: 3.2.1
   in_app_purchase_storekit: 0.3.21
+  lottie: 3.3.1
 
 dev_dependencies:
   flutter_test:
@@ -70,7 +71,6 @@ dev_dependencies:
   analyzer: 5.13.0
   build_runner: 2.4.13
   build_verify: 3.1.0
-  flutter_flavorizr: 2.2.3
   flutter_gen_runner: 5.8.0
   flutter_lints: 5.0.0
   very_good_analysis: 7.0.0
@@ -87,6 +87,7 @@ flutter_gen:
   line_length: 160
   integrations:
     flutter_svg: true
+    lottie: true
   exclude:
     - assets/fonts/
 
@@ -102,6 +103,7 @@ flutter:
     - assets/env/
     - assets/img/
     - assets/i18n/
+    - assets/lottie/
 
   fonts:
     - family: Inter

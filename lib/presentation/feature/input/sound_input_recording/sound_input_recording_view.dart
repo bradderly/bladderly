@@ -1,15 +1,6 @@
 // Dart imports:
 import 'dart:async';
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
-import 'package:synchronized/synchronized.dart';
-
 // Project imports:
 import 'package:bladderly/core/recorder/recorder_module.dart';
 import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
@@ -18,6 +9,13 @@ import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/input/sound_input_recording/widget/sound_input_recording_stop_dialog.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+import 'package:synchronized/synchronized.dart';
 
 class SoundInputRecordingView extends StatefulWidget {
   const SoundInputRecordingView({
@@ -96,31 +94,32 @@ class _SoundInputRecordingViewState extends State<SoundInputRecordingView> with 
 
   void startRecordingCountDown() {
     Timer.periodic(
-      const Duration(seconds: 1),
+      const Duration(milliseconds: 10),
       (timer) {
         if (!mounted) return timer.cancel();
 
-        if (remainingDuration.inSeconds == 0) {
+        setState(() => remainingDuration -= const Duration(milliseconds: 10));
+
+        if (timer.tick % 100 != 0) {
+          return;
+        }
+
+        if (remainingDuration <= Duration.zero) {
           startRecording();
           return timer.cancel();
         }
-
-        setState(() => remainingDuration -= const Duration(seconds: 1));
       },
     );
   }
 
   Future<void> showRecordingCancelDialog() async {
-    final shouldCancelRecord = await showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => SoundInputRecordingCancelDialog(
-        onCancel: () {
-          cancelRecording();
-          Navigator.of(context).pop<bool>(true);
-        },
-        onContinue: () => Navigator.of(context).pop<void>(),
-      ),
+    final shouldCancelRecord = await SoundInputRecordingCancelDialog.show(
+      context,
+      onCancel: () {
+        cancelRecording();
+        Navigator.of(context).pop<bool>(true);
+      },
+      onContinue: () => Navigator.of(context).pop<void>(),
     );
 
     if (shouldCancelRecord == true && mounted) Navigator.of(context).pop();
@@ -172,28 +171,53 @@ class _SoundInputRecordingViewState extends State<SoundInputRecordingView> with 
                         ),
                       ),
                       const Gap(41),
-                      // LayoutBuilder(
-                      //   builder: (context, constraints) => SizedBox(
-                      //     width: constraints.maxWidth,
-                      //     height: constraints.maxWidth,
-                      //     child: Stack(
-                      //       children: [
-                      //         const RippleEffect(),
-                      //         Container(
-                      //           width: constraints.maxWidth,
-                      //           height: constraints.maxWidth,
-                      //           alignment: Alignment.center,
-                      //           child: Text(
-                      //             '${remainingDuration.inSeconds}',
-                      //             style: context.textStyleTheme.b20Bold.copyWith(
-                      //               color: context.colorTheme.neutral.shade0,
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
+                      Stack(
+                        children: [
+                          Assets.lottie.lottieInputRippleWave.lottie(
+                            width: MediaQuery.of(context).size.width - 32,
+                            height: MediaQuery.of(context).size.width - 32,
+                          ),
+                          Container(
+                            alignment: Alignment.center,
+                            width: MediaQuery.of(context).size.width - 32,
+                            height: MediaQuery.of(context).size.width - 32,
+                            child: StreamBuilder<RecorderState>(
+                              initialData: widget.recorder.state,
+                              stream: widget.recorder.onStateChanged(),
+                              builder: (context, snapshot) => Stack(
+                                children: [
+                                  Center(
+                                    child: Text(
+                                      snapshot.data is RecorderIdle
+                                          ? '${remainingDuration.inSeconds}'
+                                          : 'Recording...'.tr(context),
+                                      style: context.textStyleTheme.b20Bold.copyWith(
+                                        color: snapshot.data is RecorderIdle
+                                            ? context.colorTheme.neutral.shade0
+                                            : const Color(0xFF87A218),
+                                      ),
+                                    ),
+                                  ),
+                                  if (snapshot.data is RecorderIdle)
+                                    Center(
+                                      child: SizedBox(
+                                        width: 45,
+                                        height: 45,
+                                        child: CircularProgressIndicator(
+                                          color: context.colorTheme.paleLime.shade20,
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(context.colorTheme.paleLime.shade60),
+                                          value: 1 - remainingDuration.inMilliseconds / 3000,
+                                          strokeCap: StrokeCap.round,
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
