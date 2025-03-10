@@ -1,6 +1,7 @@
 // Flutter imports:
 
 // Project imports:
+import 'package:bladderly/domain/model/leakage_volume.dart';
 import 'package:bladderly/presentation/common/bloc/history_result_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
@@ -13,6 +14,7 @@ import 'package:bladderly/presentation/feature/input/sound_input_note/cubit/soun
 import 'package:bladderly/presentation/feature/input/sound_input_note/modal/sound_input_note_upload_success_modal.dart';
 import 'package:bladderly/presentation/feature/input/widget/input_choice_button.dart';
 import 'package:bladderly/presentation/feature/input/widget/input_field_widget.dart';
+import 'package:bladderly/presentation/feature/input/widget/input_leakage_volume_widget.dart';
 import 'package:bladderly/presentation/feature/input/widget/input_record_time_widget.dart';
 import 'package:bladderly/presentation/feature/input/widget/input_record_urgency_widget.dart';
 import 'package:bladderly/presentation/feature/input/widget/input_save_button.dart';
@@ -38,6 +40,7 @@ class SoundInputNoteView extends StatelessWidget {
       userId: _getUserId(context),
       recordTime: recordTime,
       isLeakage: state.isLeakage!,
+      leakageVolume: state.leakageVolume,
       isNocutria: state.isNocutria!,
       recordUrgency: state.recordUrgency!,
       memo: state.memo,
@@ -101,6 +104,11 @@ class SoundInputNoteView extends StatelessWidget {
                     _buildNocturia(context),
                     const Gap(48),
                     _buildLeakage(context),
+                    BlocSelector<SoundInputNoteFormCubit, SoundInputNoteFormState, bool?>(
+                      selector: (state) => state.isLeakage,
+                      builder: (context, isLeakage) =>
+                          isLeakage != true ? const SizedBox.shrink() : _buildLeakageVolume(context),
+                    ),
                     const Gap(48),
                     _buildMemo(context),
                   ],
@@ -187,6 +195,25 @@ class SoundInputNoteView extends StatelessWidget {
           value: isLeakage,
         ),
       ),
+    );
+  }
+
+  Widget _buildLeakageVolume(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Gap(48),
+        InputFieldWidget(
+          label: 'Leakage Volume'.tr(context),
+          child: BlocSelector<SoundInputNoteFormCubit, SoundInputNoteFormState, LeakageVolume?>(
+            selector: (state) => state.leakageVolume,
+            builder: (context, leakageVolume) => InputLeakageVolumeWidget(
+              onChanged: context.read<SoundInputNoteFormCubit>().setLeakageVolume,
+              leakageVolume: leakageVolume,
+            ),
+          ),
+        ),
+      ],
     );
   }
 

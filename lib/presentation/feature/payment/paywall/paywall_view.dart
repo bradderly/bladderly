@@ -196,7 +196,8 @@ class _PaywallViewState extends State<PaywallView> {
                             onPressed: isNotValid
                                 ? null
                                 : () => context.read<PaymentBloc>().add(
-                                    PaymentPurchasePlan(planId: context.read<PaywallCubit>().state.selectedPlanId!)),
+                                      PaymentPurchasePlan(planId: context.read<PaywallCubit>().state.selectedPlanId!),
+                                    ),
                             backgroundColor: context.colorTheme.vermilion.primary.shade50,
                             borderRadius: 400,
                             shape: BoxShape.rectangle,

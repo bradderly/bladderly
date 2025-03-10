@@ -5,12 +5,14 @@ class SoundInputNoteFormState extends Equatable {
     this.recordUrgency,
     this.isNocutria,
     this.isLeakage,
+    this.leakageVolume,
     this.memo = '',
   });
 
   final int? recordUrgency;
   final bool? isNocutria;
   final bool? isLeakage;
+  final LeakageVolume? leakageVolume;
   final String memo;
 
   bool get isValid => recordUrgency != null && isNocutria != null && isLeakage != null;
@@ -19,12 +21,14 @@ class SoundInputNoteFormState extends Equatable {
     int? recordUrgency,
     bool? isNocutria,
     bool? isLeakage,
+    LeakageVolume? leakageVolume,
     String? memo,
   }) {
     return SoundInputNoteFormState(
       recordUrgency: recordUrgency ?? this.recordUrgency,
       isNocutria: isNocutria ?? this.isNocutria,
       isLeakage: isLeakage ?? this.isLeakage,
+      leakageVolume: leakageVolume ?? this.leakageVolume,
       memo: memo ?? this.memo,
     );
   }
@@ -34,6 +38,7 @@ class SoundInputNoteFormState extends Equatable {
         recordUrgency,
         isNocutria,
         isLeakage,
+        leakageVolume,
         memo,
       ];
 }

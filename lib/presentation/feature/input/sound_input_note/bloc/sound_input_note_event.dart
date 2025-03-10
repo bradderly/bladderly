@@ -4,7 +4,7 @@ sealed class SoundInputNoteEvent extends Equatable {
   const SoundInputNoteEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class SoundInputNoteUpload extends SoundInputNoteEvent {
@@ -14,6 +14,7 @@ class SoundInputNoteUpload extends SoundInputNoteEvent {
     required this.recordUrgency,
     required this.isNocutria,
     required this.isLeakage,
+    required this.leakageVolume,
     required this.memo,
   });
 
@@ -22,14 +23,16 @@ class SoundInputNoteUpload extends SoundInputNoteEvent {
   final int recordUrgency;
   final bool isNocutria;
   final bool isLeakage;
+  final LeakageVolume? leakageVolume;
   final String memo;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         recordTime,
         recordUrgency,
         isNocutria,
         isLeakage,
+        leakageVolume,
         memo,
       ];
 }
