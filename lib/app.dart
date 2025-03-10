@@ -113,7 +113,7 @@ class _BladderlyAppState extends State<BladderlyApp> {
           supportedLocales: FlutterLocalization.instance.supportedLocales,
           localizationsDelegates: FlutterLocalization.instance.localizationsDelegates,
           builder: (context, child) => MediaQuery(
-            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+            data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
             child: Theme(
               data: Theme.of(context).copyWith(
                 textSelectionTheme: TextSelectionThemeData(

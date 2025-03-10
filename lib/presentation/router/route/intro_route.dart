@@ -2,17 +2,16 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:flutter/cupertino.dart';
-
-// Package imports:
-import 'package:equatable/equatable.dart';
-import 'package:go_router/go_router.dart';
-
+import 'package:bladderly/presentation/feature/forgot_password/forgot_password_builder.dart';
 // Project imports:
 import 'package:bladderly/presentation/feature/intro/intro_view.dart';
 import 'package:bladderly/presentation/feature/sign_in/sing_in_builder.dart';
 import 'package:bladderly/presentation/feature/sign_up/guest/sign_up_guest_builder.dart';
 import 'package:bladderly/presentation/feature/sign_up/social/sign_up_social_builder.dart';
+// Package imports:
+import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 
 // Project imports:
 part 'intro_route.g.dart';
@@ -26,6 +25,10 @@ part 'intro_route.g.dart';
       path: 'sign-in',
       routes: [
         TypedGoRoute<SignUpSocialRoute>(name: 'sign-up-social', path: 'sign-up-social'),
+        TypedGoRoute<ForgotPasswordRoute>(
+          name: 'forgot-password',
+          path: 'forgot-password',
+        ),
       ],
     ),
     TypedGoRoute<SignUpGuestRoute>(name: 'sign-up', path: 'sign-up'),
@@ -102,5 +105,17 @@ class SignUpSocialRoute extends GoRouteData {
     }
 
     return null;
+  }
+}
+
+class ForgotPasswordRoute extends GoRouteData {
+  const ForgotPasswordRoute();
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: const ForgotPasswordBuilder(),
+    );
   }
 }

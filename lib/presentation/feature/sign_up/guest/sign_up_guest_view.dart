@@ -41,9 +41,7 @@ class _SignUpGuestViewState extends State<SignUpGuestView> {
         );
   }
 
-  void onSignupSuccess(BuildContext context, SignupGuestSubmitSuccess state) {
-    const MainRoute().go(context..read<UserBloc>().add(const UserLoad()));
-  }
+  void onSignupSuccess(BuildContext context, SignupGuestSubmitSuccess state) {}
 
   Future<void> onSignupFailure(BuildContext context, SignupGuestSubmitFailure state) {
     context.pop();
@@ -60,13 +58,23 @@ class _SignUpGuestViewState extends State<SignUpGuestView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SignUpGuestBloc, SignUpGuestState>(
-      listener: (context, state) => switch (state) {
-        SignupGuestSubmitInProgress() => ProgressIndicatorModal.show(context),
-        SignupGuestSubmitSuccess() => onSignupSuccess(context, state),
-        SignupGuestSubmitFailure() => onSignupFailure(context, state),
-        _ => null,
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<SignUpGuestBloc, SignUpGuestState>(
+          listener: (context, state) => switch (state) {
+            SignupGuestSubmitInProgress() => ProgressIndicatorModal.show(context),
+            SignupGuestSubmitSuccess() => onSignupSuccess(context, state),
+            SignupGuestSubmitFailure() => onSignupFailure(context, state),
+            _ => null,
+          },
+        ),
+        BlocListener<UserBloc, UserState>(
+          listener: (context, state) => switch (state) {
+            UserLoadSuccess() => const MainRoute().go(context),
+            _ => null,
+          },
+        ),
+      ],
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: 77,

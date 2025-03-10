@@ -8,6 +8,7 @@ import 'package:bladderly/domain/exception/password_attempts_exceeded_exception.
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
+import 'package:bladderly/presentation/common/widget/password_input_field.dart';
 import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/sign_in/bloc/signin_bloc.dart';
@@ -119,48 +120,36 @@ class SignInView extends StatelessWidget {
                       ),
                       child: BlocSelector<SignInFormCubit, SignInFormState, bool>(
                         selector: (state) => state.obscurePassword,
-                        builder: (_, obscurePassword) => TextField(
+                        builder: (_, obscurePassword) => PasswordInputField(
+                          obsecureText: obscurePassword,
+                          onToggleObsecureText: (value) => context.read<SignInFormCubit>().togglePasswordVisibility(),
                           onChanged: (value) => context.read<SignInFormCubit>().setPassword(value),
-                          autocorrect: false,
-                          enableSuggestions: false,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14.5),
-                            isDense: false,
-                            suffixIcon: GestureDetector(
-                              onTap: context.read<SignInFormCubit>().togglePasswordVisibility,
-                              child: Icon(
-                                obscurePassword ? Icons.visibility : Icons.visibility_off,
-                                size: 24,
-                                color: context.colorTheme.neutral.shade6,
-                              ),
-                            ),
-                          ),
-                          style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade10),
-                          keyboardType: TextInputType.emailAddress,
-                          obscureText: obscurePassword,
                         ),
                       ),
                     ),
                     const Gap(8),
-                    Stack(
-                      children: [
-                        Positioned.fill(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(color: context.colorTheme.vermilion.primary.shade50),
+                    GestureDetector(
+                      onTap: () => const ForgotPasswordRoute().go(context),
+                      behavior: HitTestBehavior.translucent,
+                      child: Stack(
+                        children: [
+                          Positioned.fill(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(color: context.colorTheme.vermilion.primary.shade50),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        Text(
-                          'Forgot Password?'.tr(context),
-                          style: context.textStyleTheme.b14SemiBold.copyWith(
-                            color: context.colorTheme.vermilion.primary.shade50,
+                          Text(
+                            'Forgot Password?'.tr(context),
+                            style: context.textStyleTheme.b14SemiBold.copyWith(
+                              color: context.colorTheme.vermilion.primary.shade50,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
