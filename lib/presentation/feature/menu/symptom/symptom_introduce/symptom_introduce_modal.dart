@@ -119,12 +119,10 @@ class SymptomIntroduceModal extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () {
-                  ModalHelper.showModal(
-                    context: context,
-                    modalBuilder: (_) => SymptomSurveyBuilder(symptomSurveyModel: symptomSurveyModel),
-                  );
-                },
+                onTap: () => ModalHelper.showModal<void>(
+                  context: context,
+                  modalBuilder: (_) => SymptomSurveyBuilder(symptomSurveyModel: symptomSurveyModel),
+                ),
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
                   decoration: BoxDecoration(

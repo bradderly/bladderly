@@ -174,7 +174,7 @@ class ProfileModal extends StatelessWidget {
                       TextIconArrowForm(
                         title: 'Change Password'.tr(context),
                         icon: Icons.lock_open,
-                        onTap: () => ModalHelper.showModal(
+                        onTap: () => ModalHelper.showModal<void>(
                           context: context,
                           modalBuilder: (_) => const ChangePasswordBuilder(),
                         ),
@@ -243,7 +243,7 @@ class ProfileModal extends StatelessWidget {
                       TextIconArrowForm(
                         title: 'Delete Account'.tr(context),
                         icon: Icons.delete_outline,
-                        onTap: () => ModalHelper.showModal(
+                        onTap: () => ModalHelper.showModal<void>(
                           context: context,
                           modalBuilder: (_) => const DeleteAccountBuilder(),
                         ),

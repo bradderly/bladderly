@@ -66,14 +66,14 @@ class PlanModal extends StatelessWidget {
                         ),
                         TextArrow(
                           title: 'Cancel plan'.tr(context),
-                          onTap: () => ModalHelper.showModal(
+                          onTap: () => ModalHelper.showModal<void>(
                             context: context,
                             modalBuilder: (_) => const PlanCancelBuilder(),
                           ),
                         ),
                         TextArrow(
                           title: 'Enter Promo Code'.tr(context),
-                          onTap: () => ModalHelper.showModal(
+                          onTap: () => ModalHelper.showModal<void>(
                             context: context,
                             modalBuilder: (_) => const PromoCodeModal(),
                           ),
