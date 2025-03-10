@@ -1,18 +1,17 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:gap/gap.dart';
-
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/common/widget/password_input_field.dart';
 import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:bladderly/presentation/feature/sign_in/widget/sign_in_field_widget.dart';
 import 'package:bladderly/presentation/feature/sign_up/regular/cubit/sign_up_regular_form_cubit.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:gap/gap.dart';
 
 class SignUpRegularAccountInfoView extends StatefulWidget {
   const SignUpRegularAccountInfoView({
@@ -71,35 +70,10 @@ class _SignUpRegularAccountInfoViewState extends State<SignUpRegularAccountInfoV
             const Gap(24),
             SignInFieldWidget(
               text: 'Password'.tr(context),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: context.colorTheme.neutral.shade2,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: BlocSelector<SignUpRegularFormCubit, SignUpRegularFormState, bool>(
-                  selector: (state) => state.obsecurePassword,
-                  builder: (_, obsecurePassword) => TextField(
-                    onChanged: (value) => context.read<SignUpRegularFormCubit>().setPassword(value),
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14.5),
-                      isDense: false,
-                      suffixIcon: GestureDetector(
-                        onTap: context.read<SignUpRegularFormCubit>().toggleObsecurePassword,
-                        child: Icon(
-                          obsecurePassword ? Icons.visibility : Icons.visibility_off,
-                          size: 24,
-                          color: context.colorTheme.neutral.shade6,
-                        ),
-                      ),
-                    ),
-                    style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade10),
-                    keyboardType: TextInputType.emailAddress,
-                    obscureText: obsecurePassword,
-                  ),
-                ),
+              child: PasswordInputField(
+                onChanged: context.read<SignUpRegularFormCubit>().setPassword,
+                onToggleObsecureText: context.read<SignUpRegularFormCubit>().toggleObsecurePassword,
+                obsecureText: context.read<SignUpRegularFormCubit>().state.obsecurePassword,
               ),
             ),
             const Gap(24),

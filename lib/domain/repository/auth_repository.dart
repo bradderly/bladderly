@@ -69,4 +69,14 @@ abstract class AuthRepository {
     required String userId,
     required String code,
   });
+
+  Future<void> sendVerificationCode({
+    required String email,
+  });
+
+  Future<void> resetPassword({
+    required String email,
+    required String password,
+    required String verificationCode,
+  });
 }

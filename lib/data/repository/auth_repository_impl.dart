@@ -22,7 +22,6 @@ import 'package:bladderly/domain/repository/auth_repository.dart';
 // Package imports:
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 @LazySingleton(as: AuthRepository)
@@ -33,14 +32,11 @@ class AuthRepositoryImpl implements AuthRepository {
     required ApiClient apiClient,
   })  : _deviceInfoModel = deviceInfoModel,
         _isarClient = isarClient,
-        _apiClient = apiClient,
-        _userSubject = BehaviorSubject();
+        _apiClient = apiClient;
 
   final DeviceInfoModel _deviceInfoModel;
   final IsarClient _isarClient;
   final ApiClient _apiClient;
-
-  final BehaviorSubject<User?> _userSubject;
 
   @override
   Future<User> signIn({
@@ -112,8 +108,12 @@ class AuthRepositoryImpl implements AuthRepository {
     required String disease,
   }) async {
     final user = switch (_isarClient.getUserOrNullByUserId(userId)) {
-      final UserEntity userEntity =>
-        UserMapper.fromUserEntity(userEntity).copyWith(email: email, name: userName, disease: disease),
+      final UserEntity userEntity => UserMapper.fromUserEntity(userEntity).copyWith(
+          email: email,
+          name: userName,
+          disease: disease,
+          signUpMethod: SignUpMethod.E,
+        ),
       _ => throw const NotFoundUserException(message: 'not found user'),
     };
 
@@ -121,7 +121,7 @@ class AuthRepositoryImpl implements AuthRepository {
       id: user.id,
       gender: user.gender.name,
       birthyear: '${user.yearOfBirth}',
-      social: SignUpMethod.E.name,
+      social: user.signUpMethod.name,
       email: user.email,
       pw: password,
       device: _deviceInfoModel.name,
@@ -265,18 +265,34 @@ class AuthRepositoryImpl implements AuthRepository {
 
   User _saveUserToLocal(User user) {
     _isarClient.saveUser(UserMapper.toUserEntity(user));
-    _userSubject.add(user);
 
     return user;
   }
 
   void _clearUserFromLocal() {
     _isarClient.clearAll();
-    _userSubject.add(null);
   }
 
   @override
   Future<void> signOut(String userId) {
     return _apiClient.logOut(request: {'id': userId});
+  }
+
+  @override
+  Future<void> sendVerificationCode({
+    required String email,
+  }) {
+    return _apiClient.forgotPassword(request: PostEmailRequest(email: email)).then((response) => response.body!);
+  }
+
+  @override
+  Future<void> resetPassword({
+    required String email,
+    required String password,
+    required String verificationCode,
+  }) {
+    return _apiClient
+        .confirmPassword(request: ConfirmPwRequest(email: email, newPw: password, verificationCode: verificationCode))
+        .then((response) => response.body!);
   }
 }

@@ -50,7 +50,7 @@ abstract class ApiClient extends ChopperService {
 
   @Post(path: '/confirm-pw')
   Future<Response<SimpleResponse>> confirmPassword({
-    @Body() required ConfirmPwRequest audioBytes,
+    @Body() required ConfirmPwRequest request,
   });
 
   @Post(path: '/delete-account')

@@ -15,7 +15,7 @@ class SignUpRegularFormCubit extends Cubit<SignUpRegularFormState> {
     emit(state.copyWith(password: password));
   }
 
-  void toggleObsecurePassword() {
-    emit(state.copyWith(obsecurePassword: !state.obsecurePassword));
+  void toggleObsecurePassword(bool obsecurePassword) {
+    emit(state.copyWith(obsecurePassword: obsecurePassword));
   }
 }
