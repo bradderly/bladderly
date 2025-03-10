@@ -1,52 +1,79 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:bladderly/presentation/common/cubit/passcode_cubit.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_auth/local_auth.dart';
 
-class PasscodeInputScreen extends StatefulWidget {
-  const PasscodeInputScreen({super.key});
+class PasscodeAuthModal extends StatefulWidget {
+  const PasscodeAuthModal({super.key});
 
   @override
-  State<PasscodeInputScreen> createState() => _PasscodeInputScreenState();
+  State<PasscodeAuthModal> createState() => _PasscodeAuthModalState();
 }
 
-class _PasscodeInputScreenState extends State<PasscodeInputScreen> {
+class _PasscodeAuthModalState extends State<PasscodeAuthModal> {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode(); // 키보드 자동 포커스 노드
-  bool isFirstAttempt = true;
-  bool isUncorrect = false;
   String firstInput = '';
-  String secondInput = '';
+  bool isUncorrect = false;
 
   @override
   void initState() {
     super.initState();
-    _focusNode.requestFocus(); // 키보드 자동 포커스
+    _requestFocusAndAuthenticate();
   }
 
-  void onPasscodeEntered(String passcode) {
-    if (passcode.length == 4) {
-      if (isFirstAttempt) {
-        firstInput = passcode;
-        _controller.clear();
-        setState(() {
-          isFirstAttempt = false;
-          isUncorrect = false;
-        });
+  Future<void> _requestFocusAndAuthenticate() async {
+    _focusNode.requestFocus(); // 키보드 자동 포커스
+    await _auth();
+  }
+
+  Future<void> _auth() async {
+    final auth = LocalAuthentication();
+    // 플랫폼이 Android가 아닌 경우에만 생체 인증을 시도
+    if (!kIsWeb && defaultTargetPlatform != TargetPlatform.android) {
+      final canCheckBiometrics = await auth.canCheckBiometrics;
+      final isDeviceSupported = await auth.isDeviceSupported();
+
+      if (canCheckBiometrics && isDeviceSupported) {
+        try {
+          final didAuthenticate = await auth.authenticate(
+            localizedReason: '얼굴 인식을 사용하여 로그인하세요.',
+            options: const AuthenticationOptions(biometricOnly: true),
+          );
+          if (didAuthenticate) {
+            // 생체 인증 성공 -> 화면 이동
+            Navigator.of(context).pop(); // 창 닫기
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print('인증 오류: $e');
+          }
+        }
       } else {
-        secondInput = passcode;
-        if (firstInput == secondInput) {
-          Navigator.pop(context, firstInput); // 성공 시 true 반환
-        } else {
-          _controller.clear();
-          setState(() {
-            firstInput = '';
-            secondInput = '';
-            isFirstAttempt = true;
-            isUncorrect = true;
-          });
+        if (kDebugMode) {
+          print('Face ID 사용 불가');
         }
       }
+    } else {
+      // Android일 때는 바로 비밀번호 입력
+    }
+  }
+
+  void onPasscodeEntered(String inputPasscode) {
+    final passcode = context.read<PasscodeCubit>().state.passcode;
+    if (passcode == inputPasscode) {
+      // 성공 시 화면이동
+      Navigator.of(context).pop(); // 창 닫기
+    } else {
+      _controller.clear();
+      setState(() {
+        isUncorrect = true;
+      });
     }
   }
 
@@ -93,14 +120,19 @@ class _PasscodeInputScreenState extends State<PasscodeInputScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
           child: Column(
             children: [
-              ModalTitle(context, 'Passcode'.tr(context)),
+              Text(
+                'Passcode'.tr(context),
+                style: context.textStyleTheme.b16SemiBold.copyWith(
+                  color: context.colorTheme.neutral.shade10,
+                ),
+              ),
               const SizedBox(height: 38),
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      isFirstAttempt ? 'Set your passcode below'.tr(context) : 'Confirm your passcode'.tr(context),
+                      'Set your passcode below'.tr(context),
                       style: context.textStyleTheme.b16Medium.copyWith(
                         color: context.colorTheme.neutral.shade6,
                       ),
