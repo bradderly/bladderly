@@ -6,9 +6,10 @@ class TextSizeUtil {
   static Size getSize({
     required String text,
     required TextStyle textStyle,
+    double maxWidth = double.infinity,
   }) {
     final textPainter = TextPainter(text: TextSpan(text: text, style: textStyle), textDirection: TextDirection.ltr)
-      ..layout();
+      ..layout(maxWidth: maxWidth);
 
     return textPainter.size;
   }

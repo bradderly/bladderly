@@ -1,6 +1,7 @@
 // Package imports:
 
 // Package imports:
+import 'package:bladderly/data/isar/schema/score_entity.dart';
 import 'package:injectable/injectable.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
@@ -23,6 +24,7 @@ abstract class IsarModule {
         HistoryEntitySchema,
         UserEntitySchema,
         AppleCredentialEntitySchema,
+        ScoreEntitySchema,
       ],
       directory: applicationDocumentsDirectory.path,
     );

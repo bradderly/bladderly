@@ -1448,7 +1448,7 @@
                   "score_value": {
                     "type": "array",
                     "items": {
-                      "type": "number",
+                      "type": "integer",
                       "description": "score selection value"
                     }
                   }
@@ -2204,7 +2204,7 @@
           "score_value": {
             "type": "array",
             "items": {
-              "type": "number",
+              "type": "integer",
               "description": "score selection value"
             }
           }

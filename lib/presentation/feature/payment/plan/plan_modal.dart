@@ -69,7 +69,6 @@ class PlanModal extends StatelessWidget {
                           onTap: () => ModalHelper.showModal(
                             context: context,
                             modalBuilder: (_) => const PlanCancelBuilder(),
-                            duration: 5,
                           ),
                         ),
                         TextArrow(
@@ -77,7 +76,6 @@ class PlanModal extends StatelessWidget {
                           onTap: () => ModalHelper.showModal(
                             context: context,
                             modalBuilder: (_) => const PromoCodeModal(),
-                            duration: 5,
                           ),
                         ),
                         const Gap(130),

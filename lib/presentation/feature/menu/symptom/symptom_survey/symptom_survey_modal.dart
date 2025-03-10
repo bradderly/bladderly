@@ -1,254 +1,275 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Project imports:
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/data/symptom_dataset.dart';
+import 'package:bladderly/presentation/common/util/text_size_util.dart';
+import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/model/symptom_survey_model.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/symptom_result/symptom_result_modal.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/symptom_survey/bloc/symptom_survey_bloc.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/symptom_survey/cubit/symptom_survey_form_cubit.dart';
+import 'package:bladderly/presentation/feature/menu/symptom/symptom_survey/widget/symptom_survey_radio_button.dart';
+import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 class SymptomSurveyModal extends StatefulWidget {
-  // ignore: non_constant_identifier_names
-  const SymptomSurveyModal({super.key, required this.symptom_type});
-  // ignore: non_constant_identifier_names
-  final String symptom_type;
+  const SymptomSurveyModal({super.key, required this.symptomSurveyModel});
+
+  final SymptomSurveyModel symptomSurveyModel;
 
   @override
   State<SymptomSurveyModal> createState() => _SymptomSurveyModalState();
 }
 
 class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
-  int currentIndex = 0;
-  int? selectedOption;
-
-  late List<Map<String, dynamic>> questions;
-
-  late List<int> asnwers = [];
-  @override
-  void initState() {
-    super.initState();
-    if (widget.symptom_type == 'IPSS') {
-      questions = IPSS_Q;
-    } else if (widget.symptom_type == 'OABSS') {
-      questions = OABSS_Q;
+  void onPreviousQuestion() {
+    if (context.read<SymptomSurveyFormCubit>().state.index < 1) {
+      return context.pop();
     }
+
+    context.read<SymptomSurveyFormCubit>().previousQuestion();
   }
 
-  void onNext() {
-    if (currentIndex < questions.length - 1) {
-      setState(() {
-        asnwers.add(selectedOption!);
-        currentIndex++;
-        selectedOption = null;
-      });
-    } else if (currentIndex == questions.length - 1) {
-      asnwers.add(selectedOption!);
-
-      // ignore: inference_failure_on_function_invocation
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        builder: (context) {
-          return SymptomResultModal(
-            symptom_type: widget.symptom_type,
-            score: 13,
-            status: 'Moderate',
-            description:
-                '"Your score indicates moderate prostate symptoms that do not significantly impact your quality of life. If discomfort occurs, medication or procedures may be required."',
-            dateTime: 'Tuesday, Nov 15\n9:00 AM',
-          );
-        },
+  void onNextQuestion() {
+    if (context.read<SymptomSurveyFormCubit>().state.isLastQuestion) {
+      final event = SymptomSurveySubmit(
+        userId: context.read<UserBloc>().state.userModelOrThrowException.id,
+        answers: context.read<SymptomSurveyFormCubit>().state.answers.map((answer) => answer!.sequence).toList(),
+        scoreType: widget.symptomSurveyModel.scoreType,
       );
+
+      context.read<SymptomSurveyBloc>().add(event);
+      return;
     }
+
+    context.read<SymptomSurveyFormCubit>().nextQuestion();
   }
 
-  void onPrevious() {
-    if (currentIndex > 0) {
-      setState(() {
-        currentIndex--;
+  Future<void> onSubmitSuccess(BuildContext context, SymptomSurveySubmitSuccess state) async {
+    context.pop();
 
-        selectedOption = asnwers.last;
-        asnwers.removeLast();
-      });
-    }
+    await ModalHelper.showModal(
+      context: context,
+      modalBuilder: (_) => SymptomResultModal(score: state.score),
+    );
+
+    if (context.mounted) context.pop();
   }
 
   @override
   Widget build(BuildContext context) {
-    final currentQuestion = questions[currentIndex];
-
-    return DraggableScrollableSheet(
-      initialChildSize: 0.95,
-      maxChildSize: 0.95,
-      minChildSize: 0.95,
-      builder: (_, controller) {
-        return Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
+    return BlocListener<SymptomSurveyBloc, SymptomSurveyState>(
+      listener: (context, state) => switch (state) {
+        SymptomSurveySubmitInProgress() => ProgressIndicatorModal.show(context),
+        SymptomSurveySubmitSuccess() => onSubmitSuccess(context, state),
+        SymptomSurveySubmitFailure() => context.pop(),
+        _ => null,
+      },
+      child: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) {
+          if (didPop) return;
+          onPreviousQuestion();
+        },
+        child: DraggableScrollableSheet(
+          initialChildSize: 0.95,
+          maxChildSize: 0.95,
+          minChildSize: 0.95,
+          builder: (_, controller) => Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
             ),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  controller: controller,
-                  children: [
-                    ModalTitle(context, widget.symptom_type.tr(context)),
-                    const SizedBox(height: 39.5),
-                    // Progress Bar
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: LinearProgressIndicator(
-                          value: (currentIndex + 1) / questions.length,
-                          backgroundColor: context.colorTheme.neutral.shade3,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            context.colorTheme.vermilion.primary.shade50,
-                          ),
-                          minHeight: 8,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 40),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Text(
-                        currentQuestion['title'].toString().tr(context),
-                        style: context.textStyleTheme.b20Bold.copyWith(
-                          color: context.colorTheme.neutral.shade10,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Text(
-                        currentQuestion['content'].toString().tr(context),
-                        style: context.textStyleTheme.b16Medium.copyWith(
-                          color: context.colorTheme.neutral.shade10,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 40),
-                    // Options
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
+            child: Column(
+              children: [
+                ModalTitle(context, widget.symptomSurveyModel.scoreType.name.tr(context)),
+                const SizedBox(height: 39.5),
+                Expanded(
+                  child: BlocBuilder<SymptomSurveyFormCubit, SymptomSurveyFormState>(
+                    builder: (context, state) {
+                      final question = widget.symptomSurveyModel.questions[state.index];
 
-                    Expanded(
-                      child: ListView.builder(
-                        shrinkWrap: true, // 크기를 제한
-                        itemCount: (currentQuestion['answer'] as List).length, // 명시적 타입 캐스팅
-                        itemBuilder: (context, index) {
-                          final answers = currentQuestion['answer'] as List<Map<String, dynamic>>; // 타입 지정
-                          final option = answers[index]['content'] as String; // 'content' 접근
-                          return ListTile(
-                            title: Text(
-                              option.tr(context),
-                              style: context.textStyleTheme.b16Medium.copyWith(
-                                color: context.colorTheme.neutral.shade6,
-                              ),
-                            ),
-                            leading: Radio<int>(
-                              value: index,
-                              groupValue: selectedOption,
-                              fillColor: WidgetStateProperty.resolveWith<Color>((states) {
-                                if (states.contains(WidgetState.selected)) {
-                                  return context.colorTheme.vermilion.primary.shade50; // 선택된 상태일 때 색상
-                                }
-                                return context.colorTheme.neutral.shade6; // 기본 색상
-                              }),
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedOption = value;
-                                });
-                              },
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 2,
-                            ), // 기본 패딩 줄이기
-                            dense: true, // ListTile의 높이를 더 줄이기
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              // Navigation Buttons
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: currentIndex == 0 ? null : onPrevious,
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 12,
-                            horizontal: 16,
+                      return ListView(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        children: [
+                          _buildProgressBar(
+                            context,
+                            current: state.index + 1,
+                            max: widget.symptomSurveyModel.questionCount,
                           ),
-                          decoration: BoxDecoration(
-                            color: context.colorTheme.neutral.shade6,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                '<- ${'Previous'.tr(context)}',
-                                style: context.textStyleTheme.b16SemiBold.copyWith(
-                                  color: context.colorTheme.neutral.shade0,
+                          const Gap(40),
+                          _buildQuestionTitle(question.title),
+                          const Gap(24),
+                          _buildQuestionDescription(question.content),
+                          const Gap(40),
+                          ...List.generate(
+                            question.answers.length * 2 - 1,
+                            (index) {
+                              if (index.isOdd) return const Gap(24);
+
+                              final answer = question.answers[index ~/ 2];
+                              final isSelected = state.answers.contains(answer);
+
+                              return GestureDetector(
+                                onTap: () => context.read<SymptomSurveyFormCubit>().setAnswer(answer),
+                                behavior: HitTestBehavior.translucent,
+                                child: SymptomSurveyAnswerWidget(
+                                  isSelected: isSelected,
+                                  answer: answer,
                                 ),
+                              );
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: onPreviousQuestion,
+                          child: Container(
+                            alignment: Alignment.center,
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            decoration: BoxDecoration(
+                              color: context.colorTheme.neutral.shade6,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              '<- ${'Previous'.tr(context)}',
+                              style: context.textStyleTheme.b16SemiBold.copyWith(
+                                color: context.colorTheme.neutral.shade0,
                               ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: selectedOption == null ? null : onNext,
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 12,
-                            horizontal: 16,
-                          ),
-                          decoration: BoxDecoration(
-                            color: (selectedOption != null)
-                                ? context.colorTheme.vermilion.primary.shade50
-                                : context.colorTheme.neutral.shade6,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
+                      const Gap(16),
+                      BlocSelector<SymptomSurveyFormCubit, SymptomSurveyFormState, bool>(
+                        selector: (state) => state.hasAnswer,
+                        builder: (context, hasAnswer) => Expanded(
+                          child: GestureDetector(
+                            onTap: hasAnswer ? onNextQuestion : null,
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              decoration: BoxDecoration(
+                                color: hasAnswer
+                                    ? context.colorTheme.vermilion.primary.shade50
+                                    : context.colorTheme.neutral.shade6,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(
                                 '${'Next'.tr(context)} ->',
                                 style: context.textStyleTheme.b16SemiBold.copyWith(
                                   color: context.colorTheme.neutral.shade0,
                                 ),
                               ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildQuestionTitle(String title) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final textStyle = context.textStyleTheme.b20Bold.copyWith(
+          color: context.colorTheme.neutral.shade10,
+        );
+
+        final height = widget.symptomSurveyModel.questions.titles
+            .map(
+              (title) => TextSizeUtil.getSize(
+                text: title.tr(context).applyWordBreak(),
+                textStyle: textStyle,
+                maxWidth: constraints.maxWidth,
               ),
-            ],
+            )
+            .reduce((value, element) => value.width > element.width ? value : element)
+            .height;
+
+        return SizedBox(
+          height: height,
+          child: Text(
+            title.tr(context),
+            style: textStyle,
           ),
         );
       },
+    );
+  }
+
+  Widget _buildQuestionDescription(String content) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final textStyle = context.textStyleTheme.b16Medium.copyWith(
+          color: context.colorTheme.neutral.shade10,
+        );
+
+        final height = widget.symptomSurveyModel.questions.contents
+            .map(
+              (title) => TextSizeUtil.getSize(
+                text: title.tr(context).applyWordBreak(),
+                textStyle: textStyle,
+                maxWidth: constraints.maxWidth,
+              ),
+            )
+            .reduce((value, element) => value.width > element.width ? value : element)
+            .height;
+
+        return SizedBox(
+          height: height,
+          child: Text(
+            content.tr(context),
+            style: textStyle,
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildProgressBar(
+    BuildContext context, {
+    required int current,
+    required int max,
+  }) {
+    return Container(
+      height: 8,
+      alignment: Alignment.centerLeft,
+      decoration: BoxDecoration(
+        color: context.colorTheme.neutral.shade3,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: LayoutBuilder(
+        builder: (context, constraints) => Container(
+          width: constraints.maxWidth / max * current,
+          decoration: BoxDecoration(
+            color: context.colorTheme.vermilion.primary.shade50,
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -3,6 +3,7 @@
 // Project imports:
 import 'package:bladderly/data/isar/schema/apple_credential_entity.dart';
 import 'package:bladderly/data/isar/schema/history_entity.dart';
+import 'package:bladderly/data/isar/schema/score_entity.dart';
 import 'package:bladderly/data/isar/schema/user_entity.dart';
 import 'package:bladderly/domain/model/history_status.dart';
 // Flutter imports:
@@ -42,6 +43,12 @@ abstract class IsarClient {
   Future<List<HistoryEntity>> getProcessingHistories();
 
   Stream<UserEntity?> get userStream;
+
+  Future<List<ScoreEntity>> saveScores(List<ScoreEntity> scoreEntities);
+
+  Future<ScoreEntity> saveScore(ScoreEntity scoreEntity);
+
+  Stream<List<ScoreEntity>> getScoresStream();
 }
 
 class _IsarClientImpl implements IsarClient {
@@ -126,6 +133,8 @@ class _IsarClientImpl implements IsarClient {
 
   @override
   Future<List<HistoryEntity>> saveHistories(List<HistoryEntity> historyEntities) {
+    if (historyEntities.isEmpty) return Future.value([]);
+
     return _isar.writeTxn(() async {
       final ids = await _isar.historyEntitys.putAllByRecordTime(historyEntities);
       return _isar.historyEntitys.getAll(ids).then((entities) => entities.whereType<HistoryEntity>().toList());
@@ -145,4 +154,29 @@ class _IsarClientImpl implements IsarClient {
   @override
   Stream<UserEntity?> get userStream =>
       _isar.userEntitys.where().watch(fireImmediately: true).map((entities) => entities.firstOrNull);
+
+  @override
+  Future<List<ScoreEntity>> saveScores(List<ScoreEntity> scoreEntities) {
+    if (scoreEntities.isEmpty) return Future.value([]);
+
+    return _isar.writeTxn(() async {
+      final ids = await _isar.scoreEntitys.putAll(scoreEntities);
+
+      return _isar.scoreEntitys.getAll(ids).then((entities) => entities.whereType<ScoreEntity>().toList());
+    });
+  }
+
+  @override
+  Future<ScoreEntity> saveScore(ScoreEntity scoreEntity) {
+    return _isar.writeTxn(() async {
+      final id = await _isar.scoreEntitys.put(scoreEntity);
+
+      return _isar.scoreEntitys.get(id).then((value) => value!);
+    });
+  }
+
+  @override
+  Stream<List<ScoreEntity>> getScoresStream() {
+    return _isar.scoreEntitys.where().sortByDateDesc().watch(fireImmediately: true);
+  }
 }
