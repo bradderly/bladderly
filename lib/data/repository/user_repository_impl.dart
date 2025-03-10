@@ -7,7 +7,7 @@ import 'package:bladderly/domain/model/user.dart';
 import 'package:bladderly/domain/repository/user_repository.dart';
 import 'package:injectable/injectable.dart';
 
-@LazySingleton(as: User)
+@LazySingleton(as: UserRepository)
 class UserRepositoryImpl implements UserRepository {
   const UserRepositoryImpl({
     required ApiClient apiClient,
