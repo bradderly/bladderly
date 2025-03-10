@@ -1,11 +1,12 @@
 // Flutter imports:
+import 'package:bladderly/presentation/feature/menu/symptom/symptom_survey/symptom_survey_builder.dart';
+import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/data/symptom_dataset.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/symptom_survey/symptom_survey_modal.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title_back.dart';
 
 class SymptomIntroduceModal extends StatelessWidget {
@@ -80,7 +81,7 @@ class SymptomIntroduceModal extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
-                                symptomData['time'].toString().tr(context),
+                                '${symptomData['time']} min'.tr(context),
                                 style: context.textStyleTheme.b14SemiBold.copyWith(
                                   color: context.colorTheme.neutral.shade0,
                                 ),
@@ -99,7 +100,7 @@ class SymptomIntroduceModal extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
-                                symptomData['qustion_count'].toString().tr(context),
+                                '${symptomData['qustion_count']} questions'.tr(context),
                                 style: context.textStyleTheme.b14SemiBold.copyWith(
                                   color: context.colorTheme.neutral.shade0,
                                 ),
@@ -129,14 +130,10 @@ class SymptomIntroduceModal extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  // ignore: inference_failure_on_function_invocation
-                  showModalBottomSheet(
+                  ModalHelper.showModal(
                     context: context,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    builder: (context) {
-                      return SymptomSurveyModal(symptom_type: symptom_type);
-                    },
+                    modalBuilder: (_) => SymptomSurveyBuilder(symptomType: symptom_type),
+                    duration: 5,
                   );
                 },
                 child: Container(

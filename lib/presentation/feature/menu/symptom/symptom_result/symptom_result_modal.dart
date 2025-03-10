@@ -1,7 +1,9 @@
 // ignore: library_prefixes
 
+// ignore_for_file: deprecated_member_use
+
 // Dart imports:
-import 'dart:math' as math;
+import 'dart:math';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -43,7 +45,7 @@ class SymptomResultModal extends StatelessWidget {
               topRight: Radius.circular(16),
             ),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          padding: const EdgeInsets.only(top: 40, bottom: 28),
           child: Column(
             children: [
               Expanded(
@@ -65,87 +67,136 @@ class SymptomResultModal extends StatelessWidget {
                             ),
                             textAlign: TextAlign.center,
                           ),
-                          const SizedBox(height: 40),
-                          const GaugeWidget(
-                            score: 13,
-                            level: 'Mild2',
-                            levelColor: Colors.green,
-                            angle: 3.14 * (13 / 35),
-                          ),
-                          const SizedBox(height: 16),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    'Mild',
-                                    style: context.textStyleTheme.b14SemiBold.copyWith(
-                                      color: context.colorTheme.neutral.shade7,
-                                    ),
-                                  ),
-                                  Text(
-                                    '1-7',
-                                    style: context.textStyleTheme.b14SemiBold.copyWith(
-                                      color: context.colorTheme.neutral.shade7,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    'Moderate',
-                                    style: context.textStyleTheme.b14SemiBold.copyWith(
-                                      color: context.colorTheme.neutral.shade7,
-                                    ),
-                                  ),
-                                  Text(
-                                    '8-19',
-                                    style: context.textStyleTheme.b14SemiBold.copyWith(
-                                      color: context.colorTheme.neutral.shade7,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    'Severe',
-                                    style: context.textStyleTheme.b14SemiBold.copyWith(
-                                      color: context.colorTheme.neutral.shade7,
-                                    ),
-                                  ),
-                                  Text(
-                                    '20-35',
-                                    style: context.textStyleTheme.b14SemiBold.copyWith(
-                                      color: context.colorTheme.neutral.shade7,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                          const SizedBox(height: 4),
+                          Text(
+                            '9:00 AM',
+                            style: context.textStyleTheme.b14SemiBold.copyWith(
+                              color: context.colorTheme.neutral.shade6,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 40),
                           Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 8.5),
-                            height: 1,
-                            color: context.colorTheme.neutral.shade5,
+                            width: 342,
+                            height: 222,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color(0xFF5D3F33).withOpacity(0.5),
+                                  offset: const Offset(0, 2),
+                                  blurRadius: 5,
+                                ),
+                                BoxShadow(
+                                  color: const Color(0xFF5D3F33).withOpacity(0.5),
+                                  offset: const Offset(0, 4),
+                                  blurRadius: 8,
+                                  spreadRadius: 3,
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: const GaugeWidget(score: 13),
                           ),
-                          const SizedBox(height: 40),
-                          Text(
-                            description,
-                            textAlign: TextAlign.center,
-                            style: context.textStyleTheme.b16Medium.copyWith(
-                              color: context.colorTheme.neutral.shade10,
+                          const SizedBox(height: 32),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  width: 1,
+                                  height: 26,
+                                  color: context.colorTheme.neutral.shade4,
+                                ),
+                                Column(
+                                  children: [
+                                    Text(
+                                      'Mild'.tr(context),
+                                      style: context.textStyleTheme.b14SemiBold.copyWith(
+                                        color: context.colorTheme.neutral.shade7,
+                                      ),
+                                    ),
+                                    Text(
+                                      '1-7',
+                                      style: context.textStyleTheme.b14SemiBold.copyWith(
+                                        color: context.colorTheme.neutral.shade7,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  width: 1,
+                                  height: 26,
+                                  color: context.colorTheme.neutral.shade4,
+                                ),
+                                Column(
+                                  children: [
+                                    Text(
+                                      'Moderate'.tr(context),
+                                      style: context.textStyleTheme.b14SemiBold.copyWith(
+                                        color: context.colorTheme.neutral.shade7,
+                                      ),
+                                    ),
+                                    Text(
+                                      '8-19',
+                                      style: context.textStyleTheme.b14SemiBold.copyWith(
+                                        color: context.colorTheme.neutral.shade7,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  width: 1,
+                                  height: 26,
+                                  color: context.colorTheme.neutral.shade4,
+                                ),
+                                Column(
+                                  children: [
+                                    Text(
+                                      'Severe'.tr(context),
+                                      style: context.textStyleTheme.b14SemiBold.copyWith(
+                                        color: context.colorTheme.neutral.shade7,
+                                      ),
+                                    ),
+                                    Text(
+                                      '20-35',
+                                      style: context.textStyleTheme.b14SemiBold.copyWith(
+                                        color: context.colorTheme.neutral.shade7,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  width: 1,
+                                  height: 26,
+                                  color: context.colorTheme.neutral.shade4,
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(height: 40),
-                          Text(
-                            'This is not a diagnosis. Consult with your doctor or medical professional if you have concerns about your condition.',
-                            textAlign: TextAlign.center,
-                            style: context.textStyleTheme.b14Medium.copyWith(
-                              color: context.colorTheme.neutral.shade6,
+                          const SizedBox(height: 32),
+                          Container(
+                            height: 94,
+                            padding: const EdgeInsets.only(left: 24.5, right: 23.5),
+                            child: Text(
+                              description,
+                              style: context.textStyleTheme.b16Medium.copyWith(
+                                color: context.colorTheme.neutral.shade10,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          Container(
+                            height: 69,
+                            padding: const EdgeInsets.only(left: 24.5, right: 23.5),
+                            child: Text(
+                              'This is not a diagnosis. Consult with your doctor or medical professional if you have concerns about your condition.',
+                              textAlign: TextAlign.center,
+                              style: context.textStyleTheme.b14Medium.copyWith(
+                                color: context.colorTheme.neutral.shade6,
+                              ),
                             ),
                           ),
                         ],
@@ -181,48 +232,59 @@ class SymptomResultModal extends StatelessWidget {
 }
 
 class GaugeWidget extends StatelessWidget {
-  const GaugeWidget({
-    super.key,
-    required this.score,
-    required this.level,
-    required this.levelColor,
-    required this.angle,
-  });
+  const GaugeWidget({super.key, required this.score});
   final int score;
-  final String level;
-  final Color levelColor;
-  final double angle;
+  final int maxScore = 35;
+
+  Map<String, dynamic> getStatus() {
+    if (score == 0) {
+      return {'text': 'No Symptom', 'face': 'img_symptom_face_1.png', 'color': const Color(0xFF94A22F)};
+    } else if (score <= 7) {
+      return {'text': 'Mild', 'face': 'img_symptom_face_2.png', 'color': const Color(0xFF94A22F)};
+    } else if (score <= 20) {
+      return {'text': 'Modarate', 'face': 'img_symptom_face_3.png', 'color': const Color(0xFFFF8D38)};
+    } else {
+      return {'text': 'Severe', 'face': 'img_symptom_face_4.png', 'color': const Color(0xFFFF6442)};
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
+    final percentage = score / maxScore;
+    final status = getStatus();
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // 3가지 색상의 배경 원 테두리
-        CustomPaint(
-          size: const Size(200, 100),
-          painter: BackgroundPainter(),
-        ),
-        // 현재 점수에 따른 진행 상태 (둥근 위치 표시 추가)
-        CustomPaint(
-          size: const Size(200, 100),
-          painter: GaugePainter(angle: angle, levelColor: levelColor),
-        ),
-        // 점수와 레벨 텍스트
-        Padding(
-          padding: const EdgeInsets.only(top: 39),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                '$score',
-                style: context.textStyleTheme.b28Bold.copyWith(color: const Color(0xFFFFC909)),
+        Stack(
+          children: [
+            CustomPaint(
+              size: const Size(220, 110),
+              painter: GaugePainter(percentage),
+            ),
+            Positioned(
+              bottom: 0,
+              left: (220 - 50) / 2, // Center the image horizontally
+              child: Image.asset(
+                'assets/img/${status['face']}',
+                width: 50,
+                height: 50,
               ),
-              Text(
-                level,
-                style: context.textStyleTheme.b28Bold.copyWith(color: const Color(0xFFFFC909)),
-              ),
-            ],
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Text(
+          status['text'].toString().tr(context),
+          style: context.textStyleTheme.b20Bold.copyWith(
+            color: status['color'] as Color,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          'Score:'.tr(context) + score.toString(),
+          style: context.textStyleTheme.b14Medium.copyWith(
+            color: context.colorTheme.neutral.shade7,
           ),
         ),
       ],
@@ -230,90 +292,43 @@ class GaugeWidget extends StatelessWidget {
   }
 }
 
-// 기본 배경 원 테두리 그리기
-class BackgroundPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final greenPaint = Paint()
-      ..color = const Color(0xFF00BEA2)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 10
-      ..strokeCap = StrokeCap.round;
-
-    final amberPaint = Paint()
-      ..color = const Color(0xFFFFC909)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 10
-      ..strokeCap = StrokeCap.round;
-
-    final redPaint = Paint()
-      ..color = const Color(0xFFFF6442)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 10
-      ..strokeCap = StrokeCap.round;
-
-    final arcRect = Rect.fromLTWH(0, 0, size.width, size.height * 2);
-
-    // 배경 게이지 간격 추가
-    canvas
-      ..drawArc(
-        arcRect,
-        3.14,
-        3.14 * (7 / 35) - 0.15,
-        false,
-        greenPaint,
-      )
-      ..drawArc(
-        arcRect,
-        3.14 + 3.14 * (7 / 35),
-        3.14 * (12 / 35) - 0.15,
-        false,
-        amberPaint,
-      )
-      ..drawArc(
-        arcRect,
-        3.14 + 3.14 * (19 / 35),
-        3.14 * (16 / 35) - 0.1,
-        false,
-        redPaint,
-      );
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
-  }
-}
-
-// 진행 상태를 나타내는 Paint
 class GaugePainter extends CustomPainter {
-  GaugePainter({required this.angle, required this.levelColor});
-  final double angle;
-  final Color levelColor;
+  GaugePainter(this.percentage);
+  final double percentage;
 
   @override
   void paint(Canvas canvas, Size size) {
-    final progressPaint = Paint()
-      ..color = levelColor
+    final backgroundPaint = Paint()
+      ..shader = LinearGradient(
+        colors: [
+          const Color(0xFF94A22F).withOpacity(0.3),
+          const Color(0xFFD97A3B).withOpacity(0.3),
+          const Color(0xFFFF6442).withOpacity(0.3),
+        ],
+        stops: const [0.0, 0.2, 1.0],
+      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height))
+      ..strokeWidth = 12
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 5
       ..strokeCap = StrokeCap.round;
 
-    final fillPaint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.fill;
+    final progressPaint = Paint()
+      ..shader = const SweepGradient(
+        colors: [Color(0xFF94A22F), Color(0xFFD97A3B), Color(0xFFFF6442)],
+        stops: [0.0, 0.2, 1.0],
+        startAngle: pi,
+      ).createShader(Rect.fromCircle(center: Offset(size.width / 2, size.height), radius: size.width / 2))
+      ..strokeWidth = 12
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
 
-    // 현재 점수 위치를 둥근 원으로 표시
-    final markerX = size.width / 2 + (size.width / 2) * math.cos(3.14 + angle);
-    final markerY = size.height + (size.width / 2) * math.sin(3.14 + angle);
+    final center = Offset(size.width / 2, size.height);
+    final radius = size.width / 2;
+    const startAngle = pi;
+    final sweepAngle = pi * percentage;
 
     canvas
-      ..drawCircle(Offset(markerX, markerY), 10, fillPaint)
-      ..drawCircle(
-        Offset(markerX, markerY),
-        10,
-        progressPaint..style = PaintingStyle.stroke,
-      );
+      ..drawArc(Rect.fromCircle(center: center, radius: radius), startAngle, pi, false, backgroundPaint)
+      ..drawArc(Rect.fromCircle(center: center, radius: radius), startAngle, sweepAngle, false, progressPaint);
   }
 
   @override

@@ -19,7 +19,6 @@ class SaveScoreUsecase {
   }) async {
     try {
       await _scoreRepository.saveScores(scores);
-      print('SaveScoreUsecase call2');
       return const Right(true);
     } catch (e) {
       return Left(e is Exception ? e : Exception(e.toString()));

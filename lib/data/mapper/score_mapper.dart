@@ -13,7 +13,8 @@ class ScoreMapper {
     try {
       const status = ScoreStatus.done;
       return Score(
-        date: DateTime.parse(score.scoreDate!.split('-')[0]),
+        date: DateTime.parse(score.scoreDate!.replaceFirst('-', 'T')),
+        // date: DateTime.parse(score.scoreDate!.split('-')[0]),
         type: ScoreType.values.firstWhere((e) => e.toString() == 'ScoreType.${score.scoreName}'),
         totalScore: score.totalScore ?? 0,
         values: score.scoreValue?.map((e) => e as int).toList() ?? [],
@@ -30,7 +31,7 @@ class ScoreMapper {
   static ScoreEntity toScoreEntity(Score score) {
     return ScoreEntity()
       ..date = score.date.toIso8601String()
-      ..name = score.type.name
+      ..name = score.type.toString().split('.').last
       ..totalScore = score.totalScore
       ..scorevalue = score.values
       ..status = score.status;
