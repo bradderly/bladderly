@@ -12,7 +12,7 @@ class SymptomHistoryFormCubit extends Cubit<SymptomHistoryFormState> {
   SymptomHistoryFormCubit({
     required GetScoresStreamUsecase getScoresStreamUsecase,
   })  : _getScoresStreamUsecase = getScoresStreamUsecase,
-        super(const SymptomHistoryFormState());
+        super(const SymptomHistoryFormState(Scores.empty()));
 
   final GetScoresStreamUsecase _getScoresStreamUsecase;
 
@@ -42,9 +42,7 @@ class SymptomHistoryFormCubit extends Cubit<SymptomHistoryFormState> {
     if (isClosed) return;
 
     emit(
-      SymptomHistoryFormState(
-        scores: scores,
-      ),
+      SymptomHistoryFormState(scores),
     );
   }
 }

@@ -1,6 +1,7 @@
 // Dart imports:
 // Project imports:
 import 'package:bladderly/data/api/client/api_client.dart';
+import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 import 'package:bladderly/data/isar/isar_client.dart';
 import 'package:bladderly/data/mapper/score_mapper.dart';
 import 'package:bladderly/domain/model/score.dart';
@@ -28,9 +29,16 @@ class ScoreRepositoryImpl implements ScoreRepository {
   }
 
   @override
-  Future<void> uploadScore(Score score) {
-    // TODO: implement uploadScorse
-    throw UnimplementedError();
+  Future<void> uploadScoreResult(Score score, String userId) {
+    return _apiClient.saveScore(
+      request: SaveSurveyRequest(
+        userId: userId,
+        scoreName: score.type.name,
+        scoreDate:
+            '${score.date.year}${score.date.month.toString().padLeft(2, '0')}${score.date.day.toString().padLeft(2, '0')}-${score.date.hour.toString().padLeft(2, '0')}${score.date.minute.toString().padLeft(2, '0')}${score.date.second.toString().padLeft(2, '0')}',
+        scoreValue: score.values.map((e) => e.toDouble()).toList(),
+      ),
+    );
   }
 
   @override
@@ -42,12 +50,6 @@ class ScoreRepositoryImpl implements ScoreRepository {
     return Scores(
       list: scores.map(ScoreMapper.fromGetAllResultResponse$Scores$Item).whereType<Score>().toList(),
     );
-  }
-
-  @override
-  Score saveScore(Scores<Score> scores) {
-    // TODO: implement saveScore
-    throw UnimplementedError();
   }
 
   @override
