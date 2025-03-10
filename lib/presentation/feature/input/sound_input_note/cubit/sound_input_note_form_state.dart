@@ -15,7 +15,14 @@ class SoundInputNoteFormState extends Equatable {
   final LeakageVolume? leakageVolume;
   final String memo;
 
-  bool get isValid => recordUrgency != null && isNocutria != null && isLeakage != null;
+  bool get isValid => recordUrgency != null && isNocutria != null && isLeakage != null && _isLeakageVolumeValid;
+
+  bool get _isLeakageVolumeValid {
+    if (isLeakage == false) return true;
+    if (isLeakage == true && leakageVolume != null) return true;
+
+    return false;
+  }
 
   SoundInputNoteFormState copyWith({
     int? recordUrgency,

@@ -3,7 +3,7 @@
   "info": {
     "title": "Bladderly for Flutter",
     "contact": {},
-    "version": "0.0.1"
+    "version": "0.0.3"
   },
   "servers": [
     {
@@ -204,6 +204,10 @@
                     "result": {
                       "type": "string",
                       "description": "return value"
+                    },
+                    "error_type": {
+                      "type": "string",
+                      "description": "error type when result is '0'"
                     }
                   }
                 }
@@ -872,6 +876,10 @@
                     "result": {
                       "type": "string",
                       "description": "return value"
+                    },
+                    "error_type": {
+                      "type": "string",
+                      "description": "error type when result is '0'"
                     }
                   }
                 }
@@ -1236,7 +1244,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": ["user_id", "device"],
+                "required": ["user_id", "device", "product_id"],
                 "type": "object",
                 "properties": {
                   "user_id": {
@@ -1245,11 +1253,19 @@
                   },
                   "device": {
                     "type": "string",
-                    "description": "device info (ex) android or iphone)"
+                    "description": "os (android or ios)"
+                  },
+                  "product_id": {
+                    "type": "string",
+                    "description": "purchased product id"
+                  },
+                  "purchase_token": {
+                    "type": "string",
+                    "description": "android purchased token(only android)"
                   },
                   "receipt": {
                     "type": "string",
-                    "description": "iOS payment receipt for verification"
+                    "description": "iOS payment receipt for verification (only ios)"
                   }
                 }
               }
@@ -1468,6 +1484,10 @@
                     "message": {
                       "type": "string",
                       "description": "success or fail"
+                    },
+                    "total_score": {
+                      "type": "integer",
+                      "description": "total score"
                     }
                   }
                 }
@@ -1712,6 +1732,10 @@
           "result": {
             "type": "string",
             "description": "return value"
+          },
+          "error_type": {
+            "type": "string",
+            "description": "error type when result is '0'"
           }
         }
       },
@@ -1991,6 +2015,19 @@
           }
         }
       },
+      "SaveSurveyResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "success or fail"
+          },
+          "total_score": {
+            "type": "integer",
+            "description": "total score"
+          }
+        }
+      },
       "LoginRequest": {
         "required": ["email", "pw"],
         "type": "object",
@@ -2147,7 +2184,7 @@
         }
       },
       "PaymentCheckRequest": {
-        "required": ["user_id", "device"],
+        "required": ["user_id", "device", "product_id"],
         "type": "object",
         "properties": {
           "user_id": {
@@ -2156,11 +2193,19 @@
           },
           "device": {
             "type": "string",
-            "description": "device info (ex) android or iphone)"
+            "description": "os (android or ios)"
+          },
+          "product_id": {
+            "type": "string",
+            "description": "purchased product id"
+          },
+          "purchase_token": {
+            "type": "string",
+            "description": "android purchased token(only android)"
           },
           "receipt": {
             "type": "string",
-            "description": "iOS payment receipt for verification"
+            "description": "iOS payment receipt for verification (only ios)"
           }
         }
       },

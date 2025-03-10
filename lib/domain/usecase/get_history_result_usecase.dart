@@ -1,5 +1,6 @@
 // Package imports:
 // Project imports:
+import 'package:bladderly/domain/exception/get_history_result_failure_exception.dart';
 import 'package:bladderly/domain/mixin/history_result_usecase_mixin.dart';
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/history_status.dart';
@@ -18,15 +19,21 @@ class GetHistoryResultUsecase with HistoryResultUsecaseMixin {
     required String userId,
     required int historyId,
   }) async {
+    final history = _historyRepository.getHistoryById(historyId);
+
+    if (history is! VoidingHistory) return const Right(null);
+
+    if (history.isManual || history.status != HistoryStatus.processing) return const Right(null);
+
     try {
-      final history = _historyRepository.getHistoryById(historyId);
-
-      if (history is! VoidingHistory) return const Right(null);
-
-      if (history.isManual || history.status != HistoryStatus.processing) return const Right(null);
+      await getResult(userId: userId, history: history);
 
       return const Right(null);
     } catch (e) {
+      if (e is GetHistoryResultFailureException) {
+        await _historyRepository.saveHistory(history.setStatus(HistoryStatus.failed));
+      }
+
       return Left(e is Exception ? e : Exception(e.toString()));
     }
   }

@@ -90,7 +90,7 @@ class _DetailedListViewState extends State<DetailedListView> {
             padding: const EdgeInsets.only(top: 34),
             child: Text(
               switch (context.locale) {
-                AppLocale.en => DateFormat('EEEE, M d, yyyy').format(widget.date),
+                AppLocale.en => DateFormat('EEEE, MMMM d, yyyy').format(widget.date),
                 AppLocale.ko => DateFormat('yyyy년 M월 d일 EEEE', context.locale.name).format(widget.date),
               },
               style: context.textStyleTheme.b20Bold.copyWith(
@@ -125,11 +125,11 @@ class _DetailedListViewState extends State<DetailedListView> {
                   onTapEdit: (id) =>
                       switch (groupedHistories.values.flattened.firstWhere((element) => element.id == id)) {
                     final DetailedListVoidingHistoryModel historyModel =>
-                      ManualInputRoute(historyId: historyModel.id).push<void>(context),
+                      ManualInputRoute(recordTime: historyModel.recordTime).push<void>(context),
                     final DetailedListLeakageHistoryModel historyModel =>
-                      ManualInputRoute(historyId: historyModel.id).push<void>(context),
+                      ManualInputRoute(recordTime: historyModel.recordTime).push<void>(context),
                     final DetailedListIntakeHistoryModel historyModel =>
-                      IntakeInputRoute.fromHistoryId(historyId: historyModel.id).push<void>(context),
+                      IntakeInputRoute.fromRecordTime(recordTime: historyModel.recordTime).push<void>(context),
                   },
                   onTapDelete: (id) => DetailedListDeleteHistoryModal.show(context).then((value) {
                     if (value && context.mounted) {

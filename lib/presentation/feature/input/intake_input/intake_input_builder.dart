@@ -1,9 +1,4 @@
 // Flutter imports:
-import 'package:flutter/cupertino.dart';
-
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 // Project imports:
 import 'package:bladderly/core/di/di.dart';
 import 'package:bladderly/domain/model/history.dart';
@@ -14,25 +9,28 @@ import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
 import 'package:bladderly/presentation/feature/input/intake_input/bloc/intake_input_bloc.dart';
 import 'package:bladderly/presentation/feature/input/intake_input/cubit/intake_input_form_cubit.dart';
 import 'package:bladderly/presentation/feature/input/intake_input/intake_input_view.dart';
+import 'package:flutter/cupertino.dart';
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class IntakeInputBuilder extends StatefulWidget {
   const IntakeInputBuilder({
     super.key,
     required this.beverageTypeModel,
-    required this.historyId,
+    required this.recordTime,
   });
 
   final BeverageTypeModel? beverageTypeModel;
-  final int? historyId;
+  final DateTime? recordTime;
 
   @override
   State<IntakeInputBuilder> createState() => _IntakeInputBuilderState();
 }
 
 class _IntakeInputBuilderState extends State<IntakeInputBuilder> {
-  late final intakeHistory = switch (widget.historyId) {
-    final int historyId =>
-      getIt<GetHistoryUsecase>().call(historyId: historyId).fold((l) => null, (r) => r is IntakeHistory ? r : null),
+  late final intakeHistory = switch (widget.recordTime) {
+    final DateTime recordTime =>
+      getIt<GetHistoryUsecase>().call(recordTime: recordTime).fold((l) => null, (r) => r is IntakeHistory ? r : null),
     _ => null,
   };
 
@@ -52,7 +50,7 @@ class _IntakeInputBuilderState extends State<IntakeInputBuilder> {
           create: (_) => IntakeInputBloc(saveIntakeHistoryUsecase: getIt<SaveIntakeHistoryUsecase>()),
         ),
       ],
-      child: IntakeInputView(isEditing: widget.historyId != null),
+      child: IntakeInputView(isEditing: widget.recordTime != null),
     );
   }
 }

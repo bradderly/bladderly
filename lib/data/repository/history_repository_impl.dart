@@ -7,6 +7,7 @@ import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 import 'package:bladderly/data/isar/isar_client.dart';
 import 'package:bladderly/data/isar/schema/history_entity.dart';
 import 'package:bladderly/data/mapper/history_mapper.dart';
+import 'package:bladderly/domain/exception/get_history_result_failure_exception.dart';
 import 'package:bladderly/domain/model/histories.dart';
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/history_result.dart';
@@ -187,6 +188,13 @@ class HistoryRepositoryImpl implements HistoryRepository {
       _ => false,
     };
 
+    if (response.errorType case final String errorType) {
+      throw GetHistoryResultFailureException.errorType(
+        errorType: errorType,
+        recordTime: recordTime,
+      );
+    }
+
     return HistoryResult(
       isDone: isDone,
       result: response.result,
@@ -198,5 +206,14 @@ class HistoryRepositoryImpl implements HistoryRepository {
     final entities = await _isarClient.getProcessingHistories();
 
     return Histories(list: entities.map(HistoryMapper.fromHistoryEntity).whereType<VoidingHistory>().toList());
+  }
+
+  @override
+  History? getHistoryByRecordTime(DateTime recordTime) {
+    if (_isarClient.getHistoryOrNullByRecordTime(recordTime) case final HistoryEntity historyEntity) {
+      return HistoryMapper.fromHistoryEntity(historyEntity);
+    }
+
+    return null;
   }
 }

@@ -37,7 +37,7 @@ extension DatetimeExtension on DateTime {
   String formatHourMinute(BuildContext context) {
     return switch (context.locale) {
       AppLocale.en => DateFormat('hh:mm a').format(this),
-      AppLocale.ko => DateFormat('a hh:mm').format(this),
+      AppLocale.ko => DateFormat('a hh:mm', context.locale.name).format(this),
     };
   }
 

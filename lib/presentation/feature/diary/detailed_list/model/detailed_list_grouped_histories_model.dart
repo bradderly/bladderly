@@ -1,14 +1,12 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:collection/collection.dart';
-import 'package:equatable/equatable.dart';
-
 // Project imports:
 import 'package:bladderly/domain/model/histories.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/diary/detailed_list/model/detailed_list_history_model.dart';
+// Package imports:
+import 'package:collection/collection.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 class DetailedListGroupedHistoriesModel extends Equatable {
   const DetailedListGroupedHistoriesModel._({
@@ -44,10 +42,16 @@ class DetailedListGroupedHistoriesModel extends Equatable {
   String getInterval(BuildContext context, {required int index}) {
     final interval = _intervals.elementAt(index);
 
+    final hours = '${interval.inHours} ${interval.inHours == 1 ? 'hour'.tr(context) : 'hours'.tr(context)}';
+
+    final minutes = switch (interval.inMinutes % 60) {
+      final int minutes => '$minutes ${minutes == 1 ? 'minute'.tr(context) : 'minutes'.tr(context)}',
+    };
+
     return switch (interval.inMinutes) {
-      < 60 => '${interval.inMinutes} ${'minutes'.tr(context)}',
+      < 60 => minutes,
       == 60 => '1 ${'hour'.tr(context)}',
-      _ => '${interval.inHours} ${'hours'.tr(context)} ${interval.inMinutes.remainder(60)} ${'minutes'.tr(context)}',
+      _ => '$hours $minutes',
     };
   }
 
