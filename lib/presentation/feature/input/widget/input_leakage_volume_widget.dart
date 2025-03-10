@@ -1,19 +1,17 @@
 // Dart imports:
 import 'dart:math';
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:gap/gap.dart';
-
 // Project imports:
 import 'package:bladderly/domain/model/leakage_volume.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:gap/gap.dart';
 
-class ManualInputLeakageVolumeWidget extends StatelessWidget {
-  const ManualInputLeakageVolumeWidget({
+class InputLeakageVolumeWidget extends StatelessWidget {
+  const InputLeakageVolumeWidget({
     super.key,
     required this.onChanged,
     required this.leakageVolume,
