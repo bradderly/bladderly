@@ -53,7 +53,7 @@ class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
   Future<void> onSubmitSuccess(BuildContext context, SymptomSurveySubmitSuccess state) async {
     context.pop();
 
-    await ModalHelper.showModal(
+    await ModalHelper.showModal<void>(
       context: context,
       modalBuilder: (_) => SymptomResultModal(score: state.score),
     );

@@ -10,13 +10,16 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 enum AppLocale {
-  en,
-  ko,
+  ko(text: 'Korean'),
+  en(text: 'English (United States)'),
   ;
 
+  const AppLocale({required this.text});
   factory AppLocale.of(String name) {
     return AppLocale.values.firstWhereOrNull((e) => e.name == name) ?? AppLocale.en;
   }
+
+  final String text;
 
   String getDayOfWeek(int index) {
     return switch (this) {

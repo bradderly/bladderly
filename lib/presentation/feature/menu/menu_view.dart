@@ -3,9 +3,11 @@
 // Project imports:
 import 'package:bladderly/domain/model/unit.dart';
 import 'package:bladderly/presentation/common/bloc/app_config_bloc.dart';
+import 'package:bladderly/presentation/common/cubit/locale_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/unit_cubit.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/feature/about/about_modal.dart';
 import 'package:bladderly/presentation/feature/menu/contact_us/contact_us_builder.dart';
 import 'package:bladderly/presentation/feature/menu/faq/faq_view_modal.dart';
@@ -51,9 +53,7 @@ class MenuView extends StatelessWidget {
                             Icons.close,
                             color: context.colorTheme.neutral.shade8,
                           ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
+                          onPressed: () => Navigator.pop(context),
                         ),
                       ],
                     ),
@@ -64,12 +64,10 @@ class MenuView extends StatelessWidget {
                       SettingsItem(
                         icon: Icons.person_outline,
                         title: 'User Profile'.tr(context),
-                        onTap: () {
-                          ModalHelper.showModal(
-                            context: context,
-                            modalBuilder: (_) => const ProfileBuilder(),
-                          );
-                        },
+                        onTap: () => ModalHelper.showModal<void>(
+                          context: context,
+                          modalBuilder: (_) => const ProfileBuilder(),
+                        ),
                       ),
                     ],
                   ),
@@ -79,7 +77,7 @@ class MenuView extends StatelessWidget {
                       SettingsItem(
                         icon: Icons.credit_card,
                         title: 'Plan'.tr(context),
-                        onTap: () => ModalHelper.showModal(
+                        onTap: () => ModalHelper.showModal<void>(
                           context: context,
                           modalBuilder: (_) => const PlanBuilder(),
                         ),
@@ -87,7 +85,7 @@ class MenuView extends StatelessWidget {
                       SettingsItem(
                         icon: Icons.ios_share,
                         title: 'Data export'.tr(context),
-                        onTap: () => ModalHelper.showModal(
+                        onTap: () => ModalHelper.showModal<void>(
                           context: context,
                           modalBuilder: (_) => const PasscodeAuthBuilder(),
                         ),
@@ -95,24 +93,32 @@ class MenuView extends StatelessWidget {
                       SettingsItem(
                         icon: Icons.bar_chart,
                         title: 'Symptom score'.tr(context),
-                        onTap: () => ModalHelper.showModal(
+                        onTap: () => ModalHelper.showModal<void>(
                           context: context,
                           modalBuilder: (_) => const SymptomBuilder(),
                         ),
                       ),
                       SettingsItem(
+                        onTap: () async {
+                          final originLocale = context.read<AppLocaleCubit>().state;
+
+                          final newLocale = await ModalHelper.showModal<AppLocale>(
+                            context: context,
+                            modalBuilder: (_) => LanguageViewModal(appLocale: originLocale),
+                          );
+
+                          if (context.mounted && newLocale != null) {
+                            context.read<AppLocaleCubit>().changeLocale(newLocale);
+                          }
+                        },
                         icon: Icons.language,
                         title: 'Language'.tr(context),
-                        subtitle: 'English (United States)'.tr(context),
-                        onTap: () => ModalHelper.showModal(
-                          context: context,
-                          modalBuilder: (_) => const LanguageViewModal(),
-                        ),
+                        subtitle: context.locale.text.tr(context),
                       ),
                       SettingsItem(
                         icon: Icons.help_outline,
                         title: 'FAQ'.tr(context),
-                        onTap: () => ModalHelper.showModal(
+                        onTap: () => ModalHelper.showModal<void>(
                           context: context,
                           modalBuilder: (_) => const FaqViewModal(),
                         ),
@@ -120,7 +126,7 @@ class MenuView extends StatelessWidget {
                       SettingsItem(
                         icon: Icons.phone,
                         title: 'Contact Us'.tr(context),
-                        onTap: () => ModalHelper.showModal(
+                        onTap: () => ModalHelper.showModal<void>(
                           context: context,
                           modalBuilder: (_) => const ContactUsBuilder(),
                         ),
@@ -128,7 +134,7 @@ class MenuView extends StatelessWidget {
                       SettingsItem(
                         icon: Icons.info_outline,
                         title: 'About'.tr(context),
-                        onTap: () => ModalHelper.showModal(
+                        onTap: () => ModalHelper.showModal<void>(
                           context: context,
                           modalBuilder: (_) => const AboutModal(),
                         ),
