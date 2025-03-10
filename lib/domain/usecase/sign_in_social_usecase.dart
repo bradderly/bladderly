@@ -1,12 +1,11 @@
 // Package imports:
 
-// Package imports:
-import 'package:dartz/dartz.dart';
-import 'package:injectable/injectable.dart';
-
 // Project imports:
 import 'package:bladderly/domain/model/sign_up_method.dart';
 import 'package:bladderly/domain/repository/auth_repository.dart';
+// Package imports:
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class SignInSocialUsecase {
@@ -27,10 +26,8 @@ class SignInSocialUsecase {
       };
 
       return Right(email);
-    } on Exception catch (e) {
-      return Left(e);
     } catch (e) {
-      return Left(Exception('An unknown error occurred'));
+      return Left(e is Exception ? e : Exception('An unknown error occurred'));
     }
   }
 }

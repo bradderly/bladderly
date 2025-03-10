@@ -1,9 +1,5 @@
 // Package imports:
 
-// Package imports:
-import 'package:dartz/dartz.dart';
-import 'package:injectable/injectable.dart';
-
 // Project imports:
 import 'package:bladderly/core/network_checker/network_checker.dart';
 import 'package:bladderly/core/recorder/recorder_module.dart';
@@ -11,9 +7,12 @@ import 'package:bladderly/domain/exception/not_found_user_exception.dart';
 import 'package:bladderly/domain/exception/not_found_voiding_sound_file_exception.dart';
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/history_status.dart';
-import 'package:bladderly/domain/repository/auth_repository.dart';
 import 'package:bladderly/domain/repository/history_repository.dart';
+// Package imports:
+import 'package:bladderly/domain/repository/user_repository.dart';
 import 'package:bladderly/domain/util/recorded_file_util.dart';
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class SaveVoidingHistoryWithFileUsecase {
@@ -21,18 +20,18 @@ class SaveVoidingHistoryWithFileUsecase {
     required RecorderFileLoader recorderFileLoader,
     required RecordedFileUtil recordedFileUtil,
     required NetworkChecker networkChecker,
-    required AuthRepository authRepository,
+    required UserRepository userRepository,
     required HistoryRepository historyRepository,
   })  : _recorderFileLoader = recorderFileLoader,
         _recordedFileUtil = recordedFileUtil,
         _networkChecker = networkChecker,
-        _authRepository = authRepository,
+        _userRepository = userRepository,
         _historyRepository = historyRepository;
 
   final RecorderFileLoader _recorderFileLoader;
   final RecordedFileUtil _recordedFileUtil;
   final NetworkChecker _networkChecker;
-  final AuthRepository _authRepository;
+  final UserRepository _userRepository;
   final HistoryRepository _historyRepository;
 
   Future<Either<Exception, VoidingHistory>> call({
@@ -44,7 +43,7 @@ class SaveVoidingHistoryWithFileUsecase {
     String? memo,
   }) async {
     try {
-      final user = _authRepository.getUserOrNullByUserId(userId) ??
+      final user = _userRepository.getUserOrNullByUserId(userId) ??
           (throw const NotFoundUserException(message: 'User not found'));
 
       final file = _recorderFileLoader.getFile(recordTime)..readAsBytesSync();

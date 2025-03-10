@@ -229,23 +229,6 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<String> changeName({
-    required String userId,
-    required String userName,
-    String? userEmail,
-  }) async {
-    final request = UpdateUserInfoRequest(
-      id: userId,
-      email: userEmail,
-      username: userName,
-    );
-
-    final response = await _apiClient.updateUserName(request: request).then((response) => response.body!);
-
-    return response.message ?? (throw Exception('Change Password failed'));
-  }
-
-  @override
   Future<String> deleteAccount({
     required String email,
   }) async {
@@ -254,15 +237,6 @@ class AuthRepositoryImpl implements AuthRepository {
     final response = await _apiClient.deleteAccount(request: request).then((response) => response.body!);
 
     return response.message ?? (throw Exception('Delete Account failed'));
-  }
-
-  @override
-  Future<GetVersionResponse> getVersion({
-    required String device,
-  }) async {
-    final response = await _apiClient.getVersion(device: device).then((response) => response.body!);
-
-    return response;
   }
 
   @override
@@ -287,20 +261,6 @@ class AuthRepositoryImpl implements AuthRepository {
     final response = await _apiClient.checkPromo(userId: userId, code: code).then((response) => response.body!);
 
     return response.message ?? (throw Exception('Check Promo failed'));
-  }
-
-  @override
-  Stream<User?> get userStream => _userSubject.stream;
-
-  @override
-  User? getUserOrNullByUserId(String userId) {
-    final userEntity = _isarClient.getUserOrNullByUserId(userId);
-
-    if (userEntity == null) {
-      return null;
-    }
-
-    return _saveUserToLocal(UserMapper.fromUserEntity(userEntity));
   }
 
   User _saveUserToLocal(User user) {

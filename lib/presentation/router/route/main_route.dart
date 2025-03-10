@@ -1,7 +1,10 @@
 // Flutter imports:
 
 // Project imports:
+import 'dart:async';
+
 import 'package:bladderly/domain/model/history.dart';
+import 'package:bladderly/domain/model/plan.dart';
 import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
 import 'package:bladderly/presentation/feature/about/privacy/privacy_view.dart';
 import 'package:bladderly/presentation/feature/about/terms/terms_view.dart';
@@ -251,14 +254,42 @@ class DetailedListRoute extends GoRouteData {
   }
 }
 
+class PaywallRouteExtra extends Equatable {
+  const PaywallRouteExtra({
+    required this.plans,
+  });
+
+  final List<Plan> plans;
+
+  @override
+  List<Object> get props => [
+        plans,
+      ];
+}
+
 class PaywallRoute extends GoRouteData {
-  const PaywallRoute();
+  const PaywallRoute({
+    required this.$extra,
+  });
+
+  final PaywallRouteExtra? $extra;
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) => CupertinoPage<void>(
         key: state.pageKey,
-        child: const PaywallBuilder(),
+        child: PaywallBuilder(
+          plans: $extra?.plans ?? [],
+        ),
       );
+
+  @override
+  FutureOr<String?> redirect(BuildContext context, GoRouterState state) {
+    if ($extra == null) {
+      return const MenuRoute().location;
+    }
+
+    return super.redirect(context, state);
+  }
 }
 
 class SignUpRegularRoute extends GoRouteData {

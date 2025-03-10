@@ -29,7 +29,6 @@ class SignInUsecase {
 
       return Right(user);
     } catch (e) {
-      _authRepository.clearLocal();
       return Left(e is Exception ? e : Exception(e.toString()));
     }
   }

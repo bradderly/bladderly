@@ -1,22 +1,21 @@
 // Package imports:
-import 'package:dartz/dartz.dart';
-import 'package:injectable/injectable.dart';
-
 // Project imports:
 import 'package:bladderly/domain/model/user.dart';
-import 'package:bladderly/domain/repository/auth_repository.dart';
+import 'package:bladderly/domain/repository/user_repository.dart';
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class GetUserUsecase {
   const GetUserUsecase({
-    required AuthRepository authRepository,
-  }) : _authRepository = authRepository;
+    required UserRepository userRepository,
+  }) : _userRepository = userRepository;
 
-  final AuthRepository _authRepository;
+  final UserRepository _userRepository;
 
   Either<Exception, User?> call(String userId) {
     try {
-      final userStream = _authRepository.getUserOrNullByUserId(userId);
+      final userStream = _userRepository.getUserOrNullByUserId(userId);
 
       return Right(userStream);
     } on Exception catch (e) {

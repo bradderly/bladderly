@@ -1,14 +1,17 @@
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 class ModalAppBar extends AppBar {
   ModalAppBar({
     super.key,
+    super.backgroundColor,
     String? title,
     bool backButton = true,
   }) : super(
+          centerTitle: true,
           automaticallyImplyLeading: false,
           leading: backButton
               ? Builder(
@@ -26,18 +29,20 @@ class ModalAppBar extends AppBar {
               ),
             ),
           ),
-          actions: [
-            if (!backButton)
-              Builder(
-                builder: (context) => IconButton(
-                  onPressed: context.pop,
-                  icon: Icon(
-                    Icons.close,
-                    color: context.colorTheme.neutral.shade10,
+          actions: backButton
+              ? null
+              : [
+                  Builder(
+                    builder: (context) => IconButton(
+                      onPressed: context.pop,
+                      icon: Icon(
+                        Icons.close,
+                        color: context.colorTheme.neutral.shade10,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-          ],
+                  const Gap(4),
+                ],
           toolbarHeight: 92,
         );
 }

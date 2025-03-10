@@ -10,6 +10,7 @@ import 'package:bladderly/presentation/feature/main/bloc/main_history_bloc.dart'
 import 'package:bladderly/presentation/feature/main/cubit/main_tab_cubit.dart';
 import 'package:bladderly/presentation/feature/main/home/home_builder.dart';
 import 'package:bladderly/presentation/feature/main/widget/main_bottom_navigation_bar.dart';
+import 'package:bladderly/presentation/feature/payment/bloc/payment_bloc.dart';
 import 'package:bladderly/presentation/router/route/intro_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 // Flutter imports:
@@ -41,6 +42,7 @@ class _MainViewState extends State<MainView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       checkPendingUploadFile();
       initializeHistories();
+      initializePurchaseHandler();
     });
   }
 
@@ -91,6 +93,14 @@ class _MainViewState extends State<MainView> {
     final userId = context.read<UserBloc>().state.userModelOrThrowException.id;
 
     context.read<MainHistoryBloc>().add(MainHistoryGetHistoryResults(userId: userId));
+  }
+
+  void initializePurchaseHandler() {
+    if (!mounted) return;
+
+    final userId = context.read<UserBloc>().state.userModelOrThrowException.id;
+
+    context.read<PaymentBloc>().add(PaymentInitializeHandler(userId: userId));
   }
 
   @override
