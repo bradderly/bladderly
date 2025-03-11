@@ -4,6 +4,8 @@ import 'package:bladderly/presentation/common/bloc/app_config_bloc.dart';
 // Project imports:
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
+import 'package:bladderly/presentation/feature/menu/profile/passcode/passcode_auth_builder.dart';
+import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 import 'package:bladderly/presentation/feature/splash/bloc/splash_bloc.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/intro_route.dart';
@@ -55,7 +57,13 @@ class _SplashViewState extends State<SplashView> {
 
   void landPage() {
     if (context.read<UserBloc>().state is UserLoadSuccess) {
-      return const MainRoute().go(context);
+      //return const PasscodeAuthRoute().go(context);
+      //  return const MainRoute().go(context);
+      ModalHelper.showModal<void>(
+        context: context,
+        modalBuilder: (_) => const PasscodeAuthBuilder(),
+      );
+      return;
     }
 
     return const IntroRoute().go(context);

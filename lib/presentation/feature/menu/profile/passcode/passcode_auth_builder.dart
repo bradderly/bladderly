@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:bladderly/presentation/common/cubit/passcode_cubit.dart';
 import 'package:bladderly/presentation/feature/menu/profile/passcode/passcode_auth_modal.dart';
+import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:flutter/widgets.dart';
 
 // Package imports:
@@ -24,9 +25,9 @@ class PasscodeAuthBuilder extends StatelessWidget {
           } else {
             // 생체 인증이 비활성화된 경우 창을 닫음
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              Navigator.pop(context); // 현재 화면을 닫습니다.
+              const MainRoute().go(context);
             });
-            return const SizedBox.shrink(); // 빈 화면을 반환하여 추가 UI를 렌더링하지 않음
+            return const SizedBox.shrink();
           }
         },
       ),

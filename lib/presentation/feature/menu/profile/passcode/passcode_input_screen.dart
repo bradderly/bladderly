@@ -53,24 +53,18 @@ class _PasscodeInputScreenState extends State<PasscodeInputScreen> {
   }
 
   Widget buildPasscodeDots(int length) {
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: () {
-        FocusScope.of(context).requestFocus(_focusNode); // 점 UI 클릭 시 키보드 활성화
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(
-          4,
-          (index) => Container(
-            margin: const EdgeInsets.symmetric(horizontal: 8),
-            width: 12,
-            height: 12,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: index < length ? context.colorTheme.neutral.shade6 : Colors.transparent,
-              border: Border.all(color: context.colorTheme.neutral.shade6),
-            ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        4,
+        (index) => Container(
+          margin: const EdgeInsets.symmetric(horizontal: 8),
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: index < length ? context.colorTheme.neutral.shade6 : Colors.transparent,
+            border: Border.all(color: context.colorTheme.neutral.shade6),
           ),
         ),
       ),
@@ -96,51 +90,57 @@ class _PasscodeInputScreenState extends State<PasscodeInputScreen> {
           child: Column(
             children: [
               ModalTitle(title: 'Passcode'.tr(context)),
-              const SizedBox(height: 38),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      isFirstAttempt ? 'Set your passcode below'.tr(context) : 'Confirm your passcode'.tr(context),
-                      style: context.textStyleTheme.b16Medium.copyWith(
-                        color: context.colorTheme.neutral.shade6,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    buildPasscodeDots(_controller.text.length), // 클릭 가능한 점 UI
-                    const SizedBox(height: 20),
-                    if (isUncorrect)
+              const SizedBox(height: 173),
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  FocusScope.of(context).requestFocus(_focusNode); // 점 UI 클릭 시 키보드 활성화
+                },
+                child: Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
                       Text(
-                        'The passcode you entered is incorrect.\nPlease try again.'.tr(context),
-                        style: context.textStyleTheme.b14Medium.copyWith(
-                          color: context.colorTheme.warning,
+                        isFirstAttempt ? 'Set your passcode below'.tr(context) : 'Confirm your passcode'.tr(context),
+                        style: context.textStyleTheme.b16Medium.copyWith(
+                          color: context.colorTheme.neutral.shade6,
                         ),
                       ),
-                    // 👇 텍스트 필드를 완전히 숨김
-                    Opacity(
-                      opacity: 0,
-                      child: SizedBox(
-                        width: 0,
-                        height: 0,
-                        child: TextField(
-                          controller: _controller,
-                          focusNode: _focusNode,
-                          obscureText: true,
-                          maxLength: 4,
-                          keyboardType: TextInputType.number,
-                          onChanged: (value) {
-                            setState(() {}); // 입력값 변화 감지
-                            if (value.length == 4) {
-                              Future.delayed(const Duration(milliseconds: 300), () {
-                                onPasscodeEntered(value);
-                              });
-                            }
-                          },
+                      const SizedBox(height: 20),
+                      buildPasscodeDots(_controller.text.length), // 클릭 가능한 점 UI
+                      const SizedBox(height: 20),
+                      if (isUncorrect)
+                        Text(
+                          'The passcode you entered is incorrect.\nPlease try again.'.tr(context),
+                          style: context.textStyleTheme.b14Medium.copyWith(
+                            color: context.colorTheme.warning,
+                          ),
+                        ),
+                      // 👇 텍스트 필드를 완전히 숨김
+                      Opacity(
+                        opacity: 0,
+                        child: SizedBox(
+                          width: 0,
+                          height: 0,
+                          child: TextField(
+                            controller: _controller,
+                            focusNode: _focusNode,
+                            obscureText: true,
+                            maxLength: 4,
+                            keyboardType: TextInputType.number,
+                            onChanged: (value) {
+                              setState(() {}); // 입력값 변화 감지
+                              if (value.length == 4) {
+                                Future.delayed(const Duration(milliseconds: 300), () {
+                                  onPasscodeEntered(value);
+                                });
+                              }
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Expanded(
