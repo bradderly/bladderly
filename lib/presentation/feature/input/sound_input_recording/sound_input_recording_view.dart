@@ -16,6 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:synchronized/synchronized.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 class SoundInputRecordingView extends StatefulWidget {
   const SoundInputRecordingView({
@@ -32,11 +33,18 @@ class SoundInputRecordingView extends StatefulWidget {
 class _SoundInputRecordingViewState extends State<SoundInputRecordingView> with WidgetsBindingObserver {
   late final recordTime = DateTime.now();
   final lock = Lock();
+  final now = DateTime.now();
 
   Duration remainingDuration = const Duration(seconds: 3);
 
   @override
   void initState() {
+    Future<void>.delayed(
+      const Duration(minutes: 3),
+      () => widget.recorder.state is RecorderRecording && mounted ? completeRecording() : null,
+    );
+
+    WakelockPlus.enable();
     WidgetsBinding.instance
       ..addObserver(this)
       ..addPostFrameCallback((_) => startRecordingCountDown());
@@ -46,6 +54,7 @@ class _SoundInputRecordingViewState extends State<SoundInputRecordingView> with 
 
   @override
   void dispose() {
+    WakelockPlus.disable();
     WidgetsBinding.instance.removeObserver(this);
 
     super.dispose();
@@ -58,38 +67,25 @@ class _SoundInputRecordingViewState extends State<SoundInputRecordingView> with 
     }
   }
 
-  Future<void> startRecording() async {
+  Future<void> completeRecording() async {
     return lock.synchronized(() async {
-      await widget.recorder.start(recordTime: recordTime);
+      final recordTime = await widget.recorder.stop();
 
-      await Future<void>.delayed(
-        const Duration(seconds: 3),
-        () => widget.recorder.state is RecorderRecording && mounted ? completeRecording() : null,
-      );
+      if (!mounted || !widget.recorder.getFile(recordTime).existsSync()) return;
+
+      context.read<PendingUploadFileCubit>().setRecordTime(recordTime);
+
+      return SoundInputNoteRoute(recordTime: recordTime).pushReplacement(context);
     });
   }
 
-  Future<void> completeRecording() async {
-    if (lock.locked) return;
-
-    final recordTime = await lock.synchronized(widget.recorder.stop);
-
-    if (!mounted || !widget.recorder.getFile(recordTime).existsSync()) return;
-
-    context.read<PendingUploadFileCubit>().setRecordTime(recordTime);
-
-    return SoundInputNoteRoute(recordTime: recordTime).pushReplacement(context);
-  }
-
-  Future<void> cancelRecording() async {
-    if (lock.locked) return;
-
-    final file = await lock
-        .synchronized<DateTime?>(() => widget.recorder.stop())
-        .then((recorderFile) => recorderFile == null ? null : widget.recorder.getFile(recorderFile))
-        .catchError((_) => null);
-
-    return file?.deleteSync();
+  Future<void> cancelRecording() {
+    return lock.synchronized(
+      () => widget.recorder
+          .stop()
+          .then<void>((recordTime) => widget.recorder.getFile(recordTime).deleteSync())
+          .catchError((_) => null),
+    );
   }
 
   void startRecordingCountDown() {
@@ -98,14 +94,12 @@ class _SoundInputRecordingViewState extends State<SoundInputRecordingView> with 
       (timer) {
         if (!mounted) return timer.cancel();
 
-        setState(() => remainingDuration -= const Duration(milliseconds: 10));
-
-        if (timer.tick % 100 != 0) {
-          return;
+        if (remainingDuration > Duration.zero) {
+          setState(() => remainingDuration -= const Duration(milliseconds: 10));
         }
 
-        if (remainingDuration <= Duration.zero) {
-          startRecording();
+        if (remainingDuration == Duration.zero) {
+          widget.recorder.start(recordTime: recordTime);
           return timer.cancel();
         }
       },

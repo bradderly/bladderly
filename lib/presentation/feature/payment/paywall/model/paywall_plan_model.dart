@@ -37,7 +37,7 @@ class PaywallPlanModel extends Equatable {
 
   String get monthlyPrice => isAnnual ? _formatPrice(_price / 12) : throw UnimplementedError();
 
-  /// TODO(eden): 추후 서버에서 데이터 내려오는식으로 변경되면 수정 필요
+  // TODO(eden): 추후 서버에서 데이터 내려오는식으로 변경되면 수정 필요
   bool get isAnnual => id.contains('annual');
 
   String _formatPrice(double price) {
