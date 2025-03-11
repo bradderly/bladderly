@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:bladderly/domain/exception/check_password_exception.dart';
+import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -13,6 +15,7 @@ import 'package:bladderly/presentation/common/widget/progress_indicator_modal.da
 import 'package:bladderly/presentation/feature/menu/profile/change_password/bloc/change_password_bloc.dart';
 import 'package:bladderly/presentation/feature/menu/profile/change_password/cubit/change_password_form_cubit.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:go_router/go_router.dart';
 
 class ChangePasswordModal extends StatelessWidget {
   const ChangePasswordModal({super.key});
@@ -58,7 +61,7 @@ class ChangePasswordModal extends StatelessWidget {
             ChangePasswordSuccess() => {
                 Navigator.of(context).pop(),
               },
-            ChangePasswordFailure() => {},
+            ChangePasswordFailure() => _onChangeFailure(context, state),
             _ => null,
           },
           child: Container(
@@ -266,6 +269,15 @@ class ChangePasswordModal extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  void _onChangeFailure(BuildContext context, ChangePasswordFailure state) {
+    // TODO: ChangePasswordFailure 에러 처리시 받는 에러가 정상적이지 않아보임
+    CommonErrorModal.showFromDominException<void>(
+      context,
+      onTap: context.pop,
+      exception: const CheckPasswordException(),
     );
   }
 }

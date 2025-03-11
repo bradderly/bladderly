@@ -26,8 +26,10 @@ class ChangePasswordUsecase {
       );
       return Right(result);
     } on Exception catch (e) {
+      print('Exception1: $e');
       return Left(e);
     } catch (e) {
+      print('Exception2: $e');
       return Left(Exception('An unknown error occurred'));
     }
   }

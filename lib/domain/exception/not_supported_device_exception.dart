@@ -4,7 +4,7 @@ class NotSupportedDeviceException extends DomainException {
   const NotSupportedDeviceException()
       : super(
           title: 'Unsupported device title',
-          message: 'Unsupported device body',
+          message: 'The device is not supported',
         );
 
   const NotSupportedDeviceException.soon()

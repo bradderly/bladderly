@@ -2,6 +2,8 @@
 import 'dart:async';
 
 import 'package:bladderly/core/bio_auth/bio_auth.dart';
+import 'package:bladderly/core/bluetooth_hfp/bluetooth_hfp_check.dart';
+import 'package:bladderly/domain/exception/bluetooth_hfp_exception.dart';
 import 'package:bladderly/domain/exception/not_supported_device_exception.dart';
 import 'package:bladderly/presentation/common/bloc/app_config_bloc.dart';
 // Project imports:
@@ -16,6 +18,7 @@ import 'package:bladderly/presentation/router/route/passcode_auth_route.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rxdart/rxdart.dart';
 
 class SplashView extends StatefulWidget {
@@ -67,6 +70,8 @@ class _SplashViewState extends State<SplashView> {
     final alreadyLoggedIn = context.read<UserBloc>().state is UserLoadSuccess;
     final isLocked = context.read<PasscodeCubit>().state.isLocked;
 
+    await checkBluetoothHFP(); //  블루투스 체크가 끝날 때까지 대기
+
     /// 로그인이 되어 있지 않으면 IntroRoute로 이동
     if (!alreadyLoggedIn) return const IntroRoute().go(context);
 
@@ -84,6 +89,20 @@ class _SplashViewState extends State<SplashView> {
       final successBioAuth = await BioAuth().authenticate();
 
       if (successBioAuth && mounted) return const MainRoute().go(context);
+    }
+  }
+
+  Future<void> checkBluetoothHFP() async {
+    if (Theme.of(context).platform == TargetPlatform.iOS) {
+      final isConnected = await BluetoothHFPChecker.isBluetoothHFPConnected();
+
+      if (isConnected) {
+        await CommonErrorModal.showFromDominException<void>(
+          context,
+          onTap: context.pop,
+          exception: const BluetoothHfpException(),
+        );
+      }
     }
   }
 

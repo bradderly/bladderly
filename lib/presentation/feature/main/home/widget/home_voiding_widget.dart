@@ -1,6 +1,8 @@
 // Flutter imports:
 
 // Flutter imports:
+import 'package:bladderly/domain/exception/no_permission_mic_exception.dart';
+import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -12,6 +14,8 @@ import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/main/home/model/home_voiding_summary_model.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+import 'package:go_router/go_router.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class HomeVoidingWidget extends StatelessWidget {
   const HomeVoidingWidget({
@@ -153,7 +157,19 @@ class HomeVoidingWidget extends StatelessWidget {
     required bool isActivated,
   }) {
     return GestureDetector(
-      onTap: () => const SoundInputRecordingRoute().push<void>(context),
+      onTap: () async {
+        final status = await Permission.microphone.status;
+
+        if (status.isGranted) {
+          await const SoundInputRecordingRoute().push<void>(context);
+        } else {
+          await CommonErrorModal.showFromDominException<void>(
+            context,
+            onTap: context.pop,
+            exception: const NoPermissionMicException(),
+          );
+        }
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 38),
         clipBehavior: Clip.antiAlias,
