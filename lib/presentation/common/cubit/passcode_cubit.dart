@@ -3,29 +3,22 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 part 'passcode_state.dart';
 
 class PasscodeCubit extends HydratedCubit<PasscodeState> {
-  PasscodeCubit() : super(PasscodeState(isBiometricEnabled: false, passcode: ''));
+  PasscodeCubit() : super(PasscodeState(isLocked: false, passcode: ''));
 
-  /// 생체 인증 활성화/비활성화
-  void toggleBiometric(bool isEnabled) {
-    emit(state.copyWith(isBiometricEnabled: isEnabled));
+  /// 잠금 설정
+  void lock({
+    required String passcode,
+  }) {
+    emit(state.copyWith(isLocked: true, passcode: passcode));
   }
 
-  /// 패스코드 설정
-  void setPasscode(String newPasscode) {
-    emit(state.copyWith(passcode: newPasscode));
-  }
-
-  /// 패스코드 제거
-  void clearPasscode() {
-    emit(state.copyWith(passcode: ''));
+  void unlock() {
+    emit(state.copyWith(isLocked: false));
   }
 
   @override
   PasscodeState? fromJson(Map<String, dynamic> json) {
-    return PasscodeState(
-      isBiometricEnabled: (json['isBiometricEnabled'] as bool?) ?? false, // ✅ 타입 캐스팅
-      passcode: (json['passcode'] as String?) ?? '',
-    );
+    return PasscodeState.fromJson(json);
   }
 
   @override

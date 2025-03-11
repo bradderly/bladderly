@@ -12,7 +12,6 @@ import 'package:bladderly/presentation/feature/about/about_modal.dart';
 import 'package:bladderly/presentation/feature/menu/contact_us/contact_us_builder.dart';
 import 'package:bladderly/presentation/feature/menu/faq/faq_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/language/language_view_modal.dart';
-import 'package:bladderly/presentation/feature/menu/profile/passcode/passcode_auth_builder.dart';
 import 'package:bladderly/presentation/feature/menu/profile/profile_builder.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/symptom_builder.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
@@ -83,12 +82,9 @@ class MenuView extends StatelessWidget {
                         ),
                       ),
                       SettingsItem(
+                        onTap: () {},
                         icon: Icons.ios_share,
                         title: 'Data export'.tr(context),
-                        onTap: () => ModalHelper.showModal<void>(
-                          context: context,
-                          modalBuilder: (_) => const PasscodeAuthBuilder(),
-                        ),
                       ),
                       SettingsItem(
                         icon: Icons.bar_chart,
@@ -141,7 +137,6 @@ class MenuView extends StatelessWidget {
                       ),
                       BlocBuilder<AppConfigBloc, AppConfigState>(
                         builder: (context, state) => Container(
-                          height: 60,
                           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -155,6 +150,9 @@ class MenuView extends StatelessWidget {
                                       style: context.textStyleTheme.b16Regular.copyWith(
                                         color: context.colorTheme.neutral.shade10,
                                       ),
+                                    ),
+                                    const SizedBox(
+                                      height: 2,
                                     ),
                                     RichText(
                                       text: TextSpan(
@@ -205,8 +203,7 @@ class MenuView extends StatelessWidget {
                                 context.read<UnitCubit>().change(Unit.ml);
                               }, //toggleUnit(unit),
                               child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                                height: 43,
+                                padding: const EdgeInsets.symmetric(vertical: 12),
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   color: unit == 'ml'
@@ -231,8 +228,7 @@ class MenuView extends StatelessWidget {
                               ),
                             ),
                           ),
-
-                          const SizedBox(width: 8), // 버튼 간 간격
+                          const SizedBox(width: 16),
                           Expanded(
                             child: GestureDetector(
                               behavior: HitTestBehavior.translucent,
@@ -240,8 +236,7 @@ class MenuView extends StatelessWidget {
                                 context.read<UnitCubit>().change(Unit.oz);
                               }, //toggleUnit(unit),
                               child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                                height: 43,
+                                padding: const EdgeInsets.symmetric(vertical: 12),
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   color: unit == 'oz'
@@ -252,7 +247,7 @@ class MenuView extends StatelessWidget {
                                     color: unit == 'oz'
                                         ? context.colorTheme.vermilion.secondary.shade20
                                         : Colors.transparent, // 선택된 버튼 테두리 색상
-                                    width: 3, // 테두리 두께
+                                    width: 3,
                                   ),
                                 ),
                                 child: Text(
@@ -347,7 +342,6 @@ class SettingsItem extends StatelessWidget {
       behavior: HitTestBehavior.translucent,
       onTap: onTap,
       child: Container(
-        height: 48,
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         child: Row(
           children: [

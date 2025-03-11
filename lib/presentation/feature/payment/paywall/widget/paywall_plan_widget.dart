@@ -22,6 +22,7 @@ class PaywallPlanWidget extends StatelessWidget {
       clipBehavior: Clip.none,
       children: [
         GestureDetector(
+          behavior: HitTestBehavior.translucent,
           onTap: () => onTap(plan),
           child: Container(
             padding: EdgeInsets.symmetric(

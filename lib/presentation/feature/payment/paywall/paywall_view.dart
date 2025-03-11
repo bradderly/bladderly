@@ -10,7 +10,7 @@ import 'package:bladderly/presentation/feature/payment/bloc/payment_bloc.dart';
 import 'package:bladderly/presentation/feature/payment/paywall/cubit/paywall_cubit.dart';
 import 'package:bladderly/presentation/feature/payment/paywall/model/paywall_plans_model.dart';
 import 'package:bladderly/presentation/feature/payment/paywall/widget/paywall_plan_widget.dart';
-import 'package:bladderly/presentation/feature/payment/promo_code/promo_code_modal.dart';
+import 'package:bladderly/presentation/feature/payment/promo_code/promo_code_builder.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
@@ -146,11 +146,12 @@ class _PaywallViewState extends State<PaywallView> {
                     Column(
                       children: [
                         GestureDetector(
+                          behavior: HitTestBehavior.translucent,
                           onTap: () => showModalBottomSheet<void>(
                             context: context,
                             isScrollControlled: true,
                             backgroundColor: Colors.transparent,
-                            builder: (context) => const PromoCodeModal(),
+                            builder: (context) => const PromoCodeBuilder(),
                           ),
                           child: Center(
                             child: Container(
@@ -211,6 +212,7 @@ class _PaywallViewState extends State<PaywallView> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             GestureDetector(
+                              behavior: HitTestBehavior.translucent,
                               onTap: () => const TermsRoute().push<void>(context),
                               child: Text(
                                 'Terms of Use'.tr(context),
@@ -222,6 +224,7 @@ class _PaywallViewState extends State<PaywallView> {
                             ),
                             const Gap(40),
                             GestureDetector(
+                              behavior: HitTestBehavior.translucent,
                               onTap: () => const PrivacyRoute().push<void>(context),
                               child: Text(
                                 'Privacy Policy'.tr(context),

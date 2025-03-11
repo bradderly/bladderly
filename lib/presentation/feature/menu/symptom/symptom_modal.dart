@@ -38,7 +38,7 @@ class SymptomModal extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
             child: Column(
               children: [
-                ModalTitle(context, 'Symptom Score'.tr(context)),
+                ModalTitle(title: 'Symptom Score'.tr(context)),
                 const SizedBox(height: 40),
                 Expanded(
                   child: ListView.builder(

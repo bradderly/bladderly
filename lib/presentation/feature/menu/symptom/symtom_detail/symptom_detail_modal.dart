@@ -8,7 +8,6 @@ import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/model/symptom_survey_model.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/model/symptom_survey_question_model.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/model/symptom_survey_result_model.dart';
-import 'package:bladderly/presentation/feature/menu/widget/modal_title_date_back.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
@@ -38,10 +37,39 @@ class SymptomDetailModal extends StatelessWidget {
           padding: const EdgeInsets.only(left: 8, top: 41, right: 8),
           child: Column(
             children: [
-              ModalTitleDateBack(
-                context,
-                formattedDate.tr(context),
-                formattedTime.tr(context),
+              SizedBox(
+                width: double.infinity,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          formattedDate.tr(context),
+                          style: context.textStyleTheme.b16SemiBold.copyWith(
+                            color: context.colorTheme.neutral.shade10,
+                          ),
+                        ),
+                        Text(
+                          formattedTime.tr(context),
+                          style: context.textStyleTheme.b14SemiBold.copyWith(
+                            color: context.colorTheme.neutral.shade6,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Positioned(
+                      left: 0,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: context.colorTheme.neutral.shade10,
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const Gap(24),
               Expanded(
@@ -62,7 +90,7 @@ class SymptomDetailModal extends StatelessWidget {
                                     color: context.colorTheme.neutral.shade7,
                                   ),
                                 ),
-                                const Gap(4),
+                                const Gap(8),
                                 Text(
                                   SymptomSurveyResultModel.fromTotalScore(score.totalScore).name.tr(context),
                                   style: context.textStyleTheme.b28Bold.copyWith(

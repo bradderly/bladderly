@@ -49,7 +49,7 @@ class SymptomResultModal extends StatelessWidget {
                 controller: controller,
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 children: [
-                  ModalTitle(context, score.type.name.tr(context)),
+                  ModalTitle(title: score.type.name.tr(context)),
                   const Gap(40),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -127,6 +127,7 @@ class SymptomResultModal extends StatelessWidget {
               ),
             ),
             GestureDetector(
+              behavior: HitTestBehavior.translucent,
               onTap: context.pop,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),

@@ -77,6 +77,7 @@ class PromoContactUsView extends StatelessWidget {
                           isMessage: true,
                         ),
                         GestureDetector(
+                          behavior: HitTestBehavior.translucent,
                           onTap: () {
                             if (formState.email.isEmpty || formState.message.isEmpty) {
                               return;
@@ -146,8 +147,7 @@ class PromoContactUsView extends StatelessWidget {
             decoration: BoxDecoration(
               color: context.colorTheme.neutral.shade2,
               border: Border.all(
-                color: context.colorTheme.neutral.shade5,
-                width: 0,
+                color: Colors.transparent,
               ),
               borderRadius: BorderRadius.circular(12),
             ),

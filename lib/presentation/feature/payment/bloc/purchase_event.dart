@@ -15,7 +15,9 @@ class PaymentInitializeHandler extends PaymentEvent {
   final String userId;
 
   @override
-  List<Object> get props => [userId];
+  List<Object> get props => [
+        userId,
+      ];
 }
 
 class PaymentPurchasePlan extends PaymentEvent {

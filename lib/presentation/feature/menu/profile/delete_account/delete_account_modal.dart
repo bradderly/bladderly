@@ -41,6 +41,8 @@ class _DeleteAccountModalState extends State<DeleteAccountModal> {
     context.read<DeleteAccountBloc>().add(
           DeleteAccount(
             email: emailText,
+            id: userModel.id,
+            reason: selectedReason ?? '',
           ),
         );
   }
@@ -70,7 +72,7 @@ class _DeleteAccountModalState extends State<DeleteAccountModal> {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
             child: Column(
               children: [
-                ModalTitle(context, 'Delete Account'.tr(context)),
+                ModalTitle(title: 'Delete Account'.tr(context)),
                 const SizedBox(height: 58),
                 Expanded(
                   child: ListView(
@@ -101,6 +103,7 @@ class _DeleteAccountModalState extends State<DeleteAccountModal> {
                   ),
                 ),
                 GestureDetector(
+                  behavior: HitTestBehavior.translucent,
                   onTap: () {
                     if (selectedReason == null) {
                       return;
@@ -163,10 +166,11 @@ void showDeleteAccountDialog(
             Column(
               children: [
                 GestureDetector(
+                  behavior: HitTestBehavior.translucent,
                   onTap: onConfirm,
                   child: Container(
                     alignment: Alignment.center,
-                    height: 56,
+                    padding: const EdgeInsets.only(top: 19, bottom: 18),
                     decoration: BoxDecoration(
                       color: context.colorTheme.neutral.shade2,
                       borderRadius: BorderRadius.circular(400),
@@ -179,12 +183,13 @@ void showDeleteAccountDialog(
                 ),
                 const SizedBox(height: 16),
                 GestureDetector(
+                  behavior: HitTestBehavior.translucent,
                   onTap: () {
                     Navigator.pop(context);
                   },
                   child: Container(
                     alignment: Alignment.center,
-                    height: 56,
+                    padding: const EdgeInsets.only(top: 19, bottom: 18),
                     decoration: BoxDecoration(
                       color: context.colorTheme.vermilion.primary.shade50,
                       borderRadius: BorderRadius.circular(400),

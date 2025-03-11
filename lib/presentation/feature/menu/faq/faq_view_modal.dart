@@ -26,7 +26,7 @@ class FaqViewModal extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
           child: Column(
             children: [
-              ModalTitle(context, 'FAQ'.tr(context)),
+              ModalTitle(title: 'FAQ'.tr(context)),
               const SizedBox(height: 20),
               //웹뷰 위치
             ],

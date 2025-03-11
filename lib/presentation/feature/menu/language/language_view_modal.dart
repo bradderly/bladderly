@@ -39,7 +39,7 @@ class _LanguageViewModalState extends State<LanguageViewModal> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ModalTitle(context, 'Language'.tr(context, appLocale: appLocale)),
+            ModalTitle(title: 'Language'.tr(context, appLocale: appLocale)),
             const SizedBox(height: 16),
             Expanded(
               child: ListView(
@@ -56,6 +56,7 @@ class _LanguageViewModalState extends State<LanguageViewModal> {
             ),
             const SizedBox(height: 16),
             GestureDetector(
+              behavior: HitTestBehavior.translucent,
               onTap: () => Navigator.of(context).pop(appLocale),
               child: Container(
                 width: double.infinity,

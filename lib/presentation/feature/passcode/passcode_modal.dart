@@ -1,76 +1,42 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:bladderly/core/bio_auth/bio_auth.dart';
 import 'package:bladderly/presentation/common/cubit/passcode_cubit.dart';
-import 'package:bladderly/presentation/feature/menu/profile/passcode/passcode_input_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:local_auth/local_auth.dart';
-import 'package:flutter/foundation.dart'; // 추가: 플랫폼 정보를 가져오기 위해 사용
-
 // PasscodeCubit 가져오기
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:bladderly/presentation/feature/passcode/input/passcode_input_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PasscodeModal extends StatelessWidget {
   const PasscodeModal({super.key});
 
-  Future<void> authenticate(BuildContext context) async {
-    final auth = LocalAuthentication();
+  Future<void> _authenticate(BuildContext context) async {
+    final canBioAuthenticate = await BioAuth().canAuthenticate();
 
-    // 플랫폼이 Android가 아닌 경우에만 생체 인증을 시도
-    if (!kIsWeb && defaultTargetPlatform != TargetPlatform.android) {
-      final canCheckBiometrics = await auth.canCheckBiometrics;
-      final isDeviceSupported = await auth.isDeviceSupported();
+    final didAuthenticate = switch (canBioAuthenticate) {
+      true => await BioAuth().authenticate(),
+      false => await Future.value(true),
+    };
 
-      if (canCheckBiometrics && isDeviceSupported) {
-        try {
-          final didAuthenticate = await auth.authenticate(
-            localizedReason: '얼굴 인식을 사용하여 로그인하세요.',
-            options: const AuthenticationOptions(biometricOnly: true),
-          );
-          if (didAuthenticate) {
-            // 생체 인증 성공 -> 비밀번호 입력 화면으로 이동
-            final result = await showModalBottomSheet<String>(
-              context: context,
-              isScrollControlled: true, // 컨텐츠 크기에 맞춰서 스크롤
-              backgroundColor: Colors.transparent, // 배경 투명 설정
-              builder: (BuildContext context) {
-                return const PasscodeInputScreen();
-              },
-            );
-            if (result != null) {
-              // 비밀번호 설정 성공
-              context.read<PasscodeCubit>().toggleBiometric(true);
-              context.read<PasscodeCubit>().setPasscode(result);
-            }
-          }
-        } catch (e) {
-          if (kDebugMode) {
-            print('인증 오류: $e');
-          }
-        }
-      } else {
-        if (kDebugMode) {
-          print('Face ID 사용 불가');
-        }
-      }
-    } else {
-      // Android일 때는 생체 인증 건너뛰기
-      final result = await showModalBottomSheet<String>(
-        context: context,
-        isScrollControlled: true, // 컨텐츠 크기에 맞춰서 스크롤
-        backgroundColor: Colors.transparent, // 배경 투명 설정
-        builder: (BuildContext context) {
-          return const PasscodeInputScreen();
-        },
-      );
-      if (result != null) {
-        // 비밀번호 설정 성공
-        context.read<PasscodeCubit>().toggleBiometric(true);
-        context.read<PasscodeCubit>().setPasscode(result);
-      }
-    }
+    if (!didAuthenticate || !context.mounted) return;
+
+    await _setPasscode(context);
+  }
+
+  Future<void> _setPasscode(BuildContext context) async {
+    final passcode = await showModalBottomSheet<String>(
+      context: context,
+      isScrollControlled: true, // 컨텐츠 크기에 맞춰서 스크롤
+      backgroundColor: Colors.transparent, // 배경 투명 설정
+      builder: (context) => const PasscodeInputScreen(),
+    );
+
+    if (passcode == null) return;
+
+    context.read<PasscodeCubit>().lock(passcode: passcode);
   }
 
   @override
@@ -94,7 +60,7 @@ class PasscodeModal extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
               child: Column(
                 children: [
-                  ModalTitle(context, 'Set Up Passcode'.tr(context)),
+                  ModalTitle(title: 'Set Up Passcode'.tr(context)),
                   const SizedBox(height: 38),
                   Expanded(
                     child: ListView(
@@ -120,20 +86,16 @@ class PasscodeModal extends StatelessWidget {
                                       ),
                                     ),
                                     GestureDetector(
-                                      onTap: () {
-                                        if (context.read<PasscodeCubit>().state.isBiometricEnabled) {
-                                          context.read<PasscodeCubit>().toggleBiometric(false);
-                                          context.read<PasscodeCubit>().clearPasscode();
-                                        } else {
-                                          authenticate(context);
-                                        }
-                                      },
+                                      behavior: HitTestBehavior.translucent,
+                                      onTap: () => context.read<PasscodeCubit>().state.isLocked
+                                          ? context.read<PasscodeCubit>().unlock()
+                                          : _authenticate(context),
                                       child: Container(
                                         width: 51,
                                         height: 31,
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(20),
-                                          color: context.read<PasscodeCubit>().state.isBiometricEnabled
+                                          color: context.read<PasscodeCubit>().state.isLocked
                                               ? context.colorTheme.vermilion.primary.shade50
                                               : const Color(0x29787880),
                                           boxShadow: const [
@@ -148,10 +110,10 @@ class PasscodeModal extends StatelessWidget {
                                           children: [
                                             // 흰색 또는 주황색 동그라미
                                             Positioned(
-                                              left: context.read<PasscodeCubit>().state.isBiometricEnabled
+                                              left: context.read<PasscodeCubit>().state.isLocked
                                                   ? 20.0
                                                   : 0.0, // 오른쪽이면 20.0, 아니면 0.0
-                                              right: context.read<PasscodeCubit>().state.isBiometricEnabled
+                                              right: context.read<PasscodeCubit>().state.isLocked
                                                   ? 0.0
                                                   : 20.0, // 왼쪽이면 20.0, 아니면 0.0
                                               top: 3,
@@ -162,7 +124,7 @@ class PasscodeModal extends StatelessWidget {
                                                 height: 30,
                                                 decoration: BoxDecoration(
                                                   shape: BoxShape.circle,
-                                                  color: context.read<PasscodeCubit>().state.isBiometricEnabled
+                                                  color: context.read<PasscodeCubit>().state.isLocked
                                                       ? Colors.white // Biometric가 활성화되었으면 주황색
                                                       : Colors.white, // 그렇지 않으면 흰색
                                                 ),
@@ -188,41 +150,31 @@ class PasscodeModal extends StatelessWidget {
                       ],
                     ),
                   ),
-                  GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () async {
-                      if (context.read<PasscodeCubit>().state.isBiometricEnabled) {
-                        final result = await showModalBottomSheet<String>(
-                          context: context,
-                          isScrollControlled: true, // 컨텐츠 크기에 맞춰서 스크롤
-                          backgroundColor: Colors.transparent, // 배경 투명 설정
-                          builder: (BuildContext context) {
-                            return const PasscodeInputScreen();
-                          },
-                        );
-                        if (result != null) {
-                          // 비밀번호 설정 성공
-                          context.read<PasscodeCubit>().setPasscode(result);
-                        }
-                      }
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      margin: const EdgeInsets.symmetric(horizontal: 67),
-                      padding: const EdgeInsets.symmetric(vertical: 14.5),
-                      decoration: BoxDecoration(
-                        color: context.read<PasscodeCubit>().state.isBiometricEnabled
-                            ? context.colorTheme.vermilion.primary.shade50
-                            : context.colorTheme.neutral.shade6,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        'Change passcode'.tr(context),
-                        style: context.textStyleTheme.b16SemiBold.copyWith(
-                          color: context.colorTheme.neutral.shade0,
+                  BlocSelector<PasscodeCubit, PasscodeState, bool>(
+                    selector: (state) => state.isLocked,
+                    builder: (context, isLocked) {
+                      return GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: isLocked ? () => _setPasscode(context) : null,
+                        child: Container(
+                          alignment: Alignment.center,
+                          margin: const EdgeInsets.symmetric(horizontal: 67),
+                          padding: const EdgeInsets.symmetric(vertical: 14.5),
+                          decoration: BoxDecoration(
+                            color: context.read<PasscodeCubit>().state.isLocked
+                                ? context.colorTheme.vermilion.primary.shade50
+                                : context.colorTheme.neutral.shade6,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            'Change passcode'.tr(context),
+                            style: context.textStyleTheme.b16SemiBold.copyWith(
+                              color: context.colorTheme.neutral.shade0,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
                 ],
               ),

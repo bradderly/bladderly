@@ -1,16 +1,22 @@
 // Flutter imports:
+import 'dart:async';
+
+import 'package:bladderly/core/bio_auth/bio_auth.dart';
 import 'package:bladderly/domain/exception/not_supported_device_exception.dart';
 import 'package:bladderly/presentation/common/bloc/app_config_bloc.dart';
 // Project imports:
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
+import 'package:bladderly/presentation/common/cubit/passcode_cubit.dart';
 import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
 import 'package:bladderly/presentation/feature/splash/bloc/splash_bloc.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/intro_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+import 'package:bladderly/presentation/router/route/passcode_auth_route.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rxdart/rxdart.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -20,25 +26,29 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
+  final subject =
+      BehaviorSubject<({bool waitingSuccess, bool initialized})>.seeded((waitingSuccess: false, initialized: false));
+
   @override
   void initState() {
+    subject.map((value) => value.initialized && value.waitingSuccess).listen((value) => value ? landPage() : null);
+
     context.read<AppConfigBloc>().add(const AppConfigLoad());
 
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => Future<void>.delayed(
         const Duration(seconds: 1),
-        _checkInialized,
+        () => subject.value = (waitingSuccess: true, initialized: subject.value.initialized),
       ),
     );
+
     super.initState();
   }
 
-  void _checkInialized() {
-    if (!mounted) return;
-
-    if (context.read<SplashBloc>().state is! SplashCheckSupportedDeviceSuccess) return;
-
-    landPage();
+  @override
+  void dispose() {
+    subject.close();
+    super.dispose();
   }
 
   Future<void> _onCheckSupportedDeviceFailure(BuildContext context, SplashCheckSupportedDeviceFailure state) {
@@ -53,12 +63,28 @@ class _SplashViewState extends State<SplashView> {
     return Future<void>.value();
   }
 
-  void landPage() {
-    if (context.read<UserBloc>().state is UserLoadSuccess) {
-      return const MainRoute().go(context);
+  Future<void> landPage() async {
+    final alreadyLoggedIn = context.read<UserBloc>().state is UserLoadSuccess;
+    final isLocked = context.read<PasscodeCubit>().state.isLocked;
+
+    /// 로그인이 되어 있지 않으면 IntroRoute로 이동
+    if (!alreadyLoggedIn) return const IntroRoute().go(context);
+
+    if (!isLocked) return const MainRoute().go(context);
+
+    final useBioAtuh = await BioAuth().canAuthenticate();
+
+    if (!mounted) return;
+
+    if (!useBioAtuh) {
+      return const PasscodeAuthRoute().go(context);
     }
 
-    return const IntroRoute().go(context);
+    while (true) {
+      final successBioAuth = await BioAuth().authenticate();
+
+      if (successBioAuth && mounted) return const MainRoute().go(context);
+    }
   }
 
   @override
@@ -73,7 +99,8 @@ class _SplashViewState extends State<SplashView> {
         ),
         BlocListener<SplashBloc, SplashState>(
           listener: (context, state) => switch (state) {
-            SplashCheckSupportedDeviceSuccess() => _checkInialized(),
+            SplashCheckSupportedDeviceSuccess() => subject.value =
+                (waitingSuccess: subject.value.waitingSuccess, initialized: true),
             SplashCheckSupportedDeviceFailure() => _onCheckSupportedDeviceFailure(context, state),
             _ => null,
           },

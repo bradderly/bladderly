@@ -88,7 +88,7 @@ class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
             child: Column(
               children: [
-                ModalTitle(context, widget.symptomSurveyModel.scoreType.name.tr(context)),
+                ModalTitle(title: widget.symptomSurveyModel.scoreType.name.tr(context)),
                 const SizedBox(height: 39.5),
                 Expanded(
                   child: BlocBuilder<SymptomSurveyFormCubit, SymptomSurveyFormState>(
@@ -138,6 +138,7 @@ class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
                     children: [
                       Expanded(
                         child: GestureDetector(
+                          behavior: HitTestBehavior.translucent,
                           onTap: onPreviousQuestion,
                           child: Container(
                             alignment: Alignment.center,
@@ -160,6 +161,7 @@ class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
                         selector: (state) => state.hasAnswer,
                         builder: (context, hasAnswer) => Expanded(
                           child: GestureDetector(
+                            behavior: HitTestBehavior.translucent,
                             onTap: hasAnswer ? onNextQuestion : null,
                             child: Container(
                               alignment: Alignment.center,

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:bladderly/core/package_device_info/src/model/device_info_model.dart';
@@ -68,8 +67,7 @@ class PaymentRepositoryImpl implements PaymentRepository {
     required String purchaseToken,
     required String receipt,
   }) async {
-    final result = await _apiClient
-        .checkPayment(
+    final result = await _apiClient.checkPayment(
       request: PaymentCheckRequest(
         userId: userId,
         device: _deviceInfoModel.os,
@@ -77,11 +75,7 @@ class PaymentRepositoryImpl implements PaymentRepository {
         purchaseToken: purchaseToken,
         receipt: receipt,
       ),
-    )
-        .catchError((error) {
-      print(error);
-      return error;
-    });
+    );
 
     return result.body!;
   }

@@ -23,11 +23,11 @@ class PromoCodeBuilder extends StatelessWidget {
         ),
         BlocProvider<PromoCodeBloc>(
           create: (_) => PromoCodeBloc(
-            promoCodeUsecase: getIt<CheckPromoCodeUsecase>(),
+            checkPromoCodeUsecase: getIt<CheckPromoCodeUsecase>(),
           ),
         ),
       ],
-      child: const PromoCodeModal(),
+      child: const PromoCodeModal(), // ✅ BlocProvider 내부에서 PromoCodeModal 사용
     );
   }
 }

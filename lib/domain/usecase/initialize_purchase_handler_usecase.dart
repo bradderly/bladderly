@@ -84,11 +84,13 @@ class InitializePurchaseHandlerUsecase {
     required String userId,
     required PurchaseDetails purchaseDetails,
   }) async {
-    /// TODO(eden) : 구매 검증로직 필요
-    //     await _paymentRepository.verifyPayment(
-    //       userId: userId,
-    //  receipt: purchaseDetails.productID,
-    //     );
+    await _paymentRepository.verifyPayment(
+      userId: userId,
+      productId: purchaseDetails.productID,
+      purchaseToken: purchaseDetails.verificationData.serverVerificationData,
+      receipt: purchaseDetails.productID,
+    );
+
     _purchaseStatusSubject.add(purchaseDetails.status);
 
     if (purchaseDetails.pendingCompletePurchase) {

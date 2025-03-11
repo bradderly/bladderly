@@ -43,6 +43,7 @@ class _HowtouseViewState extends State<HowtouseView> {
         ),
         actions: [
           GestureDetector(
+            behavior: HitTestBehavior.translucent,
             onTap: () => context.pop<bool>(true),
             child: Text(
               'Skip ->',

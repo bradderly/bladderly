@@ -6,12 +6,11 @@ import 'package:bladderly/presentation/common/model/user_model.dart';
 import 'package:bladderly/presentation/feature/menu/profile/bloc/profile_bloc.dart';
 import 'package:bladderly/presentation/feature/menu/profile/change_password/change_password_builder.dart';
 import 'package:bladderly/presentation/feature/menu/profile/delete_account/delete_account_builder.dart';
-import 'package:bladderly/presentation/feature/menu/profile/passcode/password_builder.dart';
 import 'package:bladderly/presentation/feature/menu/profile/widget/profile_name_input_field.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:bladderly/presentation/feature/menu/widget/text_icon_arrow_form.dart';
-import 'package:bladderly/presentation/feature/menu/widget/text_view_form.dart';
+import 'package:bladderly/presentation/feature/passcode/passcode_builder.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -52,7 +51,7 @@ class ProfileModal extends StatelessWidget {
             return Column(
               children: [
                 const Gap(40),
-                ModalTitle(context, 'User Profile'.tr(context)),
+                ModalTitle(title: 'User Profile'.tr(context)),
                 const SizedBox(height: 41),
                 Expanded(
                   child: ListView(
@@ -193,7 +192,6 @@ class ProfileModal extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   SizedBox(
-                                    height: 60,
                                     child: Text(
                                       'Sign out Message'.tr(context),
                                       style: context.textStyleTheme.b16SemiBold
@@ -202,10 +200,11 @@ class ProfileModal extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 24),
                                   GestureDetector(
+                                    behavior: HitTestBehavior.translucent,
                                     onTap: () => context.read<UserBloc>().add(const UserSignOut()),
                                     child: Container(
                                       alignment: Alignment.center,
-                                      height: 56,
+                                      padding: const EdgeInsets.only(top: 19, bottom: 18),
                                       decoration: BoxDecoration(
                                         color: context.colorTheme.neutral.shade2,
                                         borderRadius: BorderRadius.circular(400),
@@ -219,10 +218,11 @@ class ProfileModal extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 16),
                                   GestureDetector(
+                                    behavior: HitTestBehavior.translucent,
                                     onTap: Navigator.of(context).pop,
                                     child: Container(
                                       alignment: Alignment.center,
-                                      height: 56,
+                                      padding: const EdgeInsets.only(top: 19, bottom: 18),
                                       decoration: BoxDecoration(
                                         color: context.colorTheme.vermilion.primary.shade50,
                                         borderRadius: BorderRadius.circular(400),
@@ -256,6 +256,31 @@ class ProfileModal extends StatelessWidget {
             );
           },
         ),
+      ),
+    );
+  }
+
+  Widget TextViewForm(String title, String value, BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: context.textStyleTheme.b14Medium.copyWith(
+              color: context.colorTheme.neutral.shade6,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            value,
+            style: context.textStyleTheme.b16Medium.copyWith(
+              color: context.colorTheme.neutral.shade10,
+            ),
+          ),
+        ],
       ),
     );
   }

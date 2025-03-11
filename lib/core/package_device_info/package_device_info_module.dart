@@ -1,14 +1,13 @@
 // Dart imports:
 import 'dart:io';
 
+// Project imports:
+import 'package:bladderly/core/package_device_info/src/model/device_info_model.dart';
 // Package imports:
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:device_region/device_region.dart';
 import 'package:injectable/injectable.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-
-// Project imports:
-import 'package:bladderly/core/package_device_info/src/model/device_info_model.dart';
 
 @module
 abstract class PackageDeviceInfoModule {
@@ -20,6 +19,7 @@ abstract class PackageDeviceInfoModule {
 
     late final String deviceName;
     late final String os;
+
     if (Platform.isAndroid) {
       final androidInfo = await deviceInfoPlugin.androidInfo;
       deviceName = androidInfo.model;
@@ -31,12 +31,10 @@ abstract class PackageDeviceInfoModule {
     }
 
     return DeviceInfoModel(
-        name: deviceName.replaceAll(
-          RegExp('[^a-zA-Z0-9_]'),
-          '',
-        ),
-        region: region ?? '',
-        os: os);
+      name: deviceName.replaceAll(RegExp('[^a-zA-Z0-9_]'), ''),
+      region: region ?? '',
+      os: os,
+    );
   }
 
   @lazySingleton

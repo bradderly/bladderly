@@ -43,7 +43,7 @@ class _PlanCancelModalState extends State<PlanCancelModal> {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
           child: Column(
             children: [
-              ModalTitle(context, 'Cancel plan'.tr(context)),
+              ModalTitle(title: 'Cancel plan'.tr(context)),
               const SizedBox(height: 58),
               Expanded(
                 child: ListView(
@@ -74,6 +74,7 @@ class _PlanCancelModalState extends State<PlanCancelModal> {
                 ),
               ),
               GestureDetector(
+                behavior: HitTestBehavior.translucent,
                 onTap: () {
                   if (selectedReason == null) {
                     return;
@@ -140,9 +141,13 @@ void showDeletePlanDialog(
             Column(
               children: [
                 GestureDetector(
+                  behavior: HitTestBehavior.translucent,
                   onTap: onConfirm,
                   child: Container(
-                    height: 56,
+                    padding: const EdgeInsets.only(
+                      top: 19,
+                      bottom: 18,
+                    ),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: context.colorTheme.vermilion.primary.shade50,
