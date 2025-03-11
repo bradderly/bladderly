@@ -1,9 +1,4 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 // Project imports:
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
@@ -13,6 +8,9 @@ import 'package:bladderly/presentation/common/widget/progress_indicator_modal.da
 import 'package:bladderly/presentation/feature/menu/profile/delete_account/bloc/delete_account_bloc.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:bladderly/presentation/feature/menu/widget/reason_option.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DeleteAccountModal extends StatefulWidget {
   const DeleteAccountModal({super.key});
@@ -57,7 +55,7 @@ class _DeleteAccountModalState extends State<DeleteAccountModal> {
         return BlocListener<DeleteAccountBloc, DeleteAccountState>(
           listener: (context, state) => switch (state) {
             DeleteAccountInitial() => ProgressIndicatorModal.show(context),
-            DeleteAccountSuccess() => context.read<UserBloc>().add(const UserSignOut()),
+            DeleteAccountSuccess() => context.signOut(),
             DeleteAccountFailure() => {},
             _ => null,
           },

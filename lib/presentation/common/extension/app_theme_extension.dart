@@ -1,7 +1,10 @@
 // Flutter imports:
 // Project imports:
 import 'package:bladderly/domain/model/unit.dart';
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/locale_cubit.dart';
+import 'package:bladderly/presentation/common/cubit/passcode_cubit.dart';
+import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/unit_cubit.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/theme/color/color_theme.dart';
@@ -27,4 +30,11 @@ extension BuildContextExtension on BuildContext {
   AppLocale get locale => watch<AppLocaleCubit>().state;
 
   String formatCurrency(num number) => select<AppLocaleCubit, String>((cubit) => cubit.state.formatCurrency(number));
+
+  void signOut() {
+    PendingUploadFileCubit().clear();
+    PasscodeCubit().clear();
+
+    read<UserBloc>().add(const UserSignOut());
+  }
 }
