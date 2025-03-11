@@ -90,7 +90,6 @@ class _BladderlyAppState extends State<BladderlyApp> {
             refreshHistoryResultUsecase: getIt<RefreshHistoryResultUsecase>(),
           ),
         ),
-        // PasscodeCubit을 전체 앱에서 제공
         BlocProvider<PasscodeCubit>(create: (_) => PasscodeCubit()),
         BlocProvider<AppConfigBloc>(
           create: (_) => AppConfigBloc(

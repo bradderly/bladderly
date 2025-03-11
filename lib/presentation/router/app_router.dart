@@ -1,15 +1,14 @@
 // Flutter imports:
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:go_router/go_router.dart';
-
 // Project imports:
 import 'package:bladderly/presentation/router/route/intro_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+// Flutter imports:
+import 'package:bladderly/presentation/router/route/passcode_auth_route.dart';
 import 'package:bladderly/presentation/router/route/splash_route.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:go_router/go_router.dart';
 
 // Project imports:
 
@@ -23,6 +22,7 @@ class AppRouter {
       $introRoute,
       $mainRoute,
       $splashRoute,
+      $passcodeAuthRoute,
     ],
   );
 }

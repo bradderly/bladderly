@@ -1,22 +1,47 @@
 part of 'passcode_cubit.dart';
 
 class PasscodeState {
-  PasscodeState({required this.isBiometricEnabled, required this.passcode});
-  final bool isBiometricEnabled;
+  PasscodeState({
+    required this.isLocked,
+    required this.passcode,
+  });
+
+  static PasscodeState? fromJson(Map<String, dynamic> map) {
+    final isLocked = switch (map['isLocked']) {
+      final bool isLocked => isLocked,
+      _ => null,
+    };
+
+    final passcord = switch (map['passcode']) {
+      final String passcode => passcode,
+      _ => null,
+    };
+
+    if (isLocked == null || passcord == null) return null;
+
+    return PasscodeState(
+      isLocked: isLocked,
+      passcode: passcord,
+    );
+  }
+
+  final bool isLocked;
   final String passcode;
 
   /// JSON 변환을 위한 copyWith
-  PasscodeState copyWith({bool? isBiometricEnabled, String? passcode}) {
+  PasscodeState copyWith({
+    bool? isLocked,
+    String? passcode,
+  }) {
     return PasscodeState(
-      isBiometricEnabled: isBiometricEnabled ?? this.isBiometricEnabled,
+      isLocked: isLocked ?? this.isLocked,
       passcode: passcode ?? this.passcode,
     );
   }
 
-  /// JSON 변환 (저장용)
   Map<String, dynamic> toJson() {
     return {
-      'isBiometricEnabled': isBiometricEnabled,
+      'isLocked': isLocked,
       'passcode': passcode,
     };
   }

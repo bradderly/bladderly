@@ -17,7 +17,7 @@ import 'package:bladderly/presentation/feature/input/sound_input_recording/sound
 import 'package:bladderly/presentation/feature/main/main_builder.dart';
 import 'package:bladderly/presentation/feature/menu/faq/faq_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/menu_builder.dart';
-import 'package:bladderly/presentation/feature/menu/profile/passcode/passcode_auth_builder.dart';
+import 'package:bladderly/presentation/feature/passcode/auth/passcode_auth_builder.dart';
 import 'package:bladderly/presentation/feature/payment/paywall/paywall_builder.dart';
 import 'package:bladderly/presentation/feature/sign_up/regular/sign_up_regular_builder.dart';
 import 'package:bladderly/presentation/feature/tutorial/how_to_use/how_to_use_view.dart';
@@ -51,7 +51,6 @@ enum MainRouteTab {
         TypedGoRoute<TermsRoute>(path: 'terms', name: 'terms'),
         TypedGoRoute<PrivacyRoute>(path: 'privacy', name: 'privacy'),
         TypedGoRoute<FaqRoute>(path: 'faq', name: 'faq'),
-        TypedGoRoute<PasscodeAuthRoute>(path: 'passcode', name: 'passcode'),
         TypedGoRoute<PaywallRoute>(
           name: 'paywall',
           path: 'paywall',
@@ -368,18 +367,6 @@ class FaqRoute extends GoRouteData {
     return CupertinoPage<void>(
       key: state.pageKey,
       child: const FaqViewModal(),
-    );
-  }
-}
-
-class PasscodeAuthRoute extends GoRouteData {
-  const PasscodeAuthRoute();
-
-  @override
-  Page<void> buildPage(BuildContext context, GoRouterState state) {
-    return CupertinoPage<void>(
-      key: state.pageKey,
-      child: const PasscodeAuthBuilder(),
     );
   }
 }

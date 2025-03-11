@@ -46,6 +46,7 @@ class SignInView extends StatelessWidget {
         InvalidUserException() => null,
         final PasswordAttemptsExceededException exception => CommonErrorModal.showFromDominException<void>(
             context,
+            onTap: context.pop,
             exception: exception,
           ),
         _ => null,

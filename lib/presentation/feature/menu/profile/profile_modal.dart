@@ -6,11 +6,11 @@ import 'package:bladderly/presentation/common/model/user_model.dart';
 import 'package:bladderly/presentation/feature/menu/profile/bloc/profile_bloc.dart';
 import 'package:bladderly/presentation/feature/menu/profile/change_password/change_password_builder.dart';
 import 'package:bladderly/presentation/feature/menu/profile/delete_account/delete_account_builder.dart';
-import 'package:bladderly/presentation/feature/menu/profile/passcode/password_builder.dart';
 import 'package:bladderly/presentation/feature/menu/profile/widget/profile_name_input_field.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:bladderly/presentation/feature/menu/widget/text_icon_arrow_form.dart';
+import 'package:bladderly/presentation/feature/passcode/passcode_builder.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';

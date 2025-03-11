@@ -12,7 +12,6 @@ import 'package:bladderly/presentation/feature/about/about_modal.dart';
 import 'package:bladderly/presentation/feature/menu/contact_us/contact_us_builder.dart';
 import 'package:bladderly/presentation/feature/menu/faq/faq_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/language/language_view_modal.dart';
-import 'package:bladderly/presentation/feature/menu/profile/passcode/passcode_auth_builder.dart';
 import 'package:bladderly/presentation/feature/menu/profile/profile_builder.dart';
 import 'package:bladderly/presentation/feature/menu/symptom/symptom_builder.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
@@ -83,12 +82,9 @@ class MenuView extends StatelessWidget {
                         ),
                       ),
                       SettingsItem(
+                        onTap: () {},
                         icon: Icons.ios_share,
                         title: 'Data export'.tr(context),
-                        onTap: () => ModalHelper.showModal<void>(
-                          context: context,
-                          modalBuilder: (_) => const PasscodeAuthBuilder(),
-                        ),
                       ),
                       SettingsItem(
                         icon: Icons.bar_chart,
