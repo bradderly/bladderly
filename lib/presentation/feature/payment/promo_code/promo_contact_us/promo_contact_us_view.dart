@@ -147,8 +147,7 @@ class PromoContactUsView extends StatelessWidget {
             decoration: BoxDecoration(
               color: context.colorTheme.neutral.shade2,
               border: Border.all(
-                color: context.colorTheme.neutral.shade5,
-                width: 0,
+                color: Colors.transparent,
               ),
               borderRadius: BorderRadius.circular(12),
             ),

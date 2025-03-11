@@ -144,7 +144,10 @@ void showDeletePlanDialog(
                   behavior: HitTestBehavior.translucent,
                   onTap: onConfirm,
                   child: Container(
-                    height: 56,
+                    padding: const EdgeInsets.only(
+                      top: 19,
+                      bottom: 18,
+                    ),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: context.colorTheme.vermilion.primary.shade50,

@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_shrink_expand
+
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
@@ -118,7 +120,6 @@ class _PasscodeInputScreenState extends State<PasscodeInputScreen> {
                     // 👇 텍스트 필드를 완전히 숨김
                     Opacity(
                       opacity: 0,
-                      // ignore: sized_box_shrink_expand
                       child: SizedBox(
                         width: 0,
                         height: 0,

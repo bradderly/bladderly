@@ -41,6 +41,8 @@ class _DeleteAccountModalState extends State<DeleteAccountModal> {
     context.read<DeleteAccountBloc>().add(
           DeleteAccount(
             email: emailText,
+            id: userModel.id,
+            reason: selectedReason ?? '',
           ),
         );
   }
@@ -168,7 +170,7 @@ void showDeleteAccountDialog(
                   onTap: onConfirm,
                   child: Container(
                     alignment: Alignment.center,
-                    height: 56,
+                    padding: const EdgeInsets.only(top: 19, bottom: 18),
                     decoration: BoxDecoration(
                       color: context.colorTheme.neutral.shade2,
                       borderRadius: BorderRadius.circular(400),
@@ -187,7 +189,7 @@ void showDeleteAccountDialog(
                   },
                   child: Container(
                     alignment: Alignment.center,
-                    height: 56,
+                    padding: const EdgeInsets.only(top: 19, bottom: 18),
                     decoration: BoxDecoration(
                       color: context.colorTheme.vermilion.primary.shade50,
                       borderRadius: BorderRadius.circular(400),

@@ -21,8 +21,10 @@ class TextIconArrowForm extends StatelessWidget {
       behavior: HitTestBehavior.translucent,
       onTap: onTap,
       child: Container(
-        height: 48,
-        margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 24),
+        padding: const EdgeInsets.symmetric(
+          vertical: 12,
+        ),
+        margin: const EdgeInsets.symmetric(horizontal: 24),
         decoration: BoxDecoration(
           color: context.colorTheme.neutral.shade0,
           boxShadow: const [],

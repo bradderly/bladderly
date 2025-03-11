@@ -178,7 +178,6 @@ class _PromoCodeModalState extends State<PromoCodeModal> {
                     context.read<PromoCodeBloc>().add(promoCode);
                   },
                   child: Container(
-                    width: double.infinity,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     margin: const EdgeInsets.symmetric(horizontal: 44),
                     decoration: BoxDecoration(
@@ -187,7 +186,7 @@ class _PromoCodeModalState extends State<PromoCodeModal> {
                     ),
                     alignment: Alignment.center,
                     child: Text(
-                      '등록',
+                      'Apply'.tr(context),
                       style: context.textStyleTheme.b16SemiBold.copyWith(
                         color: Colors.white,
                       ),

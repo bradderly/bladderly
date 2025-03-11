@@ -192,7 +192,6 @@ class ProfileModal extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   SizedBox(
-                                    height: 60,
                                     child: Text(
                                       'Sign out Message'.tr(context),
                                       style: context.textStyleTheme.b16SemiBold
@@ -205,7 +204,7 @@ class ProfileModal extends StatelessWidget {
                                     onTap: () => context.read<UserBloc>().add(const UserSignOut()),
                                     child: Container(
                                       alignment: Alignment.center,
-                                      height: 56,
+                                      padding: const EdgeInsets.only(top: 19, bottom: 18),
                                       decoration: BoxDecoration(
                                         color: context.colorTheme.neutral.shade2,
                                         borderRadius: BorderRadius.circular(400),
@@ -223,7 +222,7 @@ class ProfileModal extends StatelessWidget {
                                     onTap: Navigator.of(context).pop,
                                     child: Container(
                                       alignment: Alignment.center,
-                                      height: 56,
+                                      padding: const EdgeInsets.only(top: 19, bottom: 18),
                                       decoration: BoxDecoration(
                                         color: context.colorTheme.vermilion.primary.shade50,
                                         borderRadius: BorderRadius.circular(400),
