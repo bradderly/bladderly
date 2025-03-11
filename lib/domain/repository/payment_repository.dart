@@ -14,6 +14,8 @@ abstract class PaymentRepository {
 
   Future<void> verifyPayment({
     required String userId,
+    required String productId,
+    required String purchaseToken,
     required String receipt,
   });
 }

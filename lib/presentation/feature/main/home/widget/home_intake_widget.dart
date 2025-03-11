@@ -91,6 +91,7 @@ class HomeIntakeWidget extends StatelessWidget {
           if (row.isOdd) return const Gap(16);
 
           return SizedBox(
+            width: double.infinity,
             height: 125,
             child: LayoutBuilder(
               builder: (context, constraints) => OverflowBox(
@@ -102,14 +103,14 @@ class HomeIntakeWidget extends StatelessWidget {
                     children: List.generate(3, (column) {
                       final index = (row ~/ 2 * 3) + column;
                       final baverageType = BeverageTypeModel.values[index];
-
+                      final itemWidth = (constraints.maxWidth - (16 * 2)) / 3;
                       return GestureDetector(
                         onTap: () => IntakeInputRoute.fromBeverageType(beverageType: baverageType).push<void>(context),
                         child: Column(
                           children: [
                             Container(
-                              width: 100,
-                              height: 100,
+                              width: itemWidth,
+                              height: itemWidth,
                               clipBehavior: Clip.antiAlias,
                               decoration: ShapeDecoration(
                                 color: Colors.white,

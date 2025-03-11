@@ -21,9 +21,7 @@ class InitializePurchaseHandlerUsecase {
 
   StreamSubscription<List<PurchaseDetails>>? _subscription;
 
-  Either<Exception, Stream<PurchaseStatus?>> call({
-    required String userId,
-  }) {
+  Either<Exception, Stream<PurchaseStatus?>> call({required String userId}) {
     _purchaseStatusSubject.add(null);
 
     _subscription?.cancel();
@@ -68,11 +66,12 @@ class InitializePurchaseHandlerUsecase {
     required String userId,
     required PurchaseDetails purchaseDetails,
   }) async {
-    /// TODO(eden) : 구매 검증로직 필요
-    //     await _paymentRepository.verifyPayment(
-    //       userId: userId,
-    //  receipt: purchaseDetails.productID,
-    //     );
+    await _paymentRepository.verifyPayment(
+      userId: userId,
+      productId: purchaseDetails.productID,
+      purchaseToken: purchaseDetails.verificationData.serverVerificationData,
+      receipt: purchaseDetails.verificationData.serverVerificationData,
+    );
 
     _purchaseStatusSubject.add(purchaseDetails.status);
 

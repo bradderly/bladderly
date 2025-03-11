@@ -19,22 +19,24 @@ abstract class PackageDeviceInfoModule {
     final region = await DeviceRegion.getSIMCountryCode().catchError((_) => null);
 
     late final String deviceName;
-
+    late final String os;
     if (Platform.isAndroid) {
       final androidInfo = await deviceInfoPlugin.androidInfo;
       deviceName = androidInfo.model;
+      os = 'android';
     } else {
       final iosInfo = await deviceInfoPlugin.iosInfo;
       deviceName = iosInfo.utsname.machine.replaceAll(',', '_');
+      os = 'ios';
     }
 
     return DeviceInfoModel(
-      name: deviceName.replaceAll(
-        RegExp('[^a-zA-Z0-9_]'),
-        '',
-      ),
-      region: region ?? '',
-    );
+        name: deviceName.replaceAll(
+          RegExp('[^a-zA-Z0-9_]'),
+          '',
+        ),
+        region: region ?? '',
+        os: os);
   }
 
   @lazySingleton

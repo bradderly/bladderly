@@ -1,6 +1,8 @@
 // Flutter imports:
 
 // Project imports:
+import 'dart:io';
+
 import 'package:bladderly/core/recorder/recorder_module.dart';
 import 'package:bladderly/domain/exception/get_history_result_failure_exception.dart';
 import 'package:bladderly/presentation/common/bloc/history_result_bloc.dart';
