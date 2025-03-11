@@ -75,7 +75,7 @@ class MenuView extends StatelessWidget {
                     items: [
                       SettingsItem(
                         icon: Icons.credit_card,
-                        title: 'Plan'.tr(context),
+                        title: 'Premium Plan'.tr(context),
                         onTap: () => ModalHelper.showModal<void>(
                           context: context,
                           modalBuilder: (_) => const PlanBuilder(),

@@ -173,7 +173,7 @@ class _PaywallViewState extends State<PaywallView> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 13),
                       child: Text(
-                        'Your monthly or annual subscription automatically renews for the same term unless canceled.'
+                        'Your subscription renews automatically and can be canceled anytime.'
                             .tr(context)
                             .applyWordBreak(),
                         style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),

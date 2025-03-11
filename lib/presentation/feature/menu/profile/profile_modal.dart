@@ -127,7 +127,7 @@ class ProfileModal extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       TextViewForm(
-                        'Email ID'.tr(context),
+                        'Bladderly ID'.tr(context),
                         emailOrId,
                         context,
                       ),

@@ -83,7 +83,7 @@ class SignInView extends StatelessWidget {
               ),
               const Gap(24),
               Text(
-                'It’s free, secure and easy.\nWe will save your data safely.'.tr(context),
+                'Just 3 seconds is enough. Sign up and store your data for free and securely!'.tr(context),
                 style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade10),
               ),
               const Gap(44),
