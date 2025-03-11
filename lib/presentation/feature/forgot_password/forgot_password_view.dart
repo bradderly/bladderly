@@ -21,7 +21,7 @@ class ForgotPasswordView extends StatelessWidget {
         ForgotPasswordSendVerificationCodeInProgress() => ProgressIndicatorModal.show(context),
         ForgotPasswordSendVerificationCodeSuccess() => context.pop(),
 
-        /// TODO(eden): 이메일 전송 실패시 케이스 추가 필요
+        // TODO(eden): 이메일 전송 실패시 케이스 추가 필요
         ForgotPasswordSendVerificationCodeFailure() => context.pop(),
         ForgotPasswordChangePasswordInProgress() => ProgressIndicatorModal.show(context),
         ForgotPasswordChangePasswordSuccess() => const SignInRoute().go(context),

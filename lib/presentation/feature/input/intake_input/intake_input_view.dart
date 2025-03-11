@@ -81,9 +81,12 @@ class _IntakeInputViewState extends State<IntakeInputView> {
           centerTitle: true,
           title: Padding(
             padding: const EdgeInsets.only(left: 26, top: 18),
-            child: InputRecordTimeWidget(
-              onChanged: context.read<IntakeInputFormCubit>().setRecordTime,
-              dateTime: context.read<IntakeInputFormCubit>().state.recordTime,
+            child: BlocSelector<IntakeInputFormCubit, IntakeInputFormState, DateTime>(
+              selector: (state) => state.recordTime,
+              builder: (context, recordTime) => InputRecordTimeWidget(
+                onChanged: context.read<IntakeInputFormCubit>().setRecordTime,
+                dateTime: recordTime,
+              ),
             ),
           ),
           actions: [

@@ -1,14 +1,13 @@
 // Package imports:
 
-// Package imports:
-import 'package:dartz/dartz.dart';
-import 'package:injectable/injectable.dart';
-
 // Project imports:
 import 'package:bladderly/core/network_checker/network_checker.dart';
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/history_status.dart';
 import 'package:bladderly/domain/repository/history_repository.dart';
+// Package imports:
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class SaveIntakeHistoryUsecase {
@@ -53,10 +52,8 @@ class SaveIntakeHistoryUsecase {
       final doneHistory = await _historyRepository.saveHistory(history.setStatus(HistoryStatus.done));
 
       return Right(doneHistory);
-    } on Exception catch (e) {
-      return Left(e);
     } catch (e) {
-      return Left(Exception(e.toString()));
+      return Left(e is Exception ? e : Exception(e.toString()));
     }
   }
 }
