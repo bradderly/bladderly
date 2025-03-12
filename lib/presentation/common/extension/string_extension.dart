@@ -19,6 +19,6 @@ extension StringExtension on String {
   }
 
   int getRoundedVolume() {
-    return (double.tryParse(this) ?? 0).round() * 10;
+    return ((double.tryParse(this) ?? 0) / 10).round() * 10;
   }
 }
