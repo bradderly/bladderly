@@ -12,9 +12,12 @@ abstract class AuthRepository {
     required int yearOfBirth,
   });
 
-  /// 정회원 전환
-  Future<User> signUp({
+  /// 정회원 전환 성공 시 userId 반환
+  Future<String> signUp({
     required String userId,
+    required String gender,
+    required String yearOfBirth,
+    required String signUpMethod,
     required String email,
     required String password,
     required String userName,

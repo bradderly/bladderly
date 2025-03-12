@@ -15,14 +15,14 @@ abstract class UserModel extends Equatable {
   factory UserModel.fromDomain(User user) {
     if (user.signUpMethod == SignUpMethod.N) {
       return GuestUserModel(
-        id: user.id,
+        id: user.userId,
         gender: user.gender,
         yearOfBirth: user.yearOfBirth,
       );
     }
 
     return RegularUserModel(
-      id: user.id,
+      id: user.userId,
       gender: user.gender,
       yearOfBirth: user.yearOfBirth,
       name: user.name ?? 'Bladderly User',

@@ -1,14 +1,13 @@
 // Dart imports:
 import 'dart:io';
 
-// Package imports:
-import 'package:injectable/injectable.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-
 // Project imports:
 import 'package:bladderly/core/package_device_info/src/model/device_info_model.dart';
 import 'package:bladderly/domain/model/sex.dart';
 import 'package:bladderly/domain/model/user.dart';
+// Package imports:
+import 'package:injectable/injectable.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 @lazySingleton
 class RecordedFileUtil {
@@ -28,7 +27,7 @@ class RecordedFileUtil {
     final recordTimeStr = file.path.split('/').last.split('.').first;
 
     return [
-      user.id,
+      user.userId,
       recordTimeStr,
       _deviceInfoModel.name,
       _packageInfo.version.replaceAll('.', ''),
