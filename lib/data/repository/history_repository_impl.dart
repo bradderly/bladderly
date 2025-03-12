@@ -126,6 +126,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
     final response = await _apiClient.updateRecord(
       request: RecordUpdateRequest(
         userId: userId,
+        // originRecordTime 이 있으면 수정 아니면 생성
         recDate: DateFormat('yyyyMMdd-HHmmss').format(originRecordTime ?? history.recordTime),
         record: switch (history) {
           VoidingHistory() => RecordUpdateRequestRecord(
@@ -136,7 +137,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
               recordUrgency: '${history.recordUrgency}',
               leakageMemo: history.memo,
               isManual: history.isManual,
-              newRecDate: DateFormat('yyyyMMdd-HHmmss').format(history.recordTime),
+              newRecDate: originRecordTime == null ? null : DateFormat('yyyyMMdd-HHmmss').format(history.recordTime),
             ),
           IntakeHistory() => RecordUpdateRequestRecord(
               beverageType: history.beverageType,
@@ -144,14 +145,14 @@ class HistoryRepositoryImpl implements HistoryRepository {
               recordVolume: '${history.recordVolume}',
               isIntake: true,
               isManual: true,
-              newRecDate: DateFormat('yyyyMMdd-HHmmss').format(history.recordTime),
+              newRecDate: originRecordTime == null ? null : DateFormat('yyyyMMdd-HHmmss').format(history.recordTime),
             ),
           LeakageHistory() => RecordUpdateRequestRecord(
               leakageVolume: history.leakageVolume.name,
               leakageMemo: history.memo,
               isLeakage: true,
               isManual: true,
-              newRecDate: DateFormat('yyyyMMdd-HHmmss').format(history.recordTime),
+              newRecDate: originRecordTime == null ? null : DateFormat('yyyyMMdd-HHmmss').format(history.recordTime),
             ),
         },
       ),

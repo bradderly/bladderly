@@ -1,19 +1,17 @@
 // Dart imports:
 import 'dart:async';
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 // Project imports:
 import 'package:bladderly/domain/model/histories.dart';
 import 'package:bladderly/domain/usecase/get_histories_stream_usecase.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_history_model.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_intake_summary_model.dart';
-import 'package:bladderly/presentation/feature/diary/diary/model/diary_voding_summary_model.dart';
+import 'package:bladderly/presentation/feature/diary/diary/model/diary_voiding_summary_model.dart';
+// Package imports:
+import 'package:equatable/equatable.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'diary_state.dart';
 
@@ -48,7 +46,7 @@ class DiaryCubit extends Cubit<DiaryState> {
     emit(
       DiaryState(
         dateTime: dateTime,
-        diaryVoidingSummaryModel: DiaryVoidingSummaryModel.fromDomain(histories.voidings),
+        diaryVoidingSummaryModel: DiaryVoidingSummaryModel.fromDomain(histories),
         diaryIntakeSummaryModel: DiaryIntakeSummaryModel.fromDomain(histories.intakes),
         diaryHistoryModels: histories.map(DiaryHistoryModel.fromDomain).toList(),
       ),

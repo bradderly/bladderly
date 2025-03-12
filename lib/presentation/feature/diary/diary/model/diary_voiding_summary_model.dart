@@ -29,17 +29,17 @@ class DiaryVoidingSummaryModel extends Equatable {
         meanInterval = '00:00',
         minInterval = '00:00';
 
-  factory DiaryVoidingSummaryModel.fromDomain(VodingHistories vodingHistories) {
+  factory DiaryVoidingSummaryModel.fromDomain(Histories histories) {
     return DiaryVoidingSummaryModel(
-      totalVolume: vodingHistories.totalVolume.toRoundVolume(),
-      daytimeFrequency: vodingHistories.daytimeFrequency,
-      nighttimeFrequency: vodingHistories.nighttimeFrequency,
-      leakageFrequency: vodingHistories.leakageFrequency,
-      maxVolume: vodingHistories.maxVolume.toRoundVolume(),
-      minVolume: vodingHistories.minVolume.toRoundVolume(),
-      maxInterval: vodingHistories.maxInterval.formatHHMM(),
-      minInterval: vodingHistories.minInterval.formatHHMM(),
-      meanInterval: vodingHistories.meanInterval.formatHHMM(),
+      totalVolume: histories.voidings.totalVolume.toRoundVolume(),
+      daytimeFrequency: histories.voidings.daytimeFrequency,
+      nighttimeFrequency: histories.voidings.nighttimeFrequency,
+      leakageFrequency: histories.leakageFrequency,
+      maxVolume: histories.voidings.maxVolume.toRoundVolume(),
+      minVolume: histories.voidings.minVolume.toRoundVolume(),
+      maxInterval: histories.voidings.maxInterval.formatHHMM(),
+      minInterval: histories.voidings.minInterval.formatHHMM(),
+      meanInterval: histories.voidings.meanInterval.formatHHMM(),
     );
   }
 

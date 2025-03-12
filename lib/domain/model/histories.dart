@@ -37,6 +37,16 @@ class Histories<T extends History> {
   Map<DateTime, List<T>> groupByRecordTime() {
     return groupBy(_list, (element) => element.recordTime.copyWith(second: 0, millisecond: 0, microsecond: 0));
   }
+
+  int get leakageFrequency => _list
+      .map(
+        (element) => switch (element) {
+          VoidingHistory() => element.isLeakage ? 1 : 0,
+          LeakageHistory() => 1,
+          _ => 0,
+        },
+      )
+      .fold(0, (previousValue, element) => previousValue + element);
 }
 
 extension VodingHistoriesExtension on VodingHistories {
