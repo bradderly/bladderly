@@ -1,8 +1,7 @@
 // Package imports:
-import 'package:equatable/equatable.dart';
-
 // Project imports:
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
+import 'package:equatable/equatable.dart';
 
 sealed class IntakeInputRecordVolumeModel extends Equatable {
   const IntakeInputRecordVolumeModel._({
@@ -46,8 +45,8 @@ sealed class IntakeInputRecordVolumeModel extends Equatable {
 
   int get volume {
     return switch (this) {
-      IntakeInputDrinkMoreVolumeModel() => int.parse(value),
-      _ => int.parse(typeValue),
+      IntakeInputDrinkMoreVolumeModel() => int.tryParse(value) ?? 0,
+      _ => int.tryParse(typeValue) ?? 0,
     };
   }
 
@@ -93,5 +92,5 @@ final class IntakeInputDrinkMoreVolumeModel extends IntakeInputRecordVolumeModel
   SvgGenImage get icon => Assets.icon.icInputDrinkVolumeMore;
 
   @override
-  bool get isValid => int.tryParse(value) != null;
+  bool get isValid => int.tryParse(value) != null || value.isEmpty;
 }
