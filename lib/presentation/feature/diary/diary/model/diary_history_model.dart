@@ -4,6 +4,7 @@ import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/history_status.dart';
 import 'package:bladderly/domain/model/leakage_volume.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/double_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_history_status_model.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_history_type_model.dart';
@@ -38,7 +39,7 @@ class DiaryHistoryModel extends Equatable {
           type: DiaryHistoryTypeModel.voiding,
           status: statusModel,
           recordTime: history.recordTime,
-          recordVolume: history.recordVolume,
+          recordVolume: history.recordVolume.toRoundVolume(),
           isNocturia: history.isNocturia,
           recordUrgency: history.recordUrgency,
           leakageVolume: switch (history.leakageVolume) {

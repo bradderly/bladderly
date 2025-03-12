@@ -33,7 +33,7 @@ class HistoryMapper {
     return VoidingHistory(
       id: entity.id,
       recordTime: entity.recordTime,
-      recordVolume: entity.recordVolume.toInt(),
+      recordVolume: entity.recordVolume,
       recordUrgency: entity.recordUrgency!,
       isManual: entity.isManual ?? false,
       isNocturia: entity.isNocturia ?? false,
@@ -78,7 +78,7 @@ class HistoryMapper {
       return VoidingHistory(
         id: null,
         recordTime: recordTime,
-        recordVolume: recordVolume!.toInt(),
+        recordVolume: recordVolume!,
         recordUrgency: int.parse(record.recordUrgency!),
         isManual: record.isManual ?? false,
         isNocturia: record.isNocturia ?? false,
@@ -105,7 +105,7 @@ class HistoryMapper {
       ..setId(history.id)
       ..recordTime = history.recordTime
       ..leakageMemo = history.memo
-      ..recordVolume = history.recordVolume.toDouble()
+      ..recordVolume = history.recordVolume
       ..recordUrgency = history.recordUrgency
       ..isManual = history.isManual
       ..isNocturia = history.isNocturia

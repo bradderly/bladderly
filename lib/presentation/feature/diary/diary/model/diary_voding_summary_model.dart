@@ -1,9 +1,9 @@
 // Package imports:
-import 'package:equatable/equatable.dart';
-
 // Project imports:
 import 'package:bladderly/domain/model/histories.dart';
+import 'package:bladderly/presentation/common/extension/double_extension.dart';
 import 'package:bladderly/presentation/common/extension/duration_extension.dart';
+import 'package:equatable/equatable.dart';
 
 class DiaryVoidingSummaryModel extends Equatable {
   const DiaryVoidingSummaryModel({
@@ -31,12 +31,12 @@ class DiaryVoidingSummaryModel extends Equatable {
 
   factory DiaryVoidingSummaryModel.fromDomain(VodingHistories vodingHistories) {
     return DiaryVoidingSummaryModel(
-      totalVolume: vodingHistories.totalVolume,
+      totalVolume: vodingHistories.totalVolume.toRoundVolume(),
       daytimeFrequency: vodingHistories.daytimeFrequency,
       nighttimeFrequency: vodingHistories.nighttimeFrequency,
       leakageFrequency: vodingHistories.leakageFrequency,
-      maxVolume: vodingHistories.maxVolume,
-      minVolume: vodingHistories.minVolume,
+      maxVolume: vodingHistories.maxVolume.toRoundVolume(),
+      minVolume: vodingHistories.minVolume.toRoundVolume(),
       maxInterval: vodingHistories.maxInterval.formatHHMM(),
       minInterval: vodingHistories.minInterval.formatHHMM(),
       meanInterval: vodingHistories.meanInterval.formatHHMM(),

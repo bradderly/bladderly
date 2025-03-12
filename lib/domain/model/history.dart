@@ -1,11 +1,10 @@
 // Package imports:
 
-// Package imports:
-import 'package:equatable/equatable.dart';
-
 // Project imports:
 import 'package:bladderly/domain/model/history_status.dart';
 import 'package:bladderly/domain/model/leakage_volume.dart';
+// Package imports:
+import 'package:equatable/equatable.dart';
 
 sealed class History extends Equatable {
   const History._({
@@ -53,7 +52,7 @@ class VoidingHistory extends History {
   }) : super._();
 
   /// 배뇨량
-  final int recordVolume;
+  final double recordVolume;
 
   /// 마려웠던 정도
   final int recordUrgency;
@@ -102,7 +101,7 @@ class VoidingHistory extends History {
     );
   }
 
-  VoidingHistory setRecordVolume(int recordVolume) {
+  VoidingHistory setRecordVolume(double recordVolume) {
     return VoidingHistory(
       id: id,
       recordTime: recordTime,

@@ -27,7 +27,7 @@ mixin HistoryResultUsecaseMixin {
         break;
       }
 
-      if (result.volume case final int volume when result.isDone) {
+      if (result.volume case final double volume when result.isDone) {
         await historyRepository.saveHistory(history.setStatus(HistoryStatus.done).setRecordVolume(volume));
         break;
       }

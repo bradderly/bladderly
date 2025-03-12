@@ -1,10 +1,9 @@
 // Package imports:
 
-// Package imports:
-import 'package:collection/collection.dart';
-
 // Project imports:
 import 'package:bladderly/domain/model/history.dart';
+// Package imports:
+import 'package:collection/collection.dart';
 
 typedef VodingHistories = Histories<VoidingHistory>;
 
@@ -41,7 +40,7 @@ class Histories<T extends History> {
 }
 
 extension VodingHistoriesExtension on VodingHistories {
-  int get totalVolume => _list.fold(0, (previousValue, element) => previousValue + element.recordVolume);
+  double get totalVolume => _list.fold(0, (previousValue, element) => previousValue + element.recordVolume);
 
   int get leakageFrequency => _list.where((element) => element.isLeakage).length;
 
@@ -72,13 +71,13 @@ extension VodingHistoriesExtension on VodingHistories {
     );
   }
 
-  int get maxVolume {
+  double get maxVolume {
     if (_list.isEmpty) return 0;
 
     return _list.sorted((a, b) => b.recordVolume.compareTo(a.recordVolume)).first.recordVolume;
   }
 
-  int get minVolume {
+  double get minVolume {
     if (_list.isEmpty) return 0;
 
     return _list.sorted((a, b) => a.recordVolume.compareTo(b.recordVolume)).first.recordVolume;

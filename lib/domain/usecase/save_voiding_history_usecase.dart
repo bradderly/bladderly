@@ -1,15 +1,14 @@
 // Package imports:
 
-// Package imports:
-import 'package:dartz/dartz.dart';
-import 'package:injectable/injectable.dart';
-
 // Project imports:
 import 'package:bladderly/core/network_checker/network_checker.dart';
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/history_status.dart';
 import 'package:bladderly/domain/model/leakage_volume.dart';
 import 'package:bladderly/domain/repository/history_repository.dart';
+// Package imports:
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class SaveVoidingHistoryUsecase {
@@ -38,7 +37,7 @@ class SaveVoidingHistoryUsecase {
         VoidingHistory(
           id: id,
           recordTime: recordTime,
-          recordVolume: recordVolume,
+          recordVolume: recordVolume.toDouble(),
           recordUrgency: recordUrgency,
           isNocturia: isNocutria,
           isLeakage: isLeakage,

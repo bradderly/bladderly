@@ -28,7 +28,7 @@ class ManualInputVoidingFormState extends Equatable {
     return ManualInputVoidingFormState(
       id: history.id,
       recordTime: history.recordTime,
-      recordVolume: '${unit.parseFromMl(history.recordVolume)}',
+      recordVolume: '${unit.parseFromMl(history.recordVolume.toRoundVolume())}',
       unit: unit,
       recordUrgency: history.recordUrgency,
       isNocutria: history.isNocturia,
