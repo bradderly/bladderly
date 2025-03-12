@@ -53,39 +53,36 @@ class CommonErrorModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonModal(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (title case final String title) ...[
-              Text(
-                title.tr(context),
-                style: context.textStyleTheme.b20Bold.copyWith(
-                  color: context.colorTheme.neutral.shade10,
-                ),
-              ),
-              const Gap(24),
-            ],
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (title case final String title) ...[
             Text(
-              content.tr(context),
-              style: context.textStyleTheme.b16Medium.copyWith(
+              title.tr(context),
+              style: context.textStyleTheme.b20Bold.copyWith(
                 color: context.colorTheme.neutral.shade10,
               ),
             ),
             const Gap(24),
-            PrimaryButton.filled(
-              onPressed: onTap,
-              backgroundColor: context.colorTheme.vermilion.primary.shade50,
-              borderRadius: 400,
-              shape: BoxShape.rectangle,
-              text: 'Okay'.tr(context),
-              textColor: context.colorTheme.neutral.shade0,
-              size: const Size.fromHeight(56),
-            ),
           ],
-        ),
+          Text(
+            content.tr(context),
+            style: context.textStyleTheme.b16Medium.copyWith(
+              color: context.colorTheme.neutral.shade10,
+            ),
+          ),
+          const Gap(24),
+          PrimaryButton.filled(
+            onPressed: onTap,
+            backgroundColor: context.colorTheme.vermilion.primary.shade50,
+            borderRadius: 400,
+            shape: BoxShape.rectangle,
+            text: 'Okay'.tr(context),
+            textColor: context.colorTheme.neutral.shade0,
+            size: const Size.fromHeight(56),
+          ),
+        ],
       ),
     );
   }
