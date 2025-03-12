@@ -1,6 +1,7 @@
 // Flutter imports:
 // Project imports:
 import 'package:bladderly/core/di/di.dart';
+import 'package:bladderly/domain/usecase/check_supported_device_usecase.dart';
 import 'package:bladderly/domain/usecase/get_history_result_usecase.dart';
 import 'package:bladderly/domain/usecase/get_user_stream_usecase.dart';
 import 'package:bladderly/domain/usecase/get_user_usecase.dart';
@@ -10,6 +11,7 @@ import 'package:bladderly/domain/usecase/purchase_plan_usecase.dart';
 import 'package:bladderly/domain/usecase/refresh_history_result_usecase.dart';
 import 'package:bladderly/domain/usecase/sign_out_usecase.dart';
 import 'package:bladderly/presentation/common/bloc/app_config_bloc.dart';
+import 'package:bladderly/presentation/common/bloc/device_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/history_result_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/locale_cubit.dart';
@@ -100,6 +102,11 @@ class _BladderlyAppState extends State<BladderlyApp> {
           create: (_) => PaymentBloc(
             initializePurchaseHandlerUsecase: getIt<InitializePurchaseHandlerUsecase>(),
             purchasePlanUsecase: getIt<PurchasePlanUsecase>(),
+          ),
+        ),
+        BlocProvider<DeviceBloc>(
+          create: (_) => DeviceBloc(
+            checkSupportedDeviceUsecase: getIt<CheckSupportedDeviceUsecase>(),
           ),
         ),
       ],

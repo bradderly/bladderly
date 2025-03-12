@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:bladderly/core/package_device_info/src/model/device_info_model.dart';
-import 'package:bladderly/domain/exception/not_supported_device_exception.dart';
+import 'package:bladderly/domain/model/device_support_status.dart';
 import 'package:bladderly/domain/repository/config_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
@@ -17,25 +17,21 @@ class CheckSupportedDeviceUsecase {
   final ConfigRepository _configRepository;
   final DeviceInfoModel _deviceInfoModel;
 
-  Future<Either<Exception, void>> call() async {
+  Future<Either<Exception, DeviceSupportStatus>> call() async {
     try {
       final devices = await _configRepository.getSupportedDevices();
 
-      final isSupportedDevice = devices.contains(_deviceInfoModel.name);
+      final isSupportedDevice = Platform.isAndroid
+          ? !_deviceInfoModel.name.toLowerCase().contains('moto')
+          : devices.contains(_deviceInfoModel.name);
 
-      final isSoonSupportedDevice = Platform.isAndroid
-          ? _deviceInfoModel.name.toLowerCase().contains('moto')
-          : devices.contains('${_deviceInfoModel.name}-soon');
+      final isSoonSupportedDevice = devices.contains('${_deviceInfoModel.name}-soon');
 
-      if (isSoonSupportedDevice) {
-        return const Left(NotSupportedDeviceException.soon());
-      }
+      if (isSoonSupportedDevice) return const Right(DeviceSupportStatus.soonSupported);
 
-      if (!isSupportedDevice) {
-        return const Left(NotSupportedDeviceException());
-      }
+      if (!isSupportedDevice) return const Right(DeviceSupportStatus.unsupported);
 
-      return const Right(null);
+      return const Right(DeviceSupportStatus.supported);
     } catch (e) {
       return Left(e is Exception ? e : Exception(e.toString()));
     }
