@@ -1,5 +1,7 @@
 // Flutter imports:
 // Project imports:
+import 'dart:math';
+
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
@@ -196,20 +198,22 @@ class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
   Widget _buildQuestionTitle(String title) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final textStyle = context.textStyleTheme.b20Bold.copyWith(
-          color: context.colorTheme.neutral.shade10,
-        );
+        final textStyle = context.textStyleTheme.b20Bold.copyWith(color: context.colorTheme.neutral.shade10);
 
-        final height = widget.symptomSurveyModel.questions.titles
+        final texts =
+            widget.symptomSurveyModel.questions.titles.map((title) => title.tr(context).applyWordBreak()).toList();
+
+        final textHeights = texts
             .map(
               (title) => TextSizeUtil.getSize(
-                text: title.tr(context).applyWordBreak(),
+                text: title,
                 textStyle: textStyle,
                 maxWidth: constraints.maxWidth,
-              ),
+              ).height,
             )
-            .reduce((value, element) => value.width > element.width ? value : element)
-            .height;
+            .toList();
+
+        final height = textHeights.reduce(max);
 
         return SizedBox(
           height: height,
@@ -225,20 +229,21 @@ class _SymptomSurveyModalState extends State<SymptomSurveyModal> {
   Widget _buildQuestionDescription(String content) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final textStyle = context.textStyleTheme.b16Medium.copyWith(
-          color: context.colorTheme.neutral.shade10,
-        );
+        final textStyle = context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade10);
+        final texts =
+            widget.symptomSurveyModel.questions.contents.map((text) => text.tr(context).applyWordBreak()).toList();
 
-        final height = widget.symptomSurveyModel.questions.contents
+        final textHeights = texts
             .map(
               (title) => TextSizeUtil.getSize(
-                text: title.tr(context).applyWordBreak(),
+                text: title,
                 textStyle: textStyle,
                 maxWidth: constraints.maxWidth,
-              ),
+              ).height,
             )
-            .reduce((value, element) => value.width > element.width ? value : element)
-            .height;
+            .toList();
+
+        final height = textHeights.reduce(max);
 
         return SizedBox(
           height: height,
