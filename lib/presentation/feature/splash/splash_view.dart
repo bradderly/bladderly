@@ -5,11 +5,14 @@ import 'package:bladderly/core/bio_auth/bio_auth.dart';
 import 'package:bladderly/core/bluetooth_hfp/bluetooth_hfp_check.dart';
 import 'package:bladderly/domain/exception/bluetooth_hfp_exception.dart';
 import 'package:bladderly/domain/exception/not_supported_device_exception.dart';
+import 'package:bladderly/domain/exception/update_new_version_exception.dart';
+import 'package:bladderly/domain/exception/update_new_version_must_exception.dart';
 import 'package:bladderly/presentation/common/bloc/app_config_bloc.dart';
 // Project imports:
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/passcode_cubit.dart';
 import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
+import 'package:bladderly/presentation/common/widget/common_update_modal.dart';
 import 'package:bladderly/presentation/feature/splash/bloc/splash_bloc.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/intro_route.dart';
@@ -70,6 +73,8 @@ class _SplashViewState extends State<SplashView> {
     final alreadyLoggedIn = context.read<UserBloc>().state is UserLoadSuccess;
     final isLocked = context.read<PasscodeCubit>().state.isLocked;
 
+    await checkAppVersion(); //  앱 버전 체크가 끝날 때까지 대기
+
     await checkBluetoothHFP(); //  블루투스 체크가 끝날 때까지 대기
 
     /// 로그인이 되어 있지 않으면 IntroRoute로 이동
@@ -90,6 +95,38 @@ class _SplashViewState extends State<SplashView> {
 
       if (successBioAuth && mounted) return const MainRoute().go(context);
     }
+  }
+
+  Future<void> checkAppVersion() async {
+    final appConfigState = context.read<AppConfigBloc>().state.appVersion;
+
+    // 강제 업데이트
+    if (compareVersions(appConfigState.currentVersion, appConfigState.minVersion) < 0) {
+      print('강제 업데이트가 필요합니다.');
+      await CommonUpdateModal.showFromDominException<void>(
+        context,
+        onTap: context.pop,
+        exception: const UpdateNewVersionMustException(),
+      );
+    } else if (compareVersions(appConfigState.currentVersion, appConfigState.latestVersion) < 0) {
+      print('새로운 업데이트가 있습니다.');
+      await CommonUpdateModal.showFromDominException<void>(
+        context,
+        onTap: context.pop,
+        exception: const UpdateNewVersionException(),
+      );
+    }
+  }
+
+  int compareVersions(String version1, String version2) {
+    final v1 = version1.split('.').map(int.parse).toList();
+    final v2 = version2.split('.').map(int.parse).toList();
+
+    for (var i = 0; i < v1.length; i++) {
+      if (v1[i] < v2[i]) return -1;
+      if (v1[i] > v2[i]) return 1;
+    }
+    return 0;
   }
 
   Future<void> checkBluetoothHFP() async {

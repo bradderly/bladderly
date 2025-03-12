@@ -1,6 +1,7 @@
 // Flutter imports:
 
 // Project imports:
+import 'package:bladderly/domain/exception/fail_sign_in_exception.dart';
 import 'package:bladderly/domain/exception/invalid_user_exception.dart';
 import 'package:bladderly/domain/exception/not_found_user_exception.dart';
 // Flutter imports:
@@ -18,6 +19,7 @@ import 'package:bladderly/presentation/feature/sign_in/widget/sign_in_social_sig
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/intro_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,12 +56,34 @@ class SignInView extends StatelessWidget {
     }
   }
 
+  void _onEmailFailure(BuildContext context, SignInEmailFailure state) {
+    context.pop();
+    final exception = state.exception;
+    if (exception.toString().contains('NotFoundUserException')) {
+      CommonErrorModal.showFromDominException<void>(
+        context,
+        onTap: () => context.pop(),
+        exception: const FailSignInException(),
+      );
+    } else if (exception.toString().contains('InvalidUserException')) {
+      CommonErrorModal.showFromDominException<void>(
+        context,
+        onTap: () => context.pop(),
+        exception: const FailSignInException(),
+      );
+    } else {
+      if (kDebugMode) {
+        print('LOGTAG // Unknown error: $exception');
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<SignInBloc, SignInState>(
       listener: (context, state) => switch (state) {
         SignInInProgress() => ProgressIndicatorModal.show(context),
-        SignInEmailFailure() => context.pop(),
+        SignInEmailFailure() => _onEmailFailure(context, state),
         SignInEmailSuccess() => const MainRoute().go(context),
         SignInSocialSuccess() => const MainRoute().go(context),
         SignInSocialFailure() => _onSocialFailure(context, state),

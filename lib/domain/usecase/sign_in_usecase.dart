@@ -36,7 +36,8 @@ class SignInUsecase {
 
       return Right(user);
     } catch (e) {
-      return Left(e is Exception ? e : Exception(e.toString()));
+      print('LOGTAG' + e.toString());
+      return Left(Exception(e.toString()));
     }
   }
 }
