@@ -1,9 +1,12 @@
 name: bladderly
 description: "A new Flutter project."
 
-publish_to: 'none'
+publish_to: "none"
 
-version: 1.0.0+1
+# android
+# version: 3.1.0+59
+# ios
+version: 3.1.0+3
 
 environment:
   sdk: ">=3.4.3 <4.0.0"
@@ -40,7 +43,7 @@ dependencies:
   path: 1.9.0
   http: 1.2.2
   rxdart: 0.28.0
-  csv2json: 0.0.3 
+  csv2json: 0.0.3
   device_info_plus: 11.2.2
   package_info_plus: 8.1.4
   crypto: 3.0.6
@@ -139,5 +142,3 @@ flutter:
       fonts:
         - asset: assets/fonts/Outfit-Bold.ttf
           weight: 700
-
-        
