@@ -1,8 +1,7 @@
 // Flutter imports:
-import 'package:flutter/services.dart';
-
 // Project imports:
 import 'package:bladderly/domain/model/unit.dart';
+import 'package:flutter/services.dart';
 
 class InputVolumeFormatter extends TextInputFormatter {
   InputVolumeFormatter({required this.unit});
@@ -11,6 +10,10 @@ class InputVolumeFormatter extends TextInputFormatter {
 
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    if (int.tryParse(newValue.text) == null && newValue.text.isNotEmpty) {
+      return oldValue;
+    }
+
     final mlValue = switch (unit) {
       Unit.ml => int.tryParse(newValue.text) ?? 0,
       Unit.oz => unit.parseToMl(int.tryParse(newValue.text) ?? 0),

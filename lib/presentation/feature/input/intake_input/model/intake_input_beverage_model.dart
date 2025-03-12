@@ -1,8 +1,7 @@
 // Package imports:
-import 'package:equatable/equatable.dart';
-
 // Project imports:
 import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
+import 'package:equatable/equatable.dart';
 
 class IntakeInputBeverageModel extends Equatable {
   const IntakeInputBeverageModel({
@@ -21,10 +20,6 @@ class IntakeInputBeverageModel extends Equatable {
   final String typeValue;
 
   bool get isValid {
-    if (typeModel == BeverageTypeModel.others && typeValue.isEmpty) {
-      return false;
-    }
-
     return true;
   }
 
