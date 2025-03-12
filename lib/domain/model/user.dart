@@ -6,7 +6,7 @@ import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
   const User({
-    required this.id,
+    required this.userId,
     required this.gender,
     required this.yearOfBirth,
     required this.signUpMethod,
@@ -15,7 +15,7 @@ class User extends Equatable {
     this.disease,
   });
 
-  final String id;
+  final String userId;
 
   final Gender gender;
 
@@ -30,6 +30,7 @@ class User extends Equatable {
   final String? disease;
 
   User copyWith({
+    String? userId,
     Gender? gender,
     int? yearOfBirth,
     SignUpMethod? signUpMethod,
@@ -38,7 +39,7 @@ class User extends Equatable {
     String? disease,
   }) {
     return User(
-      id: id,
+      userId: userId ?? this.userId,
       gender: gender ?? this.gender,
       yearOfBirth: yearOfBirth ?? this.yearOfBirth,
       signUpMethod: signUpMethod ?? this.signUpMethod,
@@ -50,7 +51,7 @@ class User extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
+        userId,
         gender,
         yearOfBirth,
         signUpMethod,

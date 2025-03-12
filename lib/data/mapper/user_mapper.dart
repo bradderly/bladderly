@@ -10,7 +10,7 @@ class UserMapper {
 
   static User fromUserEntity(UserEntity entity) {
     return User(
-      id: entity.userId,
+      userId: entity.userId,
       email: entity.email,
       gender: Gender.values.byName(entity.gender),
       name: entity.name,
@@ -21,7 +21,7 @@ class UserMapper {
 
   static UserEntity toUserEntity(User user) {
     return UserEntity()
-      ..userId = user.id
+      ..userId = user.userId
       ..gender = user.gender.name
       ..yearOfBirth = user.yearOfBirth
       ..signUpMethod = user.signUpMethod.name
@@ -29,12 +29,12 @@ class UserMapper {
       ..email = user.email;
   }
 
-  static User fromLoginResponse$UserInfo({
-    required LoginResponse$UserInfo userInfo,
+  static User fromLoginResponseUserInfo({
+    required LoginResponseUserInfo userInfo,
     required String email,
   }) {
     return User(
-      id: userInfo.id!,
+      userId: userInfo.id!,
       gender: Gender.values.byName(userInfo.gender!),
       yearOfBirth: int.parse(userInfo.birthyear!),
       signUpMethod: SignUpMethod.of(userInfo.social!),

@@ -548,7 +548,7 @@ order no.,comp no.,page/section,change_type,key,en,ko,remark
 775,633,Menu_score_oabss_p3,text,OABSS3_answer2,Once a week or more,일주일에 1회 또는 그 이상,ko - 한국어번역자 오증준교수 버전 따름
 785,644,Menu_score_oabss_p4,text,OABSS4_answer2,Once a week or more,일주일에 1회 또는 그 이상,ko - 한국어번역자 오증준교수 버전 따름
 172,137,sound_input_popup_na,text,"Oops, we couldn’t analyze your results","Oops, we couldn’t analyze your results",죄송합니다. 배뇨량을 계산할 수 없습니다.,
-443,384,menu_userprofile_delete,text,Other,Other,기타,
+443,384,menu_userprofile_delete,text,Other,Other,기타,
 24,21,home_main_intake,text,others,others,기타,
 71,53,diary_main_list,text,others,others,기타,
 95,75,diary_add_sumintake,text,others,others,기타,

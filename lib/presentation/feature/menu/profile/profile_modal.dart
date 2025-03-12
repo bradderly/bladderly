@@ -6,6 +6,7 @@ import 'package:bladderly/presentation/common/model/user_model.dart';
 import 'package:bladderly/presentation/feature/menu/profile/bloc/profile_bloc.dart';
 import 'package:bladderly/presentation/feature/menu/profile/change_password/change_password_builder.dart';
 import 'package:bladderly/presentation/feature/menu/profile/delete_account/delete_account_builder.dart';
+import 'package:bladderly/presentation/feature/menu/profile/modal/sign_out_modal.dart';
 import 'package:bladderly/presentation/feature/menu/profile/widget/profile_name_input_field.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
@@ -181,64 +182,7 @@ class ProfileModal extends StatelessWidget {
                       TextIconArrowForm(
                         title: 'Sign out'.tr(context),
                         icon: Icons.logout,
-                        onTap: () => showDialog<void>(
-                          context: context,
-                          builder: (context) => Dialog(
-                            backgroundColor: context.colorTheme.neutral.shade0,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 24),
-                              height: 300,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    child: Text(
-                                      'Sign out Message'.tr(context),
-                                      style: context.textStyleTheme.b16SemiBold
-                                          .copyWith(color: context.colorTheme.neutral.shade10),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 24),
-                                  GestureDetector(
-                                    behavior: HitTestBehavior.translucent,
-                                    onTap: context.signOut,
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      padding: const EdgeInsets.only(top: 19, bottom: 18),
-                                      decoration: BoxDecoration(
-                                        color: context.colorTheme.neutral.shade2,
-                                        borderRadius: BorderRadius.circular(400),
-                                      ),
-                                      child: Text(
-                                        'Yes, Sign Out'.tr(context),
-                                        style: context.textStyleTheme.b16SemiBold
-                                            .copyWith(color: context.colorTheme.neutral.shade10),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  GestureDetector(
-                                    behavior: HitTestBehavior.translucent,
-                                    onTap: Navigator.of(context).pop,
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      padding: const EdgeInsets.only(top: 19, bottom: 18),
-                                      decoration: BoxDecoration(
-                                        color: context.colorTheme.vermilion.primary.shade50,
-                                        borderRadius: BorderRadius.circular(400),
-                                      ),
-                                      child: Text(
-                                        'No, Keep Me Signed In'.tr(context),
-                                        style: context.textStyleTheme.b16SemiBold
-                                            .copyWith(color: context.colorTheme.neutral.shade0),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+                        onTap: () => SignOutModal.show(context),
                       ),
                       TextIconArrowForm(
                         title: 'Delete Account'.tr(context),

@@ -25,4 +25,16 @@ class UserEntity {
 
   @Name('email')
   String? email;
+
+  void changeUserInfo({
+    String? userId,
+    String? email,
+    String? name,
+    String? signUpMethod,
+  }) {
+    this.userId = userId ?? this.userId;
+    this.email = email;
+    this.name = name;
+    this.signUpMethod = signUpMethod ?? this.signUpMethod;
+  }
 }

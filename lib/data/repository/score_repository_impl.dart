@@ -51,7 +51,7 @@ class ScoreRepositoryImpl implements ScoreRepository {
     final scores = response.scores ?? [];
 
     return Scores(
-      list: scores.map(ScoreMapper.fromGetAllResultResponse$Scores$Item).whereType<Score>().toList(),
+      list: scores.map(ScoreMapper.fromGetAllScoreResponseList).whereType<Score>().toList(),
     );
   }
 

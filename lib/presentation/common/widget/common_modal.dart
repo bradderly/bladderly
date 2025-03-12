@@ -27,7 +27,8 @@ class CommonModal extends StatelessWidget {
       child: Material(
         borderRadius: BorderRadius.circular(20),
         color: Colors.white,
-        child: SizedBox(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
           width: MediaQuery.sizeOf(context).width - 48,
           child: child,
         ),

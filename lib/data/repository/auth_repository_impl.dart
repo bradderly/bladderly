@@ -7,7 +7,6 @@ import 'package:bladderly/data/api/client/api_client.dart';
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 import 'package:bladderly/data/isar/isar_client.dart';
 import 'package:bladderly/data/isar/schema/apple_credential_entity.dart';
-import 'package:bladderly/data/isar/schema/user_entity.dart';
 import 'package:bladderly/data/mapper/user_mapper.dart';
 import 'package:bladderly/domain/exception/invalid_user_exception.dart';
 import 'package:bladderly/domain/exception/not_found_apple_credential_exception.dart';
@@ -69,7 +68,7 @@ class AuthRepositoryImpl implements AuthRepository {
       throw UnknownException(message: response.message!);
     }
 
-    final user = UserMapper.fromLoginResponse$UserInfo(userInfo: userInfo, email: email);
+    final user = UserMapper.fromLoginResponseUserInfo(userInfo: userInfo, email: email);
 
     return _saveUserToLocal(user);
   }
@@ -90,7 +89,7 @@ class AuthRepositoryImpl implements AuthRepository {
     final response = await _apiClient.signUp(request: signUpRequest).then((response) => response.body!);
 
     final user = User(
-      id: response.id!,
+      userId: response.id!,
       gender: gender,
       yearOfBirth: yearOfBirth,
       signUpMethod: SignUpMethod.N,
@@ -100,39 +99,32 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<User> signUp({
+  Future<String> signUp({
     required String userId,
+    required String gender,
+    required String yearOfBirth,
+    required String signUpMethod,
     required String email,
     required String password,
     required String userName,
     required String disease,
   }) async {
-    final user = switch (_isarClient.getUserOrNullByUserId(userId)) {
-      final UserEntity userEntity => UserMapper.fromUserEntity(userEntity).copyWith(
-          email: email,
-          name: userName,
-          disease: disease,
-          signUpMethod: SignUpMethod.E,
-        ),
-      _ => throw const NotFoundUserException(message: 'not found user'),
-    };
-
     final signUpRequest = SignUpRequest(
-      id: user.id,
-      gender: user.gender.name,
-      birthyear: '${user.yearOfBirth}',
-      social: user.signUpMethod.name,
-      email: user.email,
+      id: userId,
+      gender: gender,
+      birthyear: '$yearOfBirth',
+      social: signUpMethod,
+      email: email,
       pw: password,
+      username: userName,
+      disease: disease,
       device: _deviceInfoModel.name,
       region: _deviceInfoModel.region,
     );
 
-    return _apiClient
-        .signUp(request: signUpRequest)
-        .then((response) => response.body!)
-        .then((_) => _saveUserToLocal(user))
-        .then((_) => user);
+    final response = await _apiClient.signUp(request: signUpRequest).then((response) => response.body!);
+
+    return response.id!;
   }
 
   @override
@@ -160,7 +152,7 @@ class AuthRepositoryImpl implements AuthRepository {
     final response = await _apiClient.signUp(request: signUpRequest).then((response) => response.body!);
 
     final user = User(
-      id: response.id!,
+      userId: response.id!,
       signUpMethod: signUpMethod,
       gender: gender,
       yearOfBirth: yearOfBirth,

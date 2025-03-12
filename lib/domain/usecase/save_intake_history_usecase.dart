@@ -29,6 +29,9 @@ class SaveIntakeHistoryUsecase {
     String? memo,
   }) async {
     try {
+      // OriginRecordTime이 존재하면 수정 아니면 생성
+      final originRecordTime = id == null ? null : _historyRepository.getHistoryById(id)?.recordTime;
+
       final history = await _historyRepository.saveHistory(
         IntakeHistory(
           id: id,
@@ -47,7 +50,11 @@ class SaveIntakeHistoryUsecase {
 
       if (!isNetworkConnected) return Right(history);
 
-      await _historyRepository.uploadHistory(userId: userId, history: history);
+      await _historyRepository.uploadHistory(
+        userId: userId,
+        history: history,
+        originRecordTime: originRecordTime,
+      );
 
       final doneHistory = await _historyRepository.saveHistory(history.setStatus(HistoryStatus.done));
 

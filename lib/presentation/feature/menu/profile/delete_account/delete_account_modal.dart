@@ -6,6 +6,7 @@ import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/model/user_model.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/menu/profile/delete_account/bloc/delete_account_bloc.dart';
+import 'package:bladderly/presentation/feature/menu/profile/delete_account/modal/delete_account_confirm_modal.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:bladderly/presentation/feature/menu/widget/reason_option.dart';
 import 'package:flutter/material.dart';
@@ -106,12 +107,7 @@ class _DeleteAccountModalState extends State<DeleteAccountModal> {
                     if (selectedReason == null) {
                       return;
                     }
-                    showDeleteAccountDialog(
-                      context,
-                      onConfirm: () {
-                        _onDeleteAccount(context);
-                      },
-                    );
+                    DeleteAccountConfirmModal.show(context, onConfirm: () => _onDeleteAccount(context));
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
@@ -136,75 +132,4 @@ class _DeleteAccountModalState extends State<DeleteAccountModal> {
       },
     );
   }
-}
-
-void showDeleteAccountDialog(
-  BuildContext context, {
-  VoidCallback? onConfirm,
-  VoidCallback? onCancel,
-}) {
-  // ignore: inference_failure_on_function_invocation
-  showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16), // 둥근 모서리
-        ),
-        contentPadding: const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Delete account popup Message'.tr(context),
-              style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
-            ),
-            const SizedBox(height: 32),
-            Column(
-              children: [
-                GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: onConfirm,
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.only(top: 19, bottom: 18),
-                    decoration: BoxDecoration(
-                      color: context.colorTheme.neutral.shade2,
-                      borderRadius: BorderRadius.circular(400),
-                    ),
-                    child: Text(
-                      'Yes, delete my account'.tr(context),
-                      style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.only(top: 19, bottom: 18),
-                    decoration: BoxDecoration(
-                      color: context.colorTheme.vermilion.primary.shade50,
-                      borderRadius: BorderRadius.circular(400),
-                    ),
-                    child: Text(
-                      'No, keep my account'.tr(context),
-                      style: context.textStyleTheme.b16SemiBold.copyWith(
-                        color: context.colorTheme.neutral.shade0,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      );
-    },
-  );
 }

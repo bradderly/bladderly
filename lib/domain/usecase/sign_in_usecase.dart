@@ -30,8 +30,8 @@ class SignInUsecase {
       final user = await _authRepository.signIn(email: email, password: password);
 
       await Future.wait([
-        _historyRepository.getAllHistoriesFromServer(user.id).then(_historyRepository.saveHistories),
-        _scoreRepository.getAllScoreHistoriesFromServer(user.id).then(_scoreRepository.saveScores),
+        _historyRepository.getAllHistoriesFromServer(user.userId).then(_historyRepository.saveHistories),
+        _scoreRepository.getAllScoreHistoriesFromServer(user.userId).then(_scoreRepository.saveScores),
       ]);
 
       return Right(user);
