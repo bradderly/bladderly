@@ -1,15 +1,13 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:gap/gap.dart';
-
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
 import 'package:bladderly/presentation/feature/input/intake_input/model/intake_input_beverage_model.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:gap/gap.dart';
 
 class IntakeInputBeverageTypeWidget extends StatelessWidget {
   const IntakeInputBeverageTypeWidget({
@@ -109,6 +107,7 @@ class IntakeInputBeverageTypeWidget extends StatelessWidget {
                       onChanged: (value) => onChanged(beverageModel.copyWith(typeValue: value)),
                       initialValue: beverageModel.typeValue,
                       scrollPadding: const EdgeInsets.only(bottom: 12),
+                      autofocus: true,
                       autocorrect: false,
                       enableSuggestions: false,
                       decoration: InputDecoration(
