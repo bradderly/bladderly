@@ -45,6 +45,7 @@ class VoidingHistory extends History {
     required super.memo,
     required super.status,
     required this.recordVolume,
+    required this.roundedVolume,
     required this.recordUrgency,
     required this.isManual,
     required this.isNocturia,
@@ -53,7 +54,8 @@ class VoidingHistory extends History {
   }) : super._();
 
   /// 배뇨량
-  final int recordVolume;
+  final String recordVolume;
+  final int roundedVolume;
 
   /// 마려웠던 정도
   final int recordUrgency;
@@ -70,6 +72,10 @@ class VoidingHistory extends History {
   /// 요실금 발생 양
   final LeakageVolume? leakageVolume;
 
+  int getRoundedVolume() {
+    return 0;
+  }
+
   @override
   VoidingHistory setId(int id) {
     return VoidingHistory(
@@ -78,6 +84,7 @@ class VoidingHistory extends History {
       memo: memo,
       status: status,
       recordVolume: recordVolume,
+      roundedVolume: roundedVolume,
       recordUrgency: recordUrgency,
       isManual: isManual,
       isNocturia: isNocturia,
@@ -94,6 +101,7 @@ class VoidingHistory extends History {
       memo: memo,
       status: status,
       recordVolume: recordVolume,
+      roundedVolume: roundedVolume,
       recordUrgency: recordUrgency,
       isManual: isManual,
       isNocturia: isNocturia,
@@ -102,13 +110,14 @@ class VoidingHistory extends History {
     );
   }
 
-  VoidingHistory setRecordVolume(int recordVolume) {
+  VoidingHistory setRecordVolume(String recordVolume, int roundedVolume) {
     return VoidingHistory(
       id: id,
       recordTime: recordTime,
       memo: memo,
       status: status,
       recordVolume: recordVolume,
+      roundedVolume: roundedVolume,
       recordUrgency: recordUrgency,
       isManual: isManual,
       isNocturia: isNocturia,
@@ -137,13 +146,15 @@ class IntakeHistory extends History {
     required super.status,
     required this.beverageType,
     required this.recordVolume,
+    required this.roundedVolume,
   }) : super._();
 
   /// 섭취 종류
   final String beverageType;
 
   /// 섭취량
-  final int recordVolume;
+  final String recordVolume;
+  final int roundedVolume;
 
   @override
   IntakeHistory setId(int id) {
@@ -154,6 +165,7 @@ class IntakeHistory extends History {
       status: status,
       beverageType: beverageType,
       recordVolume: recordVolume,
+      roundedVolume: roundedVolume,
     );
   }
 
@@ -166,6 +178,7 @@ class IntakeHistory extends History {
       status: status,
       beverageType: beverageType,
       recordVolume: recordVolume,
+      roundedVolume: roundedVolume,
     );
   }
 

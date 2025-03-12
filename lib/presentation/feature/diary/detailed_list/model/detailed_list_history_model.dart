@@ -21,7 +21,7 @@ sealed class DetailedListHistoryModel extends Equatable {
           id: history.id!,
           recordTime: history.recordTime,
           memo: history.memo,
-          recordVolume: history.recordVolume,
+          roundedVolume: history.roundedVolume,
           recordUrgency: history.recordUrgency,
           isNocutria: history.isNocturia,
           leakageVolume: switch (history.leakageVolume) {
@@ -42,7 +42,7 @@ sealed class DetailedListHistoryModel extends Equatable {
           recordTime: history.recordTime,
           memo: history.memo,
           beverageType: history.beverageType,
-          recordVolume: history.recordVolume,
+          roundedVolume: history.roundedVolume,
         ),
     };
   }
@@ -64,13 +64,13 @@ class DetailedListVoidingHistoryModel extends DetailedListHistoryModel {
     required super.id,
     required super.recordTime,
     required super.memo,
-    required this.recordVolume,
+    required this.roundedVolume,
     required this.recordUrgency,
     required this.isNocutria,
     required this.leakageVolume,
   }) : super._();
 
-  final int recordVolume;
+  final int roundedVolume;
   final int recordUrgency;
   final bool isNocutria;
   final String? leakageVolume;
@@ -78,7 +78,7 @@ class DetailedListVoidingHistoryModel extends DetailedListHistoryModel {
   @override
   List<Object?> get props => [
         ...super.props,
-        recordVolume,
+        roundedVolume,
         recordUrgency,
         leakageVolume,
       ];
@@ -107,11 +107,11 @@ class DetailedListIntakeHistoryModel extends DetailedListHistoryModel {
     required super.recordTime,
     required super.memo,
     required this.beverageType,
-    required this.recordVolume,
+    required this.roundedVolume,
   }) : super._();
 
   final String beverageType;
-  final int recordVolume;
+  final int roundedVolume;
 
   SvgGenImage get icon {
     return switch (BeverageTypeModel.of(beverageType)) {
@@ -128,6 +128,6 @@ class DetailedListIntakeHistoryModel extends DetailedListHistoryModel {
   List<Object?> get props => [
         ...super.props,
         beverageType,
-        recordVolume,
+        roundedVolume,
       ];
 }

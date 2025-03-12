@@ -23,7 +23,7 @@ final class ManualInputVoidingSave extends ManualInputVoidingEvent {
   final String userId;
   final int? id;
   final DateTime recordTime;
-  final int recordVolume;
+  final String recordVolume;
   final int recordUrgency;
   final bool isNocutria;
   final bool isLeakage;

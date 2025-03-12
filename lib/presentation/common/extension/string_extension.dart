@@ -17,4 +17,8 @@ extension StringExtension on String {
   String applyWordBreak() {
     return replaceAllMapped(RegExp(r'(\S)(?=\S)'), (m) => '${m[1]}\u200D');
   }
+
+  int getRoundedVolume() {
+    return (double.tryParse(this) ?? 0).round() * 10;
+  }
 }

@@ -5,6 +5,7 @@ import 'package:bladderly/core/network_checker/network_checker.dart';
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/history_status.dart';
 import 'package:bladderly/domain/repository/history_repository.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
 // Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
@@ -25,7 +26,7 @@ class SaveIntakeHistoryUsecase {
     required int? id,
     required DateTime recordTime,
     required String beverageType,
-    required int recordVolume,
+    required String recordVolume,
     String? memo,
   }) async {
     try {
@@ -35,6 +36,7 @@ class SaveIntakeHistoryUsecase {
           recordTime: recordTime,
           beverageType: beverageType,
           recordVolume: recordVolume,
+          roundedVolume: recordVolume.getRoundedVolume(),
           status: HistoryStatus.pending,
           memo: switch (memo) {
             final String memo when memo.trim().isNotEmpty => memo,

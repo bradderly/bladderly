@@ -68,7 +68,7 @@ class _ManualInputVoidingWidgetState extends State<ManualInputVoidingWidget> wit
       userId: context.read<UserBloc>().state.userModelOrThrowException.id,
       id: state.id,
       recordTime: state.recordTime,
-      recordVolume: state.unit.parseToMl(int.parse(state.recordVolume)),
+      recordVolume: state.unit.parseToMl(int.parse(state.recordVolume)).toString(),
       recordUrgency: state.recordUrgency!,
       isNocutria: state.isNocutria!,
       isLeakage: state.isLeakage!,

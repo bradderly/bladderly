@@ -9,7 +9,7 @@ class HistoryResult extends Equatable {
   final bool isDone;
   final String? result;
 
-  int? get volume => int.tryParse(result ?? '');
+  String? get volume => result;
 
   @override
   List<Object?> get props => [

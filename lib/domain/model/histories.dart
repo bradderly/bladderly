@@ -41,7 +41,7 @@ class Histories<T extends History> {
 }
 
 extension VodingHistoriesExtension on VodingHistories {
-  int get totalVolume => _list.fold(0, (previousValue, element) => previousValue + element.recordVolume);
+  int get totalVolume => _list.fold(0, (previousValue, element) => previousValue + element.roundedVolume);
 
   int get leakageFrequency => _list.where((element) => element.isLeakage).length;
 
@@ -75,13 +75,13 @@ extension VodingHistoriesExtension on VodingHistories {
   int get maxVolume {
     if (_list.isEmpty) return 0;
 
-    return _list.sorted((a, b) => b.recordVolume.compareTo(a.recordVolume)).first.recordVolume;
+    return _list.sorted((a, b) => b.roundedVolume.compareTo(a.roundedVolume)).first.roundedVolume;
   }
 
   int get minVolume {
     if (_list.isEmpty) return 0;
 
-    return _list.sorted((a, b) => a.recordVolume.compareTo(b.recordVolume)).first.recordVolume;
+    return _list.sorted((a, b) => a.roundedVolume.compareTo(b.roundedVolume)).first.roundedVolume;
   }
 
   int get daytimeFrequency {
@@ -94,7 +94,7 @@ extension VodingHistoriesExtension on VodingHistories {
 }
 
 extension IntakeHistoriesExtension on IntakeHistories {
-  int get totalVolume => _list.fold(0, (previousValue, element) => previousValue + element.recordVolume);
+  int get totalVolume => _list.fold(0, (previousValue, element) => previousValue + element.roundedVolume);
 
   IntakeHistories filterByBeverageType(String beverageType) {
     return IntakeHistories(list: _list.where((element) => element.beverageType == beverageType).toList());

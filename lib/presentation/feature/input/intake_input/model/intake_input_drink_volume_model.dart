@@ -11,10 +11,10 @@ sealed class IntakeInputRecordVolumeModel extends Equatable {
     required this.value,
   });
 
-  factory IntakeInputRecordVolumeModel.fromVolume(int volume) {
+  factory IntakeInputRecordVolumeModel.fromVolume(String volume) {
     return values.firstWhere(
-      (element) => element.typeValue == '$volume',
-      orElse: () => IntakeInputDrinkMoreVolumeModel(value: '$volume'),
+      (element) => element.typeValue == volume,
+      orElse: () => IntakeInputDrinkMoreVolumeModel(value: volume),
     );
   }
 
@@ -44,10 +44,10 @@ sealed class IntakeInputRecordVolumeModel extends Equatable {
     };
   }
 
-  int get volume {
+  String get volume {
     return switch (this) {
-      IntakeInputDrinkMoreVolumeModel() => int.parse(value),
-      _ => int.parse(typeValue),
+      IntakeInputDrinkMoreVolumeModel() => value,
+      _ => typeValue,
     };
   }
 

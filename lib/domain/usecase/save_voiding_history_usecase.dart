@@ -1,6 +1,7 @@
 // Package imports:
 
 // Package imports:
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
@@ -26,7 +27,7 @@ class SaveVoidingHistoryUsecase {
     required String userId,
     required int? id,
     required DateTime recordTime,
-    required int recordVolume,
+    required String recordVolume,
     required int recordUrgency,
     required bool isNocutria,
     required bool isLeakage,
@@ -39,6 +40,7 @@ class SaveVoidingHistoryUsecase {
           id: id,
           recordTime: recordTime,
           recordVolume: recordVolume,
+          roundedVolume: recordVolume.getRoundedVolume(),
           recordUrgency: recordUrgency,
           isNocturia: isNocutria,
           isLeakage: isLeakage,

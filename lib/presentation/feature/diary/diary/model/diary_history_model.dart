@@ -19,12 +19,12 @@ class DiaryHistoryModel extends Equatable {
     required this.status,
     required DateTime recordTime,
     required this.isNocturia,
-    required int? recordVolume,
+    required int roundedVolume,
     required this.recordUrgency,
     required this.leakageVolume,
     required this.beverageType,
   })  : _recordTime = recordTime,
-        _recordVolume = recordVolume;
+        _roundedVolume = roundedVolume;
 
   factory DiaryHistoryModel.fromDomain(History history) {
     final statusModel = switch (history.status) {
@@ -38,7 +38,7 @@ class DiaryHistoryModel extends Equatable {
           type: DiaryHistoryTypeModel.voiding,
           status: statusModel,
           recordTime: history.recordTime,
-          recordVolume: history.recordVolume,
+          roundedVolume: history.roundedVolume,
           isNocturia: history.isNocturia,
           recordUrgency: history.recordUrgency,
           leakageVolume: switch (history.leakageVolume) {
@@ -55,7 +55,7 @@ class DiaryHistoryModel extends Equatable {
           status: statusModel,
           recordTime: history.recordTime,
           isNocturia: false,
-          recordVolume: history.recordVolume,
+          roundedVolume: history.roundedVolume,
           recordUrgency: null,
           leakageVolume: null,
           beverageType: history.beverageType,
@@ -66,7 +66,7 @@ class DiaryHistoryModel extends Equatable {
           status: statusModel,
           recordTime: history.recordTime,
           isNocturia: false,
-          recordVolume: null,
+          roundedVolume: 0,
           recordUrgency: null,
           leakageVolume: switch (history.leakageVolume) {
             LeakageVolume.Small => 'S',
@@ -83,7 +83,7 @@ class DiaryHistoryModel extends Equatable {
   final DiaryHistoryStatusModel status;
   final DateTime _recordTime;
   final bool isNocturia;
-  final int? _recordVolume;
+  final int _roundedVolume;
   final int? recordUrgency;
   final String? leakageVolume;
   final String? beverageType;
@@ -97,7 +97,7 @@ class DiaryHistoryModel extends Equatable {
   String getRecordVolume(BuildContext context) {
     if (type == DiaryHistoryTypeModel.leakage) return '';
 
-    return _recordVolume == null ? 'N/A' : '${context.unitValue(_recordVolume)}${context.unitName}';
+    return _roundedVolume == 0 ? 'N/A' : '${context.unitValue(_roundedVolume)}${context.unitName}';
   }
 
   @override
@@ -107,7 +107,7 @@ class DiaryHistoryModel extends Equatable {
         status,
         _recordTime,
         isNocturia,
-        _recordVolume,
+        _roundedVolume,
         recordUrgency,
         leakageVolume,
         beverageType,

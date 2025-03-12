@@ -21,7 +21,7 @@ final class IntakeInputSave extends IntakeInputEvent {
   final String hashId;
   final DateTime recordTime;
   final String beverageType;
-  final int recordVolume;
+  final String recordVolume;
   final String memo;
 
   @override
