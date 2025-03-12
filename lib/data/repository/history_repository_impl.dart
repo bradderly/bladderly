@@ -121,13 +121,14 @@ class HistoryRepositoryImpl implements HistoryRepository {
   Future<String?> uploadHistory({
     required String userId,
     required History history,
+    DateTime? originRecordTime,
   }) async {
     final response = await _apiClient.updateRecord(
       request: RecordUpdateRequest(
         userId: userId,
-        recDate: DateFormat('yyyyMMdd-HHmmss').format(history.recordTime),
+        recDate: DateFormat('yyyyMMdd-HHmmss').format(originRecordTime ?? history.recordTime),
         record: switch (history) {
-          VoidingHistory() => RecordUpdateRequest$Record(
+          VoidingHistory() => RecordUpdateRequestRecord(
               isLeakage: history.isLeakage,
               isNocturia: history.isNocturia,
               recordVolume: '${history.recordVolume}',
@@ -135,19 +136,22 @@ class HistoryRepositoryImpl implements HistoryRepository {
               recordUrgency: '${history.recordUrgency}',
               leakageMemo: history.memo,
               isManual: history.isManual,
+              newRecDate: DateFormat('yyyyMMdd-HHmmss').format(history.recordTime),
             ),
-          IntakeHistory() => RecordUpdateRequest$Record(
+          IntakeHistory() => RecordUpdateRequestRecord(
               beverageType: history.beverageType,
               leakageMemo: history.memo,
               recordVolume: '${history.recordVolume}',
               isIntake: true,
               isManual: true,
+              newRecDate: DateFormat('yyyyMMdd-HHmmss').format(history.recordTime),
             ),
-          LeakageHistory() => RecordUpdateRequest$Record(
+          LeakageHistory() => RecordUpdateRequestRecord(
               leakageVolume: history.leakageVolume.name,
               leakageMemo: history.memo,
               isLeakage: true,
               isManual: true,
+              newRecDate: DateFormat('yyyyMMdd-HHmmss').format(history.recordTime),
             ),
         },
       ),
@@ -163,7 +167,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
     final records = response.records ?? [];
 
     return Histories(
-      list: records.map(HistoryMapper.fromGetAllResultResponse$Records$Item).whereType<History>().toList(),
+      list: records.map(HistoryMapper.fromGetAllResultResponseList).whereType<History>().toList(),
     );
   }
 

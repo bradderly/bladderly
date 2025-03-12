@@ -47,6 +47,7 @@ abstract class HistoryRepository {
   Future<String?> uploadHistory({
     required String userId,
     required History history,
+    DateTime? originRecordTime,
   });
 
   Future<Histories> getAllHistoriesFromServer(String userId);

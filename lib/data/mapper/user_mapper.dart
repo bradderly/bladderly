@@ -29,8 +29,8 @@ class UserMapper {
       ..email = user.email;
   }
 
-  static User fromLoginResponse$UserInfo({
-    required LoginResponse$UserInfo userInfo,
+  static User fromLoginResponseUserInfo({
+    required LoginResponseUserInfo userInfo,
     required String email,
   }) {
     return User(

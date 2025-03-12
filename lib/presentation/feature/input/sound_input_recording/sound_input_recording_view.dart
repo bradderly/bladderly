@@ -63,7 +63,7 @@ class _SoundInputRecordingViewState extends State<SoundInputRecordingView> with 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.inactive) {
-      cancelRecording().then((_) => mounted ? Navigator.of(context).pop<void>() : null);
+      cancelRecording().then((_) => mounted ? const MainRoute().go(context) : null);
     }
   }
 

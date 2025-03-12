@@ -3,7 +3,7 @@
   "info": {
     "title": "Bladderly for Flutter",
     "contact": {},
-    "version": "0.0.3"
+    "version": "0.0.6"
   },
   "servers": [
     {
@@ -65,13 +65,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or fail"
-                    }
-                  }
+                  "$ref": "#/components/schemas/SimpleResponse"
                 }
               }
             }
@@ -109,19 +103,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": ["email", "new_pw", "old_pw"],
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string"
-                  },
-                  "new_pw": {
-                    "type": "string"
-                  },
-                  "old_pw": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/ChagePwRequest"
               }
             }
           }
@@ -132,13 +114,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or fail"
-                    }
-                  }
+                  "$ref": "#/components/schemas/SimpleResponse"
                 }
               }
             }
@@ -195,21 +171,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or fail"
-                    },
-                    "result": {
-                      "type": "string",
-                      "description": "return value"
-                    },
-                    "error_type": {
-                      "type": "string",
-                      "description": "error type when result is '0'"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ResultResponse"
                 }
               }
             }
@@ -241,19 +203,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": ["email", "new_pw", "verification_code"],
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string"
-                  },
-                  "new_pw": {
-                    "type": "string"
-                  },
-                  "verification_code": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/ConfirmPwRequest"
               }
             }
           }
@@ -264,13 +214,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or fail"
-                    }
-                  }
+                  "$ref": "#/components/schemas/SimpleResponse"
                 }
               }
             }
@@ -301,24 +245,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": ["id", "email", "message"],
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "description": "guest id or email address(signup user)"
-                  },
-                  "preferred_name": {
-                    "type": "string"
-                  },
-                  "email": {
-                    "type": "string",
-                    "description": "email address for email sending"
-                  },
-                  "message": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/ContactUsRequest"
               }
             }
           }
@@ -329,13 +256,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or fail"
-                    }
-                  }
+                  "$ref": "#/components/schemas/SimpleResponse"
                 }
               }
             }
@@ -366,21 +287,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string",
-                    "description": "email user"
-                  },
-                  "id": {
-                    "type": "string",
-                    "description": "guest user"
-                  },
-                  "reason": {
-                    "type": "string",
-                    "description": "delete account reason"
-                  }
-                }
+                "$ref": "#/components/schemas/DeleteAccRequest"
               }
             }
           }
@@ -391,13 +298,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or fail"
-                    }
-                  }
+                  "$ref": "#/components/schemas/SimpleResponse"
                 }
               }
             }
@@ -428,21 +329,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string",
-                    "description": "email user"
-                  },
-                  "id": {
-                    "type": "string",
-                    "description": "guest user"
-                  },
-                  "username": {
-                    "type": "string",
-                    "description": "preferred username"
-                  }
-                }
+                "$ref": "#/components/schemas/UpdateUserInfoRequest"
               }
             }
           }
@@ -453,13 +340,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or fail"
-                    }
-                  }
+                  "$ref": "#/components/schemas/SimpleResponse"
                 }
               }
             }
@@ -490,27 +371,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": ["export_date", "user_id", "email"],
-                "type": "object",
-                "properties": {
-                  "export_date": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "user_id": {
-                    "type": "string",
-                    "description": "hashed id for data exporting"
-                  },
-                  "email": {
-                    "type": "string",
-                    "description": "email address for report receiving"
-                  },
-                  "language": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/ExportReportRequest"
               }
             }
           }
@@ -521,13 +382,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or fail"
-                    }
-                  }
+                  "$ref": "#/components/schemas/SimpleResponse"
                 }
               }
             }
@@ -559,13 +414,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": ["email"],
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/PostEmailRequest"
               }
             }
           }
@@ -576,13 +425,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or fail"
-                    }
-                  }
+                  "$ref": "#/components/schemas/SimpleResponse"
                 }
               }
             }
@@ -626,111 +469,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or fail"
-                    },
-                    "records": {
-                      "type": "array",
-                      "description": "all records",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "record_time": {
-                            "type": "string",
-                            "x-stoplight": {
-                              "id": "jfqk72kbukadc"
-                            }
-                          },
-                          "is_intake": {
-                            "type": "boolean",
-                            "x-stoplight": {
-                              "id": "77up6hv0i3gnl"
-                            }
-                          },
-                          "is_manual": {
-                            "type": "boolean",
-                            "x-stoplight": {
-                              "id": "h1ba1fpbz7ht1"
-                            }
-                          },
-                          "is_nocturia": {
-                            "type": "boolean",
-                            "x-stoplight": {
-                              "id": "7r6nf49219880"
-                            }
-                          },
-                          "is_leakage": {
-                            "type": "boolean",
-                            "x-stoplight": {
-                              "id": "yk2dmlom9sbw4"
-                            }
-                          },
-                          "leakage_memo": {
-                            "type": "string",
-                            "x-stoplight": {
-                              "id": "ow74ke8j8u5cs"
-                            }
-                          },
-                          "record_volume": {
-                            "type": "string",
-                            "x-stoplight": {
-                              "id": "xuwqz2ms3iqr2"
-                            }
-                          },
-                          "record_urgency": {
-                            "type": "string",
-                            "x-stoplight": {
-                              "id": "fb6fqqv66k86o"
-                            }
-                          },
-                          "beverage_type": {
-                            "type": "string",
-                            "x-stoplight": {
-                              "id": "am54bh8ok6gec"
-                            }
-                          },
-                          "leakage_volume": {
-                            "type": "string",
-                            "x-stoplight": {
-                              "id": "i98qhhaikjnui"
-                            }
-                          }
-                        },
-                        "description": "dictionary item"
-                      }
-                    },
-                    "scores": {
-                      "type": "array",
-                      "description": "all scores",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "score_date": {
-                            "type": "string",
-                            "description": "score action time (yyyymmdd-hhmmss)"
-                          },
-                          "score_name": {
-                            "type": "string",
-                            "description": "IPSS or OABSS"
-                          },
-                          "total_score": {
-                            "type": "integer",
-                            "description": "score item sum"
-                          },
-                          "score_value": {
-                            "type": "array",
-                            "items": {
-                              "type": "integer"
-                            },
-                            "description": "score item value"
-                          }
-                        }
-                      }
-                    }
-                  }
+                  "$ref": "#/components/schemas/GetAllResultResponse"
                 }
               }
             }
@@ -789,32 +528,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or fail"
-                    },
-                    "pay_info": {
-                      "required": ["is_pause", "remain_count"],
-                      "type": "object",
-                      "properties": {
-                        "remain_count": {
-                          "type": "string",
-                          "x-stoplight": {
-                            "id": "if3g9wa2xoqhr"
-                          }
-                        },
-                        "is_pause": {
-                          "type": "string",
-                          "x-stoplight": {
-                            "id": "d7px7zvtesirs"
-                          }
-                        }
-                      },
-                      "description": "payment information"
-                    }
-                  }
+                  "$ref": "#/components/schemas/GetPayResponse"
                 }
               }
             }
@@ -867,21 +581,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or fail"
-                    },
-                    "result": {
-                      "type": "string",
-                      "description": "return value"
-                    },
-                    "error_type": {
-                      "type": "string",
-                      "description": "error type when result is '0'"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ResultResponse"
                 }
               }
             }
@@ -924,21 +624,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or fail"
-                    },
-                    "min_ver": {
-                      "type": "string",
-                      "description": "support minimum app version"
-                    },
-                    "latest_ver": {
-                      "type": "string",
-                      "description": "latest app version"
-                    }
-                  }
+                  "$ref": "#/components/schemas/GetVersionResponse"
                 }
               }
             }
@@ -991,20 +677,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or fail"
-                    },
-                    "models": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "description": "support ios model name"
-                    }
-                  }
+                  "$ref": "#/components/schemas/GetSupportModelsResponse"
                 }
               }
             }
@@ -1036,16 +709,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": ["email", "pw"],
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string"
-                  },
-                  "pw": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/LoginRequest"
               }
             }
           }
@@ -1056,43 +720,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or invalid email/password"
-                    },
-                    "user_info": {
-                      "type": "object",
-                      "properties": {
-                        "username": {
-                          "type": "string",
-                          "description": "user name"
-                        },
-                        "birthyear": {
-                          "type": "string",
-                          "description": "birth year"
-                        },
-                        "gender": {
-                          "type": "string",
-                          "description": "gender (male or female)"
-                        },
-                        "social": {
-                          "type": "string",
-                          "description": "E(email), A(apple), G(google), N(guest)"
-                        },
-                        "id": {
-                          "type": "string",
-                          "description": "email hash value"
-                        }
-                      },
-                      "description": "user profile"
-                    },
-                    "access_token": {
-                      "type": "string",
-                      "description": "not use (token for authorization)"
-                    }
-                  }
+                  "$ref": "#/components/schemas/LoginResponse"
                 }
               }
             }
@@ -1125,17 +753,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string",
-                    "description": "email user"
-                  },
-                  "id": {
-                    "type": "string",
-                    "description": "guest user"
-                  }
-                }
+                "$ref": "#/components/schemas/EmailAndIDRequest"
               }
             }
           }
@@ -1146,13 +764,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or fail"
-                    }
-                  }
+                  "$ref": "#/components/schemas/SimpleResponse"
                 }
               }
             }
@@ -1183,18 +795,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": ["from_id", "to_id"],
-                "type": "object",
-                "properties": {
-                  "from_id": {
-                    "type": "string",
-                    "description": "old user_id"
-                  },
-                  "to_id": {
-                    "type": "string",
-                    "description": "new user_id"
-                  }
-                }
+                "$ref": "#/components/schemas/DataMigrationRequest"
               }
             }
           }
@@ -1205,13 +806,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or fail"
-                    }
-                  }
+                  "$ref": "#/components/schemas/SimpleResponse"
                 }
               }
             }
@@ -1244,30 +839,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": ["user_id", "device", "product_id"],
-                "type": "object",
-                "properties": {
-                  "user_id": {
-                    "type": "string",
-                    "description": "user_id"
-                  },
-                  "device": {
-                    "type": "string",
-                    "description": "os (android or ios)"
-                  },
-                  "product_id": {
-                    "type": "string",
-                    "description": "purchased product id"
-                  },
-                  "purchase_token": {
-                    "type": "string",
-                    "description": "android purchased token(only android)"
-                  },
-                  "receipt": {
-                    "type": "string",
-                    "description": "iOS payment receipt for verification (only ios)"
-                  }
-                }
+                "$ref": "#/components/schemas/PaymentCheckRequest"
               }
             }
           }
@@ -1278,73 +850,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or fail"
-                    },
-                    "pay_info": {
-                      "type": "object",
-                      "properties": {
-                        "original_transaction_id": {
-                          "type": "string",
-                          "x-stoplight": {
-                            "id": "bw7xbnwltw1w3"
-                          }
-                        },
-                        "transaction_id": {
-                          "type": "string",
-                          "x-stoplight": {
-                            "id": "sp4yjzlqvvd8k"
-                          }
-                        },
-                        "product_id": {
-                          "type": "string",
-                          "x-stoplight": {
-                            "id": "6fx6unstelpd8"
-                          }
-                        },
-                        "purchase_date_ms": {
-                          "type": "string",
-                          "x-stoplight": {
-                            "id": "4j558kw7m6luf"
-                          }
-                        },
-                        "expires_date_ms": {
-                          "type": "string",
-                          "x-stoplight": {
-                            "id": "uniww2uqmszwl"
-                          }
-                        },
-                        "in_app_ownership_type": {
-                          "type": "string",
-                          "x-stoplight": {
-                            "id": "sjbnp10cfp2nc"
-                          }
-                        },
-                        "cancellation_date_ms": {
-                          "type": "string",
-                          "x-stoplight": {
-                            "id": "pse6jjubg3moa"
-                          }
-                        },
-                        "is_upgraded": {
-                          "type": "string",
-                          "x-stoplight": {
-                            "id": "l35z9b2b7jfqq"
-                          }
-                        },
-                        "auto_renew_status": {
-                          "type": "string",
-                          "x-stoplight": {
-                            "id": "jm4bwfg1daq1w"
-                          }
-                        }
-                      },
-                      "description": "payment information"
-                    }
-                  }
+                  "$ref": "#/components/schemas/SimpleResponse"
                 }
               }
             }
@@ -1375,25 +881,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": ["select", "user_id"],
-                "type": "object",
-                "properties": {
-                  "clinic": {
-                    "type": "string",
-                    "description": "clinic name (optional)"
-                  },
-                  "doctor": {
-                    "type": "string",
-                    "description": "doctor name (optional)"
-                  },
-                  "select": {
-                    "type": "integer",
-                    "description": "survey select value"
-                  },
-                  "user_id": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/DataExportSurveyRequest"
               }
             }
           }
@@ -1404,13 +892,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or fail"
-                    }
-                  }
+                  "$ref": "#/components/schemas/SimpleResponse"
                 }
               }
             }
@@ -1441,34 +923,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": [
-                  "score_date",
-                  "score_name",
-                  "score_value",
-                  "user_id"
-                ],
-                "type": "object",
-                "properties": {
-                  "user_id": {
-                    "type": "string",
-                    "description": "user id"
-                  },
-                  "score_name": {
-                    "type": "string",
-                    "description": "IPSS or OABSS"
-                  },
-                  "score_date": {
-                    "type": "string",
-                    "description": "yyyymmdd-hhmmss"
-                  },
-                  "score_value": {
-                    "type": "array",
-                    "items": {
-                      "type": "integer",
-                      "description": "score selection value"
-                    }
-                  }
-                }
+                "$ref": "#/components/schemas/SaveSurveyRequest"
               }
             }
           }
@@ -1479,17 +934,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or fail"
-                    },
-                    "total_score": {
-                      "type": "integer",
-                      "description": "total score"
-                    }
-                  }
+                  "$ref": "#/components/schemas/SaveSurveyResponse"
                 }
               }
             }
@@ -1521,56 +966,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": [
-                  "gender",
-                  "birthyear",
-                  "social",
-                  "device",
-                  "region"
-                ],
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string",
-                    "description": "email address when signup"
-                  },
-                  "pw": {
-                    "type": "string",
-                    "description": "password when signup"
-                  },
-                  "id": {
-                    "type": "string",
-                    "description": "guestmode id when signup"
-                  },
-                  "gender": {
-                    "type": "string",
-                    "description": "male or female"
-                  },
-                  "birthyear": {
-                    "type": "string",
-                    "description": "year of birth (ex 1980)"
-                  },
-                  "username": {
-                    "type": "string",
-                    "description": "user name when signup"
-                  },
-                  "social": {
-                    "type": "string",
-                    "description": "E(email), A(apple), G(google), N(guest)"
-                  },
-                  "device": {
-                    "type": "string",
-                    "description": "Android or iPhone"
-                  },
-                  "region": {
-                    "type": "string",
-                    "description": "country code"
-                  },
-                  "disease": {
-                    "type": "string",
-                    "description": "any diagnosed disease info"
-                  }
-                }
+                "$ref": "#/components/schemas/SignUpRequest"
               }
             }
           }
@@ -1581,17 +977,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or fail"
-                    },
-                    "id": {
-                      "type": "string",
-                      "description": "guest mode uuid"
-                    }
-                  }
+                  "$ref": "#/components/schemas/SignUpResponse"
                 }
               }
             }
@@ -1622,54 +1008,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": ["rec_date", "user_id"],
-                "type": "object",
-                "properties": {
-                  "user_id": {
-                    "type": "string"
-                  },
-                  "rec_date": {
-                    "type": "string",
-                    "description": "record date (yyyymmdd-hhmms)"
-                  },
-                  "record": {
-                    "type": "object",
-                    "properties": {
-                      "record_urgency": {
-                        "type": "string"
-                      },
-                      "is_nocturia": {
-                        "type": "boolean"
-                      },
-                      "is_intake": {
-                        "type": "boolean"
-                      },
-                      "is_manual": {
-                        "type": "boolean"
-                      },
-                      "is_leakage": {
-                        "type": "boolean"
-                      },
-                      "leakage_memo": {
-                        "type": "string"
-                      },
-                      "record_volume": {
-                        "type": "string"
-                      },
-                      "beverage_type": {
-                        "type": "string"
-                      },
-                      "leakage_volume": {
-                        "type": "string"
-                      },
-                      "delete_time": {
-                        "type": "string",
-                        "description": "when delete record (yyyymmdd-hhmmss)"
-                      }
-                    },
-                    "description": "record item"
-                  }
-                }
+                "$ref": "#/components/schemas/RecordUpdateRequest"
               }
             }
           }
@@ -1680,13 +1019,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "success or fail"
-                    }
-                  }
+                  "$ref": "#/components/schemas/SimpleResponse"
                 }
               }
             }
@@ -1747,30 +1080,7 @@
             "description": "success or invalid email/password"
           },
           "user_info": {
-            "type": "object",
-            "properties": {
-              "username": {
-                "type": "string",
-                "description": "user name"
-              },
-              "birthyear": {
-                "type": "string",
-                "description": "birth year"
-              },
-              "gender": {
-                "type": "string",
-                "description": "gender (male or female)"
-              },
-              "social": {
-                "type": "string",
-                "description": "E(email), A(apple), G(google), N(guest)"
-              },
-              "id": {
-                "type": "string",
-                "description": "email hash value"
-              }
-            },
-            "description": "user profile"
+            "$ref": "#/components/schemas/LoginResponseUserInfo"
           },
           "access_token": {
             "type": "string",
@@ -1822,98 +1132,14 @@
             "type": "array",
             "description": "all records",
             "items": {
-              "type": "object",
-              "properties": {
-                "record_time": {
-                  "type": "string",
-                  "x-stoplight": {
-                    "id": "jfqk72kbukadc"
-                  }
-                },
-                "is_intake": {
-                  "type": "boolean",
-                  "x-stoplight": {
-                    "id": "77up6hv0i3gnl"
-                  }
-                },
-                "is_manual": {
-                  "type": "boolean",
-                  "x-stoplight": {
-                    "id": "h1ba1fpbz7ht1"
-                  }
-                },
-                "is_nocturia": {
-                  "type": "boolean",
-                  "x-stoplight": {
-                    "id": "7r6nf49219880"
-                  }
-                },
-                "is_leakage": {
-                  "type": "boolean",
-                  "x-stoplight": {
-                    "id": "yk2dmlom9sbw4"
-                  }
-                },
-                "leakage_memo": {
-                  "type": "string",
-                  "x-stoplight": {
-                    "id": "ow74ke8j8u5cs"
-                  }
-                },
-                "record_volume": {
-                  "type": "string",
-                  "x-stoplight": {
-                    "id": "xuwqz2ms3iqr2"
-                  }
-                },
-                "record_urgency": {
-                  "type": "string",
-                  "x-stoplight": {
-                    "id": "fb6fqqv66k86o"
-                  }
-                },
-                "beverage_type": {
-                  "type": "string",
-                  "x-stoplight": {
-                    "id": "am54bh8ok6gec"
-                  }
-                },
-                "leakage_volume": {
-                  "type": "string",
-                  "x-stoplight": {
-                    "id": "i98qhhaikjnui"
-                  }
-                }
-              },
-              "description": "dictionary item"
+              "$ref": "#/components/schemas/GetAllResultResponseList"
             }
           },
           "scores": {
             "type": "array",
             "description": "all scores",
             "items": {
-              "type": "object",
-              "properties": {
-                "score_date": {
-                  "type": "string",
-                  "description": "score action time (yyyymmdd-hhmmss)"
-                },
-                "score_name": {
-                  "type": "string",
-                  "description": "IPSS or OABSS"
-                },
-                "total_score": {
-                  "type": "integer",
-                  "description": "score item sum"
-                },
-                "score_value": {
-                  "type": "array",
-                  "items": {
-                    "type": "integer"
-                  },
-                  "description": "score item value"
-                }
-              }
+              "$ref": "#/components/schemas/GetAllScoreResponseList"
             }
           }
         }
@@ -1926,64 +1152,14 @@
             "description": "success or fail"
           },
           "pay_info": {
-            "type": "object",
-            "properties": {
-              "original_transaction_id": {
-                "type": "string",
-                "x-stoplight": {
-                  "id": "bw7xbnwltw1w3"
-                }
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/PostPayResponsePayInfoIos"
               },
-              "transaction_id": {
-                "type": "string",
-                "x-stoplight": {
-                  "id": "sp4yjzlqvvd8k"
-                }
-              },
-              "product_id": {
-                "type": "string",
-                "x-stoplight": {
-                  "id": "6fx6unstelpd8"
-                }
-              },
-              "purchase_date_ms": {
-                "type": "string",
-                "x-stoplight": {
-                  "id": "4j558kw7m6luf"
-                }
-              },
-              "expires_date_ms": {
-                "type": "string",
-                "x-stoplight": {
-                  "id": "uniww2uqmszwl"
-                }
-              },
-              "in_app_ownership_type": {
-                "type": "string",
-                "x-stoplight": {
-                  "id": "sjbnp10cfp2nc"
-                }
-              },
-              "cancellation_date_ms": {
-                "type": "string",
-                "x-stoplight": {
-                  "id": "pse6jjubg3moa"
-                }
-              },
-              "is_upgraded": {
-                "type": "string",
-                "x-stoplight": {
-                  "id": "l35z9b2b7jfqq"
-                }
-              },
-              "auto_renew_status": {
-                "type": "string",
-                "x-stoplight": {
-                  "id": "jm4bwfg1daq1w"
-                }
+              {
+                "$ref": "#/components/schemas/PostPayResponsePayInfoAndroid"
               }
-            },
-            "description": "payment information"
+            ]
           }
         }
       },
@@ -1995,23 +1171,7 @@
             "description": "success or fail"
           },
           "pay_info": {
-            "required": ["is_pause", "remain_count"],
-            "type": "object",
-            "properties": {
-              "remain_count": {
-                "type": "string",
-                "x-stoplight": {
-                  "id": "if3g9wa2xoqhr"
-                }
-              },
-              "is_pause": {
-                "type": "string",
-                "x-stoplight": {
-                  "id": "d7px7zvtesirs"
-                }
-              }
-            },
-            "description": "payment information"
+            "$ref": "#/components/schemas/GetPayResponsePayInfo"
           }
         }
       },
@@ -2313,45 +1473,11 @@
             "description": "record date (yyyymmdd-hhmms)"
           },
           "record": {
-            "type": "object",
-            "properties": {
-              "record_urgency": {
-                "type": "string"
-              },
-              "is_nocturia": {
-                "type": "boolean"
-              },
-              "is_intake": {
-                "type": "boolean"
-              },
-              "is_manual": {
-                "type": "boolean"
-              },
-              "is_leakage": {
-                "type": "boolean"
-              },
-              "leakage_memo": {
-                "type": "string"
-              },
-              "record_volume": {
-                "type": "string"
-              },
-              "beverage_type": {
-                "type": "string"
-              },
-              "leakage_volume": {
-                "type": "string"
-              },
-              "delete_time": {
-                "type": "string",
-                "description": "when delete record (yyyymmdd-hhmmss)"
-              }
-            },
-            "description": "record item"
+            "$ref": "#/components/schemas/RecordUpdateRequestRecord"
           }
         }
       },
-      "LoginResponse_user_info": {
+      "LoginResponseUserInfo": {
         "type": "object",
         "properties": {
           "username": {
@@ -2467,86 +1593,111 @@
           }
         }
       },
-      "PostPayResponse_pay_info": {
+      "PostPayResponsePayInfoIos": {
         "type": "object",
         "properties": {
           "original_transaction_id": {
-            "type": "string",
-            "x-stoplight": {
-              "id": "bw7xbnwltw1w3"
-            }
+            "type": "string"
           },
           "transaction_id": {
-            "type": "string",
-            "x-stoplight": {
-              "id": "sp4yjzlqvvd8k"
-            }
+            "type": "string"
           },
           "product_id": {
-            "type": "string",
-            "x-stoplight": {
-              "id": "6fx6unstelpd8"
-            }
+            "type": "string"
           },
           "purchase_date_ms": {
-            "type": "string",
-            "x-stoplight": {
-              "id": "4j558kw7m6luf"
-            }
+            "type": "string"
           },
           "expires_date_ms": {
-            "type": "string",
-            "x-stoplight": {
-              "id": "uniww2uqmszwl"
-            }
+            "type": "string"
           },
           "in_app_ownership_type": {
-            "type": "string",
-            "x-stoplight": {
-              "id": "sjbnp10cfp2nc"
-            }
+            "type": "string"
           },
           "cancellation_date_ms": {
-            "type": "string",
-            "x-stoplight": {
-              "id": "pse6jjubg3moa"
-            }
+            "type": "string"
           },
           "is_upgraded": {
-            "type": "string",
-            "x-stoplight": {
-              "id": "l35z9b2b7jfqq"
-            }
+            "type": "string"
           },
           "auto_renew_status": {
-            "type": "string",
-            "x-stoplight": {
-              "id": "jm4bwfg1daq1w"
-            }
+            "type": "string"
           }
         },
-        "description": "payment information"
+        "description": "payment information for iOS"
       },
-      "GetPayResponse_pay_info": {
-        "required": ["is_pause", "remain_count"],
+      "PostPayResponsePayInfoAndroid": {
+        "type": "object",
+        "properties": {
+          "startTimeMillis": {
+            "type": "string"
+          },
+          "expiryTimeMillis": {
+            "type": "string"
+          },
+          "autoRenewing": {
+            "type": "string"
+          },
+          "priceCurrencyCode": {
+            "type": "string"
+          },
+          "priceAmountMicros": {
+            "type": "string"
+          },
+          "countryCode": {
+            "type": "string"
+          },
+          "developerPayload": {
+            "type": "string"
+          },
+          "paymentState": {
+            "type": "string"
+          },
+          "cancelReason": {
+            "type": "string"
+          },
+          "userCancellationTimeMillis": {
+            "type": "string"
+          },
+          "orderId": {
+            "type": "string"
+          },
+          "acknowledgementState": {
+            "type": "string"
+          }
+        },
+        "description": "payment information for Android"
+      },
+      "GetPayResponsePayInfo": {
+        "required": ["remain_count"],
         "type": "object",
         "properties": {
           "remain_count": {
-            "type": "string",
-            "x-stoplight": {
-              "id": "if3g9wa2xoqhr"
-            }
+            "type": "string"
           },
           "is_pause": {
+            "type": "string"
+          },
+          "product_id": {
             "type": "string",
-            "x-stoplight": {
-              "id": "d7px7zvtesirs"
-            }
+            "description": "purchased product id"
+          },
+          "start_day": {
+            "type": "string",
+            "description": "subscription start day"
+          },
+          "end_day": {
+            "type": "string",
+            "description": "subscription end day"
+          },
+          "auto_renewal": {
+            "type": "string",
+            "description": "subscription auto renewing status"
           }
         },
         "description": "payment information"
       },
-      "RecordUpdateRequest_record": {
+      "RecordUpdateRequestRecord": {
         "type": "object",
         "properties": {
           "record_urgency": {
@@ -2579,6 +1730,10 @@
           "delete_time": {
             "type": "string",
             "description": "when delete record (yyyymmdd-hhmmss)"
+          },
+          "new_rec_date": {
+            "type": "string",
+            "description": "when record time is changed (yyyymmdd-hhmmss)"
           }
         },
         "description": "record item"

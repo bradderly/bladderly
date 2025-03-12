@@ -1,15 +1,14 @@
 // Package imports:
 
-// Package imports:
-import 'package:dartz/dartz.dart';
-import 'package:injectable/injectable.dart';
-
 // Project imports:
 import 'package:bladderly/core/network_checker/network_checker.dart';
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/history_status.dart';
 import 'package:bladderly/domain/model/leakage_volume.dart';
 import 'package:bladderly/domain/repository/history_repository.dart';
+// Package imports:
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class SaveLeakageHistoryUsecase {
@@ -30,6 +29,9 @@ class SaveLeakageHistoryUsecase {
     String? memo,
   }) async {
     try {
+      // OriginRecordTime이 존재하면 수정 아니면 생성
+      final originRecordTime = id == null ? null : _historyRepository.getHistoryById(id)?.recordTime;
+
       final history = await _historyRepository.saveHistory(
         LeakageHistory(
           id: id,
@@ -47,7 +49,11 @@ class SaveLeakageHistoryUsecase {
 
       if (!isNetworkConnected) return Right(history);
 
-      await _historyRepository.uploadHistory(userId: userId, history: history);
+      await _historyRepository.uploadHistory(
+        userId: userId,
+        history: history,
+        originRecordTime: originRecordTime,
+      );
 
       final doneHistory = await _historyRepository.saveHistory(history.setStatus(HistoryStatus.done));
 

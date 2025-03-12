@@ -69,7 +69,7 @@ class AuthRepositoryImpl implements AuthRepository {
       throw UnknownException(message: response.message!);
     }
 
-    final user = UserMapper.fromLoginResponse$UserInfo(userInfo: userInfo, email: email);
+    final user = UserMapper.fromLoginResponseUserInfo(userInfo: userInfo, email: email);
 
     return _saveUserToLocal(user);
   }
