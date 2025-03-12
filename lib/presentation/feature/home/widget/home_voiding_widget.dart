@@ -1,17 +1,20 @@
 // Flutter imports:
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:gap/gap.dart';
-
 // Project imports:
+import 'package:bladderly/domain/exception/domain_exception.dart';
+import 'package:bladderly/presentation/common/bloc/device_bloc.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/feature/main/home/model/home_voiding_summary_model.dart';
+import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
+import 'package:bladderly/presentation/feature/home/model/home_voiding_summary_model.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+// Package imports:
+import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeVoidingWidget extends StatelessWidget {
   const HomeVoidingWidget({
@@ -153,7 +156,22 @@ class HomeVoidingWidget extends StatelessWidget {
     required bool isActivated,
   }) {
     return GestureDetector(
-      onTap: () => const SoundInputRecordingRoute().push<void>(context),
+      onTap: () async {
+        final state = context.read<DeviceBloc>().state;
+        if (state is! DeviceCheckSupportSuccess) return;
+
+        if (state.deviceSupportStatus.exception case final DomainException exception) {
+          await CommonErrorModal.showFromDominException<void>(
+            context,
+            onTap: context.pop,
+            exception: exception,
+          );
+        }
+
+        if (!context.mounted) return;
+
+        return const SoundInputRecordingRoute().push<void>(context);
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 38),
         clipBehavior: Clip.antiAlias,
