@@ -4,7 +4,6 @@ import 'package:bladderly/data/isar/schema/history_entity.dart';
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/history_status.dart';
 import 'package:bladderly/domain/model/leakage_volume.dart';
-import 'package:bladderly/presentation/common/extension/string_extension.dart';
 
 class HistoryMapper {
   const HistoryMapper._();
@@ -15,8 +14,7 @@ class HistoryMapper {
         id: entity.id,
         recordTime: entity.recordTime,
         beverageType: entity.beverageType!,
-        recordVolume: entity.recordVolume.toString(),
-        roundedVolume: entity.recordVolume.toString().getRoundedVolume(),
+        recordVolume: entity.recordVolume.toInt(),
         memo: entity.leakageMemo,
         status: entity.status,
       );
@@ -35,8 +33,7 @@ class HistoryMapper {
     return VoidingHistory(
       id: entity.id,
       recordTime: entity.recordTime,
-      recordVolume: entity.recordVolume.toString(),
-      roundedVolume: entity.recordVolume.toString().getRoundedVolume(),
+      recordVolume: entity.recordVolume,
       recordUrgency: entity.recordUrgency!,
       isManual: entity.isManual ?? false,
       isNocturia: entity.isNocturia ?? false,
@@ -51,7 +48,7 @@ class HistoryMapper {
     try {
       const status = HistoryStatus.done;
       final recordTime = DateTime.parse(record.recordTime!.replaceAll('-', ' '));
-      final recordVolume = record.recordVolume.toString();
+      final recordVolume = double.tryParse(record.recordVolume ?? '');
       final leakageVolume = switch (record.leakageVolume) {
         final String leakageVolume when leakageVolume.isNotEmpty => LeakageVolume.values.byName(leakageVolume),
         _ => null,
@@ -62,14 +59,13 @@ class HistoryMapper {
           id: null,
           recordTime: recordTime,
           beverageType: record.beverageType!,
-          recordVolume: recordVolume,
-          roundedVolume: recordVolume.getRoundedVolume(),
+          recordVolume: recordVolume!.toInt(),
           memo: record.leakageMemo,
           status: status,
         );
       }
 
-      if (recordVolume == '0.1') {
+      if (recordVolume == 0.1) {
         return LeakageHistory(
           id: null,
           recordTime: recordTime,
@@ -82,8 +78,7 @@ class HistoryMapper {
       return VoidingHistory(
         id: null,
         recordTime: recordTime,
-        recordVolume: recordVolume,
-        roundedVolume: recordVolume.getRoundedVolume(),
+        recordVolume: recordVolume!,
         recordUrgency: int.parse(record.recordUrgency!),
         isManual: record.isManual ?? false,
         isNocturia: record.isNocturia ?? false,
@@ -110,7 +105,7 @@ class HistoryMapper {
       ..setId(history.id)
       ..recordTime = history.recordTime
       ..leakageMemo = history.memo
-      ..recordVolume = double.parse(history.recordVolume)
+      ..recordVolume = history.recordVolume
       ..recordUrgency = history.recordUrgency
       ..isManual = history.isManual
       ..isNocturia = history.isNocturia
@@ -125,7 +120,7 @@ class HistoryMapper {
       ..recordTime = history.recordTime
       ..leakageMemo = history.memo
       ..beverageType = history.beverageType
-      ..recordVolume = double.parse(history.recordVolume)
+      ..recordVolume = history.recordVolume.toDouble()
       ..status = history.status
       ..isIntake = true;
   }

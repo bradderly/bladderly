@@ -1,9 +1,9 @@
 // Package imports:
-import 'package:equatable/equatable.dart';
-
 // Project imports:
 import 'package:bladderly/domain/model/histories.dart';
+import 'package:bladderly/presentation/common/extension/double_extension.dart';
 import 'package:bladderly/presentation/common/extension/duration_extension.dart';
+import 'package:equatable/equatable.dart';
 
 class HomeVoidingSummaryModel extends Equatable {
   const HomeVoidingSummaryModel({
@@ -20,7 +20,7 @@ class HomeVoidingSummaryModel extends Equatable {
   factory HomeVoidingSummaryModel.fromDomain(VodingHistories vodingHistories) {
     return HomeVoidingSummaryModel(
       frequency: vodingHistories.length,
-      totalVoid: vodingHistories.totalVolume,
+      totalVoid: vodingHistories.totalVolume.toRoundVolume(),
       lastRecord: switch (vodingHistories.lastRecordTime) {
         final DateTime lastRecordTime => DateTime.now().difference(lastRecordTime).formatHHMM(),
         _ => 'N/A',

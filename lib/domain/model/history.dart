@@ -1,11 +1,10 @@
 // Package imports:
 
-// Package imports:
-import 'package:equatable/equatable.dart';
-
 // Project imports:
 import 'package:bladderly/domain/model/history_status.dart';
 import 'package:bladderly/domain/model/leakage_volume.dart';
+// Package imports:
+import 'package:equatable/equatable.dart';
 
 sealed class History extends Equatable {
   const History._({
@@ -45,7 +44,6 @@ class VoidingHistory extends History {
     required super.memo,
     required super.status,
     required this.recordVolume,
-    required this.roundedVolume,
     required this.recordUrgency,
     required this.isManual,
     required this.isNocturia,
@@ -54,8 +52,7 @@ class VoidingHistory extends History {
   }) : super._();
 
   /// 배뇨량
-  final String recordVolume;
-  final int roundedVolume;
+  final double recordVolume;
 
   /// 마려웠던 정도
   final int recordUrgency;
@@ -72,10 +69,6 @@ class VoidingHistory extends History {
   /// 요실금 발생 양
   final LeakageVolume? leakageVolume;
 
-  int getRoundedVolume() {
-    return 0;
-  }
-
   @override
   VoidingHistory setId(int id) {
     return VoidingHistory(
@@ -84,7 +77,6 @@ class VoidingHistory extends History {
       memo: memo,
       status: status,
       recordVolume: recordVolume,
-      roundedVolume: roundedVolume,
       recordUrgency: recordUrgency,
       isManual: isManual,
       isNocturia: isNocturia,
@@ -101,7 +93,6 @@ class VoidingHistory extends History {
       memo: memo,
       status: status,
       recordVolume: recordVolume,
-      roundedVolume: roundedVolume,
       recordUrgency: recordUrgency,
       isManual: isManual,
       isNocturia: isNocturia,
@@ -110,14 +101,13 @@ class VoidingHistory extends History {
     );
   }
 
-  VoidingHistory setRecordVolume(String recordVolume, int roundedVolume) {
+  VoidingHistory setRecordVolume(double recordVolume) {
     return VoidingHistory(
       id: id,
       recordTime: recordTime,
       memo: memo,
       status: status,
       recordVolume: recordVolume,
-      roundedVolume: roundedVolume,
       recordUrgency: recordUrgency,
       isManual: isManual,
       isNocturia: isNocturia,
@@ -146,15 +136,13 @@ class IntakeHistory extends History {
     required super.status,
     required this.beverageType,
     required this.recordVolume,
-    required this.roundedVolume,
   }) : super._();
 
   /// 섭취 종류
   final String beverageType;
 
   /// 섭취량
-  final String recordVolume;
-  final int roundedVolume;
+  final int recordVolume;
 
   @override
   IntakeHistory setId(int id) {
@@ -165,7 +153,6 @@ class IntakeHistory extends History {
       status: status,
       beverageType: beverageType,
       recordVolume: recordVolume,
-      roundedVolume: roundedVolume,
     );
   }
 
@@ -178,7 +165,6 @@ class IntakeHistory extends History {
       status: status,
       beverageType: beverageType,
       recordVolume: recordVolume,
-      roundedVolume: roundedVolume,
     );
   }
 

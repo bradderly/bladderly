@@ -193,7 +193,7 @@ class _DetailedListVoidingHistoryWidget extends DetailedListHistoryWidget {
                     ),
                     child: Text(
                       switch (realIndex) {
-                        0 => '${context.unitValue(historyModel.roundedVolume)}',
+                        0 => '${context.unitValue(historyModel.recordVolume)}',
                         1 => 'Lv ${historyModel.recordUrgency}',
                         2 when historyModel.leakageVolume != null => historyModel.leakageVolume!.tr(context),
                         _ => '',
@@ -305,7 +305,7 @@ class _DetailedListIntakeHistoryWidget extends DetailedListHistoryWidget {
                   borderRadius: BorderRadius.circular(32),
                 ),
                 child: Text(
-                  historyModel.roundedVolume.toString(),
+                  '${historyModel.recordVolume}',
                   style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade1),
                 ),
               ),

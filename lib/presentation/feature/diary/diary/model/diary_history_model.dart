@@ -4,6 +4,7 @@ import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/history_status.dart';
 import 'package:bladderly/domain/model/leakage_volume.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/double_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_history_status_model.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_history_type_model.dart';
@@ -19,12 +20,12 @@ class DiaryHistoryModel extends Equatable {
     required this.status,
     required DateTime recordTime,
     required this.isNocturia,
-    required int roundedVolume,
+    required int? recordVolume,
     required this.recordUrgency,
     required this.leakageVolume,
     required this.beverageType,
   })  : _recordTime = recordTime,
-        _roundedVolume = roundedVolume;
+        _recordVolume = recordVolume;
 
   factory DiaryHistoryModel.fromDomain(History history) {
     final statusModel = switch (history.status) {
@@ -38,7 +39,7 @@ class DiaryHistoryModel extends Equatable {
           type: DiaryHistoryTypeModel.voiding,
           status: statusModel,
           recordTime: history.recordTime,
-          roundedVolume: history.roundedVolume,
+          recordVolume: history.recordVolume.toRoundVolume(),
           isNocturia: history.isNocturia,
           recordUrgency: history.recordUrgency,
           leakageVolume: switch (history.leakageVolume) {
@@ -55,7 +56,7 @@ class DiaryHistoryModel extends Equatable {
           status: statusModel,
           recordTime: history.recordTime,
           isNocturia: false,
-          roundedVolume: history.roundedVolume,
+          recordVolume: history.recordVolume,
           recordUrgency: null,
           leakageVolume: null,
           beverageType: history.beverageType,
@@ -66,7 +67,7 @@ class DiaryHistoryModel extends Equatable {
           status: statusModel,
           recordTime: history.recordTime,
           isNocturia: false,
-          roundedVolume: 0,
+          recordVolume: null,
           recordUrgency: null,
           leakageVolume: switch (history.leakageVolume) {
             LeakageVolume.Small => 'S',
@@ -83,7 +84,7 @@ class DiaryHistoryModel extends Equatable {
   final DiaryHistoryStatusModel status;
   final DateTime _recordTime;
   final bool isNocturia;
-  final int _roundedVolume;
+  final int? _recordVolume;
   final int? recordUrgency;
   final String? leakageVolume;
   final String? beverageType;
@@ -97,7 +98,7 @@ class DiaryHistoryModel extends Equatable {
   String getRecordVolume(BuildContext context) {
     if (type == DiaryHistoryTypeModel.leakage) return '';
 
-    return _roundedVolume == 0 ? 'N/A' : '${context.unitValue(_roundedVolume)}${context.unitName}';
+    return _recordVolume == null ? 'N/A' : '${context.unitValue(_recordVolume)}${context.unitName}';
   }
 
   @override
@@ -107,7 +108,7 @@ class DiaryHistoryModel extends Equatable {
         status,
         _recordTime,
         isNocturia,
-        _roundedVolume,
+        _recordVolume,
         recordUrgency,
         leakageVolume,
         beverageType,

@@ -31,7 +31,7 @@ class GetHistoryResultUsecase with HistoryResultUsecaseMixin {
       return const Right(null);
     } catch (e) {
       if (e is GetHistoryResultFailureException) {
-        await _historyRepository.saveHistory(history.setStatus(HistoryStatus.done));
+        await _historyRepository.saveHistory(history.setStatus(HistoryStatus.failed));
       }
 
       return Left(e is Exception ? e : Exception(e.toString()));

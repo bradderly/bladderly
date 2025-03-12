@@ -3,6 +3,7 @@
 // Project imports:
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/leakage_volume.dart';
+import 'package:bladderly/presentation/common/extension/double_extension.dart';
 import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 // Package imports:
@@ -21,7 +22,7 @@ sealed class DetailedListHistoryModel extends Equatable {
           id: history.id!,
           recordTime: history.recordTime,
           memo: history.memo,
-          roundedVolume: history.roundedVolume,
+          recordVolume: history.recordVolume.toRoundVolume(),
           recordUrgency: history.recordUrgency,
           isNocutria: history.isNocturia,
           leakageVolume: switch (history.leakageVolume) {
@@ -42,7 +43,7 @@ sealed class DetailedListHistoryModel extends Equatable {
           recordTime: history.recordTime,
           memo: history.memo,
           beverageType: history.beverageType,
-          roundedVolume: history.roundedVolume,
+          recordVolume: history.recordVolume,
         ),
     };
   }
@@ -64,13 +65,13 @@ class DetailedListVoidingHistoryModel extends DetailedListHistoryModel {
     required super.id,
     required super.recordTime,
     required super.memo,
-    required this.roundedVolume,
+    required this.recordVolume,
     required this.recordUrgency,
     required this.isNocutria,
     required this.leakageVolume,
   }) : super._();
 
-  final int roundedVolume;
+  final int recordVolume;
   final int recordUrgency;
   final bool isNocutria;
   final String? leakageVolume;
@@ -78,7 +79,7 @@ class DetailedListVoidingHistoryModel extends DetailedListHistoryModel {
   @override
   List<Object?> get props => [
         ...super.props,
-        roundedVolume,
+        recordVolume,
         recordUrgency,
         leakageVolume,
       ];
@@ -107,11 +108,11 @@ class DetailedListIntakeHistoryModel extends DetailedListHistoryModel {
     required super.recordTime,
     required super.memo,
     required this.beverageType,
-    required this.roundedVolume,
+    required this.recordVolume,
   }) : super._();
 
   final String beverageType;
-  final int roundedVolume;
+  final int recordVolume;
 
   SvgGenImage get icon {
     return switch (BeverageTypeModel.of(beverageType)) {
@@ -128,6 +129,6 @@ class DetailedListIntakeHistoryModel extends DetailedListHistoryModel {
   List<Object?> get props => [
         ...super.props,
         beverageType,
-        roundedVolume,
+        recordVolume,
       ];
 }

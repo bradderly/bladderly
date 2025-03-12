@@ -2,7 +2,6 @@
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/history_status.dart';
 import 'package:bladderly/domain/repository/history_repository.dart';
-import 'package:bladderly/presentation/common/extension/string_extension.dart';
 
 mixin HistoryResultUsecaseMixin {
   HistoryRepository get historyRepository;
@@ -28,9 +27,8 @@ mixin HistoryResultUsecaseMixin {
         break;
       }
 
-      if (result.volume case final String volume when result.isDone) {
-        await historyRepository
-            .saveHistory(history.setStatus(HistoryStatus.done).setRecordVolume(volume, volume.getRoundedVolume()));
+      if (result.volume case final double volume when result.isDone) {
+        await historyRepository.saveHistory(history.setStatus(HistoryStatus.done).setRecordVolume(volume));
         break;
       }
 

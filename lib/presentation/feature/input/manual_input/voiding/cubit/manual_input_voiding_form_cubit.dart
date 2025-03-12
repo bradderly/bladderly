@@ -1,11 +1,11 @@
 // Package imports:
-import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 // Project imports:
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/leakage_volume.dart';
 import 'package:bladderly/domain/model/unit.dart';
+import 'package:bladderly/presentation/common/extension/double_extension.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'manual_input_voiding_form_state.dart';
 
