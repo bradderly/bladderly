@@ -4,6 +4,7 @@ import 'dart:math';
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_history_model.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_history_status_model.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_history_type_model.dart';
@@ -279,7 +280,9 @@ class _HistoryWidget extends StatelessWidget {
                   ),
                 ),
               _DiaryHistoryColumn.type => Text(
-                  diaryHistoryModel.beverageType?.tr(context) ?? '',
+                  (diaryHistoryModel.beverageType ?? '').isEmpty
+                      ? ''
+                      : BeverageTypeModel.of(diaryHistoryModel.beverageType ?? '').name.tr(context),
                   style: context.textStyleTheme.b14Medium.copyWith(
                     color: context.colorTheme.neutral.shade8,
                   ),

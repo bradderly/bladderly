@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -83,7 +84,10 @@ sealed class DetailedListHistoryWidget extends StatelessWidget {
           const Divider(color: Color(0xFFE6E6E6), thickness: 1, height: 35),
           _buildBody(context),
           if (historyModel.memo case final String memo when memo.trim().isNotEmpty) ...[
+            /// TODO: beverage others 값 입력
+            // historyModel.beverageType이 Others이면 아래의 텍스트 바디에 추가 (BeverageTypeModel.of(historyModel.beverageType).name)
             const Gap(16),
+            // Text('Beverage: ${beverageName}')
             Text(
               memo,
               style: context.textStyleTheme.b12Medium.copyWith(color: context.colorTheme.neutral.shade6),
@@ -193,7 +197,7 @@ class _DetailedListVoidingHistoryWidget extends DetailedListHistoryWidget {
                     ),
                     child: Text(
                       switch (realIndex) {
-                        0 => '${context.unitValue(historyModel.recordVolume)}',
+                        0 => '${historyModel.recordVolume == 0 ? 'N/A' : context.unitValue(historyModel.recordVolume)}',
                         1 => 'Lv ${historyModel.recordUrgency}',
                         2 when historyModel.leakageVolume != null => historyModel.leakageVolume!.tr(context),
                         _ => '',
@@ -336,7 +340,7 @@ class _DetailedListIntakeHistoryWidget extends DetailedListHistoryWidget {
                       alignment: Alignment.center,
                       constraints: const BoxConstraints(minWidth: 54),
                       child: Text(
-                        historyModel.beverageType.tr(context),
+                        BeverageTypeModel.of(historyModel.beverageType).name.tr(context),
                         style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade1),
                       ),
                     ),

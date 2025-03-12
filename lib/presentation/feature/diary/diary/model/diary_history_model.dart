@@ -98,7 +98,7 @@ class DiaryHistoryModel extends Equatable {
   String getRecordVolume(BuildContext context) {
     if (type == DiaryHistoryTypeModel.leakage) return '';
 
-    return _recordVolume == null ? 'N/A' : '${context.unitValue(_recordVolume)}${context.unitName}';
+    return (_recordVolume ?? 0) == 0 ? 'N/A' : '${context.unitValue(_recordVolume!)}${context.unitName}';
   }
 
   @override
