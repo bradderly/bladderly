@@ -194,25 +194,32 @@ class DiaryVoidingSummaryWidget extends StatelessWidget {
                       ],
                     ),
                     const Gap(8),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16),
-                      child: RichText(
-                        text: TextSpan(
-                          style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade10),
-                          children: [
-                            TextSpan(
-                              text: switch (frequencyType) {
-                                _FrequencyType.daytime => '${diaryVodingSummaryModel.daytimeFrequency}',
-                                _FrequencyType.nighttime => '${diaryVodingSummaryModel.nighttimeFrequency}',
-                                _FrequencyType.leakage => '${diaryVodingSummaryModel.leakageFrequency}',
-                              },
-                              style: context.textStyleTheme.b24Bold.copyWith(color: context.colorTheme.neutral.shade10),
+                    Builder(
+                      builder: (context) {
+                        final frequency = switch (frequencyType) {
+                          _FrequencyType.daytime => diaryVodingSummaryModel.daytimeFrequency,
+                          _FrequencyType.nighttime => diaryVodingSummaryModel.nighttimeFrequency,
+                          _FrequencyType.leakage => diaryVodingSummaryModel.leakageFrequency,
+                        };
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 16),
+                          child: RichText(
+                            text: TextSpan(
+                              style:
+                                  context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade10),
+                              children: [
+                                TextSpan(
+                                  text: '$frequency',
+                                  style: context.textStyleTheme.b24Bold
+                                      .copyWith(color: context.colorTheme.neutral.shade10),
+                                ),
+                                const TextSpan(text: ' '),
+                                TextSpan(text: frequency <= 1 ? 'time'.tr(context) : 'times'.tr(context)),
+                              ],
                             ),
-                            const TextSpan(text: ' '),
-                            TextSpan(text: 'times'.tr(context)),
-                          ],
-                        ),
-                      ),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
