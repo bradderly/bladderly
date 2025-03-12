@@ -1,15 +1,13 @@
 // Flutter imports:
-import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:gap/gap.dart';
-
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
 import 'package:bladderly/presentation/feature/diary/detailed_list/model/detailed_list_history_model.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:gap/gap.dart';
 
 sealed class DetailedListHistoryWidget extends StatelessWidget {
   factory DetailedListHistoryWidget({
@@ -83,24 +81,13 @@ sealed class DetailedListHistoryWidget extends StatelessWidget {
           ),
           const Divider(color: Color(0xFFE6E6E6), thickness: 1, height: 35),
           _buildBody(context),
-          if (historyModel.memo case final String memo when memo.trim().isNotEmpty) ...[
-            /// TODO: beverage others 값 입력
-            // historyModel.beverageType이 Others이면 아래의 텍스트 바디에 추가 (BeverageTypeModel.of(historyModel.beverageType).name)
-            const Gap(16),
-            // Text('Beverage: ${beverageName}')
-            Text(
-              memo,
-              style: context.textStyleTheme.b12Medium.copyWith(color: context.colorTheme.neutral.shade6),
-            ),
-          ],
+          _buildMemo(context),
         ],
       ),
     );
   }
 
-  Widget _buildHeader(BuildContext context);
-
-  Widget _buildBody(BuildContext context);
+  Color _getColor(BuildContext context);
 
   Widget _buildHistoryType(
     BuildContext context, {
@@ -121,7 +108,38 @@ sealed class DetailedListHistoryWidget extends StatelessWidget {
     );
   }
 
-  Color _getColor(BuildContext context);
+  Widget _buildHeader(BuildContext context);
+
+  Widget _buildBody(BuildContext context);
+
+  Widget _buildMemo(BuildContext context) {
+    final historyModel = this.historyModel;
+
+    final isBevarageTypeOthers = historyModel is DetailedListIntakeHistoryModel && historyModel.isBevarageTypeOthers;
+    final isMemoNotEmpty = historyModel.memo?.trim().isNotEmpty ?? false;
+
+    return Column(
+      children: [
+        if (isBevarageTypeOthers || isMemoNotEmpty) const Gap(16),
+        if (isBevarageTypeOthers)
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(text: 'Beverage'.tr(context)),
+                const TextSpan(text: ':'),
+                TextSpan(text: historyModel.beverageType),
+              ],
+              style: context.textStyleTheme.b12Medium.copyWith(color: context.colorTheme.neutral.shade6),
+            ),
+          ),
+        if (isMemoNotEmpty)
+          Text(
+            historyModel.memo!,
+            style: context.textStyleTheme.b12Medium.copyWith(color: context.colorTheme.neutral.shade6),
+          ),
+      ],
+    );
+  }
 }
 
 class _DetailedListVoidingHistoryWidget extends DetailedListHistoryWidget {

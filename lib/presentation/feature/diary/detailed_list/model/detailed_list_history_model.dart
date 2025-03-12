@@ -125,6 +125,8 @@ class DetailedListIntakeHistoryModel extends DetailedListHistoryModel {
     };
   }
 
+  bool get isBevarageTypeOthers => BeverageTypeModel.of(beverageType) == BeverageTypeModel.others;
+
   @override
   List<Object?> get props => [
         ...super.props,
