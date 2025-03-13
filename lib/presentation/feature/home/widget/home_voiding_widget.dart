@@ -1,11 +1,13 @@
 // Flutter imports:
 
 // Project imports:
+import 'package:bladderly/core/recorder/recorder_module.dart';
 import 'package:bladderly/domain/exception/domain_exception.dart';
 import 'package:bladderly/presentation/common/bloc/device_bloc.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
+import 'package:bladderly/presentation/common/widget/common_modal.dart';
 import 'package:bladderly/presentation/feature/home/model/home_voiding_summary_model.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
@@ -19,11 +21,13 @@ import 'package:go_router/go_router.dart';
 class HomeVoidingWidget extends StatelessWidget {
   const HomeVoidingWidget({
     super.key,
+    required this.recorder,
     required this.onTapMore,
     required this.onTapHowToUse,
     required this.homeVoidingSummaryModel,
   });
 
+  final Recorder recorder;
   final VoidCallback onTapMore;
   final VoidCallback onTapHowToUse;
   final HomeVoidingSummaryModel homeVoidingSummaryModel;
@@ -157,6 +161,25 @@ class HomeVoidingWidget extends StatelessWidget {
   }) {
     return GestureDetector(
       onTap: () async {
+        final granted = await recorder.checkPermission();
+        if (!granted) {
+          return showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text('Microphone permission title'.tr(context)),
+              content: Text('Microphone permission body'.tr(context)),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Okay'.tr(context)),
+                ),
+              ],
+            ),
+          );
+        }
+
         final state = context.read<DeviceBloc>().state;
         if (state is! DeviceCheckSupportSuccess) return;
 

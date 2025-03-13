@@ -64,7 +64,7 @@ abstract class Recorder {
   const Recorder();
 
   /// 음성 녹음 권한 체크
-  Future<bool> chekcPermission();
+  Future<bool> checkPermission();
 
   Future<void> start({required DateTime recordTime});
 

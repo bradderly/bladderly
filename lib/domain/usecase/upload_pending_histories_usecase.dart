@@ -62,7 +62,7 @@ class UploadPendingHistoriesUsecase {
     required User user,
     required History history,
   }) async {
-    await _historyRepository.uploadHistory(userId: user.userId, history: history);
+    // await _historyRepository.uploadHistory(userId: user.userId, history: history);
 
     await _historyRepository.saveHistory(history.setStatus(HistoryStatus.done));
 
@@ -85,6 +85,8 @@ class UploadPendingHistoriesUsecase {
       fileName: _recordedFileUtil.generateFileName(file: file, user: user),
       file: file,
     );
+
+    await _historyRepository.uploadHistory(userId: user.userId, history: history);
 
     await _historyRepository.saveHistory(history.setStatus(HistoryStatus.processing));
 

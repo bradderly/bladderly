@@ -40,7 +40,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
     final done = await const HowToUseRoute().push(context);
 
     if (done == true) {
-      await widget.recorder.chekcPermission();
+      await widget.recorder.checkPermission();
     }
   }
 
@@ -72,6 +72,7 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
                       BlocSelector<HomeSummaryCubit, HomeSummaryState, HomeVoidingSummaryModel>(
                         selector: (state) => state.voidingSummaryModel,
                         builder: (context, homeVoidingSummaryModel) => HomeVoidingWidget(
+                          recorder: widget.recorder,
                           onTapMore: widget.onPressedMoreVoiding,
                           onTapHowToUse: onTapHowToUse,
                           homeVoidingSummaryModel: homeVoidingSummaryModel,

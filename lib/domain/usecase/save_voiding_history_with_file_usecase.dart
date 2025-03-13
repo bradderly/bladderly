@@ -78,6 +78,8 @@ class SaveVoidingHistoryWithFileUsecase {
         file: file,
       );
 
+      await _historyRepository.uploadHistory(userId: userId, history: history);
+
       final processingHistory = await _historyRepository.saveHistory(history.setStatus(HistoryStatus.processing));
 
       return Right(processingHistory);

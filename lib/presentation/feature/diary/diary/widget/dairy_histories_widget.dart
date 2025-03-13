@@ -280,9 +280,9 @@ class _HistoryWidget extends StatelessWidget {
                   ),
                 ),
               _DiaryHistoryColumn.type => Text(
-                  (diaryHistoryModel.beverageType ?? '').isEmpty
-                      ? ''
-                      : BeverageTypeModel.of(diaryHistoryModel.beverageType ?? '').name.tr(context),
+                  diaryHistoryModel.type == DiaryHistoryTypeModel.intake
+                      ? BeverageTypeModel.of(diaryHistoryModel.beverageType ?? '').name.tr(context)
+                      : '',
                   style: context.textStyleTheme.b14Medium.copyWith(
                     color: context.colorTheme.neutral.shade8,
                   ),

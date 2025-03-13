@@ -23,7 +23,7 @@ class _RecorderImpl implements Recorder, RecorderFileLoader {
   final _subject = BehaviorSubject<RecorderState>.seeded(const RecorderIdle());
 
   @override
-  Future<bool> chekcPermission() {
+  Future<bool> checkPermission() {
     return _recorder.hasPermission();
   }
 

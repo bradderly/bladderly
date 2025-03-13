@@ -47,7 +47,7 @@
 		<true/>
 	</dict>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Enable microphone access to record sounds.</string>
+	<string>Bladderly records sound only while using Sound Input to estimate your urine volume.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
@@ -71,6 +71,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSFaceIDUsageDescription</key>
-	<string>이 앱은 얼굴 인식을 사용하여 인증합니다.</string>
+	<string>Unlock the app by using Face ID</string>
 </dict>
 </plist>

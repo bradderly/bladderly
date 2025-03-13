@@ -44,6 +44,12 @@
             "state" : "new",
             "value" : "이 앱은 얼굴 인식을 사용하여 인증합니다."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Face ID를 이용하여 앱 잠금을 해제합니다."
+          }
         }
       }
     },
@@ -55,6 +61,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Enable microphone access to record sounds."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "블래덜리는 자동측정 기능을 사용할 때만 소리를 녹음하며, 녹음된 소리를 분석하여 배뇨량을 추정합니다."
           }
         }
       }
