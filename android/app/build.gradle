@@ -41,6 +41,10 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        def build = 5
+        buildConfigField "int", "build", "$build"
+        archivesBaseName = "bladderly_v" + versionName + "(" + build + ")-" + versionCode
+
     }
 
     signingConfigs {
@@ -51,6 +55,11 @@ android {
             storePassword keystoreProperties['storePassword']
         }
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
 
     buildTypes {
         release {

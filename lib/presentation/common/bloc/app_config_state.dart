@@ -13,6 +13,7 @@ sealed class AppConfigState extends Equatable {
   AppVersion get appVersion => _appConfig!.appVersion;
 
   String get currentVersion => appVersion.currentVersion;
+  String get currentBuild => appVersion.currentBuild;
 
   String get updatedDate {
     final updatedAt = switch (_versionMap[appVersion.currentVersion]) {
