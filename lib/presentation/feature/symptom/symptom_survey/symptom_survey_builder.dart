@@ -2,10 +2,10 @@
 // Project imports:
 import 'package:bladderly/core/di/di.dart';
 import 'package:bladderly/domain/usecase/send_score_result_usecase.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/model/symptom_survey_model.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/symptom_survey/bloc/symptom_survey_bloc.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/symptom_survey/cubit/symptom_survey_form_cubit.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/symptom_survey/symptom_survey_modal.dart';
+import 'package:bladderly/presentation/feature/symptom/model/symptom_survey_model.dart';
+import 'package:bladderly/presentation/feature/symptom/symptom_survey/bloc/symptom_survey_bloc.dart';
+import 'package:bladderly/presentation/feature/symptom/symptom_survey/cubit/symptom_survey_form_cubit.dart';
+import 'package:bladderly/presentation/feature/symptom/symptom_survey/symptom_survey_view.dart';
 import 'package:flutter/widgets.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,7 +27,7 @@ class SymptomSurveyBuilder extends StatelessWidget {
           create: (_) => SymptomSurveyFormCubit(questionCount: symptomSurveyModel.questions.length),
         ),
       ],
-      child: SymptomSurveyModal(symptomSurveyModel: symptomSurveyModel),
+      child: SymptomSurveyView(symptomSurveyModel: symptomSurveyModel),
     );
   }
 }

@@ -5,9 +5,9 @@ import 'package:bladderly/domain/model/score.dart';
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/model/symptom_survey_model.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/model/symptom_survey_question_model.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/model/symptom_survey_result_model.dart';
+import 'package:bladderly/presentation/feature/symptom/model/symptom_survey_model.dart';
+import 'package:bladderly/presentation/feature/symptom/model/symptom_survey_question_model.dart';
+import 'package:bladderly/presentation/feature/symptom/model/symptom_survey_result_model.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';

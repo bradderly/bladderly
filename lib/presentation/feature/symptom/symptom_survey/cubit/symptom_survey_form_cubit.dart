@@ -1,4 +1,4 @@
-import 'package:bladderly/presentation/feature/menu/symptom/model/symptom_survery_answer_model.dart';
+import 'package:bladderly/presentation/feature/symptom/model/symptom_survery_answer_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

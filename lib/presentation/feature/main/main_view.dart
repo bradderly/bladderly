@@ -52,6 +52,7 @@ class _MainViewState extends State<MainView> {
 
   @override
   void dispose() {
+    GoRouter.of(context).routeInformationProvider.removeListener(routeInfomationProviderListener);
     pageController.dispose();
     super.dispose();
   }

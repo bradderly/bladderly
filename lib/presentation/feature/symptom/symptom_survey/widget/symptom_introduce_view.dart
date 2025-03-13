@@ -2,14 +2,12 @@
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/model/symptom_survey_model.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/symptom_survey/symptom_survey_builder.dart';
-import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title_back.dart';
+import 'package:bladderly/presentation/feature/symptom/model/symptom_survey_model.dart';
 import 'package:flutter/material.dart';
 
-class SymptomIntroduceModal extends StatelessWidget {
-  const SymptomIntroduceModal({super.key, required this.symptomSurveyModel});
+class SymptomIntroduceView extends StatelessWidget {
+  const SymptomIntroduceView({super.key, required this.symptomSurveyModel});
 
   final SymptomSurveyModel symptomSurveyModel;
 
@@ -24,7 +22,6 @@ class SymptomIntroduceModal extends StatelessWidget {
           decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
             ),
           ),
@@ -120,10 +117,15 @@ class SymptomIntroduceModal extends StatelessWidget {
               ),
               GestureDetector(
                 behavior: HitTestBehavior.translucent,
-                onTap: () => ModalHelper.showModal<void>(
-                  context: context,
-                  modalBuilder: (_) => SymptomSurveyBuilder(symptomSurveyModel: symptomSurveyModel),
-                ),
+                onTap: () async {
+                  // final isDone =
+                  //     await SymtomSurveyRoute($extra: SymtomSurveyRouteExtra(symptomSurveyModel: symptomSurveyModel))
+                  //         .push<void>(context);
+
+                  // if (context.mounted && isDone == true) {
+                  //   context.pop(isDone);
+                  // }
+                },
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
                   decoration: BoxDecoration(

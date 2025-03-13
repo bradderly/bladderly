@@ -6,13 +6,13 @@ import 'package:bladderly/domain/usecase/get_scores_stream_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'symptom_history_form_state.dart';
+part 'symptom_scores_form_state.dart';
 
-class SymptomHistoryFormCubit extends Cubit<SymptomHistoryFormState> {
-  SymptomHistoryFormCubit({
+class SymptomScoresFormCubit extends Cubit<SymptomScoresFormState> {
+  SymptomScoresFormCubit({
     required GetScoresStreamUsecase getScoresStreamUsecase,
   })  : _getScoresStreamUsecase = getScoresStreamUsecase,
-        super(const SymptomHistoryFormState(Scores.empty()));
+        super(const SymptomScoresFormState(Scores.empty()));
 
   final GetScoresStreamUsecase _getScoresStreamUsecase;
 
@@ -41,6 +41,6 @@ class SymptomHistoryFormCubit extends Cubit<SymptomHistoryFormState> {
   void _listener(Scores scores) {
     if (isClosed) return;
 
-    emit(SymptomHistoryFormState(scores));
+    emit(SymptomScoresFormState(scores));
   }
 }

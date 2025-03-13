@@ -13,9 +13,9 @@ import 'package:bladderly/presentation/feature/menu/contact_us/contact_us_builde
 import 'package:bladderly/presentation/feature/menu/faq/faq_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/language/language_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/profile/profile_builder.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/symptom_builder.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 import 'package:bladderly/presentation/feature/payment/plan/plan_builder.dart';
+import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // Package imports:
@@ -87,12 +87,9 @@ class MenuView extends StatelessWidget {
                         title: 'Data export'.tr(context),
                       ),
                       SettingsItem(
+                        onTap: () => const SymptomScoresRoute().go(context),
                         icon: Icons.bar_chart,
                         title: 'Symptom score'.tr(context),
-                        onTap: () => ModalHelper.showModal<void>(
-                          context: context,
-                          modalBuilder: (_) => const SymptomBuilder(),
-                        ),
                       ),
                       SettingsItem(
                         onTap: () async {

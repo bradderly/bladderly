@@ -1,4 +1,4 @@
-import 'package:bladderly/presentation/feature/menu/symptom/model/symptom_survey_question_model.dart';
+import 'package:bladderly/presentation/feature/symptom/model/symptom_survey_question_model.dart';
 import 'package:equatable/equatable.dart';
 
 class SymptomSurveyQuestionsModel extends Equatable {

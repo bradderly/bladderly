@@ -8,6 +8,7 @@ class ProgressIndicatorModal extends StatelessWidget {
   static Future<void> show(
     BuildContext context, {
     bool removeAutoFocus = true,
+    bool useRootNavigator = true,
   }) {
     if (removeAutoFocus) {
       FocusScope.of(context).requestFocus(FocusNode());
@@ -15,6 +16,7 @@ class ProgressIndicatorModal extends StatelessWidget {
 
     return showDialog(
       context: context,
+      useRootNavigator: useRootNavigator,
       barrierDismissible: false,
       builder: (context) => const ProgressIndicatorModal._(),
     );
@@ -22,6 +24,9 @@ class ProgressIndicatorModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: CupertinoActivityIndicator());
+    return const PopScope(
+      canPop: false,
+      child: Center(child: CupertinoActivityIndicator()),
+    );
   }
 }

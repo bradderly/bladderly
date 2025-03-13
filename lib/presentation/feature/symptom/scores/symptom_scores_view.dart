@@ -6,72 +6,67 @@ import 'package:bladderly/domain/model/scores.dart';
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/cubit/symptom_history_form_cubit.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/model/symptom_survey_model.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/model/symptom_survey_result_model.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/symptom_descript/symptom_descript_modal.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/symptom_introduce/symptom_introduce_modal.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/symtom_detail/symptom_detail_modal.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:bladderly/presentation/feature/symptom/model/symptom_survey_model.dart';
+import 'package:bladderly/presentation/feature/symptom/model/symptom_survey_result_model.dart';
+import 'package:bladderly/presentation/feature/symptom/scores/cubit/symptom_scores_form_cubit.dart';
+import 'package:bladderly/presentation/feature/symptom/symptom_descript/symptom_descript_modal.dart';
+import 'package:bladderly/presentation/feature/symptom/sypmtom_detail/symptom_detail_modal.dart';
+import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 
-class SymptomModal extends StatelessWidget {
-  const SymptomModal({super.key});
+class SymptomScoresView extends StatefulWidget {
+  const SymptomScoresView({
+    super.key,
+  });
 
   @override
+  State<SymptomScoresView> createState() => _SymptomScoresViewState();
+}
+
+class _SymptomScoresViewState extends State<SymptomScoresView> {
+  @override
   Widget build(BuildContext context) {
-    return DraggableScrollableSheet(
-      initialChildSize: 0.95,
-      maxChildSize: 0.95,
-      minChildSize: 0.95,
-      builder: (_, controller) {
-        return BlocSelector<SymptomHistoryFormCubit, SymptomHistoryFormState, Scores>(
-          selector: (state) => state.scores,
-          builder: (context, scores) => Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
-            child: Column(
-              children: [
-                ModalTitle(title: 'Symptom Score'.tr(context)),
-                const SizedBox(height: 40),
-                Expanded(
-                  child: ListView.builder(
-                    controller: controller,
-                    itemCount: ScoreType.values.length,
-                    itemBuilder: (context, index) => SurveyItem(
-                      symptomSurvey: SymptomSurveyModel.getByScoreType(ScoreType.values[index]),
-                      scores: scores.whereByScoreType(ScoreType.values[index]),
-                    ),
-                  ),
+    return BlocSelector<SymptomScoresFormCubit, SymptomScoresFormState, Scores>(
+      selector: (state) => state.scores,
+      builder: (context, scores) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
+        child: Column(
+          children: [
+            ModalTitle(title: 'Symptom Score'.tr(context)),
+            const SizedBox(height: 40),
+            Expanded(
+              child: ListView.builder(
+                itemCount: ScoreType.values.length,
+                itemBuilder: (context, index) => SurveyItem(
+                  symptomSurvey: SymptomSurveyModel.getByScoreType(ScoreType.values[index]),
+                  scores: scores.whereByScoreType(ScoreType.values[index]),
                 ),
-                GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: () => showModalBottomSheet<void>(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    builder: (context) => const SymptomDescriptModal(),
-                  ),
-                  child: Text(
-                    'References'.tr(context),
-                    style: context.textStyleTheme.b16SemiBold.copyWith(
-                      color: context.colorTheme.vermilion.primary.shade50,
-                      decoration: TextDecoration.underline,
-                      decorationColor: context.colorTheme.vermilion.primary.shade50,
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        );
-      },
+            GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () => showModalBottomSheet<void>(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder: (context) => const SymptomDescriptModal(),
+              ),
+              child: Text(
+                'References'.tr(context),
+                style: context.textStyleTheme.b16SemiBold.copyWith(
+                  color: context.colorTheme.vermilion.primary.shade50,
+                  decoration: TextDecoration.underline,
+                  decorationColor: context.colorTheme.vermilion.primary.shade50,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -114,12 +109,9 @@ class _SurveyItemState extends State<SurveyItem> {
               ),
               trailing: GestureDetector(
                 behavior: HitTestBehavior.translucent,
-                onTap: () => showModalBottomSheet<void>(
-                  context: context,
-                  isScrollControlled: true,
-                  backgroundColor: Colors.transparent,
-                  builder: (context) => SymptomIntroduceModal(symptomSurveyModel: widget.symptomSurvey),
-                ),
+                onTap: () =>
+                    SymptomSurveyRoute($extra: SymptomSurveyRouteExtra(symptomSurveyModel: widget.symptomSurvey))
+                        .go(context),
                 child: Container(
                   decoration: BoxDecoration(
                     color: context.colorTheme.vermilion.primary.shade50,

@@ -5,6 +5,7 @@ import 'dart:async';
 
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/plan.dart';
+import 'package:bladderly/domain/model/score.dart';
 import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
 import 'package:bladderly/presentation/feature/about/privacy/privacy_view.dart';
 import 'package:bladderly/presentation/feature/about/terms/terms_view.dart';
@@ -19,7 +20,13 @@ import 'package:bladderly/presentation/feature/menu/faq/faq_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/menu_builder.dart';
 import 'package:bladderly/presentation/feature/payment/paywall/paywall_builder.dart';
 import 'package:bladderly/presentation/feature/sign_up/regular/sign_up_regular_builder.dart';
+import 'package:bladderly/presentation/feature/symptom/model/symptom_survey_model.dart';
+import 'package:bladderly/presentation/feature/symptom/result/symptom_result_view.dart';
+import 'package:bladderly/presentation/feature/symptom/scores/symptom_scores_builder.dart';
+import 'package:bladderly/presentation/feature/symptom/symptom_survey/symptom_survey_builder.dart';
+import 'package:bladderly/presentation/feature/symptom/symptom_view.dart';
 import 'package:bladderly/presentation/feature/tutorial/how_to_use/how_to_use_view.dart';
+import 'package:bladderly/presentation/router/page/modal_bottom_sheet_page.dart';
 // Package imports:
 import 'package:equatable/equatable.dart';
 // Flutter imports:
@@ -53,6 +60,24 @@ enum MainRouteTab {
         TypedGoRoute<PaywallRoute>(
           name: 'paywall',
           path: 'paywall',
+        ),
+        TypedShellRoute<SymptomShellRouteData>(
+          routes: [
+            TypedGoRoute<SymptomScoresRoute>(
+              path: 'symptom-scores',
+              name: 'symptom-scores',
+              routes: [
+                TypedGoRoute<SymptomSurveyRoute>(
+                  path: 'symptom-survey',
+                  name: 'symptom-survey',
+                ),
+                TypedGoRoute<SymptomResultRoute>(
+                  path: 'symptom-result',
+                  name: 'symptom-result',
+                ),
+              ],
+            ),
+          ],
         ),
       ],
     ),
@@ -366,6 +391,93 @@ class FaqRoute extends GoRouteData {
     return CupertinoPage<void>(
       key: state.pageKey,
       child: const FaqViewModal(),
+    );
+  }
+}
+
+class SymptomScoresRoute extends GoRouteData {
+  const SymptomScoresRoute();
+
+  static final $parentNavigatorKey = SymptomShellRouteData.$navigatorKey;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const SymptomScoresBuilder();
+  }
+}
+
+class SymptomSurveyRouteExtra extends Equatable {
+  const SymptomSurveyRouteExtra({
+    required this.symptomSurveyModel,
+  });
+
+  final SymptomSurveyModel symptomSurveyModel;
+
+  @override
+  List<Object> get props => [
+        symptomSurveyModel,
+      ];
+}
+
+class SymptomSurveyRoute extends GoRouteData {
+  const SymptomSurveyRoute({
+    required this.$extra,
+  });
+
+  static final $parentNavigatorKey = SymptomShellRouteData.$navigatorKey;
+
+  final SymptomSurveyRouteExtra? $extra;
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: SymptomSurveyBuilder(symptomSurveyModel: $extra!.symptomSurveyModel),
+    );
+  }
+}
+
+class SymptomResultRouteExtra extends Equatable {
+  const SymptomResultRouteExtra({
+    required this.score,
+  });
+
+  final Score score;
+
+  @override
+  List<Object> get props => [
+        score,
+      ];
+}
+
+class SymptomResultRoute extends GoRouteData {
+  const SymptomResultRoute({
+    required this.$extra,
+  });
+
+  static final $parentNavigatorKey = SymptomShellRouteData.$navigatorKey;
+
+  final SymptomResultRouteExtra? $extra;
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: SymptomResultView(score: $extra!.score),
+    );
+  }
+}
+
+class SymptomShellRouteData extends ShellRouteData {
+  static final $navigatorKey = GlobalKey<NavigatorState>();
+
+  @override
+  Page<void> pageBuilder(BuildContext context, GoRouterState state, Widget navigator) {
+    return ModalBottomSheetPage(
+      key: state.pageKey,
+      child: SymptomView(
+        navigator: navigator,
+      ),
     );
   }
 }

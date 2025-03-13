@@ -1,5 +1,5 @@
 import 'package:bladderly/domain/model/score_type.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/model/symptom_survey_questions_model.dart';
+import 'package:bladderly/presentation/feature/symptom/model/symptom_survey_questions_model.dart';
 import 'package:equatable/equatable.dart';
 
 class SymptomSurveyModel extends Equatable {
