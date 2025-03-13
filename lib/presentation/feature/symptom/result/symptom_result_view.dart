@@ -180,9 +180,8 @@ class GaugeWidget extends StatelessWidget {
             ),
             Positioned(
               bottom: 16,
-              // Center the image horizontally
               left: (220 - 50) / 2,
-              child: result.icon.image(
+              child: result.icon.svg(
                 width: 50,
                 height: 50,
               ),

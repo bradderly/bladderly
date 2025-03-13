@@ -57,12 +57,12 @@ enum SymptomSurveyResultModel {
   final int min;
   final int max;
 
-  AssetGenImage get icon {
+  SvgGenImage get icon {
     return switch (this) {
-      noSymptom => Assets.img.imgSymptomFace1,
-      mild => Assets.img.imgSymptomFace2,
-      moderate => Assets.img.imgSymptomFace3,
-      severe => Assets.img.imgSymptomFace4,
+      noSymptom => Assets.icon.icSymptomFace1,
+      mild => Assets.icon.icSymptomFace2,
+      moderate => Assets.icon.icSymptomFace3,
+      severe => Assets.icon.icSymptomFace4,
     };
   }
 
