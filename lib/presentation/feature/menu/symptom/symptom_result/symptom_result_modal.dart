@@ -194,7 +194,7 @@ class GaugeWidget extends StatelessWidget {
               bottom: 16,
               // Center the image horizontally
               left: (220 - 50) / 2,
-              child: result.icon.image(
+              child: result.icon.svg(
                 width: 50,
                 height: 50,
               ),
@@ -237,11 +237,14 @@ class GaugePainter extends CustomPainter {
       ..strokeCap = StrokeCap.round;
 
     final progressPaint = Paint()
-      ..shader = const SweepGradient(
-        colors: [Color(0xFF94A22F), Color(0xFFD97A3B), Color(0xFFFF6442)],
+      ..shader = const LinearGradient(
+        colors: [
+          Color(0xFF94A22F),
+          Color(0xFFD97A3B),
+          Color(0xFFFF6442),
+        ],
         stops: [0.0, 0.2, 1.0],
-        startAngle: pi,
-      ).createShader(Rect.fromCircle(center: Offset(size.width / 2, size.height), radius: size.width / 2))
+      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height))
       ..strokeWidth = 22
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
