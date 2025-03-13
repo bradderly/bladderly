@@ -5,7 +5,7 @@ import 'package:bladderly/domain/exception/invalid_user_exception.dart';
 import 'package:bladderly/domain/exception/not_found_user_exception.dart';
 // Flutter imports:
 import 'package:bladderly/domain/exception/password_attempts_exceeded_exception.dart';
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
 import 'package:bladderly/presentation/common/widget/password_input_field.dart';

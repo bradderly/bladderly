@@ -25,7 +25,9 @@ import 'package:bladderly/presentation/feature/symptom/result/symptom_result_vie
 import 'package:bladderly/presentation/feature/symptom/scores/symptom_scores_builder.dart';
 import 'package:bladderly/presentation/feature/symptom/symptom_survey/symptom_survey_builder.dart';
 import 'package:bladderly/presentation/feature/symptom/symptom_view.dart';
+import 'package:bladderly/presentation/feature/tutorial/guide_tour/guide_tour_view.dart';
 import 'package:bladderly/presentation/feature/tutorial/how_to_use/how_to_use_view.dart';
+import 'package:bladderly/presentation/router/page/dialog_page.dart';
 import 'package:bladderly/presentation/router/page/modal_bottom_sheet_page.dart';
 // Package imports:
 import 'package:equatable/equatable.dart';
@@ -45,6 +47,10 @@ enum MainRouteTab {
   name: 'main',
   path: '/',
   routes: [
+    TypedGoRoute<GuideTourRoute>(
+      name: 'guide-tour',
+      path: 'guide-tour',
+    ),
     TypedGoRoute<ExportRoute>(
       name: 'export',
       path: 'export',
@@ -108,11 +114,7 @@ enum MainRouteTab {
   ],
 )
 class MainRoute extends GoRouteData {
-  const MainRoute({
-    this.tab,
-  });
-
-  final MainRouteTab? tab;
+  const MainRoute();
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
@@ -478,6 +480,20 @@ class SymptomShellRouteData extends ShellRouteData {
       child: SymptomView(
         navigator: navigator,
       ),
+    );
+  }
+}
+
+class GuideTourRoute extends GoRouteData {
+  const GuideTourRoute();
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return DialogPage<void>(
+      key: state.pageKey,
+      barrierDismissible: false,
+      barrierColor: const Color(0xFF4F4F4F).withValues(alpha: 0.6),
+      child: const GuideTourView(),
     );
   }
 }

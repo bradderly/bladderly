@@ -1,17 +1,15 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:gap/gap.dart';
-
 // Project imports:
 import 'package:bladderly/domain/model/history.dart';
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/feature/input/manual_input/leakage/manual_input_leakage_builder.dart';
 import 'package:bladderly/presentation/feature/input/manual_input/voiding/manual_input_voiding_builder.dart';
 import 'package:bladderly/presentation/feature/input/manual_input/widget/manual_input_tab_bar.dart';
 import 'package:bladderly/presentation/feature/input/widget/input_record_time_widget.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:gap/gap.dart';
 
 class ManualInputView extends StatefulWidget {
   const ManualInputView({

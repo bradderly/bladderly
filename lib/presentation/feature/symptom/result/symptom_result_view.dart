@@ -8,7 +8,7 @@ import 'dart:math';
 // Flutter imports:
 import 'package:bladderly/domain/model/score.dart';
 // Project imports:
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/datetime_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';

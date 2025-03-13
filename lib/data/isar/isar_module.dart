@@ -1,16 +1,16 @@
 // Package imports:
 
-// Package imports:
-import 'package:bladderly/data/isar/schema/score_entity.dart';
-import 'package:injectable/injectable.dart';
-import 'package:isar/isar.dart';
-import 'package:path_provider/path_provider.dart';
-
 // Project imports:
 import 'package:bladderly/data/isar/isar_client.dart';
 import 'package:bladderly/data/isar/schema/apple_credential_entity.dart';
 import 'package:bladderly/data/isar/schema/history_entity.dart';
+// Package imports:
+import 'package:bladderly/data/isar/schema/membership_entity.dart';
+import 'package:bladderly/data/isar/schema/score_entity.dart';
 import 'package:bladderly/data/isar/schema/user_entity.dart';
+import 'package:injectable/injectable.dart';
+import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
 
 @module
 abstract class IsarModule {
@@ -25,6 +25,7 @@ abstract class IsarModule {
         UserEntitySchema,
         AppleCredentialEntitySchema,
         ScoreEntitySchema,
+        MembershipEntitySchema,
       ],
       directory: applicationDocumentsDirectory.path,
     );

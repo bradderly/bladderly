@@ -1,7 +1,7 @@
 // Flutter imports:
 
 // Project imports:
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/feature/diary/detailed_list/bloc/detailed_list_histories_bloc.dart';
 import 'package:bladderly/presentation/feature/diary/detailed_list/modal/detailed_list_delete_history_modal.dart';

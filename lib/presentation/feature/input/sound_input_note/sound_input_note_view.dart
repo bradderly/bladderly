@@ -4,8 +4,9 @@
 import 'package:bladderly/domain/model/leakage_volume.dart';
 import 'package:bladderly/presentation/common/bloc/history_result_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
+import 'package:bladderly/presentation/common/cubit/main_tab_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 // Flutter imports:
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
@@ -57,7 +58,7 @@ class SoundInputNoteView extends StatelessWidget {
 
     SoundInputNoteUploadSuccessModal.show(
       context,
-      onGoToDiary: () => const MainRoute(tab: MainRouteTab.diary).go(context),
+      onGoToDiary: () => const MainRoute().go(context..read<MainTabCubit>().showDiary()),
     );
   }
 

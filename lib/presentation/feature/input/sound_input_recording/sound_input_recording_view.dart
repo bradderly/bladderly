@@ -4,7 +4,7 @@ import 'dart:async';
 // Project imports:
 import 'package:bladderly/core/recorder/recorder_module.dart';
 import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/input/sound_input_recording/widget/sound_input_recording_stop_dialog.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';

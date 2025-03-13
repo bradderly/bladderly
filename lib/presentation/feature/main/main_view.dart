@@ -4,15 +4,18 @@
 
 import 'package:bladderly/core/recorder/recorder_module.dart';
 import 'package:bladderly/domain/exception/get_history_result_failure_exception.dart';
+import 'package:bladderly/domain/exception/network_not_connected_exception.dart';
 import 'package:bladderly/presentation/common/bloc/history_result_bloc.dart';
+import 'package:bladderly/presentation/common/bloc/membership_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
+import 'package:bladderly/presentation/common/cubit/main_tab_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
+import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
 import 'package:bladderly/presentation/common/widget/get_history_result_failure_modal.dart';
 import 'package:bladderly/presentation/feature/diary/diary/diary_builder.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_tab_scroll_section_model.dart';
 import 'package:bladderly/presentation/feature/home/home_builder.dart';
 import 'package:bladderly/presentation/feature/main/bloc/main_history_bloc.dart';
-import 'package:bladderly/presentation/feature/main/cubit/main_tab_cubit.dart';
 import 'package:bladderly/presentation/feature/main/widget/main_bottom_navigation_bar.dart';
 import 'package:bladderly/presentation/feature/payment/bloc/payment_bloc.dart';
 import 'package:bladderly/presentation/router/route/intro_route.dart';
@@ -41,30 +44,18 @@ class _MainViewState extends State<MainView> {
   @override
   void initState() {
     super.initState();
-    GoRouter.of(context).routeInformationProvider.addListener(routeInfomationProviderListener);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      checkPendingUploadFile();
-      initializeHistories();
-      initializePurchaseHandler();
-    });
+    initializeHistories();
+    initializePurchaseHandler();
+    initilizeMembership();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => checkPendingUploadFile());
   }
 
   @override
   void dispose() {
-    GoRouter.of(context).routeInformationProvider.removeListener(routeInfomationProviderListener);
     pageController.dispose();
     super.dispose();
-  }
-
-  void routeInfomationProviderListener() {
-    if (!mounted) return;
-
-    final queryParameters = GoRouter.of(context).state?.uri.queryParametersAll;
-
-    if (queryParameters?['tab']?.firstOrNull case final String tab) {
-      context.read<MainTabCubit>().switchByTabName(tab);
-    }
   }
 
   void checkPendingUploadFile() {
@@ -108,6 +99,12 @@ class _MainViewState extends State<MainView> {
     context.read<PaymentBloc>().add(PaymentInitializeHandler(userId: userId));
   }
 
+  void initilizeMembership() {
+    context.read<MembershipBloc>()
+      ..add(MembershipLoad(userId: context.read<UserBloc>().state.userModelOrThrowException.id))
+      ..add(MembershipInitialize(userId: context.read<UserBloc>().state.userModelOrThrowException.id));
+  }
+
   void onHistoryResultGetFailure(BuildContext context, HistoryResultGetFailure state) {
     if (!context.mounted) return;
 
@@ -118,6 +115,18 @@ class _MainViewState extends State<MainView> {
         onMaintain: context.pop,
         message: exception.message,
         recordTime: exception.recordTime,
+      );
+    }
+  }
+
+  void onMembershipInitializeFailure(BuildContext context, MembershipInitializeFailure state) {
+    if (!context.mounted) return;
+
+    if (state.exception case final NetworkNotConnectedException exception) {
+      CommonErrorModal.showFromDominException<void>(
+        context,
+        onTap: context.pop,
+        exception: exception,
       );
     }
   }
@@ -139,6 +148,12 @@ class _MainViewState extends State<MainView> {
         BlocListener<HistoryResultBloc, HistoryResultState>(
           listener: (context, state) => switch (state) {
             HistoryResultGetFailure() => onHistoryResultGetFailure(context, state),
+            _ => null,
+          },
+        ),
+        BlocListener<MembershipBloc, MembershipState>(
+          listener: (context, state) => switch (state) {
+            MembershipInitializeFailure() => onMembershipInitializeFailure(context, state),
             _ => null,
           },
         ),

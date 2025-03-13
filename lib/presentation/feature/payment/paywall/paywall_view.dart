@@ -1,6 +1,6 @@
 // Flutter imports:
 // Project imports:
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/util/text_size_util.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';

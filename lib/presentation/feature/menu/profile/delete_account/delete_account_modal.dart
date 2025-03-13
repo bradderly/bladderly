@@ -1,7 +1,7 @@
 // Flutter imports:
 // Project imports:
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/model/user_model.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';

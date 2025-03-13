@@ -3,6 +3,7 @@
 // Project imports:
 import 'package:bladderly/domain/model/leakage_volume.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
+import 'package:bladderly/presentation/common/cubit/main_tab_cubit.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/common_keyboard_actions.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
@@ -89,7 +90,7 @@ class _ManualInputVoidingWidgetState extends State<ManualInputVoidingWidget> wit
     if (widget.isEditing) {
       return context.pop();
     } else {
-      return const MainRoute(tab: MainRouteTab.diary).go(context);
+      return const MainRoute().go(context..read<MainTabCubit>().showDiary());
     }
   }
 

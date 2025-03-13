@@ -109,12 +109,14 @@ class _SplashViewState extends State<SplashView> {
         BlocListener<AppConfigBloc, AppConfigState>(
           listener: (context, state) => switch (state) {
             AppConfigLoadSuccess() => onAppConfigLoadSuccess(context, state),
+            AppConfigLoadFailure() => setSubjectValue(initialized: true),
             _ => null,
           },
         ),
         BlocListener<DeviceBloc, DeviceState>(
           listener: (context, state) => switch (state) {
             DeviceCheckSupportSuccess() => onCheckSupportedDeviceSuccess(context, state),
+            DeviceCheckSupportFailure() => setSubjectValue(initialized: true),
             _ => null,
           },
         ),

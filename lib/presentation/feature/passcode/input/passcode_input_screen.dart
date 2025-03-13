@@ -1,6 +1,6 @@
 // ignore_for_file: sized_box_shrink_expand
 
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:flutter/material.dart';

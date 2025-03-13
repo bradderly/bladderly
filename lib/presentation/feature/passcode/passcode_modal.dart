@@ -3,7 +3,7 @@
 import 'package:bladderly/core/bio_auth/bio_auth.dart';
 import 'package:bladderly/presentation/common/cubit/passcode_cubit.dart';
 // PasscodeCubit 가져오기
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:bladderly/presentation/feature/passcode/input/passcode_input_screen.dart';

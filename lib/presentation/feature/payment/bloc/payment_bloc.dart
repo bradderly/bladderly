@@ -27,7 +27,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
 
     return _initializePurchaseHandlerUsecase(userId: event.userId).fold(
       (exception) => emit(PaymentInitializeHandlerFailure(exception: exception)),
-      (stream) => emit.forEach(
+      (stream) => emit.forEach<PurchaseStatus?>(
         stream,
         onData: (status) => switch (status) {
           PurchaseStatus.pending => const PaymentPurchaseInProgress(),

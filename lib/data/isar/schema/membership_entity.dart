@@ -1,16 +1,19 @@
 import 'package:isar/isar.dart';
 
+part 'membership_entity.g.dart';
+
 @collection
 class MembershipEntity {
   Id id = Isar.autoIncrement;
 
   @Index(unique: true, replace: true)
-  @Name('user_id')
-  late String userId;
+  late int userId;
 
-  late DateTime startAt;
+  late String productId;
 
-  late DateTime endAt;
+  late DateTime startDate;
 
-  DateTime? renewAt;
+  late DateTime endDate;
+
+  late bool autoRenewal;
 }

@@ -1,9 +1,8 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Project imports:
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/widget/ripple_button.dart';
+import 'package:flutter/material.dart';
 
 abstract class PrimaryButton extends StatelessWidget {
   const PrimaryButton._({

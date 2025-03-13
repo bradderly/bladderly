@@ -1,16 +1,14 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
-
 // Project imports:
 import 'package:bladderly/domain/model/sex.dart';
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 abstract class HowToUsePageView extends StatelessWidget {
   factory HowToUsePageView({

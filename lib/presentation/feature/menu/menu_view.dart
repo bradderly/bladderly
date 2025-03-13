@@ -5,7 +5,7 @@ import 'package:bladderly/domain/model/unit.dart';
 import 'package:bladderly/presentation/common/bloc/app_config_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/locale_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/unit_cubit.dart';
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/feature/about/about_modal.dart';

@@ -2,9 +2,10 @@
 
 // Project imports:
 import 'package:bladderly/core/recorder/recorder_module.dart';
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/primary_background.dart';
+import 'package:bladderly/presentation/feature/home/cubit/home_cubit.dart';
 import 'package:bladderly/presentation/feature/home/cubit/home_summary_cubit.dart';
 import 'package:bladderly/presentation/feature/home/model/home_intake_summary_model.dart';
 import 'package:bladderly/presentation/feature/home/model/home_voiding_summary_model.dart';
@@ -36,8 +37,29 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!context.read<HomeCubit>().state.showGuideTour) {
+        await const GuideTourRoute().push<void>(context);
+
+        if (!mounted) return;
+
+        /// TODO(eden): 노티피케이션 권한 요청 로직 구현 필요
+
+        context.read<HomeCubit>().onShowGuideTour();
+
+        await onTapHowToUse();
+      }
+    });
+  }
+
   Future<void> onTapHowToUse() async {
     final done = await const HowToUseRoute().push(context);
+
+    if (mounted) context.read<HomeCubit>().onShowHowToUse();
 
     if (done == true) {
       await widget.recorder.checkPermission();
