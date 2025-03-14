@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:bladderly/presentation/feature/payment/plan/plan_modal.dart';
+import 'package:bladderly/presentation/feature/payment/plan/plan_view.dart';
 import 'package:flutter/widgets.dart';
 
 class PlanBuilder extends StatelessWidget {
@@ -7,6 +7,6 @@ class PlanBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const PlanModal();
+    return const PlanView();
   }
 }

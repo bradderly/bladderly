@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class MenuView extends StatelessWidget {
   const MenuView({super.key});
@@ -46,11 +47,11 @@ class MenuView extends StatelessWidget {
                           ),
                         ),
                         IconButton(
+                          onPressed: context.pop,
                           icon: Icon(
                             Icons.close,
                             color: context.colorTheme.neutral.shade8,
                           ),
-                          onPressed: () => Navigator.pop(context),
                         ),
                       ],
                     ),

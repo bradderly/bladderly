@@ -77,7 +77,7 @@ class InitializePurchaseHandlerUsecase {
       receipt: purchaseDetails.verificationData.serverVerificationData,
     );
 
-    final membership = await _userRepository.initializeMembership(userId: userId);
+    final membership = await _userRepository.getMembershipFromServer(userId: userId);
     final localUserId = _userRepository.getLocalUserIdByUserId(userId);
 
     if (membership != null && localUserId != null) {
@@ -102,7 +102,7 @@ class InitializePurchaseHandlerUsecase {
       receipt: purchaseDetails.productID,
     );
 
-    final membership = await _userRepository.initializeMembership(userId: userId);
+    final membership = await _userRepository.getMembershipFromServer(userId: userId);
     final localUserId = _userRepository.getLocalUserIdByUserId(userId);
 
     if (membership != null && localUserId != null) {

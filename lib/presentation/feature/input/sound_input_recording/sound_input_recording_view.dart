@@ -15,6 +15,7 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:synchronized/synchronized.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
@@ -111,19 +112,19 @@ class _SoundInputRecordingViewState extends State<SoundInputRecordingView> with 
       context,
       onCancel: () {
         cancelRecording();
-        Navigator.of(context).pop<bool>(true);
+        context.pop<bool>(true);
       },
-      onContinue: () => Navigator.of(context).pop<void>(),
+      onContinue: () => context.pop<void>(),
     );
 
-    if (shouldCancelRecord == true && mounted) Navigator.of(context).pop();
+    if (shouldCancelRecord == true && mounted) context.pop();
   }
 
   void onPop() {
     if (widget.recorder.state is RecorderRecording) {
       showRecordingCancelDialog();
     } else {
-      Navigator.of(context).pop<void>();
+      context.pop<void>();
     }
   }
 

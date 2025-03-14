@@ -92,7 +92,7 @@ class _IntakeInputViewState extends State<IntakeInputView> {
           ),
           actions: [
             GestureDetector(
-              onTap: Navigator.of(context).pop,
+              onTap: context.pop,
               child: Assets.icon.icExportClose.svg(
                 colorFilter: ColorFilter.mode(
                   context.colorTheme.neutral.shade8,

@@ -34,19 +34,10 @@ class PaymentRepositoryImpl implements PaymentRepository {
   }
 
   @override
-  Future<void> purchaseOneTimePlan({
-    required String userId,
-    required String planId,
+  Future<void> purchasePlan({
+    required String productId,
   }) {
-    // TODO: implement purchaseOneTimePlan
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> purchaseSubscriptionPlan({
-    required String planId,
-  }) {
-    final productDetails = _productDetailsStream.value.firstWhere((element) => element.id == planId);
+    final productDetails = _productDetailsStream.value.firstWhere((element) => element.id == productId);
 
     return _inAppPurchase.buyNonConsumable(purchaseParam: PurchaseParam(productDetails: productDetails));
   }
@@ -69,5 +60,15 @@ class PaymentRepositoryImpl implements PaymentRepository {
     );
 
     return result.body!;
+  }
+
+  @override
+  Future<void> purchaseWithoutIap({
+    required String userId,
+    required String productId,
+  }) {
+    return _apiClient
+        .checkPayment(request: PaymentCheckRequest(userId: userId, device: _deviceInfoModel.os, productId: productId))
+        .then((value) => value.body!);
   }
 }

@@ -3,9 +3,12 @@
 import 'dart:math';
 
 import 'package:bladderly/domain/model/membership.dart';
+import 'package:bladderly/domain/model/product.dart';
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/util/text_size_util.dart';
+import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
@@ -40,6 +43,13 @@ abstract class PaywallView extends StatelessWidget {
   final Membership? membership;
   final PaywallPlansModel plans;
 
+  void _purchase(BuildContext context) {
+    final userId = context.read<UserBloc>().state.userModelOrThrowException.id;
+    final planId = context.read<PaywallCubit>().state.selectedPlanId;
+
+    context.read<PaymentBloc>().add(PaymentPurchasePlan(userId: userId, planId: planId!));
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<PaymentBloc, PaymentState>(
@@ -48,6 +58,14 @@ abstract class PaywallView extends StatelessWidget {
       },
       listener: (context, state) => switch (state) {
         PaymentPurchaseReadyInProgress() => ProgressIndicatorModal.show(context),
+        final PaymentPurchaseReadySuccess state when state.product == Product.threeDaysPass => CommonErrorModal.show(
+            context,
+            onTap: () => const PlanRoute().go(context),
+            title: 'Surprise! A Gift for You!'.tr(context),
+            content:
+                'Enjoying our fresh new look? Here’s a free 3-day pass! Hope this helps you take care of your urinary health.'
+                    .tr(context),
+          ),
         PaymentPurchaseSuccess() => context.pop(),
         PaymentPurchaseFailure() => context.pop(),
         PaymentPurchaseRestored() => context.pop(),
@@ -151,11 +169,7 @@ abstract class PaywallView extends StatelessWidget {
           BlocSelector<PaywallCubit, PaywallState, bool>(
             selector: (state) => !state.isValid,
             builder: (context, isNotValid) => PrimaryButton.filled(
-              onPressed: isNotValid
-                  ? null
-                  : () => context.read<PaymentBloc>().add(
-                        PaymentPurchasePlan(planId: context.read<PaywallCubit>().state.selectedPlanId!),
-                      ),
+              onPressed: isNotValid ? null : () => _purchase(context),
               backgroundColor:
                   isNotValid ? context.colorTheme.neutral.shade6 : context.colorTheme.vermilion.primary.shade50,
               borderRadius: 400,

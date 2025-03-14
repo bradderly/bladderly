@@ -29,7 +29,7 @@ class InitializeMembershipUsecase {
         throw NetworkNotConnectedException();
       }
 
-      final membership = await _userRepository.initializeMembership(
+      final membership = await _userRepository.getMembershipFromServer(
         userId: userId,
       );
 

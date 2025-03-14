@@ -106,7 +106,7 @@ class _DiaryViewState extends State<DiaryView> with AutomaticKeepAliveClientMixi
       ),
       child: Scaffold(
         appBar: DiaryAppBar(
-          onTapExport: () => ExportCalendarRoute().push<void>(context),
+          onTapExport: () => const ExportCalendarRoute().push<void>(context),
           onChanged: onDateChanged,
           today: today,
         ),

@@ -57,7 +57,7 @@ class UserRepositoryImpl implements UserRepository {
       _isarClient.userStream.map((entity) => entity == null ? null : UserMapper.fromUserEntity(entity));
 
   @override
-  Future<Membership?> initializeMembership({
+  Future<Membership?> getMembershipFromServer({
     required String userId,
   }) async {
     final response = await _apiClient

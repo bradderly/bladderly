@@ -11,6 +11,7 @@ import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ChangePasswordModal extends StatelessWidget {
   const ChangePasswordModal({super.key});
@@ -48,9 +49,7 @@ class ChangePasswordModal extends StatelessWidget {
     return BlocListener<ChangePasswordBloc, ChangePasswordState>(
       listener: (context, state) => switch (state) {
         ChangePasswordInitial() => ProgressIndicatorModal.show(context),
-        ChangePasswordSuccess() => {
-            Navigator.of(context).pop(),
-          },
+        ChangePasswordSuccess() => context.pop(),
         ChangePasswordFailure() => {},
         _ => null,
       },

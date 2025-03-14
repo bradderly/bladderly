@@ -12,6 +12,7 @@ import 'package:bladderly/presentation/feature/payment/promo_code/promo_contact_
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class PromoCodeModal extends StatefulWidget {
   const PromoCodeModal({super.key});
@@ -51,7 +52,7 @@ class _PromoCodeModalState extends State<PromoCodeModal> {
               const SizedBox(height: 5),
               GestureDetector(
                 behavior: HitTestBehavior.translucent,
-                onTap: () => Navigator.of(context).pop(),
+                onTap: () => context.pop(),
                 child: Container(
                   width: 300,
                   alignment: Alignment.center,
@@ -77,8 +78,9 @@ class _PromoCodeModalState extends State<PromoCodeModal> {
         if (state is PromoCodeProgress) {
           ProgressIndicatorModal.show(context); // 로딩 표시
         } else if (state is PromoCodeSuccess) {
-          Navigator.of(context).pop(); // 성공 시 모달 닫기
-          Navigator.of(context).pop(); // 화면 뒤로가기
+          context
+            ..pop() // 성공 시 모달 닫기
+            ..pop(); // 화면 뒤로가기
         } else if (state is PromoCodeFailure) {
           // 실패 시 에러 처리
           failToast();

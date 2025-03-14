@@ -10,6 +10,7 @@ import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 class ManualInputView extends StatefulWidget {
   const ManualInputView({
@@ -56,7 +57,7 @@ class _ManualInputViewState extends State<ManualInputView> {
         ),
         actions: [
           GestureDetector(
-            onTap: Navigator.of(context).pop,
+            onTap: context.pop,
             child: Assets.icon.icExportClose.svg(
               colorFilter: ColorFilter.mode(
                 context.colorTheme.neutral.shade8,

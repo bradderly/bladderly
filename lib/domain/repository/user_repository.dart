@@ -14,7 +14,7 @@ abstract class UserRepository {
 
   User? getUserOrNullByUserId(String userId);
 
-  Future<Membership?> initializeMembership({
+  Future<Membership?> getMembershipFromServer({
     required String userId,
   });
 

@@ -2,6 +2,7 @@ import 'package:bladderly/presentation/common/extension/build_context_extension.
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/common_modal.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SignOutModal extends StatelessWidget {
   const SignOutModal._();
@@ -44,7 +45,7 @@ class SignOutModal extends StatelessWidget {
         const SizedBox(height: 16),
         GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: Navigator.of(context).pop,
+          onTap: context.pop,
           child: Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.only(top: 19, bottom: 18),

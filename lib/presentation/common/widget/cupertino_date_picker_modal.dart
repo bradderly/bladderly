@@ -4,6 +4,7 @@ import 'package:bladderly/presentation/common/extension/build_context_extension.
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CupertinoDatePickerModal extends StatefulWidget {
   const CupertinoDatePickerModal({
@@ -64,7 +65,7 @@ class _CupertinoDatePickerModalState extends State<CupertinoDatePickerModal> {
                 children: [
                   Expanded(
                     child: GestureDetector(
-                      onTap: Navigator.of(context).pop,
+                      onTap: context.pop,
                       behavior: HitTestBehavior.translucent,
                       child: Center(
                         child: Text(
@@ -76,7 +77,7 @@ class _CupertinoDatePickerModalState extends State<CupertinoDatePickerModal> {
                   ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () => Navigator.of(context).pop(selectedDate),
+                      onTap: () => context.pop(selectedDate),
                       behavior: HitTestBehavior.translucent,
                       child: Center(
                         child: Text(

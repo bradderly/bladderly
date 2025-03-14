@@ -37,7 +37,16 @@ final class PaymentPurchaseReadyInProgress extends PaymentState {
 }
 
 final class PaymentPurchaseReadySuccess extends PaymentState {
-  const PaymentPurchaseReadySuccess();
+  const PaymentPurchaseReadySuccess({
+    required this.product,
+  });
+
+  final Product product;
+
+  @override
+  List<Object> get props => [
+        product,
+      ];
 }
 
 final class PaymentPurchaseReadyFailure extends PaymentState {

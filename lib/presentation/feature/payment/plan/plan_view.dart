@@ -13,17 +13,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
-class PlanModal extends StatelessWidget {
-  const PlanModal({super.key});
+class PlanView extends StatelessWidget {
+  const PlanView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<PlanBloc, PlanState>(
-      listener: (context, state) {
-        return switch (state) {
-          PlanGetPlansSuccess() => PaywallRoute($extra: PaywallRouteExtra(plans: state.plans)).go(context),
-          _ => null
-        };
+      listener: (context, state) => switch (state) {
+        PlanGetPlansSuccess() => PaywallRoute($extra: PaywallRouteExtra(plans: state.plans)).push<void>(context),
+        _ => null
       },
       child: Container(
         color: Colors.white,

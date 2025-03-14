@@ -22,9 +22,11 @@ class PaymentInitializeHandler extends PaymentEvent {
 
 class PaymentPurchasePlan extends PaymentEvent {
   const PaymentPurchasePlan({
+    required this.userId,
     required this.planId,
   });
 
+  final String userId;
   final String planId;
 
   @override

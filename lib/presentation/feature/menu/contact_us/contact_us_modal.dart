@@ -8,6 +8,7 @@ import 'package:bladderly/presentation/feature/menu/contact_us/cubit/contact_us_
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ContactUsModal extends StatefulWidget {
   const ContactUsModal({super.key});
@@ -73,7 +74,7 @@ class _ContactUsModalState extends State<ContactUsModal> {
             if (state is ContactUsInitial) {
               ProgressIndicatorModal.show(context);
             } else if (state is ContactUsSuccess) {
-              Navigator.of(context).pop();
+              context.pop();
             }
           },
           child: Container(

@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CupertinoBackButton extends StatelessWidget {
   const CupertinoBackButton({super.key, this.onPressed});
@@ -9,7 +10,7 @@ class CupertinoBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: onPressed ?? () => Navigator.of(context).pop(),
+      onPressed: onPressed ?? () => context.pop(),
       icon: const Icon(Icons.arrow_back_sharp),
     );
   }
