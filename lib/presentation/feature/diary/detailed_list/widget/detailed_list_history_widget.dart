@@ -2,6 +2,7 @@
 // Project imports:
 import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
 import 'package:bladderly/presentation/feature/diary/detailed_list/model/detailed_list_history_model.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
@@ -79,6 +80,9 @@ sealed class DetailedListHistoryWidget extends StatelessWidget {
               ),
             ],
           ),
+          if (historyModel is DetailedListVoidingHistoryModel &&
+              (historyModel as DetailedListVoidingHistoryModel).recordVolume == 0)
+            _buildNA(context),
           const Divider(color: Color(0xFFE6E6E6), thickness: 1, height: 35),
           _buildBody(context),
           _buildMemo(context),
@@ -109,6 +113,39 @@ sealed class DetailedListHistoryWidget extends StatelessWidget {
   }
 
   Widget _buildHeader(BuildContext context);
+
+  Widget _buildNA(BuildContext context) {
+    return Column(
+      children: [
+        const Gap(8),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Assets.icon.icInputWarning.svg(),
+            const Gap(8),
+            Flexible(
+              child: RichText(
+                text: TextSpan(
+                  style: context.textStyleTheme.b12Medium.copyWith(color: context.colorTheme.vermilion.primary.shade50),
+                  children: switch (context.locale) {
+                    AppLocale.en => [
+                        TextSpan(text: 'Voided Volume Not Recorded.', style: context.textStyleTheme.b12SemiBold),
+                        const TextSpan(text: ' Please manually record the amount to ensure accurate tracking.'),
+                      ],
+                    AppLocale.ko => [
+                        TextSpan(text: '배뇨량이 기록되지 않았습니다.', style: context.textStyleTheme.b12SemiBold),
+                        const TextSpan(text: ' 정확한 추적을 위해 수동으로 양을 기록해 주세요.'),
+                      ]
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
 
   Widget _buildBody(BuildContext context);
 
