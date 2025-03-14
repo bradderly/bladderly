@@ -8,11 +8,13 @@ import 'package:bladderly/presentation/common/bloc/device_bloc.dart';
 // Project imports:
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/passcode_cubit.dart';
+import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/intro_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:bladderly/presentation/router/route/passcode_auth_route.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,9 +40,8 @@ class _SplashViewState extends State<SplashView> {
     context.read<AppConfigBloc>().add(const AppConfigLoad());
 
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => Future<void>.delayed(
-        const Duration(seconds: 1),
-        () => setSubjectValue(waitingSuccess: true),
+      (_) => Future.wait([Firebase.initializeApp(), Translation().initialize()]).then(
+        (_) => Future<void>.delayed(const Duration(seconds: 1), () => setSubjectValue(waitingSuccess: true)),
       ),
     );
 

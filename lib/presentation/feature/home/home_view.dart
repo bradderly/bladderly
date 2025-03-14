@@ -13,6 +13,7 @@ import 'package:bladderly/presentation/feature/home/widget/home_app_bar.dart';
 import 'package:bladderly/presentation/feature/home/widget/home_intake_widget.dart';
 import 'package:bladderly/presentation/feature/home/widget/home_voiding_widget.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -47,7 +48,9 @@ class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin 
 
         if (!mounted) return;
 
-        /// TODO(eden): 노티피케이션 권한 요청 로직 구현 필요
+        await FirebaseMessaging.instance.requestPermission();
+
+        if (!mounted) return;
 
         context.read<HomeCubit>().onShowGuideTour();
 

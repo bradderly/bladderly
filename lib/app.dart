@@ -29,7 +29,6 @@ import 'package:bladderly/presentation/router/app_router.dart';
 import 'package:bladderly/presentation/theme/color/color_theme.dart';
 import 'package:bladderly/presentation/theme/shadow/shadow_theme.dart';
 import 'package:bladderly/presentation/theme/text_style/text_style_theme.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,13 +64,6 @@ class _BladderlyAppState extends State<BladderlyApp> {
       initLanguageCode: AppLocaleCubit().state.name,
       mapLocales: AppLocale.values.map((e) => MapLocale(e.name, {})).toList(),
     );
-  }
-
-  Future<void> initialize() {
-    return Future.wait([
-      Firebase.initializeApp(),
-      Translation().initialize(),
-    ]);
   }
 
   @override
