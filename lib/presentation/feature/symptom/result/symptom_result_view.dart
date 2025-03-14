@@ -7,6 +7,7 @@ import 'dart:math';
 
 // Flutter imports:
 import 'package:bladderly/domain/model/score.dart';
+import 'package:bladderly/domain/model/score_type.dart';
 // Project imports:
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/datetime_extension.dart';
@@ -25,10 +26,12 @@ class SymptomResultView extends StatelessWidget {
 
   final Score score;
 
-  SymptomSurveyResultModel get result => SymptomSurveyResultModel.fromTotalScore(score.totalScore);
+  SymptomSurveyResultModel get result => SymptomSurveyResultModel.fromTotalScore(score.totalScore, score.type);
 
   @override
   Widget build(BuildContext context) {
+    final isIPSS = score.type == ScoreType.IPSS;
+
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.only(top: 40, bottom: 28),
@@ -53,7 +56,10 @@ class SymptomResultView extends StatelessWidget {
                         boxShadow: context.shadowTheme.shadow1,
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: GaugeWidget(totalScore: score.totalScore),
+                      child: GaugeWidget(
+                        totalScore: score.totalScore,
+                        scoreType: score.type,
+                      ),
                     ),
                     const Gap(32),
                     Padding(
@@ -70,7 +76,9 @@ class SymptomResultView extends StatelessWidget {
                               );
                             }
 
-                            final result = SymptomSurveyResultModel.values.sublist(1)[index ~/ 2];
+                            final result = isIPSS
+                                ? SymptomSurveyResultModel.values.sublist(1)[index ~/ 2]
+                                : SymptomSurveyResultModel.values.sublist(1)[index ~/ 2];
 
                             return Expanded(
                               child: Column(
@@ -82,7 +90,9 @@ class SymptomResultView extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    '${result.min}-${result.max}',
+                                    isIPSS
+                                        ? '${result.ipssMin}-${result.ipssMax}'
+                                        : '${result.oabssMin}-${result.oabssMax}',
                                     style: context.textStyleTheme.b14SemiBold.copyWith(
                                       color: context.colorTheme.neutral.shade7,
                                     ),
@@ -162,13 +172,23 @@ class SymptomResultView extends StatelessWidget {
 }
 
 class GaugeWidget extends StatelessWidget {
-  const GaugeWidget({super.key, required this.totalScore});
+  const GaugeWidget({super.key, required this.totalScore, required this.scoreType});
   final int totalScore;
+  final ScoreType scoreType;
 
-  SymptomSurveyResultModel get result => SymptomSurveyResultModel.fromTotalScore(totalScore);
+  SymptomSurveyResultModel get result => SymptomSurveyResultModel.fromTotalScore(
+        totalScore,
+        scoreType,
+      );
 
   @override
   Widget build(BuildContext context) {
+    var totalMaxScore = 0;
+    if (scoreType == ScoreType.IPSS) {
+      totalMaxScore = 35;
+    } else if (scoreType == ScoreType.OABSS) {
+      totalMaxScore = 15;
+    }
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -176,7 +196,7 @@ class GaugeWidget extends StatelessWidget {
           children: [
             CustomPaint(
               size: const Size(220, 110),
-              painter: GaugePainter(totalScore / 35),
+              painter: GaugePainter(totalScore / totalMaxScore),
             ),
             Positioned(
               bottom: 16,
@@ -224,11 +244,14 @@ class GaugePainter extends CustomPainter {
       ..strokeCap = StrokeCap.round;
 
     final progressPaint = Paint()
-      ..shader = const SweepGradient(
-        colors: [Color(0xFF94A22F), Color(0xFFD97A3B), Color(0xFFFF6442)],
+      ..shader = const LinearGradient(
+        colors: [
+          Color(0xFF94A22F),
+          Color(0xFFD97A3B),
+          Color(0xFFFF6442),
+        ],
         stops: [0.0, 0.2, 1.0],
-        startAngle: pi,
-      ).createShader(Rect.fromCircle(center: Offset(size.width / 2, size.height), radius: size.width / 2))
+      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height))
       ..strokeWidth = 22
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;

@@ -238,13 +238,12 @@ class _SurveyItemState extends State<SurveyItem> {
                       color: context.colorTheme.vermilion.primary.shade50,
                     ),
                   ),
-                  const SizedBox(width: 20),
                   Container(
-                    width: 65,
-                    margin: const EdgeInsets.only(left: 11),
-                    alignment: Alignment.center,
+                    width: 100,
+                    margin: const EdgeInsets.only(left: 11, right: 11),
+                    alignment: Alignment.centerRight,
                     child: Text(
-                      SymptomSurveyResultModel.fromTotalScore(score.totalScore).name.tr(context),
+                      SymptomSurveyResultModel.fromTotalScore(score.totalScore, score.type).name.tr(context),
                       style: context.textStyleTheme.b14Medium.copyWith(
                         color: context.colorTheme.vermilion.primary.shade50,
                       ),

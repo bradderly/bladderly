@@ -92,7 +92,9 @@ class SymptomDetailModal extends StatelessWidget {
                                 ),
                                 const Gap(8),
                                 Text(
-                                  SymptomSurveyResultModel.fromTotalScore(score.totalScore).name.tr(context),
+                                  SymptomSurveyResultModel.fromTotalScore(score.totalScore, score.type)
+                                      .name
+                                      .tr(context),
                                   style: context.textStyleTheme.b28Bold.copyWith(
                                     color: context.colorTheme.neutral.shade10,
                                   ),
