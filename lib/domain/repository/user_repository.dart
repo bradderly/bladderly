@@ -16,7 +16,6 @@ abstract class UserRepository {
 
   Future<Membership?> initializeMembership({
     required String userId,
-    required String device,
   });
 
   Membership saveMembership({

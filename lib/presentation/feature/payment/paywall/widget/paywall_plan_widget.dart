@@ -27,7 +27,7 @@ class PaywallPlanWidget extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(
               horizontal: 24,
-              vertical: plan.isAnnual ? 24 : 20,
+              vertical: plan.isAnnualSubscription ? 24 : 20,
             ),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -72,7 +72,7 @@ class PaywallPlanWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                    if (plan.isAnnual)
+                    if (plan.isAnnualSubscription)
                       RichText(
                         text: TextSpan(
                           children: [
@@ -91,7 +91,7 @@ class PaywallPlanWidget extends StatelessWidget {
             ),
           ),
         ),
-        if (plan.isAnnual)
+        if (plan.isAnnualSubscription)
           Positioned(
             left: 17,
             top: -15,

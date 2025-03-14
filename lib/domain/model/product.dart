@@ -1,0 +1,35 @@
+import 'dart:io';
+
+enum Product {
+  threeDaysPass(type: ProductType.nonRenewalSubscription),
+  annualSubscription(type: ProductType.renewalSubscription),
+  monthlySubscription(type: ProductType.renewalSubscription),
+  oneTimeExport(type: ProductType.consumable),
+  oneDayFreeTrial(type: ProductType.freeTrial),
+  ;
+
+  const Product({required this.type});
+
+  factory Product.fromId(String id) => Product.values.firstWhere((product) => product.id == id);
+
+  final ProductType type;
+
+  String get id {
+    return switch (this) {
+      Product.monthlySubscription => Platform.isAndroid ? 'monthly' : 'bladderly.unlimited.monthly',
+      Product.annualSubscription => Platform.isAndroid ? 'annual' : 'bladderly.unlimited.annual',
+      Product.threeDaysPass => 'threedaypass',
+      Product.oneTimeExport => 'onetimeexport',
+      Product.oneDayFreeTrial => 'onedayfreetrial',
+    };
+  }
+
+  static Set<String> get ids => Product.values.map((product) => product.id).toSet();
+}
+
+enum ProductType {
+  renewalSubscription,
+  nonRenewalSubscription,
+  consumable,
+  freeTrial,
+}

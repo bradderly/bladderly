@@ -1,5 +1,6 @@
 // Flutter imports:
 // Project imports:
+import 'package:bladderly/presentation/common/bloc/membership_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/datetime_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
@@ -7,6 +8,8 @@ import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/feature/export/calendar/cubit/export_dates_cubit.dart';
 import 'package:bladderly/presentation/feature/export/calendar/widget/export_calendar_app_bar.dart';
 import 'package:bladderly/presentation/feature/export/widget/export_stickey_button.dart';
+import 'package:bladderly/presentation/router/route/export_route.dart';
+import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,13 +54,7 @@ enum _DateType {
 class ExportCalendarView extends StatefulWidget {
   const ExportCalendarView({
     super.key,
-    required this.onTapNext,
-    required this.historyDates,
   });
-
-  final void Function(List<DateTime>) onTapNext;
-
-  final List<DateTime> historyDates;
 
   @override
   State<ExportCalendarView> createState() => _ExportCalendarViewState();
@@ -71,6 +68,16 @@ class _ExportCalendarViewState extends State<ExportCalendarView> {
   void dispose() {
     scrollController.dispose();
     super.dispose();
+  }
+
+  Future<void> onContinue() async {
+    if (!context.read<MembershipBloc>().state.isValidMembership) {
+      await const ExportPageWallRoute().push<void>(context);
+    }
+
+    if (!mounted) return;
+
+    await ExportReportRoute().push<void>(context);
   }
 
   @override
@@ -87,29 +94,37 @@ class _ExportCalendarViewState extends State<ExportCalendarView> {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              ListView.builder(
-                controller: scrollController,
-                padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 48),
-                itemBuilder: (context, index) {
-                  final calendarDate = DateUtils.addMonthsToMonthDate(today, -index);
-                  return Column(
-                    children: [
-                      _buildCalendarHeader(context, calendarDate: calendarDate),
-                      const Gap(32),
-                      _buildCalendarWeekDay(context),
-                      const Gap(24),
-                      _buildCalendarDay(context, calendarDate: calendarDate),
-                      const Gap(48),
-                    ],
-                  );
-                },
+              BlocSelector<ExportDatesCubit, ExportDatesState, List<DateTime>>(
+                selector: (state) => state.historyDates,
+                builder: (context, historyDates) => ListView.builder(
+                  controller: scrollController,
+                  padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 48),
+                  itemBuilder: (context, index) {
+                    final calendarDate = DateUtils.addMonthsToMonthDate(today, -index);
+                    return Column(
+                      key: ValueKey(calendarDate),
+                      children: [
+                        _buildCalendarHeader(context, calendarDate: calendarDate),
+                        const Gap(32),
+                        _buildCalendarWeekDay(context),
+                        const Gap(24),
+                        _buildCalendarDay(
+                          context,
+                          historyDates: historyDates,
+                          calendarDate: calendarDate,
+                        ),
+                        const Gap(48),
+                      ],
+                    );
+                  },
+                ),
               ),
               Positioned.fill(
                 top: null,
                 child: BlocSelector<ExportDatesCubit, ExportDatesState, List<DateTime>>(
-                  selector: (state) => state.dates,
+                  selector: (state) => state.selectedDates,
                   builder: (context, selectedDates) => ExportStickeyButton(
-                    onTap: selectedDates.isEmpty ? null : () => widget.onTapNext(selectedDates),
+                    onTap: selectedDates.isEmpty ? null : onContinue,
                     text: 'Continue'.tr(context),
                     header: RichText(
                       text: TextSpan(
@@ -186,10 +201,11 @@ class _ExportCalendarViewState extends State<ExportCalendarView> {
 
   Widget _buildCalendarDay(
     BuildContext context, {
+    required List<DateTime> historyDates,
     required DateTime calendarDate,
   }) {
     return BlocSelector<ExportDatesCubit, ExportDatesState, List<DateTime>>(
-      selector: (state) => state.dates,
+      selector: (state) => state.selectedDates,
       builder: (context, selectedDates) {
         final firstDayOfMonth = DateTime(calendarDate.year, calendarDate.month);
         final firstDayOffsetOfMonth = firstDayOfMonth.weekday == DateTime.sunday ? 0 : firstDayOfMonth.weekday;
@@ -208,7 +224,7 @@ class _ExportCalendarViewState extends State<ExportCalendarView> {
                   final date = firstDayOfMonth.add(Duration(days: rowIndex * 7 + columnIndex - firstDayOffsetOfMonth));
                   final isNotSameMonth = !DateUtils.isSameMonth(date, calendarDate);
                   final isOutDate = date.isAfter(today) || !DateUtils.isSameMonth(date, calendarDate);
-                  final containsHistory = widget.historyDates.contains(date);
+                  final containsHistory = historyDates.contains(date);
 
                   final dateType = _DateType.from(
                     isToday: DateUtils.isSameDay(date, today),
@@ -249,7 +265,7 @@ class _ExportCalendarViewState extends State<ExportCalendarView> {
                                   width: 4,
                                   height: 4,
                                   decoration: BoxDecoration(
-                                    color: widget.historyDates.contains(date)
+                                    color: historyDates.contains(date)
                                         ? context.colorTheme.vermilion.primary.shade50
                                         : null,
                                     shape: BoxShape.circle,

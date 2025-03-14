@@ -4,12 +4,12 @@
 import 'package:bladderly/presentation/common/bloc/history_result_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/feature/diary/diary/cubit/diary_cubit.dart';
-import 'package:bladderly/presentation/feature/diary/diary/cubit/diary_history_dates_cubit.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_history_status_model.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_tab_scroll_section_model.dart';
 import 'package:bladderly/presentation/feature/diary/diary/widget/dairy_histories_widget.dart';
 import 'package:bladderly/presentation/feature/diary/diary/widget/diary_app_bar.dart';
 import 'package:bladderly/presentation/feature/diary/diary/widget/diary_today_summary_widget.dart';
+import 'package:bladderly/presentation/router/route/export_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -106,8 +106,7 @@ class _DiaryViewState extends State<DiaryView> with AutomaticKeepAliveClientMixi
       ),
       child: Scaffold(
         appBar: DiaryAppBar(
-          onTapExport: () =>
-              ExportRoute(historyDates: context.read<DiaryHistoryDatesCubit>().state.dates).push<void>(context),
+          onTapExport: () => ExportCalendarRoute().push<void>(context),
           onChanged: onDateChanged,
           today: today,
         ),

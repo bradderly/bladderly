@@ -11,7 +11,6 @@ import 'package:bladderly/presentation/feature/about/about_view.dart';
 import 'package:bladderly/presentation/feature/about/privacy/privacy_view.dart';
 import 'package:bladderly/presentation/feature/about/terms/terms_view.dart';
 import 'package:bladderly/presentation/feature/diary/detailed_list/detailed_list_builder.dart';
-import 'package:bladderly/presentation/feature/export/export_builder.dart';
 import 'package:bladderly/presentation/feature/input/intake_input/intake_input_builder.dart';
 import 'package:bladderly/presentation/feature/input/manual_input/manual_input_builder.dart';
 import 'package:bladderly/presentation/feature/input/sound_input_note/sound_input_note_builder.dart';
@@ -39,6 +38,7 @@ import 'package:bladderly/presentation/feature/tutorial/guide_tour/guide_tour_vi
 import 'package:bladderly/presentation/feature/tutorial/how_to_use/how_to_use_view.dart';
 import 'package:bladderly/presentation/router/page/dialog_page.dart';
 import 'package:bladderly/presentation/router/page/modal_bottom_sheet_page.dart';
+import 'package:bladderly/presentation/router/route/export_route.dart';
 // Package imports:
 import 'package:equatable/equatable.dart';
 // Flutter imports:
@@ -61,9 +61,23 @@ enum MainRouteTab {
       name: 'guide-tour',
       path: 'guide-tour',
     ),
-    TypedGoRoute<ExportRoute>(
-      name: 'export',
-      path: 'export',
+    TypedShellRoute<ExportShellRoute>(
+      routes: [
+        TypedGoRoute<ExportCalendarRoute>(
+          name: 'export-calendar',
+          path: 'export-calendar',
+          routes: [
+            TypedGoRoute<ExportReportRoute>(
+              name: 'export-report',
+              path: 'export-report',
+            ),
+          ],
+        ),
+      ],
+    ),
+    TypedGoRoute<ExportPageWallRoute>(
+      name: 'export-paywall',
+      path: 'export-paywall',
     ),
     TypedGoRoute<MenuRoute>(
       path: 'menu',
@@ -89,7 +103,7 @@ enum MainRouteTab {
           name: 'paywall',
           path: 'paywall',
         ),
-        TypedShellRoute<SymptomShellRouteData>(
+        TypedShellRoute<SymptomShellRoute>(
           routes: [
             TypedGoRoute<SymptomScoresRoute>(
               path: 'symptom-scores',
@@ -178,28 +192,13 @@ enum MainRouteTab {
 class MainRoute extends GoRouteData {
   const MainRoute();
 
+  static final $navigatorKey = GlobalKey<NavigatorState>();
+
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
     return CupertinoPage<void>(
       key: state.pageKey,
       child: const MainBuilder(),
-    );
-  }
-}
-
-class ExportRoute extends GoRouteData {
-  const ExportRoute({
-    List<DateTime>? historyDates,
-  }) : historyDates = historyDates ?? const [];
-
-  final List<DateTime> historyDates;
-
-  @override
-  Page<void> buildPage(BuildContext context, GoRouterState state) {
-    return CupertinoPage<void>(
-      key: state.pageKey,
-      fullscreenDialog: true,
-      child: ExportBuilder(historyDates: historyDates),
     );
   }
 }
@@ -464,7 +463,7 @@ class FaqRoute extends GoRouteData {
 class SymptomScoresRoute extends GoRouteData {
   const SymptomScoresRoute();
 
-  static final $parentNavigatorKey = SymptomShellRouteData.$navigatorKey;
+  static final $parentNavigatorKey = SymptomShellRoute.$navigatorKey;
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
@@ -490,7 +489,7 @@ class SymptomSurveyRoute extends GoRouteData {
     required this.$extra,
   });
 
-  static final $parentNavigatorKey = SymptomShellRouteData.$navigatorKey;
+  static final $parentNavigatorKey = SymptomShellRoute.$navigatorKey;
 
   final SymptomSurveyRouteExtra? $extra;
 
@@ -533,7 +532,7 @@ class SymptomResultRoute extends GoRouteData {
     required this.$extra,
   });
 
-  static final $parentNavigatorKey = SymptomShellRouteData.$navigatorKey;
+  static final $parentNavigatorKey = SymptomShellRoute.$navigatorKey;
 
   final SymptomResultRouteExtra? $extra;
 
@@ -546,7 +545,7 @@ class SymptomResultRoute extends GoRouteData {
   }
 }
 
-class SymptomShellRouteData extends ShellRouteData {
+class SymptomShellRoute extends ShellRouteData {
   static final $navigatorKey = GlobalKey<NavigatorState>();
 
   @override

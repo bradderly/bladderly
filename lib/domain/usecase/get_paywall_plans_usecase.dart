@@ -1,5 +1,7 @@
 import 'package:bladderly/domain/model/plan.dart';
+import 'package:bladderly/domain/model/product.dart';
 import 'package:bladderly/domain/repository/payment_repository.dart';
+import 'package:collection/collection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:injectable/injectable.dart';
@@ -15,7 +17,9 @@ class GetPaywallPlansUsecase {
   final InAppPurchase _inAppPurchase;
   final PaymentRepository _paymentRepository;
 
-  Future<Either<Exception, List<Plan>>> call() async {
+  Future<Either<Exception, List<Plan>>> call({
+    required List<ProductType> productTypes,
+  }) async {
     try {
       final isAailable = await _inAppPurchase.isAvailable();
 
@@ -25,7 +29,11 @@ class GetPaywallPlansUsecase {
 
       final plans = await _paymentRepository.getPlans();
 
-      return Right(plans);
+      return Right(
+        plans
+            .where((plan) => productTypes.contains(plan.product.type))
+            .sorted((prev, curr) => prev.product.index.compareTo(curr.product.index)),
+      );
     } catch (e) {
       return Left(e is Exception ? e : Exception(e.toString()));
     }

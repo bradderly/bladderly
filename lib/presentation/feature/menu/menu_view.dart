@@ -12,6 +12,7 @@ import 'package:bladderly/presentation/feature/menu/contact_us/contact_us_builde
 import 'package:bladderly/presentation/feature/menu/faq/faq_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/language/language_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
+import 'package:bladderly/presentation/router/route/export_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -73,7 +74,7 @@ class MenuView extends StatelessWidget {
                         onTap: () => const PlanRoute().go(context),
                       ),
                       SettingsItem(
-                        onTap: () {},
+                        onTap: () => const ExportCalendarRoute().push<void>(context),
                         icon: Icons.ios_share,
                         title: 'Data export'.tr(context),
                       ),

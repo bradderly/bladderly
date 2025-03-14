@@ -18,32 +18,34 @@ class HomeAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height + MediaQuery.paddingOf(context).top,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            context.colorTheme.vermilion.primary.shade40,
-            context.colorTheme.vermilion.primary.shade40,
-            context.colorTheme.vermilion.primary.shade40.withValues(alpha: 0),
-          ],
-          stops: const [0, 0.74, 1],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
-      child: Row(
-        children: [
-          const Gap(24),
-          Assets.icon.icIntroLogo.svg(),
-          const Spacer(),
-          IconButton(
-            onPressed: onTapMenu,
-            icon: Assets.icon.icHomeMenu.svg(),
+    return SafeArea(
+      bottom: false,
+      child: Container(
+        height: height,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              context.colorTheme.vermilion.primary.shade40,
+              context.colorTheme.vermilion.primary.shade40,
+              context.colorTheme.vermilion.primary.shade40.withValues(alpha: 0),
+            ],
+            stops: const [0, 0.74, 1],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
-          const Gap(8),
-        ],
+        ),
+        child: Row(
+          children: [
+            const Gap(24),
+            Assets.icon.icIntroLogo.svg(),
+            const Spacer(),
+            IconButton(
+              onPressed: onTapMenu,
+              icon: Assets.icon.icHomeMenu.svg(),
+            ),
+            const Gap(8),
+          ],
+        ),
       ),
     );
   }

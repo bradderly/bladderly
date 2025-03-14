@@ -69,7 +69,7 @@ class _SymptomSurveyViewState extends State<SymptomSurveyView> {
     return BlocListener<SymptomSurveyBloc, SymptomSurveyState>(
       listener: (context, state) => switch (state) {
         SymptomSurveySubmitInProgress() =>
-          ProgressIndicatorModal.show(SymptomShellRouteData.$navigatorKey.currentContext!, useRootNavigator: false),
+          ProgressIndicatorModal.show(SymptomShellRoute.$navigatorKey.currentContext!, useRootNavigator: false),
         SymptomSurveySubmitSuccess() => onSubmitSuccess(context, state),
         SymptomSurveySubmitFailure() => context.pop(),
         _ => null,

@@ -33,9 +33,7 @@ abstract class ApiClient extends ChopperService {
           ApiLoggingInterceptor(
             logger: chopperLogger
               ..onRecord.listen((rec) {
-                if (kDebugMode) {
-                  print(rec.message);
-                }
+                if (kDebugMode) print(rec.message);
               }),
           ),
         ],

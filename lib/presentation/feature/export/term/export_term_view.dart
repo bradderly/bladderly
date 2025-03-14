@@ -1,6 +1,5 @@
 // Flutter imports:
 // Project imports:
-import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
@@ -16,19 +15,14 @@ import 'package:gap/gap.dart';
 class ExportTermView extends StatelessWidget {
   const ExportTermView({
     super.key,
-    required this.onExport,
-    required this.dates,
   });
-
-  final VoidCallback onExport;
-  final List<DateTime> dates;
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<ExportBloc, ExportState>(
       listener: (context, state) => switch (state) {
         ExportExportHistoriesInProgress() => ProgressIndicatorModal.show(context),
-        ExportExportHistoriesSuccess() => Navigator.of(context).pop<void>(onExport()),
+        ExportExportHistoriesSuccess() => Navigator.of(context).pop<void>(),
         ExportExportHistoriesFailure() => Navigator.of(context).pop<void>(),
         _ => null,
       },
@@ -78,13 +72,15 @@ class ExportTermView extends StatelessWidget {
               Positioned.fill(
                 top: null,
                 child: ExportStickeyButton(
-                  onTap: () => context.read<ExportBloc>().add(
-                        ExportExportHistories(
-                          userId: context.read<UserBloc>().state.userModelOrThrowException.id,
-                          email: 'email',
-                          dates: dates,
-                        ),
-                      ),
+                  onTap: () {
+                    // context.read<ExportBloc>().add(
+                    //     ExportExportHistories(
+                    //       userId: context.read<UserBloc>().state.userModelOrThrowException.id,
+                    //       email: 'email',
+                    //       dates: dates,
+                    //     ),
+                    //   );
+                  },
                   text: 'Agree and Export'.tr(context),
                 ),
               ),

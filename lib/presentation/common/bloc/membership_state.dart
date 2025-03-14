@@ -9,6 +9,8 @@ sealed class MembershipState extends Equatable {
   final Membership? membership;
   final DateTime? _lastInitializedAt;
 
+  bool get isValidMembership => membership?.isValid ?? false;
+
   @override
   List<Object?> get props => [
         membership,

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bladderly/data/api/client/api_client.dart';
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 import 'package:bladderly/data/isar/isar_client.dart';
@@ -57,9 +59,10 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<Membership?> initializeMembership({
     required String userId,
-    required String device,
   }) async {
-    final response = await _apiClient.getPayInfo(userId: userId, device: device).then((response) => response.body!);
+    final response = await _apiClient
+        .getPayInfo(userId: userId, device: Platform.isAndroid ? 'android' : 'ios')
+        .then((response) => response.body!);
 
     return MembershipMapper.fromGetPayResponse(response);
   }

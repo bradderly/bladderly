@@ -1,4 +1,5 @@
 import 'package:bladderly/domain/model/plan.dart';
+import 'package:bladderly/domain/model/product.dart';
 import 'package:bladderly/domain/usecase/get_paywall_plans_usecase.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
@@ -20,7 +21,7 @@ class PlanBloc extends Bloc<PlanEvent, PlanState> {
   Future<void> _onGetPlans(PlanGetPlans event, Emitter<PlanState> emit) async {
     emit(const PlanGetPlansInProgress());
 
-    final result = await _getPaywallPlansUsecase();
+    final result = await _getPaywallPlansUsecase(productTypes: event.productTypes);
 
     result.fold(
       (exception) => emit(PlanGetPlansFailure(exception: exception)),

@@ -22,20 +22,3 @@ class PaywallState extends Equatable {
         selectedPlanId,
       ];
 }
-
-// final class PaywallPurchasePlanInProgress extends PaywallState {}
-
-// final class PaywallPurchasePlanSuccess extends PaywallState {}
-
-// final class PaywallPurchasePlanFailure extends PaywallState {
-//   const PaywallPurchasePlanFailure({
-//     required this.exception,
-//   });
-
-//   final Exception exception;
-
-//   @override
-//   List<Object> get props => [
-//         exception,
-//       ];
-// }

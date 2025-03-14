@@ -1,15 +1,16 @@
+import 'package:bladderly/domain/model/product.dart';
 import 'package:equatable/equatable.dart';
 
 class Plan extends Equatable {
   const Plan({
-    required this.id,
+    required this.product,
     required this.name,
     required this.price,
     required this.originPrice,
     required this.symbol,
   });
 
-  final String id;
+  final Product product;
   final String name;
   final double price;
   final double originPrice;
@@ -17,7 +18,6 @@ class Plan extends Equatable {
 
   @override
   List<Object> get props => [
-        id,
         name,
         price,
         originPrice,

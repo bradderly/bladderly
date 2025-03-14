@@ -4,6 +4,7 @@ import 'package:bladderly/core/di/di.dart';
 import 'package:bladderly/domain/usecase/check_supported_device_usecase.dart';
 import 'package:bladderly/domain/usecase/get_history_result_usecase.dart';
 import 'package:bladderly/domain/usecase/get_membership_stream_usecase.dart';
+import 'package:bladderly/domain/usecase/get_paywall_plans_usecase.dart';
 import 'package:bladderly/domain/usecase/get_user_stream_usecase.dart';
 import 'package:bladderly/domain/usecase/get_user_usecase.dart';
 import 'package:bladderly/domain/usecase/initialize_membership_usecase.dart';
@@ -16,10 +17,12 @@ import 'package:bladderly/presentation/common/bloc/app_config_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/device_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/history_result_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/membership_bloc.dart';
+import 'package:bladderly/presentation/common/bloc/plan_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/locale_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/main_tab_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/passcode_cubit.dart';
+import 'package:bladderly/presentation/common/cubit/timer_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/unit_cubit.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
@@ -114,6 +117,12 @@ class _BladderlyAppState extends State<BladderlyApp> {
         ),
         BlocProvider<MainTabCubit>(
           create: (_) => MainTabCubit(),
+        ),
+        BlocProvider<PlanBloc>(
+          create: (_) => PlanBloc(getPaywallPlansUsecase: getIt<GetPaywallPlansUsecase>()),
+        ),
+        BlocProvider<TimerCubit>(
+          create: (_) => TimerCubit(),
         ),
       ],
       child: BlocListener<AppLocaleCubit, AppLocale>(

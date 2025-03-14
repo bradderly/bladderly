@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bladderly/core/network_checker/network_checker.dart';
 import 'package:bladderly/domain/exception/network_not_connected_exception.dart';
 import 'package:bladderly/domain/exception/not_found_user_exception.dart';
@@ -33,7 +31,6 @@ class InitializeMembershipUsecase {
 
       final membership = await _userRepository.initializeMembership(
         userId: userId,
-        device: Platform.isAndroid ? 'android' : 'ios',
       );
 
       final savedMembership =

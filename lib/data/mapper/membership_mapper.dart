@@ -1,13 +1,14 @@
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 import 'package:bladderly/data/isar/schema/membership_entity.dart';
 import 'package:bladderly/domain/model/membership.dart';
+import 'package:bladderly/domain/model/product.dart';
 
 class MembershipMapper {
   const MembershipMapper._();
 
   static Membership fromMembershipEntity(MembershipEntity entity) {
     return Membership(
-      productId: entity.productId,
+      product: Product.fromId(entity.productId),
       startDate: entity.startDate,
       endDate: entity.endDate,
       autoRenewal: entity.autoRenewal,
@@ -17,7 +18,7 @@ class MembershipMapper {
   static Membership? fromGetPayResponse(GetPayResponse response) {
     return switch (response.payInfo) {
       final GetPayResponsePayInfo payInfo => Membership(
-          productId: payInfo.productId!,
+          product: Product.fromId(payInfo.productId!),
           startDate: DateTime.fromMillisecondsSinceEpoch(int.parse(payInfo.startDay!)),
           endDate: DateTime.fromMillisecondsSinceEpoch(int.parse(payInfo.endDay!)),
           autoRenewal: payInfo.autoRenewal == '1',
@@ -32,7 +33,7 @@ class MembershipMapper {
   }) {
     return MembershipEntity()
       ..userId = localUserId
-      ..productId = membership.productId
+      ..productId = membership.product.id
       ..startDate = membership.startDate
       ..endDate = membership.endDate
       ..autoRenewal = membership.autoRenewal;

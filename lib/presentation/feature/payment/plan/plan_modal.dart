@@ -1,11 +1,11 @@
 // Flutter imports:
 
+import 'package:bladderly/presentation/common/bloc/plan_bloc.dart';
 // Project imports:
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/feature/menu/widget/text_arrow_form.dart';
-import 'package:bladderly/presentation/feature/payment/plan/bloc/plan_bloc.dart';
 import 'package:bladderly/presentation/feature/payment/plan/widget/plan_free_user_widget.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 // Flutter imports:
@@ -48,7 +48,7 @@ class PlanModal extends StatelessWidget {
                       ),
                       TextArrow(
                         title: 'Change plan'.tr(context),
-                        onTap: () => context.read<PlanBloc>().add(const PlanGetPlans()),
+                        onTap: () => context.read<PlanBloc>().add(const PlanGetPlans.subscription()),
                       ),
                       TextArrow(
                         title: 'Cancel plan'.tr(context),

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ModalBottomSheetPage<T> extends Page<T> {
-  const ModalBottomSheetPage({
-    required super.key,
-    required this.child,
-  });
+  const ModalBottomSheetPage({required super.key, required this.child, this.useSafeArea = false});
 
+  final bool useSafeArea;
   final Widget child;
 
   @override
@@ -13,6 +11,10 @@ class ModalBottomSheetPage<T> extends Page<T> {
         settings: this,
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
-        builder: (context) => (ModalRoute.of(context)!.settings as ModalBottomSheetPage).child,
+        useSafeArea: useSafeArea,
+        builder: (context) => switch (ModalRoute.of(context)!.settings) {
+          final ModalBottomSheetPage page => page.child,
+          _ => child,
+        },
       );
 }
