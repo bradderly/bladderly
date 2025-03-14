@@ -70,10 +70,12 @@ class _SignUpRegularAccountInfoViewState extends State<SignUpRegularAccountInfoV
             const Gap(24),
             SignInFieldWidget(
               text: 'Password'.tr(context),
-              child: PasswordInputField(
-                onChanged: context.read<SignUpRegularFormCubit>().setPassword,
-                onToggleObsecureText: context.read<SignUpRegularFormCubit>().toggleObsecurePassword,
-                obsecureText: context.read<SignUpRegularFormCubit>().state.obsecurePassword,
+              child: BlocBuilder<SignUpRegularFormCubit, SignUpRegularFormState>(
+                builder: (context, state) => PasswordInputField(
+                  onChanged: context.read<SignUpRegularFormCubit>().setPassword,
+                  onToggleObsecureText: context.read<SignUpRegularFormCubit>().toggleObsecurePassword,
+                  obsecureText: state.obsecurePassword,
+                ),
               ),
             ),
             const Gap(24),

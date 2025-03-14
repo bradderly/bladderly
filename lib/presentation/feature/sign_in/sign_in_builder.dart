@@ -10,8 +10,8 @@ import 'package:flutter/widgets.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SinginBuilder extends StatelessWidget {
-  const SinginBuilder({super.key});
+class SigninBuilder extends StatelessWidget {
+  const SigninBuilder({super.key});
 
   @override
   Widget build(BuildContext context) {

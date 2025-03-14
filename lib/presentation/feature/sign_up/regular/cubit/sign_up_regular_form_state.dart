@@ -39,7 +39,7 @@ class SignUpRegularFormState extends Equatable {
   }
 
   bool get isPasswordAtLeastOneSpecialCharacter {
-    return RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(password);
+    return RegExp(r'[!@#$%^&*(),.?":{}|<>-]').hasMatch(password);
   }
 
   SignUpRegularFormState copyWith({
