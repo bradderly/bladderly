@@ -36,7 +36,8 @@ class SoundInputNoteView extends StatelessWidget {
 
   final DateTime recordTime;
 
-  void _onSave(BuildContext context, SoundInputNoteFormState state) {
+  void _onSave(BuildContext context) {
+    final state = context.read<SoundInputNoteFormCubit>().state;
     final event = SoundInputNoteUpload(
       userId: _getUserId(context),
       recordTime: recordTime,
@@ -233,10 +234,10 @@ class SoundInputNoteView extends StatelessWidget {
       top: null,
       bottom: 28,
       child: Center(
-        child: BlocBuilder<SoundInputNoteFormCubit, SoundInputNoteFormState>(
-          buildWhen: (prev, curr) => prev.isValid != curr.isValid,
-          builder: (context, state) => InputSaveButton(
-            onPressed: state.isValid ? () => _onSave(context, state) : null,
+        child: BlocSelector<SoundInputNoteFormCubit, SoundInputNoteFormState, bool>(
+          selector: (state) => state.isValid,
+          builder: (context, isValid) => InputSaveButton(
+            onPressed: isValid ? () => _onSave(context) : null,
           ),
         ),
       ),

@@ -16,7 +16,7 @@ class SignUpRegularFormState extends Equatable {
   }
 
   bool get isEmailValid {
-    return RegExp(r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+').hasMatch(email);
+    return email.validateEmail();
   }
 
   bool get isPasswordValid {

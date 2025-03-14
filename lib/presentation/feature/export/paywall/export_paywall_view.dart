@@ -1,8 +1,11 @@
+import 'package:bladderly/domain/model/plan.dart';
 import 'package:bladderly/presentation/common/bloc/plan_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/common/widget/primary_button.dart';
+import 'package:bladderly/presentation/feature/export/paywall/model/export_plan_model.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +14,26 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 class ExportPaywallView extends StatelessWidget {
-  const ExportPaywallView({super.key});
+  const ExportPaywallView({
+    super.key,
+    required Plan plan,
+  }) : _plan = plan;
+
+  final Plan _plan;
+
+  ExportPlanModel get plan => ExportPlanModel.fromDomain(_plan);
+
+  Future<void> _onNext(BuildContext context) async {
+    await CommonErrorModal.show<bool>(
+      context,
+      onTap: context.pop,
+      title: 'Surprise! A Gift for You!',
+      content:
+          'Loving our fresh new look? Enjoy a free export ticket on us! Hope this makes managing your urinary health even easier.',
+    );
+
+    if (context.mounted) context.pop<bool>(true);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +97,7 @@ class ExportPaywallView extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              'PDF Export Once',
+                              _plan.name,
                               style: context.textStyleTheme.b18Bold.copyWith(
                                 color: context.colorTheme.neutral.shade10,
                               ),
@@ -83,7 +105,7 @@ class ExportPaywallView extends StatelessWidget {
                           ),
                           const Gap(16),
                           Text(
-                            r'$1.99',
+                            plan.price,
                             style: context.textStyleTheme.b20Bold
                                 .copyWith(color: context.colorTheme.vermilion.primary.shade50),
                           ),
@@ -165,7 +187,7 @@ class ExportPaywallView extends StatelessWidget {
                       children: [
                         const Gap(16),
                         PrimaryButton.filled(
-                          onPressed: context.pop,
+                          onPressed: () => _onNext(context),
                           backgroundColor: context.colorTheme.vermilion.primary.shade50,
                           borderRadius: 400,
                           shape: BoxShape.rectangle,

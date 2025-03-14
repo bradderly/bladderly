@@ -7,15 +7,14 @@ class ExportDatesState extends Equatable {
   });
 
   final List<DateTime> historyDates;
-
   final List<DateTime> selectedDates;
 
   ExportDatesState copyWith({
-    List<DateTime>? dates,
+    List<DateTime>? historyDates,
     List<DateTime>? selectedDates,
   }) {
     return ExportDatesState(
-      historyDates: dates ?? this.historyDates,
+      historyDates: historyDates ?? this.historyDates,
       selectedDates: selectedDates ?? this.selectedDates,
     );
   }

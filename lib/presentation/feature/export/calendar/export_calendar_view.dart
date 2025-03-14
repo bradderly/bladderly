@@ -1,6 +1,8 @@
 // Flutter imports:
 // Project imports:
+import 'package:bladderly/domain/model/product.dart';
 import 'package:bladderly/presentation/common/bloc/membership_bloc.dart';
+import 'package:bladderly/presentation/common/bloc/plan_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/datetime_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
@@ -10,6 +12,7 @@ import 'package:bladderly/presentation/feature/export/calendar/widget/export_cal
 import 'package:bladderly/presentation/feature/export/widget/export_stickey_button.dart';
 import 'package:bladderly/presentation/router/route/export_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -70,89 +73,110 @@ class _ExportCalendarViewState extends State<ExportCalendarView> {
     super.dispose();
   }
 
-  Future<void> onContinue() async {
-    if (!context.read<MembershipBloc>().state.isValidMembership) {
-      await const ExportPageWallRoute().push<void>(context);
+  Future<void> onGetPlansSuccess(BuildContext context, PlanGetPlansSuccess state) async {
+    final oneTimeExportPlan =
+        context.read<PlanBloc>().state.plans.firstWhereOrNull((plan) => plan.product == Product.oneTimeExport);
+
+    final isValidMembership = context.read<MembershipBloc>().state.isValidMembership;
+
+    if (oneTimeExportPlan == null) return;
+
+    if (!isValidMembership) {
+      final shouldExport =
+          await ExportPayWallRoute($extra: ExportPayWallRouteExtra(plan: oneTimeExportPlan)).push<bool>(context);
+
+      if (shouldExport != true) return;
     }
 
-    if (!mounted) return;
+    if (!context.mounted) return;
 
-    await ExportReportRoute().push<void>(context);
+    final selectedDates = context.read<ExportDatesCubit>().state.selectedDates;
+
+    await ExportReportRoute($extra: ExportReportRouteExtra(selectedDates: selectedDates)).push<void>(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return ScrollsToTop(
-      onScrollsToTop: (_) => scrollController.animateTo(
-        0,
-        duration: const Duration(milliseconds: 1000),
-        curve: Curves.easeOutCirc,
-      ),
-      child: Scaffold(
-        appBar: ExportCalendarAppBar(onTapToday: () => scrollController.jumpTo(0)),
-        body: SafeArea(
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              BlocSelector<ExportDatesCubit, ExportDatesState, List<DateTime>>(
-                selector: (state) => state.historyDates,
-                builder: (context, historyDates) => ListView.builder(
-                  controller: scrollController,
-                  padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 48),
-                  itemBuilder: (context, index) {
-                    final calendarDate = DateUtils.addMonthsToMonthDate(today, -index);
-                    return Column(
-                      key: ValueKey(calendarDate),
-                      children: [
-                        _buildCalendarHeader(context, calendarDate: calendarDate),
-                        const Gap(32),
-                        _buildCalendarWeekDay(context),
-                        const Gap(24),
-                        _buildCalendarDay(
-                          context,
-                          historyDates: historyDates,
-                          calendarDate: calendarDate,
-                        ),
-                        const Gap(48),
-                      ],
-                    );
-                  },
-                ),
-              ),
-              Positioned.fill(
-                top: null,
-                child: BlocSelector<ExportDatesCubit, ExportDatesState, List<DateTime>>(
-                  selector: (state) => state.selectedDates,
-                  builder: (context, selectedDates) => ExportStickeyButton(
-                    onTap: selectedDates.isEmpty ? null : onContinue,
-                    text: 'Continue'.tr(context),
-                    header: RichText(
-                      text: TextSpan(
+    return BlocListener<PlanBloc, PlanState>(
+      listener: (context, state) => switch (state) {
+        PlanGetPlansSuccess() => onGetPlansSuccess(context, state),
+        _ => null,
+      },
+      child: ScrollsToTop(
+        onScrollsToTop: (_) => scrollController.animateTo(
+          0,
+          duration: const Duration(milliseconds: 1000),
+          curve: Curves.easeOutCirc,
+        ),
+        child: Scaffold(
+          appBar: ExportCalendarAppBar(onTapToday: () => scrollController.jumpTo(0)),
+          body: SafeArea(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                BlocSelector<ExportDatesCubit, ExportDatesState, List<DateTime>>(
+                  selector: (state) => state.historyDates,
+                  builder: (context, historyDates) => ListView.builder(
+                    controller: scrollController,
+                    padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 48),
+                    reverse: true,
+                    itemBuilder: (context, index) {
+                      final calendarDate = DateUtils.addMonthsToMonthDate(today, -index);
+                      return Column(
+                        key: ValueKey(calendarDate),
                         children: [
-                          if (selectedDates.isEmpty)
-                            TextSpan(text: 'You can export up to 7 days'.tr(context))
-                          else ...[
-                            TextSpan(text: '${selectedDates.length}'),
-                            switch (context.locale) {
-                              AppLocale.en when selectedDates.length == 1 => const TextSpan(text: ' day selected '),
-                              AppLocale.en => const TextSpan(text: ' days selected '),
-                              AppLocale.ko => const TextSpan(text: '일 선택됨 '),
-                            },
-                            TextSpan(
-                              text: '(up to 7 days)'.tr(context),
-                              style: selectedDates.length == 7 ? TextStyle(color: context.colorTheme.warning) : null,
-                            ),
-                          ],
+                          _buildCalendarHeader(context, calendarDate: calendarDate),
+                          const Gap(32),
+                          _buildCalendarWeekDay(context),
+                          const Gap(24),
+                          _buildCalendarDay(
+                            context,
+                            historyDates: historyDates,
+                            calendarDate: calendarDate,
+                          ),
+                          const Gap(48),
                         ],
-                        style: context.textStyleTheme.b16SemiBold.copyWith(
-                          color: context.colorTheme.neutral.shade6,
+                      );
+                    },
+                  ),
+                ),
+                Positioned.fill(
+                  top: null,
+                  child: BlocSelector<ExportDatesCubit, ExportDatesState, List<DateTime>>(
+                    selector: (state) => state.selectedDates,
+                    builder: (context, selectedDates) => ExportStickeyButton(
+                      onTap: selectedDates.isEmpty
+                          ? null
+                          : () => context.read<PlanBloc>().add(const PlanGetPlans.onlyConsumable()),
+                      text: 'Continue'.tr(context),
+                      header: RichText(
+                        text: TextSpan(
+                          children: [
+                            if (selectedDates.isEmpty)
+                              TextSpan(text: 'You can export up to 7 days'.tr(context))
+                            else ...[
+                              TextSpan(text: '${selectedDates.length}'),
+                              switch (context.locale) {
+                                AppLocale.en when selectedDates.length == 1 => const TextSpan(text: ' day selected '),
+                                AppLocale.en => const TextSpan(text: ' days selected '),
+                                AppLocale.ko => const TextSpan(text: '일 선택됨 '),
+                              },
+                              TextSpan(
+                                text: '(up to 7 days)'.tr(context),
+                                style: selectedDates.length == 7 ? TextStyle(color: context.colorTheme.warning) : null,
+                              ),
+                            ],
+                          ],
+                          style: context.textStyleTheme.b16SemiBold.copyWith(
+                            color: context.colorTheme.neutral.shade6,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

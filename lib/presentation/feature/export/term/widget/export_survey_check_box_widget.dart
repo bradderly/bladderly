@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:gap/gap.dart';
 
-class ExportReportCheckBoxWidget extends StatelessWidget {
-  const ExportReportCheckBoxWidget({
+class ExportSurveyCheckBoxWidget extends StatelessWidget {
+  const ExportSurveyCheckBoxWidget({
     super.key,
     required this.onTap,
     required this.isChecked,

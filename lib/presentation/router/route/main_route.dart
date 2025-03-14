@@ -75,7 +75,7 @@ enum MainRouteTab {
         ),
       ],
     ),
-    TypedGoRoute<ExportPageWallRoute>(
+    TypedGoRoute<ExportPayWallRoute>(
       name: 'export-paywall',
       path: 'export-paywall',
     ),
@@ -121,7 +121,7 @@ enum MainRouteTab {
             ),
           ],
         ),
-        TypedShellRoute<PaymentShellRouteData>(
+        TypedShellRoute<PaymentShellRoute>(
           routes: [
             TypedGoRoute<PlanRoute>(
               path: 'plan',
@@ -139,7 +139,7 @@ enum MainRouteTab {
             ),
           ],
         ),
-        TypedShellRoute<ProfileShellRouteData>(
+        TypedShellRoute<ProfileShellRoute>(
           routes: [
             TypedGoRoute<ProfileRoute>(
               path: 'profile',
@@ -562,7 +562,7 @@ class SymptomShellRoute extends ShellRouteData {
 class PlanRoute extends GoRouteData {
   const PlanRoute();
 
-  static final $parentNavigatorKey = PaymentShellRouteData.$navigatorKey;
+  static final $parentNavigatorKey = PaymentShellRoute.$navigatorKey;
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
@@ -573,7 +573,7 @@ class PlanRoute extends GoRouteData {
 class PlanCancelRoute extends GoRouteData {
   const PlanCancelRoute();
 
-  static final $parentNavigatorKey = PaymentShellRouteData.$navigatorKey;
+  static final $parentNavigatorKey = PaymentShellRoute.$navigatorKey;
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
@@ -584,7 +584,7 @@ class PlanCancelRoute extends GoRouteData {
 class PromoCodeRoute extends GoRouteData {
   const PromoCodeRoute();
 
-  static final $parentNavigatorKey = PaymentShellRouteData.$navigatorKey;
+  static final $parentNavigatorKey = PaymentShellRoute.$navigatorKey;
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
     return CupertinoPage<void>(
@@ -594,7 +594,7 @@ class PromoCodeRoute extends GoRouteData {
   }
 }
 
-class PaymentShellRouteData extends ShellRouteData {
+class PaymentShellRoute extends ShellRouteData {
   static final $navigatorKey = GlobalKey<NavigatorState>();
 
   @override
@@ -611,7 +611,7 @@ class PaymentShellRouteData extends ShellRouteData {
 class ChangePasswordRoute extends GoRouteData {
   const ChangePasswordRoute();
 
-  static final $parentNavigatorKey = ProfileShellRouteData.$navigatorKey;
+  static final $parentNavigatorKey = ProfileShellRoute.$navigatorKey;
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
@@ -622,7 +622,7 @@ class ChangePasswordRoute extends GoRouteData {
 class PasscodeRoute extends GoRouteData {
   const PasscodeRoute();
 
-  static final $parentNavigatorKey = ProfileShellRouteData.$navigatorKey;
+  static final $parentNavigatorKey = ProfileShellRoute.$navigatorKey;
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
@@ -633,7 +633,7 @@ class PasscodeRoute extends GoRouteData {
 class DeleteAccountRoute extends GoRouteData {
   const DeleteAccountRoute();
 
-  static final $parentNavigatorKey = ProfileShellRouteData.$navigatorKey;
+  static final $parentNavigatorKey = ProfileShellRoute.$navigatorKey;
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
@@ -644,7 +644,7 @@ class DeleteAccountRoute extends GoRouteData {
 class ProfileRoute extends GoRouteData {
   const ProfileRoute();
 
-  static final $parentNavigatorKey = ProfileShellRouteData.$navigatorKey;
+  static final $parentNavigatorKey = ProfileShellRoute.$navigatorKey;
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
@@ -652,7 +652,7 @@ class ProfileRoute extends GoRouteData {
   }
 }
 
-class ProfileShellRouteData extends ShellRouteData {
+class ProfileShellRoute extends ShellRouteData {
   static final $navigatorKey = GlobalKey<NavigatorState>();
 
   @override

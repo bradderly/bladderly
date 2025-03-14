@@ -19,7 +19,7 @@ class ExportCalendarBuilder extends StatelessWidget {
       create: (_) => ExportDatesCubit(
         getHistoryDatesStreamUsecase: getIt<GetHistoryDatesStreamUsecase>(),
       )..subscribe(),
-      child: ExportCalendarView(),
+      child: const ExportCalendarView(),
     );
   }
 }

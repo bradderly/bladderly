@@ -39,15 +39,10 @@ class _ContactUsModalState extends State<ContactUsModal> {
     }
   }
 
-  bool _isEmailValid(String email) {
-    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-    return emailRegex.hasMatch(email);
-  }
-
   void _onSendMessage(BuildContext context) {
     final formState = context.read<ContactUsFormCubit>().state;
 
-    if (!_isEmailValid(formState.email)) {
+    if (!formState.email.validateEmail()) {
       return;
     }
     context.read<ContactUsBloc>().add(
@@ -112,10 +107,10 @@ class _ContactUsModalState extends State<ContactUsModal> {
                           'Email Address',
                           formState.email,
                           1,
-                          _isEmptyCheck && (formState.email.isEmpty || !_isEmailValid(formState.email)),
+                          _isEmptyCheck && (formState.email.isEmpty || !formState.email.validateEmail()),
                           onChanged: (value) => context.read<ContactUsFormCubit>().setEmail(value),
                         ),
-                        if (_isEmptyCheck && (formState.email.isEmpty || !_isEmailValid(formState.email)))
+                        if (_isEmptyCheck && (formState.email.isEmpty || !formState.email.validateEmail()))
                           Padding(
                             padding: const EdgeInsets.only(left: 24, top: 8),
                             child: Text(

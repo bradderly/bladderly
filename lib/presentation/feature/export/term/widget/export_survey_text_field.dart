@@ -3,8 +3,8 @@
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:flutter/material.dart';
 
-class ExportReportTextField extends StatelessWidget {
-  const ExportReportTextField({
+class ExportSurveyTextField extends StatelessWidget {
+  const ExportSurveyTextField({
     super.key,
     required this.onChanged,
     required this.onSubmitted,

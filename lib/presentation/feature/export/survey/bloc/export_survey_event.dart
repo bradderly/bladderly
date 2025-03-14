@@ -1,14 +1,14 @@
-part of 'export_report_bloc.dart';
+part of 'export_survey_bloc.dart';
 
-sealed class ExportReportEvent extends Equatable {
-  const ExportReportEvent();
+sealed class ExportSurveyEvent extends Equatable {
+  const ExportSurveyEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class ExportReportSelectReason extends ExportReportEvent {
-  const ExportReportSelectReason({
+class ExportSurveySelectReason extends ExportSurveyEvent {
+  const ExportSurveySelectReason({
     required this.reasonModel,
   });
 
@@ -20,8 +20,8 @@ class ExportReportSelectReason extends ExportReportEvent {
       ];
 }
 
-class ExportReportSendReason extends ExportReportEvent {
-  const ExportReportSendReason({
+class ExportSurveySendReason extends ExportSurveyEvent {
+  const ExportSurveySendReason({
     required this.userId,
   });
 

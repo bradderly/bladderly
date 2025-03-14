@@ -18,19 +18,12 @@ class ExportDatesCubit extends Cubit<ExportDatesState> {
   StreamSubscription<List<DateTime>>? _subscription;
 
   void select(DateTime date) {
+    final dates = List<DateTime>.from(state.selectedDates);
     final hasDate = state.selectedDates.contains(date);
 
-    if (hasDate && state.selectedDates.length >= 7) {
-      return;
-    }
+    if (hasDate && state.selectedDates.length > 1) dates.remove(date);
 
-    final dates = List<DateTime>.from(state.selectedDates);
-
-    if (hasDate) {
-      dates.remove(date);
-    } else {
-      dates.add(date);
-    }
+    if (!hasDate && state.selectedDates.length <= 6) dates.add(date);
 
     emit(state.copyWith(selectedDates: dates));
   }
@@ -47,7 +40,7 @@ class ExportDatesCubit extends Cubit<ExportDatesState> {
   void _listener(List<DateTime> dates) {
     if (isClosed) return;
 
-    emit(state.copyWith(dates: dates));
+    emit(state.copyWith(historyDates: dates));
   }
 
   void _clearSubscription() {

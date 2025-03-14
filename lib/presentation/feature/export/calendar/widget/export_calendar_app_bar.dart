@@ -4,6 +4,7 @@ import 'package:bladderly/presentation/common/extension/build_context_extension.
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ExportCalendarAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ExportCalendarAppBar({
@@ -58,7 +59,7 @@ class ExportCalendarAppBar extends StatelessWidget implements PreferredSizeWidge
                   right: 16,
                   left: null,
                   child: GestureDetector(
-                    onTap: Navigator.of(context).pop,
+                    onTap: context.pop,
                     child: Assets.icon.icExportClose.svg(),
                   ),
                 ),
