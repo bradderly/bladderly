@@ -158,17 +158,19 @@ class _DetailedListVoidingHistoryWidget extends DetailedListHistoryWidget {
     return Row(
       children: [
         _buildHistoryType(context, type: 'Voiding'.tr(context)),
-        const Gap(8),
-        Container(
-          alignment: Alignment.center,
-          width: 30,
-          height: 30,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: context.colorTheme.neutral.shade2,
+        if (historyModel.isNocutria) ...[
+          const Gap(8),
+          Container(
+            alignment: Alignment.center,
+            width: 30,
+            height: 30,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: context.colorTheme.neutral.shade2,
+            ),
+            child: Assets.icon.icDiaryNighttime.svg(),
           ),
-          child: Assets.icon.icDiaryNighttime.svg(),
-        ),
+        ],
       ],
     );
   }
@@ -193,10 +195,10 @@ class _DetailedListVoidingHistoryWidget extends DetailedListHistoryWidget {
                         0 => [
                             TextSpan(text: 'Volume'.tr(context)),
                             const TextSpan(text: ' '),
-                            TextSpan(
-                              text: '(${context.unitName})'.tr(context),
-                              style: TextStyle(color: context.colorTheme.neutral.shade6),
-                            ),
+                            // TextSpan(
+                            //   text: '(${context.unitName})'.tr(context),
+                            //   style: TextStyle(color: context.colorTheme.neutral.shade6),
+                            // ),
                           ],
                         1 => [TextSpan(text: 'Urge Lv'.tr(context))],
                         2 when historyModel.leakageVolume != null => [TextSpan(text: 'Leakage'.tr(context))],

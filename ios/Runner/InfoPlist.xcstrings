@@ -42,12 +42,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "이 앱은 얼굴 인식을 사용하여 인증합니다."
+            "value" : "Unlock the app by using Face ID"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Face ID를 이용하여 앱 잠금을 해제합니다."
           }
         }
@@ -60,12 +60,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Enable microphone access to record sounds."
+            "value" : "Bladderly records sound only while using Sound Input to estimate your urine volume."
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "블래덜리는 자동측정 기능을 사용할 때만 소리를 녹음하며, 녹음된 소리를 분석하여 배뇨량을 추정합니다."
           }
         }
