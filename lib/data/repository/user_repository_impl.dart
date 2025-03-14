@@ -53,8 +53,9 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Stream<User?> get userStream =>
-      _isarClient.userStream.map((entity) => entity == null ? null : UserMapper.fromUserEntity(entity));
+  Stream<User?> get userStream {
+    return _isarClient.userStream.map((entity) => entity == null ? null : UserMapper.fromUserEntity(entity));
+  }
 
   @override
   Future<Membership?> getMembershipFromServer({
@@ -98,12 +99,14 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Stream<Membership?> getMembershipStream({required int localUserId}) => _isarClient
-      .getMembershipStreamByUserId(localUserId)
-      .map((entity) => entity == null ? null : MembershipMapper.fromMembershipEntity(entity));
+  Stream<Membership?> getMembershipStream({
+    required int localUserId,
+  }) {
+    return _isarClient
+        .getMembershipStreamByUserId(localUserId)
+        .map((entity) => entity == null ? null : MembershipMapper.fromMembershipEntity(entity));
+  }
 
   @override
-  int? getLocalUserIdByUserId(String userId) {
-    return _isarClient.getUserOrNullByUserId(userId)?.id;
-  }
+  int? getLocalUserIdByUserId(String userId) => _isarClient.getUserOrNullByUserId(userId)?.id;
 }

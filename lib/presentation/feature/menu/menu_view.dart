@@ -12,8 +12,12 @@ import 'package:bladderly/presentation/feature/menu/contact_us/contact_us_builde
 import 'package:bladderly/presentation/feature/menu/faq/faq_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/language/language_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
+import 'package:bladderly/presentation/router/route/about_route.dart';
 import 'package:bladderly/presentation/router/route/export_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+import 'package:bladderly/presentation/router/route/payment_route.dart';
+import 'package:bladderly/presentation/router/route/profile_route.dart';
+import 'package:bladderly/presentation/router/route/symtom_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // Package imports:
@@ -71,7 +75,7 @@ class MenuView extends StatelessWidget {
                     items: [
                       SettingsItem(
                         icon: Icons.credit_card,
-                        title: 'Premium Plan'.tr(context),
+                        title: 'Plan'.tr(context),
                         onTap: () => const PlanRoute().go(context),
                       ),
                       SettingsItem(
@@ -133,7 +137,7 @@ class MenuView extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'App Version'.tr(context),
+                                      'App version'.tr(context),
                                       style: context.textStyleTheme.b16Regular.copyWith(
                                         color: context.colorTheme.neutral.shade10,
                                       ),
@@ -157,7 +161,7 @@ class MenuView extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                '${state.currentVersion} (${state.currentBuild})',
+                                state.currentVersion,
                                 style: context.textStyleTheme.b14Medium
                                     .copyWith(color: context.colorTheme.vermilion.primary.shade50),
                               ),

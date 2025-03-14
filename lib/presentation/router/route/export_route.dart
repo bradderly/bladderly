@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bladderly/domain/model/plan.dart';
 import 'package:bladderly/presentation/feature/export/calendar/export_calendar_builder.dart';
-import 'package:bladderly/presentation/feature/export/export_view.dart';
 import 'package:bladderly/presentation/feature/export/paywall/export_paywall_view.dart';
 import 'package:bladderly/presentation/feature/export/report/export_report_builder.dart';
 import 'package:bladderly/presentation/router/page/modal_bottom_sheet_page.dart';
@@ -21,7 +20,7 @@ class ExportShellRoute extends ShellRouteData {
     return ModalBottomSheetPage(
       key: state.pageKey,
       useSafeArea: true,
-      child: ExportView(navigator: navigator),
+      child: navigator,
     );
   }
 }

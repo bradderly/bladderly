@@ -5,6 +5,7 @@ import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
+import 'package:bladderly/presentation/router/route/about_route.dart';
 import 'package:bladderly/presentation/router/route/intro_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:flutter/gestures.dart';

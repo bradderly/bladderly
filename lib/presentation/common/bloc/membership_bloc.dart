@@ -1,22 +1,22 @@
 import 'package:bladderly/domain/model/membership.dart';
 import 'package:bladderly/domain/usecase/get_membership_stream_usecase.dart';
 import 'package:bladderly/domain/usecase/initialize_membership_usecase.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'membership_event.dart';
 part 'membership_state.dart';
 
-class MembershipBloc extends HydratedBloc<MembershipEvent, MembershipState> {
+class MembershipBloc extends Bloc<MembershipEvent, MembershipState> {
   MembershipBloc({
     required GetMembershipStreamUsecase getMembershipStreamUsecase,
     required InitializeMembershipUsecase initializeMembershipUsecase,
   })  : _getMembershipStreamUsecase = getMembershipStreamUsecase,
         _initializeMembershipUsecase = initializeMembershipUsecase,
         super(const MembershipInitial()) {
-    on<MembershipLoad>(_onLoad);
-    on<MembershipInitialize>(_onInitialize);
+    on<MembershipLoad>(_onLoad, transformer: sequential());
+    on<MembershipInitialize>(_onInitialize, transformer: sequential());
   }
 
   final GetMembershipStreamUsecase _getMembershipStreamUsecase;
@@ -47,8 +47,6 @@ class MembershipBloc extends HydratedBloc<MembershipEvent, MembershipState> {
   }
 
   Future<void> _onInitialize(MembershipInitialize event, Emitter<MembershipState> emit) async {
-    if (DateUtils.isSameDay(state._lastInitializedAt, DateTime.now())) return;
-
     emit(MembershipInitializeInProgress(membership: state.membership, lastInitializedAt: state._lastInitializedAt));
 
     final result = await _initializeMembershipUsecase(userId: event.userId);
@@ -68,21 +66,5 @@ class MembershipBloc extends HydratedBloc<MembershipEvent, MembershipState> {
         ),
       ),
     );
-  }
-
-  @override
-  MembershipState? fromJson(Map<String, dynamic> json) {
-    if (json['last_initialized_at'] case final int milliseconds) {
-      return MembershipInitial(lastInitializedAt: DateTime.fromMillisecondsSinceEpoch(milliseconds));
-    }
-
-    return null;
-  }
-
-  @override
-  Map<String, dynamic>? toJson(MembershipState state) {
-    return {
-      'last_initialized_at': state._lastInitializedAt?.millisecondsSinceEpoch,
-    };
   }
 }

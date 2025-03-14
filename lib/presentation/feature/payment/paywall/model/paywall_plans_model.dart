@@ -23,8 +23,12 @@ class PaywallPlansModel extends Equatable {
 
   PaywallPlanModel? get threeDaysPass => _list.firstWhereOrNull((element) => element.product == Product.threeDaysPass);
 
-  PaywallPlanModel? firstWhereByProduct(Product product) =>
+  PaywallPlanModel? firstWhereByProduct(Product? product) =>
       _list.firstWhereOrNull((element) => element.product == product);
+
+  PaywallPlansModel removeByProduct(Product product) {
+    return PaywallPlansModel(list: _list.where((element) => element.product != product).toList());
+  }
 
   @override
   List<Object?> get props => [

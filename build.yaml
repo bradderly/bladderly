@@ -23,3 +23,4 @@ targets:
           build_only_models: true
           separate_models: true
           enums_case_sensitive: false
+          include_if_null: false

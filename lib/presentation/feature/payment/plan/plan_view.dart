@@ -1,17 +1,23 @@
 // Flutter imports:
 
+import 'package:bladderly/domain/model/membership.dart';
+import 'package:bladderly/presentation/common/bloc/membership_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/plan_bloc.dart';
+import 'package:bladderly/presentation/common/cubit/timer_cubit.dart';
 // Project imports:
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/feature/menu/widget/text_arrow_form.dart';
-import 'package:bladderly/presentation/feature/payment/plan/widget/plan_free_user_widget.dart';
+import 'package:bladderly/presentation/feature/payment/plan/widget/plan_non_subscription_widget.dart';
+import 'package:bladderly/presentation/feature/payment/plan/widget/plan_subscription_widget.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+import 'package:bladderly/presentation/router/route/payment_route.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:nil/nil.dart';
 
 class PlanView extends StatelessWidget {
   const PlanView({super.key});
@@ -35,7 +41,16 @@ class PlanView extends StatelessWidget {
                 children: [
                   ListView(
                     children: [
-                      const PlanFreeUserWidget(),
+                      BlocSelector<TimerCubit, DateTime, MembershipSubscription?>(
+                        selector: (state) => context.read<MembershipBloc>().state.membership?.subscription,
+                        builder: (context, subscription) {
+                          if (subscription case final MembershipSubscription subscription when subscription.isValid) {
+                            return PlanSubscriptionWidget(subscription: subscription);
+                          }
+
+                          return const PlanNonSubscriptionWidget();
+                        },
+                      ),
                       const SizedBox(height: 40),
                       Padding(
                         padding: const EdgeInsets.only(left: 24),
@@ -44,13 +59,26 @@ class PlanView extends StatelessWidget {
                           style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
                         ),
                       ),
-                      TextArrow(
-                        title: 'Change plan'.tr(context),
-                        onTap: () => context.read<PlanBloc>().add(const PlanGetPlans.subscription()),
-                      ),
-                      TextArrow(
-                        title: 'Cancel plan'.tr(context),
-                        onTap: () => const PlanCancelRoute().go(context),
+                      BlocSelector<TimerCubit, DateTime, MembershipSubscription?>(
+                        selector: (state) => context.read<MembershipBloc>().state.membership?.subscription,
+                        builder: (context, subscription) {
+                          if (subscription case final MembershipSubscription subscription when subscription.isValid) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextArrow(
+                                  title: 'Change plan'.tr(context),
+                                  onTap: () => context.read<PlanBloc>().add(const PlanGetPlans.subscription()),
+                                ),
+                                TextArrow(
+                                  title: 'Cancel plan'.tr(context),
+                                  onTap: () => const PlanCancelRoute().go(context),
+                                ),
+                              ],
+                            );
+                          }
+                          return const Nil();
+                        },
                       ),
                       TextArrow(
                         title: 'Enter Promo Code'.tr(context),

@@ -14,11 +14,14 @@ import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/payment/bloc/payment_bloc.dart';
 import 'package:bladderly/presentation/feature/payment/paywall/cubit/paywall_cubit.dart';
+import 'package:bladderly/presentation/feature/payment/paywall/model/paywall_plan_model.dart';
 import 'package:bladderly/presentation/feature/payment/paywall/model/paywall_plans_model.dart';
 import 'package:bladderly/presentation/feature/payment/paywall/widget/paywall_plan_widget.dart';
 import 'package:bladderly/presentation/feature/payment/promo_code/promo_code_builder.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
+import 'package:bladderly/presentation/router/route/about_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+import 'package:bladderly/presentation/router/route/payment_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -26,21 +29,21 @@ import 'package:go_router/go_router.dart';
 
 abstract class PaywallView extends StatelessWidget {
   factory PaywallView({
-    Membership? membership,
+    MembershipSubscription? subscription,
     required PaywallPlansModel plans,
   }) {
-    if (membership == null) return _FreeUserPaywallView(plans: plans);
+    if (subscription == null) return _FreeUserPaywallView(plans: plans);
 
-    return _SubscriberPaywallView(membership: membership, plans: plans);
+    return _SubscriberPaywallView(subscription: subscription, plans: plans);
   }
 
   const PaywallView._({
     super.key,
-    required this.membership,
+    required this.subscription,
     required this.plans,
   });
 
-  final Membership? membership;
+  final MembershipSubscription? subscription;
   final PaywallPlansModel plans;
 
   void _purchase(BuildContext context) {
@@ -50,22 +53,27 @@ abstract class PaywallView extends StatelessWidget {
     context.read<PaymentBloc>().add(PaymentPurchasePlan(userId: userId, planId: planId!));
   }
 
+  void _onReadySuccess(BuildContext context, PaymentPurchaseReadySuccess state) {
+    context.pop();
+
+    if (state.product == Product.threeDaysPass) {
+      CommonErrorModal.show<void>(
+        context,
+        onTap: () => const PlanRoute().go(context),
+        title: 'Surprise! A Gift for You!',
+        content:
+            'Enjoying our fresh new look? Here’s a free 3-day pass! Hope this helps you take care of your urinary health.',
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<PaymentBloc, PaymentState>(
-      listenWhen: (_, state) {
-        return true;
-      },
       listener: (context, state) => switch (state) {
         PaymentPurchaseReadyInProgress() => ProgressIndicatorModal.show(context),
-        final PaymentPurchaseReadySuccess state when state.product == Product.threeDaysPass => CommonErrorModal.show(
-            context,
-            onTap: () => const PlanRoute().go(context),
-            title: 'Surprise! A Gift for You!'.tr(context),
-            content:
-                'Enjoying our fresh new look? Here’s a free 3-day pass! Hope this helps you take care of your urinary health.'
-                    .tr(context),
-          ),
+        PaymentPurchaseReadySuccess() => _onReadySuccess(context, state),
+        PaymentPurchaseReadyFailure() => context.pop(),
         PaymentPurchaseSuccess() => context.pop(),
         PaymentPurchaseFailure() => context.pop(),
         PaymentPurchaseRestored() => context.pop(),
@@ -218,7 +226,7 @@ abstract class PaywallView extends StatelessWidget {
 class _FreeUserPaywallView extends PaywallView {
   const _FreeUserPaywallView({
     required super.plans,
-  }) : super._(membership: null);
+  }) : super._(subscription: null);
 
   @override
   Widget _buildHeader(BuildContext context) {
@@ -312,12 +320,12 @@ class _FreeUserPaywallView extends PaywallView {
 
 class _SubscriberPaywallView extends PaywallView {
   const _SubscriberPaywallView({
-    required Membership super.membership,
+    required MembershipSubscription super.subscription,
     required super.plans,
   }) : super._();
 
   @override
-  Membership get membership => super.membership!;
+  MembershipSubscription get subscription => super.subscription!;
 
   @override
   Widget _buildHeader(BuildContext context) {
@@ -327,11 +335,35 @@ class _SubscriberPaywallView extends PaywallView {
   @override
   Widget _buildPlans(BuildContext context, {required String? selectedPlanId}) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        PaywallPlanWidget(
-          onTap: (_) {},
-          isSelected: false,
-          plan: plans.firstWhereByProduct(membership.product)!,
+        if (plans.firstWhereByProduct(subscription.product) case final PaywallPlanModel plan) ...[
+          Text(
+            'Current plan'.tr(context),
+            style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
+          ),
+          const Gap(16),
+          PaywallPlanWidget.my(plan: plan, renewAt: subscription.renewAt),
+          const Gap(32),
+        ],
+        Text(
+          'Offers for you'.tr(context),
+          style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
+        ),
+        const Gap(31),
+        ...List.generate(
+          plans.removeByProduct(subscription.product).length * 2 - 1,
+          (index) {
+            if (index.isOdd) return const Gap(12);
+
+            final plan = plans.removeByProduct(subscription.product)[index ~/ 2];
+
+            return PaywallPlanWidget(
+              onTap: (plan) => context.read<PaywallCubit>().selectPlan(plan.product.id),
+              isSelected: selectedPlanId == plan.product.id,
+              plan: plan,
+            );
+          },
         ),
       ],
     );

@@ -9,6 +9,7 @@ import 'package:chopper/chopper.dart';
 import 'package:http/http.dart' as http;
 
 class ApiResponseExceptionInterceptor implements ResponseInterceptor {
+  const ApiResponseExceptionInterceptor();
   @override
   FutureOr<Response> onResponse(Response response) {
     if (response.body == null && response is! Response<LoginResponse>) {

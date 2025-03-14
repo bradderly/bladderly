@@ -20,15 +20,7 @@ class PaywallBuilder extends StatelessWidget {
     return BlocProvider<PaywallCubit>(
       create: (_) => PaywallCubit(),
       child: PaywallView(
-        membership:
-            //  Membership(
-            //   product: Product.annualSubscription,
-            //   startDate: DateTime.now(),
-            //   endDate: DateTime.now().add(const Duration(days: 365)),
-            //   autoRenewal: true,
-            // ),
-
-            context.read<MembershipBloc>().state.membership,
+        subscription: context.read<MembershipBloc>().state.membership?.subscription,
         plans: PaywallPlansModel.fromDomain(plans),
       ),
     );

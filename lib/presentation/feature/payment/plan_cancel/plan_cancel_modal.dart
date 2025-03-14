@@ -66,12 +66,6 @@ class _PlanCancelModalState extends State<PlanCancelModal> {
               if (selectedReason == null) {
                 return;
               }
-              showDeletePlanDialog(
-                context,
-                onConfirm: () {
-                  Navigator.pop(context);
-                },
-              );
             },
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),

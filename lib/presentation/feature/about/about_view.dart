@@ -3,6 +3,7 @@
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:bladderly/presentation/feature/menu/widget/text_arrow_form.dart';
+import 'package:bladderly/presentation/router/route/about_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
 
@@ -11,34 +12,21 @@ class AboutView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Container(
-        margin: EdgeInsets.only(top: MediaQuery.sizeOf(context).height * 0.05),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-        ),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
-            child: Column(
-              children: [
-                ModalTitle(title: 'Terms of Use'.tr(context)),
-                const SizedBox(height: 75.5),
-                TextArrow(
-                  onTap: () => const TermsRoute().go(context),
-                  title: 'Terms of Use'.tr(context),
-                ),
-                TextArrow(
-                  onTap: () => const PrivacyRoute().go(context),
-                  title: 'Privacy Policy'.tr(context),
-                ),
-              ],
-            ),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
+      child: Column(
+        children: [
+          ModalTitle(title: 'Terms of Use'.tr(context)),
+          const SizedBox(height: 75.5),
+          TextArrow(
+            onTap: () => const TermsRoute().go(context),
+            title: 'Terms of Use'.tr(context),
           ),
-        ),
+          TextArrow(
+            onTap: () => const PrivacyRoute().go(context),
+            title: 'Privacy Policy'.tr(context),
+          ),
+        ],
       ),
     );
   }

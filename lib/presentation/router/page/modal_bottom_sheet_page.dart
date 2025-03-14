@@ -12,9 +12,22 @@ class ModalBottomSheetPage<T> extends Page<T> {
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
         useSafeArea: useSafeArea,
-        builder: (context) => switch (ModalRoute.of(context)!.settings) {
-          final ModalBottomSheetPage page => page.child,
-          _ => child,
-        },
+        builder: (context) => Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Container(
+            margin: EdgeInsets.only(top: MediaQuery.sizeOf(context).height * 0.05),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+            ),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+              child: switch (ModalRoute.of(context)!.settings) {
+                final ModalBottomSheetPage page => page.child,
+                _ => child,
+              },
+            ),
+          ),
+        ),
       );
 }

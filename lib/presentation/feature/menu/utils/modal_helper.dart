@@ -12,10 +12,6 @@ class ModalHelper {
       isScrollControlled: isScrollControlled,
       backgroundColor: Colors.transparent,
       builder: modalBuilder,
-      transitionAnimationController: AnimationController(
-        duration: const Duration(milliseconds: 5000), // 애니메이션 시간 조정 (500ms)
-        vsync: Navigator.of(context),
-      ),
     );
   }
 }

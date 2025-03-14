@@ -5,10 +5,10 @@ import 'package:bladderly/presentation/common/extension/build_context_extension.
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/model/user_model.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
-import 'package:bladderly/presentation/feature/menu/profile/delete_account/bloc/delete_account_bloc.dart';
-import 'package:bladderly/presentation/feature/menu/profile/delete_account/modal/delete_account_confirm_modal.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:bladderly/presentation/feature/menu/widget/reason_option.dart';
+import 'package:bladderly/presentation/feature/profile/delete_account/bloc/delete_account_bloc.dart';
+import 'package:bladderly/presentation/feature/profile/delete_account/modal/delete_account_confirm_modal.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';

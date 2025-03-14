@@ -9,6 +9,13 @@ class MembershipEntity {
   @Index(unique: true, replace: true)
   late int userId;
 
+  MembershipSubscriptionEntity? subscription;
+
+  late int remainCount;
+}
+
+@Embedded()
+class MembershipSubscriptionEntity {
   late String productId;
 
   late DateTime startDate;

@@ -3,12 +3,13 @@ import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/model/user_model.dart';
-import 'package:bladderly/presentation/feature/menu/profile/bloc/profile_bloc.dart';
-import 'package:bladderly/presentation/feature/menu/profile/modal/sign_out_modal.dart';
-import 'package:bladderly/presentation/feature/menu/profile/widget/profile_name_input_field.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:bladderly/presentation/feature/menu/widget/text_icon_arrow_form.dart';
+import 'package:bladderly/presentation/feature/profile/bloc/profile_bloc.dart';
+import 'package:bladderly/presentation/feature/profile/modal/sign_out_modal.dart';
+import 'package:bladderly/presentation/feature/profile/widget/profile_name_input_field.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+import 'package:bladderly/presentation/router/route/profile_route.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:

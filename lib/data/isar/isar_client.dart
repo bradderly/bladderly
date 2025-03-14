@@ -204,7 +204,7 @@ class _IsarClientImpl implements IsarClient {
   @override
   MembershipEntity saveMembership(MembershipEntity membershipEntity) {
     return _isar.writeTxnSync(
-      () => _isar.membershipEntitys.getSync(_isar.membershipEntitys.putSync(membershipEntity))!,
+      () => _isar.membershipEntitys.getSync(_isar.membershipEntitys.putByUserIdSync(membershipEntity))!,
     );
   }
 }

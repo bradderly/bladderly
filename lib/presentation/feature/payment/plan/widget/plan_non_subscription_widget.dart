@@ -7,13 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
-class PlanFreeUserWidget extends StatelessWidget {
-  const PlanFreeUserWidget({super.key});
+class PlanNonSubscriptionWidget extends StatelessWidget {
+  const PlanNonSubscriptionWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 24, right: 21),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

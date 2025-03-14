@@ -8,23 +8,27 @@ class MembershipMapper {
 
   static Membership fromMembershipEntity(MembershipEntity entity) {
     return Membership(
-      product: Product.fromId(entity.productId),
-      startDate: entity.startDate,
-      endDate: entity.endDate,
-      autoRenewal: entity.autoRenewal,
+      subscription: switch (entity.subscription) {
+        final MembershipSubscriptionEntity subscription => MembershipSubscription(
+            product: Product.fromId(subscription.productId),
+            startDate: subscription.startDate,
+            endDate: subscription.endDate,
+            autoRenewal: subscription.autoRenewal,
+          ),
+        _ => null,
+      },
+      remainCount: entity.remainCount,
     );
   }
 
   static Membership? fromGetPayResponse(GetPayResponse response) {
-    return switch (response.payInfo) {
-      final GetPayResponsePayInfo payInfo => Membership(
-          product: Product.fromId(payInfo.productId!),
-          startDate: DateTime.fromMillisecondsSinceEpoch(int.parse(payInfo.startDay!)),
-          endDate: DateTime.fromMillisecondsSinceEpoch(int.parse(payInfo.endDay!)),
-          autoRenewal: payInfo.autoRenewal == '1',
-        ),
-      _ => null,
-    };
+    final payInfo = response.payInfo;
+    final subscription = payInfo == null ? null : _fromGetPayResponsePayInfo(payInfo);
+
+    return Membership(
+      subscription: subscription,
+      remainCount: int.tryParse(payInfo?.remainCount ?? '0') ?? 0,
+    );
   }
 
   static MembershipEntity toMembershipEntity({
@@ -33,9 +37,27 @@ class MembershipMapper {
   }) {
     return MembershipEntity()
       ..userId = localUserId
-      ..productId = membership.product.id
-      ..startDate = membership.startDate
-      ..endDate = membership.endDate
-      ..autoRenewal = membership.autoRenewal;
+      ..remainCount = membership.remainCount
+      ..subscription = switch (membership.subscription) {
+        final MembershipSubscription subscription => MembershipSubscriptionEntity()
+          ..productId = subscription.product.id
+          ..startDate = subscription.startDate
+          ..endDate = subscription.endDate
+          ..autoRenewal = subscription.autoRenewal,
+        _ => null,
+      };
+  }
+
+  static MembershipSubscription? _fromGetPayResponsePayInfo(GetPayResponsePayInfo payInfo) {
+    try {
+      return MembershipSubscription(
+        product: Product.fromId(payInfo.productId!),
+        startDate: DateTime.fromMillisecondsSinceEpoch(int.parse(payInfo.startDay!)),
+        endDate: DateTime.fromMillisecondsSinceEpoch(int.parse(payInfo.endDay!)),
+        autoRenewal: payInfo.autoRenewal == '1',
+      );
+    } catch (e) {
+      return null;
+    }
   }
 }

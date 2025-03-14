@@ -13,6 +13,7 @@ import 'package:bladderly/presentation/feature/symptom/scores/cubit/symptom_scor
 import 'package:bladderly/presentation/feature/symptom/symptom_descript/symptom_descript_modal.dart';
 import 'package:bladderly/presentation/feature/symptom/sypmtom_detail/symptom_detail_modal.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+import 'package:bladderly/presentation/router/route/symtom_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';

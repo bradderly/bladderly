@@ -2,8 +2,8 @@
 
 // Project imports:
 import 'package:bladderly/data/api/client/converter/api_client_converter.dart';
-import 'package:bladderly/data/api/client/interceptor/api_client_x_api_key_interceptor.dart';
 import 'package:bladderly/data/api/client/interceptor/api_logging_interceptor.dart';
+import 'package:bladderly/data/api/client/interceptor/api_request_interceptor.dart';
 import 'package:bladderly/data/api/client/interceptor/api_response_exception_interceptor.dart';
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 // Package imports:
@@ -28,8 +28,8 @@ abstract class ApiClient extends ChopperService {
         baseUrl: Uri.parse('https://e9wd4zrpk5.execute-api.us-east-1.amazonaws.com/dev'),
         converter: ApiClientConverter(),
         interceptors: [
-          ApiClientXApiKeyInterceptor(),
-          ApiResponseExceptionInterceptor(),
+          const ApiRequestInterceptor(),
+          const ApiResponseExceptionInterceptor(),
           ApiLoggingInterceptor(
             logger: chopperLogger
               ..onRecord.listen((rec) {
