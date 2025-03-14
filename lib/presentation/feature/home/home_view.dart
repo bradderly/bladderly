@@ -2,9 +2,10 @@
 
 // Project imports:
 import 'package:bladderly/core/recorder/recorder_module.dart';
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/primary_background.dart';
+import 'package:bladderly/presentation/feature/home/cubit/home_cubit.dart';
 import 'package:bladderly/presentation/feature/home/cubit/home_summary_cubit.dart';
 import 'package:bladderly/presentation/feature/home/model/home_intake_summary_model.dart';
 import 'package:bladderly/presentation/feature/home/model/home_voiding_summary_model.dart';
@@ -12,6 +13,7 @@ import 'package:bladderly/presentation/feature/home/widget/home_app_bar.dart';
 import 'package:bladderly/presentation/feature/home/widget/home_intake_widget.dart';
 import 'package:bladderly/presentation/feature/home/widget/home_voiding_widget.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,8 +38,31 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> with AutomaticKeepAliveClientMixin {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!context.read<HomeCubit>().state.showGuideTour) {
+        await const GuideTourRoute().push<void>(context);
+
+        if (!mounted) return;
+
+        await FirebaseMessaging.instance.requestPermission();
+
+        if (!mounted) return;
+
+        context.read<HomeCubit>().onShowGuideTour();
+
+        await onTapHowToUse();
+      }
+    });
+  }
+
   Future<void> onTapHowToUse() async {
     final done = await const HowToUseRoute().push(context);
+
+    if (mounted) context.read<HomeCubit>().onShowHowToUse();
 
     if (done == true) {
       await widget.recorder.checkPermission();

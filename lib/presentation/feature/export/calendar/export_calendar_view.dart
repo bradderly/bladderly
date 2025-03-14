@@ -1,19 +1,23 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
-import 'package:scrolls_to_top/scrolls_to_top.dart';
-
 // Project imports:
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/domain/model/product.dart';
+import 'package:bladderly/presentation/common/bloc/membership_bloc.dart';
+import 'package:bladderly/presentation/common/bloc/plan_bloc.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/datetime_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/feature/export/calendar/cubit/export_dates_cubit.dart';
 import 'package:bladderly/presentation/feature/export/calendar/widget/export_calendar_app_bar.dart';
 import 'package:bladderly/presentation/feature/export/widget/export_stickey_button.dart';
+import 'package:bladderly/presentation/router/route/export_route.dart';
+import 'package:bladderly/presentation/router/route/main_route.dart';
+import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+import 'package:scrolls_to_top/scrolls_to_top.dart';
 
 enum _DateType {
   selected,
@@ -53,13 +57,7 @@ enum _DateType {
 class ExportCalendarView extends StatefulWidget {
   const ExportCalendarView({
     super.key,
-    required this.onTapNext,
-    required this.historyDates,
   });
-
-  final void Function(List<DateTime>) onTapNext;
-
-  final List<DateTime> historyDates;
 
   @override
   State<ExportCalendarView> createState() => _ExportCalendarViewState();
@@ -75,71 +73,110 @@ class _ExportCalendarViewState extends State<ExportCalendarView> {
     super.dispose();
   }
 
+  Future<void> onGetPlansSuccess(BuildContext context, PlanGetPlansSuccess state) async {
+    final oneTimeExportPlan =
+        context.read<PlanBloc>().state.plans.firstWhereOrNull((plan) => plan.product == Product.oneTimeExport);
+
+    final isValidMembership = context.read<MembershipBloc>().state.isValidMembership;
+
+    if (oneTimeExportPlan == null) return;
+
+    if (!isValidMembership) {
+      final shouldExport =
+          await ExportPayWallRoute($extra: ExportPayWallRouteExtra(plan: oneTimeExportPlan)).push<bool>(context);
+
+      if (shouldExport != true) return;
+    }
+
+    if (!context.mounted) return;
+
+    final selectedDates = context.read<ExportDatesCubit>().state.selectedDates;
+
+    await ExportReportRoute($extra: ExportReportRouteExtra(selectedDates: selectedDates)).push<void>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ScrollsToTop(
-      onScrollsToTop: (_) => scrollController.animateTo(
-        0,
-        duration: const Duration(milliseconds: 1000),
-        curve: Curves.easeOutCirc,
-      ),
-      child: Scaffold(
-        appBar: ExportCalendarAppBar(onTapToday: () => scrollController.jumpTo(0)),
-        body: SafeArea(
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              ListView.builder(
-                controller: scrollController,
-                padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 48),
-                itemBuilder: (context, index) {
-                  final calendarDate = DateUtils.addMonthsToMonthDate(today, -index);
-                  return Column(
-                    children: [
-                      _buildCalendarHeader(context, calendarDate: calendarDate),
-                      const Gap(32),
-                      _buildCalendarWeekDay(context),
-                      const Gap(24),
-                      _buildCalendarDay(context, calendarDate: calendarDate),
-                      const Gap(48),
-                    ],
-                  );
-                },
-              ),
-              Positioned.fill(
-                top: null,
-                child: BlocSelector<ExportDatesCubit, ExportDatesState, List<DateTime>>(
-                  selector: (state) => state.dates,
-                  builder: (context, selectedDates) => ExportStickeyButton(
-                    onTap: selectedDates.isEmpty ? null : () => widget.onTapNext(selectedDates),
-                    text: 'Continue'.tr(context),
-                    header: RichText(
-                      text: TextSpan(
+    return BlocListener<PlanBloc, PlanState>(
+      listener: (context, state) => switch (state) {
+        PlanGetPlansSuccess() => onGetPlansSuccess(context, state),
+        _ => null,
+      },
+      child: ScrollsToTop(
+        onScrollsToTop: (_) => scrollController.animateTo(
+          0,
+          duration: const Duration(milliseconds: 1000),
+          curve: Curves.easeOutCirc,
+        ),
+        child: Scaffold(
+          appBar: ExportCalendarAppBar(onTapToday: () => scrollController.jumpTo(0)),
+          body: SafeArea(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                BlocSelector<ExportDatesCubit, ExportDatesState, List<DateTime>>(
+                  selector: (state) => state.historyDates,
+                  builder: (context, historyDates) => ListView.builder(
+                    controller: scrollController,
+                    padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 48),
+                    reverse: true,
+                    itemBuilder: (context, index) {
+                      final calendarDate = DateUtils.addMonthsToMonthDate(today, -index);
+                      return Column(
+                        key: ValueKey(calendarDate),
                         children: [
-                          if (selectedDates.isEmpty)
-                            TextSpan(text: 'You can export up to 7 days'.tr(context))
-                          else ...[
-                            TextSpan(text: '${selectedDates.length}'),
-                            switch (context.locale) {
-                              AppLocale.en when selectedDates.length == 1 => const TextSpan(text: ' day selected '),
-                              AppLocale.en => const TextSpan(text: ' days selected '),
-                              AppLocale.ko => const TextSpan(text: '일 선택됨 '),
-                            },
-                            TextSpan(
-                              text: '(up to 7 days)'.tr(context),
-                              style: selectedDates.length == 7 ? TextStyle(color: context.colorTheme.warning) : null,
-                            ),
-                          ],
+                          _buildCalendarHeader(context, calendarDate: calendarDate),
+                          const Gap(32),
+                          _buildCalendarWeekDay(context),
+                          const Gap(24),
+                          _buildCalendarDay(
+                            context,
+                            historyDates: historyDates,
+                            calendarDate: calendarDate,
+                          ),
+                          const Gap(48),
                         ],
-                        style: context.textStyleTheme.b16SemiBold.copyWith(
-                          color: context.colorTheme.neutral.shade6,
+                      );
+                    },
+                  ),
+                ),
+                Positioned.fill(
+                  top: null,
+                  child: BlocSelector<ExportDatesCubit, ExportDatesState, List<DateTime>>(
+                    selector: (state) => state.selectedDates,
+                    builder: (context, selectedDates) => ExportStickeyButton(
+                      onTap: selectedDates.isEmpty
+                          ? null
+                          : () => context.read<PlanBloc>().add(const PlanGetPlans.onlyConsumable()),
+                      text: 'Continue'.tr(context),
+                      header: RichText(
+                        text: TextSpan(
+                          children: [
+                            if (selectedDates.isEmpty)
+                              TextSpan(text: 'You can export up to 7 days'.tr(context))
+                            else ...[
+                              TextSpan(text: '${selectedDates.length}'),
+                              switch (context.locale) {
+                                AppLocale.en when selectedDates.length == 1 => const TextSpan(text: ' day selected '),
+                                AppLocale.en => const TextSpan(text: ' days selected '),
+                                AppLocale.ko => const TextSpan(text: '일 선택됨 '),
+                              },
+                              TextSpan(
+                                text: '(up to 7 days)'.tr(context),
+                                style: selectedDates.length == 7 ? TextStyle(color: context.colorTheme.warning) : null,
+                              ),
+                            ],
+                          ],
+                          style: context.textStyleTheme.b16SemiBold.copyWith(
+                            color: context.colorTheme.neutral.shade6,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -188,10 +225,11 @@ class _ExportCalendarViewState extends State<ExportCalendarView> {
 
   Widget _buildCalendarDay(
     BuildContext context, {
+    required List<DateTime> historyDates,
     required DateTime calendarDate,
   }) {
     return BlocSelector<ExportDatesCubit, ExportDatesState, List<DateTime>>(
-      selector: (state) => state.dates,
+      selector: (state) => state.selectedDates,
       builder: (context, selectedDates) {
         final firstDayOfMonth = DateTime(calendarDate.year, calendarDate.month);
         final firstDayOffsetOfMonth = firstDayOfMonth.weekday == DateTime.sunday ? 0 : firstDayOfMonth.weekday;
@@ -210,7 +248,7 @@ class _ExportCalendarViewState extends State<ExportCalendarView> {
                   final date = firstDayOfMonth.add(Duration(days: rowIndex * 7 + columnIndex - firstDayOffsetOfMonth));
                   final isNotSameMonth = !DateUtils.isSameMonth(date, calendarDate);
                   final isOutDate = date.isAfter(today) || !DateUtils.isSameMonth(date, calendarDate);
-                  final containsHistory = widget.historyDates.contains(date);
+                  final containsHistory = historyDates.contains(date);
 
                   final dateType = _DateType.from(
                     isToday: DateUtils.isSameDay(date, today),
@@ -251,7 +289,7 @@ class _ExportCalendarViewState extends State<ExportCalendarView> {
                                   width: 4,
                                   height: 4,
                                   decoration: BoxDecoration(
-                                    color: widget.historyDates.contains(date)
+                                    color: historyDates.contains(date)
                                         ? context.colorTheme.vermilion.primary.shade50
                                         : null,
                                     shape: BoxShape.circle,

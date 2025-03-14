@@ -6,14 +6,58 @@ import 'package:bladderly/data/api/client/exception/api_response_body_empty_exce
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 // Package imports:
 import 'package:chopper/chopper.dart';
+import 'package:http/http.dart' as http;
 
 class ApiResponseExceptionInterceptor implements ResponseInterceptor {
   @override
   FutureOr<Response> onResponse(Response response) {
     if (response.body == null && response is! Response<LoginResponse>) {
+      _logResponse(response);
       throw const ApiResponseBodyEmptyException();
     }
 
     return response;
+  }
+
+  void _logResponse(Response response) {
+    final base = response.base;
+
+    var reasonPhrase = response.statusCode.toString();
+    var bodyMessage = '';
+    if (base is http.Response) {
+      if (base.reasonPhrase != null) {
+        reasonPhrase += ' ${base.reasonPhrase != reasonPhrase ? base.reasonPhrase : ''}';
+      }
+
+      if (base.body.isNotEmpty) {
+        bodyMessage = base.body;
+      }
+    }
+
+    // Always start on a new line
+    chopperLogger
+      ..info(ChopperLogRecord('', response: response))
+      ..info(
+        ChopperLogRecord(
+          '<-- $reasonPhrase ${base.request?.method} ${base.request?.url}',
+          response: response,
+        ),
+      );
+
+    base.headers.forEach(
+      (k, v) => chopperLogger.info(ChopperLogRecord('$k: $v', response: response)),
+    );
+
+    if (base.contentLength != null && base.headers['content-length'] == null) {
+      chopperLogger.info(ChopperLogRecord('content-length: ${base.contentLength}', response: response));
+    }
+
+    if (bodyMessage.isNotEmpty) {
+      chopperLogger
+        ..info(ChopperLogRecord('', response: response))
+        ..info(ChopperLogRecord(bodyMessage, response: response));
+    }
+
+    chopperLogger.info(ChopperLogRecord('<-- END HTTP', response: response));
   }
 }

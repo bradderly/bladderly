@@ -3,6 +3,7 @@
 // Project imports:
 import 'package:bladderly/data/isar/schema/apple_credential_entity.dart';
 import 'package:bladderly/data/isar/schema/history_entity.dart';
+import 'package:bladderly/data/isar/schema/membership_entity.dart';
 import 'package:bladderly/data/isar/schema/score_entity.dart';
 import 'package:bladderly/data/isar/schema/user_entity.dart';
 import 'package:bladderly/domain/model/history_status.dart';
@@ -51,6 +52,10 @@ abstract class IsarClient {
   Future<ScoreEntity> saveScore(ScoreEntity scoreEntity);
 
   Stream<List<ScoreEntity>> getScoresStream();
+
+  Stream<MembershipEntity?> getMembershipStreamByUserId(int userId);
+
+  MembershipEntity saveMembership(MembershipEntity membershipEntity);
 }
 
 class _IsarClientImpl implements IsarClient {
@@ -185,5 +190,21 @@ class _IsarClientImpl implements IsarClient {
   @override
   Stream<List<ScoreEntity>> getScoresStream() {
     return _isar.scoreEntitys.where().sortByDateDesc().watch(fireImmediately: true);
+  }
+
+  @override
+  Stream<MembershipEntity?> getMembershipStreamByUserId(int userId) {
+    return _isar.membershipEntitys
+        .filter()
+        .userIdEqualTo(userId)
+        .watch(fireImmediately: true)
+        .map((entites) => entites.firstOrNull);
+  }
+
+  @override
+  MembershipEntity saveMembership(MembershipEntity membershipEntity) {
+    return _isar.writeTxnSync(
+      () => _isar.membershipEntitys.getSync(_isar.membershipEntitys.putSync(membershipEntity))!,
+    );
   }
 }

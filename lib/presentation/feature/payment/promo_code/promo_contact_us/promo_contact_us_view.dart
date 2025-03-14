@@ -1,13 +1,14 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/model/user_model.dart';
 import 'package:bladderly/presentation/feature/menu/contact_us/bloc/contact_us_bloc.dart';
 import 'package:bladderly/presentation/feature/menu/contact_us/cubit/contact_us_form_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class PromoContactUsView extends StatelessWidget {
   const PromoContactUsView({super.key});
@@ -90,7 +91,7 @@ class PromoContactUsView extends StatelessWidget {
                                     message: formState.message,
                                   ),
                                 );
-                            Navigator.of(context).pop();
+                            context.pop();
                           },
                           child: Container(
                             margin: const EdgeInsets.only(top: 28),

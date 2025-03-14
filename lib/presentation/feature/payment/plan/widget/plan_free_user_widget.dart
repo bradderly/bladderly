@@ -1,7 +1,10 @@
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/bloc/plan_bloc.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
 class PlanFreeUserWidget extends StatelessWidget {
@@ -71,18 +74,14 @@ class PlanFreeUserWidget extends StatelessWidget {
                   ],
                 ),
                 const Gap(16),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  decoration: BoxDecoration(
-                    color: context.colorTheme.vermilion.primary.shade50,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Learn more'.tr(context),
-                    style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade0),
-                  ),
+                PrimaryButton.filled(
+                  onPressed: () => context.read<PlanBloc>().add(const PlanGetPlans.subscription()),
+                  shape: BoxShape.rectangle,
+                  backgroundColor: context.colorTheme.vermilion.primary.shade50,
+                  borderRadius: 30,
+                  text: 'Learn more'.tr(context),
+                  textColor: context.colorTheme.neutral.shade0,
+                  size: const Size.fromHeight(48),
                 ),
               ],
             ),

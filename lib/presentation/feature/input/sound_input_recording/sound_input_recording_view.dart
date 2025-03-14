@@ -4,7 +4,7 @@ import 'dart:async';
 // Project imports:
 import 'package:bladderly/core/recorder/recorder_module.dart';
 import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/input/sound_input_recording/widget/sound_input_recording_stop_dialog.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
@@ -15,6 +15,7 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:synchronized/synchronized.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
@@ -111,19 +112,19 @@ class _SoundInputRecordingViewState extends State<SoundInputRecordingView> with 
       context,
       onCancel: () {
         cancelRecording();
-        Navigator.of(context).pop<bool>(true);
+        context.pop<bool>(true);
       },
-      onContinue: () => Navigator.of(context).pop<void>(),
+      onContinue: () => context.pop<void>(),
     );
 
-    if (shouldCancelRecord == true && mounted) Navigator.of(context).pop();
+    if (shouldCancelRecord == true && mounted) context.pop();
   }
 
   void onPop() {
     if (widget.recorder.state is RecorderRecording) {
       showRecordingCancelDialog();
     } else {
-      Navigator.of(context).pop<void>();
+      context.pop<void>();
     }
   }
 

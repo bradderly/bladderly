@@ -1,4 +1,5 @@
 import 'package:bladderly/domain/model/plan.dart';
+import 'package:bladderly/domain/model/product.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 
 abstract class PlanMapper {
@@ -6,7 +7,7 @@ abstract class PlanMapper {
 
   static Plan fromProdutDetails(ProductDetails productDetails) {
     return Plan(
-      id: productDetails.id,
+      product: Product.fromId(productDetails.id),
       name: productDetails.title,
       price: productDetails.rawPrice,
       originPrice: productDetails.rawPrice,

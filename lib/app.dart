@@ -3,8 +3,11 @@
 import 'package:bladderly/core/di/di.dart';
 import 'package:bladderly/domain/usecase/check_supported_device_usecase.dart';
 import 'package:bladderly/domain/usecase/get_history_result_usecase.dart';
+import 'package:bladderly/domain/usecase/get_membership_stream_usecase.dart';
+import 'package:bladderly/domain/usecase/get_paywall_plans_usecase.dart';
 import 'package:bladderly/domain/usecase/get_user_stream_usecase.dart';
 import 'package:bladderly/domain/usecase/get_user_usecase.dart';
+import 'package:bladderly/domain/usecase/initialize_membership_usecase.dart';
 import 'package:bladderly/domain/usecase/initialize_purchase_handler_usecase.dart';
 import 'package:bladderly/domain/usecase/load_app_config_usecase.dart';
 import 'package:bladderly/domain/usecase/purchase_plan_usecase.dart';
@@ -13,11 +16,15 @@ import 'package:bladderly/domain/usecase/sign_out_usecase.dart';
 import 'package:bladderly/presentation/common/bloc/app_config_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/device_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/history_result_bloc.dart';
+import 'package:bladderly/presentation/common/bloc/membership_bloc.dart';
+import 'package:bladderly/presentation/common/bloc/plan_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/locale_cubit.dart';
+import 'package:bladderly/presentation/common/cubit/main_tab_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/passcode_cubit.dart';
+import 'package:bladderly/presentation/common/cubit/timer_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/unit_cubit.dart';
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/common/widget/no_over_bouncing_scroll_physcis.dart';
 import 'package:bladderly/presentation/feature/payment/bloc/payment_bloc.dart';
@@ -52,21 +59,14 @@ class BladderlyApp extends StatefulWidget {
 }
 
 class _BladderlyAppState extends State<BladderlyApp> {
-  final appLocaleCubit = AppLocaleCubit();
-
   @override
   void initState() {
+    super.initState();
+
     FlutterLocalization.instance.init(
-      initLanguageCode: appLocaleCubit.state.name,
+      initLanguageCode: AppLocaleCubit().state.name,
       mapLocales: AppLocale.values.map((e) => MapLocale(e.name, {})).toList(),
     );
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    appLocaleCubit.close();
-    super.dispose();
   }
 
   @override
@@ -83,8 +83,8 @@ class _BladderlyAppState extends State<BladderlyApp> {
             signOutUsecase: getIt<SignOutUsecase>(),
           )..add(const UserLoad()),
         ),
-        BlocProvider<AppLocaleCubit>.value(
-          value: appLocaleCubit,
+        BlocProvider<AppLocaleCubit>(
+          create: (_) => AppLocaleCubit(),
         ),
         BlocProvider<HistoryResultBloc>(
           create: (_) => HistoryResultBloc(
@@ -108,6 +108,21 @@ class _BladderlyAppState extends State<BladderlyApp> {
           create: (_) => DeviceBloc(
             checkSupportedDeviceUsecase: getIt<CheckSupportedDeviceUsecase>(),
           ),
+        ),
+        BlocProvider<MembershipBloc>(
+          create: (_) => MembershipBloc(
+            getMembershipStreamUsecase: getIt<GetMembershipStreamUsecase>(),
+            initializeMembershipUsecase: getIt<InitializeMembershipUsecase>(),
+          ),
+        ),
+        BlocProvider<MainTabCubit>(
+          create: (_) => MainTabCubit(),
+        ),
+        BlocProvider<PlanBloc>(
+          create: (_) => PlanBloc(getPaywallPlansUsecase: getIt<GetPaywallPlansUsecase>()),
+        ),
+        BlocProvider<TimerCubit>(
+          create: (_) => TimerCubit(),
         ),
       ],
       child: BlocListener<AppLocaleCubit, AppLocale>(

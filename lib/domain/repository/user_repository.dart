@@ -14,13 +14,22 @@ abstract class UserRepository {
 
   User? getUserOrNullByUserId(String userId);
 
-  Future<Membership?> getMembership(String userId);
+  Future<Membership?> getMembershipFromServer({
+    required String userId,
+  });
 
-  Membership saveMembership(Membership membership);
+  Membership saveMembership({
+    required int localUserId,
+    required Membership membership,
+  });
+
+  Stream<Membership?> getMembershipStream({required int localUserId});
 
   /// 주어진 userId에 해당하는 엔티티의 데이터를 주어진 User의 데이터로 변경한다
   User migrateUser({
     required String userId,
     required User user,
   });
+
+  int? getLocalUserIdByUserId(String userId);
 }

@@ -1,11 +1,12 @@
 import 'package:equatable/equatable.dart';
 
 class AppVersion extends Equatable {
-  const AppVersion(
-      {required this.minVersion,
-      required this.latestVersion,
-      required this.currentVersion,
-      required this.currentBuild});
+  const AppVersion({
+    required this.minVersion,
+    required this.latestVersion,
+    required this.currentVersion,
+    required this.currentBuild,
+  });
 
   final String minVersion;
   final String latestVersion;

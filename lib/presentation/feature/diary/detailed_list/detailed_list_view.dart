@@ -1,7 +1,7 @@
 // Flutter imports:
 
 // Project imports:
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/feature/diary/detailed_list/bloc/detailed_list_histories_bloc.dart';
 import 'package:bladderly/presentation/feature/diary/detailed_list/modal/detailed_list_delete_history_modal.dart';
@@ -15,6 +15,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class DetailedListView extends StatefulWidget {
@@ -102,7 +103,7 @@ class _DetailedListViewState extends State<DetailedListView> {
             Padding(
               padding: const EdgeInsets.only(top: 34),
               child: GestureDetector(
-                onTap: () => Navigator.of(context).pop(),
+                onTap: () => context.pop(),
                 child: Assets.icon.icExportClose.svg(
                   colorFilter: ColorFilter.mode(
                     context.colorTheme.neutral.shade8,

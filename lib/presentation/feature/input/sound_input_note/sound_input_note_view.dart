@@ -4,8 +4,9 @@
 import 'package:bladderly/domain/model/leakage_volume.dart';
 import 'package:bladderly/presentation/common/bloc/history_result_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
+import 'package:bladderly/presentation/common/cubit/main_tab_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 // Flutter imports:
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
@@ -35,7 +36,8 @@ class SoundInputNoteView extends StatelessWidget {
 
   final DateTime recordTime;
 
-  void _onSave(BuildContext context, SoundInputNoteFormState state) {
+  void _onSave(BuildContext context) {
+    final state = context.read<SoundInputNoteFormCubit>().state;
     final event = SoundInputNoteUpload(
       userId: _getUserId(context),
       recordTime: recordTime,
@@ -57,7 +59,7 @@ class SoundInputNoteView extends StatelessWidget {
 
     SoundInputNoteUploadSuccessModal.show(
       context,
-      onGoToDiary: () => const MainRoute(tab: MainRouteTab.diary).go(context),
+      onGoToDiary: () => const MainRoute().go(context..read<MainTabCubit>().showDiary()),
     );
   }
 
@@ -232,10 +234,10 @@ class SoundInputNoteView extends StatelessWidget {
       top: null,
       bottom: 28,
       child: Center(
-        child: BlocBuilder<SoundInputNoteFormCubit, SoundInputNoteFormState>(
-          buildWhen: (prev, curr) => prev.isValid != curr.isValid,
-          builder: (context, state) => InputSaveButton(
-            onPressed: state.isValid ? () => _onSave(context, state) : null,
+        child: BlocSelector<SoundInputNoteFormCubit, SoundInputNoteFormState, bool>(
+          selector: (state) => state.isValid,
+          builder: (context, isValid) => InputSaveButton(
+            onPressed: isValid ? () => _onSave(context) : null,
           ),
         ),
       ),

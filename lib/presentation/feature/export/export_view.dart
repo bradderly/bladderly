@@ -1,61 +1,24 @@
-// Flutter imports:
-// Project imports:
-import 'package:bladderly/presentation/feature/export/calendar/export_calendar_builder.dart';
-import 'package:bladderly/presentation/feature/export/report/export_report_builder.dart';
-import 'package:bladderly/presentation/feature/export/term/export_term_builder.dart';
 import 'package:flutter/material.dart';
 
-class ExportView extends StatefulWidget {
+class ExportView extends StatelessWidget {
   const ExportView({
     super.key,
-    required this.historyDates,
+    required this.navigator,
   });
 
-  final List<DateTime> historyDates;
-
-  @override
-  State<ExportView> createState() => _ExportViewState();
-}
-
-class _ExportViewState extends State<ExportView> {
-  final pageContorller = PageController();
-
-  List<DateTime> selectedDates = <DateTime>[];
-
-  @override
-  void dispose() {
-    pageContorller.dispose();
-    super.dispose();
-  }
-
-  void animateToPage(int page) {
-    pageContorller.animateToPage(
-      page,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.ease,
-    );
-  }
+  final Widget navigator;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: pageContorller,
-        children: [
-          ExportCalendarBuilder(
-            onTapNext: (dates) {
-              setState(() => selectedDates = dates);
-              animateToPage(1);
-            },
-            historyDates: widget.historyDates,
-          ),
-          ExportTermBuilder(
-            onExport: () => animateToPage(2),
-            dates: selectedDates,
-          ),
-          const ExportReportBuilder(),
-        ],
+    return Container(
+      margin: EdgeInsets.only(top: MediaQuery.sizeOf(context).height * 0.05),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+        child: navigator,
       ),
     );
   }

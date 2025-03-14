@@ -1,12 +1,10 @@
 // Flutter imports:
+// Project imports:
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
+import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:gap/gap.dart';
-
-// Project imports:
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({
@@ -20,32 +18,34 @@ class HomeAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height + MediaQuery.paddingOf(context).top,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            context.colorTheme.vermilion.primary.shade40,
-            context.colorTheme.vermilion.primary.shade40,
-            context.colorTheme.vermilion.primary.shade40.withValues(alpha: 0),
-          ],
-          stops: const [0, 0.74, 1],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
-      child: Row(
-        children: [
-          const Gap(24),
-          Assets.icon.icIntroLogo.svg(),
-          const Spacer(),
-          IconButton(
-            onPressed: onTapMenu,
-            icon: Assets.icon.icHomeMenu.svg(),
+    return SafeArea(
+      bottom: false,
+      child: Container(
+        height: height,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              context.colorTheme.vermilion.primary.shade40,
+              context.colorTheme.vermilion.primary.shade40,
+              context.colorTheme.vermilion.primary.shade40.withValues(alpha: 0),
+            ],
+            stops: const [0, 0.74, 1],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
-          const Gap(8),
-        ],
+        ),
+        child: Row(
+          children: [
+            const Gap(24),
+            Assets.icon.icIntroLogo.svg(),
+            const Spacer(),
+            IconButton(
+              onPressed: onTapMenu,
+              icon: Assets.icon.icHomeMenu.svg(),
+            ),
+            const Gap(8),
+          ],
+        ),
       ),
     );
   }

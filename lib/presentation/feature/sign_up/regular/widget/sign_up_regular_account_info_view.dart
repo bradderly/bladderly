@@ -1,6 +1,6 @@
 // Flutter imports:
 // Project imports:
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/password_input_field.dart';
 import 'package:bladderly/presentation/common/widget/primary_button.dart';
@@ -70,10 +70,12 @@ class _SignUpRegularAccountInfoViewState extends State<SignUpRegularAccountInfoV
             const Gap(24),
             SignInFieldWidget(
               text: 'Password'.tr(context),
-              child: PasswordInputField(
-                onChanged: context.read<SignUpRegularFormCubit>().setPassword,
-                onToggleObsecureText: context.read<SignUpRegularFormCubit>().toggleObsecurePassword,
-                obsecureText: context.read<SignUpRegularFormCubit>().state.obsecurePassword,
+              child: BlocBuilder<SignUpRegularFormCubit, SignUpRegularFormState>(
+                builder: (context, state) => PasswordInputField(
+                  onChanged: context.read<SignUpRegularFormCubit>().setPassword,
+                  onToggleObsecureText: context.read<SignUpRegularFormCubit>().toggleObsecurePassword,
+                  obsecureText: state.obsecurePassword,
+                ),
               ),
             ),
             const Gap(24),

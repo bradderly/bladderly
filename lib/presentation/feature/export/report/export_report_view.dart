@@ -1,34 +1,27 @@
 // Flutter imports:
-import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
-// Project imports:
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/feature/export/report/bloc/export_report_bloc.dart';
-import 'package:bladderly/presentation/feature/export/report/model/export_report_reason_model.dart';
 import 'package:bladderly/presentation/feature/export/report/widget/export_report_app_bar.dart';
-import 'package:bladderly/presentation/feature/export/report/widget/export_report_check_box_widget.dart';
-import 'package:bladderly/presentation/feature/export/report/widget/export_report_text_field.dart';
-import 'package:bladderly/presentation/feature/export/widget/export_stickey_button.dart';
+import 'package:bladderly/presentation/feature/export/survey/export_survey_builder.dart';
+import 'package:bladderly/presentation/feature/export/term/export_report_term_builder.dart';
 import 'package:flutter/material.dart';
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 
 class ExportReportView extends StatefulWidget {
-  const ExportReportView({super.key});
+  const ExportReportView({
+    super.key,
+    required this.selectedDates,
+  });
+
+  final List<DateTime> selectedDates;
 
   @override
   State<ExportReportView> createState() => _ExportReportViewState();
 }
 
 class _ExportReportViewState extends State<ExportReportView> {
-  final focusNodeDoctorName = FocusNode(debugLabel: 'DoctorName');
-  final focusNodeClinicInformation = FocusNode(debugLabel: 'ClinicInformation');
+  final pageController = PageController();
 
   @override
   void dispose() {
-    focusNodeDoctorName.dispose();
-    focusNodeClinicInformation.dispose();
+    pageController.dispose();
     super.dispose();
   }
 
@@ -37,108 +30,16 @@ class _ExportReportViewState extends State<ExportReportView> {
     return Scaffold(
       appBar: const ExportReportAppBar(),
       body: SafeArea(
-        child: Stack(
-          fit: StackFit.expand,
+        child: PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: pageController,
           children: [
-            ListView(
-              padding: const EdgeInsets.all(24).copyWith(bottom: 140),
-              children: [
-                Text(
-                  'Data report is sent to your email!'.tr(context),
-                  style: context.textStyleTheme.b18SemiBold.copyWith(color: context.colorTheme.neutral.shade9),
-                ),
-                const Gap(19),
-                Text(
-                  'Your opinions matter the most. Please share with us the purpose of the data report.'.tr(context),
-                  style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade7),
-                ),
-                const Gap(56),
-                BlocSelector<ExportReportBloc, ExportReportState, ExportReportReasonModel>(
-                  selector: (state) => state.reasonModel,
-                  builder: (context, reasonModel) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'What’s this report for?'.tr(context),
-                        style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade9),
-                      ),
-                      const Gap(24),
-                      ExportReportCheckBoxWidget(
-                        onTap: () => context
-                            .read<ExportReportBloc>()
-                            .add(const ExportReportSelectReason(reasonModel: ExportReportReasonModel.useForPersonal())),
-                        isChecked: reasonModel is ExportReportUseForPersonalReason,
-                        child: Container(
-                          alignment: Alignment.centerLeft,
-                          height: 24,
-                          child: Text(
-                            'For personal use only.'.tr(context),
-                            style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade9),
-                          ),
-                        ),
-                      ),
-                      const Gap(24),
-                      ExportReportCheckBoxWidget(
-                        onTap: () => context
-                            .read<ExportReportBloc>()
-                            .add(const ExportReportSelectReason(reasonModel: ExportReportReasonModel.shareClinic())),
-                        isChecked: reasonModel is ExportReportShareClinicReason,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              height: 24,
-                              child: Text(
-                                'To share with a clinician.'.tr(context),
-                                style:
-                                    context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade9),
-                              ),
-                            ),
-                            if (reasonModel is ExportReportShareClinicReason) ...[
-                              const Gap(16),
-                              ExportReportTextField(
-                                onChanged: (value) => context.read<ExportReportBloc>().add(
-                                      ExportReportSelectReason(reasonModel: reasonModel.copyWith(doctorName: value)),
-                                    ),
-                                focusNode: focusNodeDoctorName,
-                                onSubmitted: (value) => focusNodeClinicInformation.requestFocus(),
-                                hintText: 'Dr. Name'.tr(context),
-                              ),
-                              const Gap(8),
-                              ExportReportTextField(
-                                onChanged: (value) => context.read<ExportReportBloc>().add(
-                                      ExportReportSelectReason(
-                                        reasonModel: reasonModel.copyWith(clinicInformation: value),
-                                      ),
-                                    ),
-                                onSubmitted: (value) => FocusScope.of(context).unfocus(),
-                                focusNode: focusNodeClinicInformation,
-                                hintText: 'Clinic Information'.tr(context),
-                              ),
-                            ],
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+            ExportReportTermBuilder(
+              onExportSuccess: () =>
+                  pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut),
+              selectedDates: widget.selectedDates,
             ),
-            Positioned.fill(
-              top: null,
-              child: BlocSelector<ExportReportBloc, ExportReportState, bool>(
-                selector: (state) => state.reasonModel.isValid,
-                builder: (context, isValid) => ExportStickeyButton(
-                  onTap: isValid
-                      ? () => context.read<ExportReportBloc>().add(
-                            ExportReportSendReason(userId: context.read<UserBloc>().state.userModelOrThrowException.id),
-                          )
-                      : null,
-                  text: 'Done'.tr(context),
-                ),
-              ),
-            ),
+            const ExportSurveyBuilder(),
           ],
         ),
       ),

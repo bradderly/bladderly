@@ -76,8 +76,8 @@ class UploadPendingHistoriesUsecase {
     final file = _recorderFileLoader.getFile(history.recordTime);
     final isFileNotExist = !file.existsSync();
 
-    // TODO(eden): 파일이 없을때 로우를 삭제할지 그냥 냅둘지 정해야함
     if (isFileNotExist) {
+      _historyRepository.deleteHistoryById(history.id!);
       return false;
     }
 

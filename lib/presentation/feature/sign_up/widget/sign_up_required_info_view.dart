@@ -1,7 +1,7 @@
 // Flutter imports:
 // Project imports:
 import 'package:bladderly/domain/model/sex.dart';
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/common/widget/common_keyboard_actions.dart';

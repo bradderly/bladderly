@@ -17,4 +17,8 @@ extension StringExtension on String {
   String applyWordBreak() {
     return replaceAllMapped(RegExp(r'(\S)(?=\S)'), (m) => '${m[1]}\u200D');
   }
+
+  bool validateEmail() {
+    return RegExp(r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+').hasMatch(this);
+  }
 }

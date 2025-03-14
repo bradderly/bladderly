@@ -1,4 +1,4 @@
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/forgot_password/bloc/forgot_password_bloc.dart';
@@ -20,8 +20,6 @@ class ForgotPasswordView extends StatelessWidget {
       listener: (context, state) => switch (state) {
         ForgotPasswordSendVerificationCodeInProgress() => ProgressIndicatorModal.show(context),
         ForgotPasswordSendVerificationCodeSuccess() => context.pop(),
-
-        // TODO(eden): 이메일 전송 실패시 케이스 추가 필요
         ForgotPasswordSendVerificationCodeFailure() => context.pop(),
         ForgotPasswordChangePasswordInProgress() => ProgressIndicatorModal.show(context),
         ForgotPasswordChangePasswordSuccess() => const SignInRoute().go(context),

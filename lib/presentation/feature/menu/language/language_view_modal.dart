@@ -1,10 +1,11 @@
 // Flutter imports:
 // Project imports:
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class LanguageViewModal extends StatefulWidget {
   const LanguageViewModal({
@@ -57,7 +58,7 @@ class _LanguageViewModalState extends State<LanguageViewModal> {
             const SizedBox(height: 16),
             GestureDetector(
               behavior: HitTestBehavior.translucent,
-              onTap: () => Navigator.of(context).pop(appLocale),
+              onTap: () => context.pop(appLocale),
               child: Container(
                 width: double.infinity,
                 margin: const EdgeInsets.symmetric(horizontal: 50),

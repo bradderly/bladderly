@@ -5,21 +5,20 @@ import 'package:bladderly/domain/model/unit.dart';
 import 'package:bladderly/presentation/common/bloc/app_config_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/locale_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/unit_cubit.dart';
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
-import 'package:bladderly/presentation/feature/about/about_modal.dart';
 import 'package:bladderly/presentation/feature/menu/contact_us/contact_us_builder.dart';
 import 'package:bladderly/presentation/feature/menu/faq/faq_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/language/language_view_modal.dart';
-import 'package:bladderly/presentation/feature/menu/profile/profile_builder.dart';
-import 'package:bladderly/presentation/feature/menu/symptom/symptom_builder.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
-import 'package:bladderly/presentation/feature/payment/plan/plan_builder.dart';
+import 'package:bladderly/presentation/router/route/export_route.dart';
+import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class MenuView extends StatelessWidget {
   const MenuView({super.key});
@@ -48,11 +47,11 @@ class MenuView extends StatelessWidget {
                           ),
                         ),
                         IconButton(
+                          onPressed: context.pop,
                           icon: Icon(
                             Icons.close,
                             color: context.colorTheme.neutral.shade8,
                           ),
-                          onPressed: () => Navigator.pop(context),
                         ),
                       ],
                     ),
@@ -63,10 +62,7 @@ class MenuView extends StatelessWidget {
                       SettingsItem(
                         icon: Icons.person_outline,
                         title: 'User Profile'.tr(context),
-                        onTap: () => ModalHelper.showModal<void>(
-                          context: context,
-                          modalBuilder: (_) => const ProfileBuilder(),
-                        ),
+                        onTap: () => const ProfileRoute().go(context),
                       ),
                     ],
                   ),
@@ -76,23 +72,17 @@ class MenuView extends StatelessWidget {
                       SettingsItem(
                         icon: Icons.credit_card,
                         title: 'Premium Plan'.tr(context),
-                        onTap: () => ModalHelper.showModal<void>(
-                          context: context,
-                          modalBuilder: (_) => const PlanBuilder(),
-                        ),
+                        onTap: () => const PlanRoute().go(context),
                       ),
                       SettingsItem(
-                        onTap: () {},
+                        onTap: () => const ExportCalendarRoute().push<void>(context),
                         icon: Icons.ios_share,
                         title: 'Data export'.tr(context),
                       ),
                       SettingsItem(
+                        onTap: () => const SymptomScoresRoute().go(context),
                         icon: Icons.bar_chart,
                         title: 'Symptom score'.tr(context),
-                        onTap: () => ModalHelper.showModal<void>(
-                          context: context,
-                          modalBuilder: (_) => const SymptomBuilder(),
-                        ),
                       ),
                       SettingsItem(
                         onTap: () async {
@@ -130,10 +120,7 @@ class MenuView extends StatelessWidget {
                       SettingsItem(
                         icon: Icons.info_outline,
                         title: 'About'.tr(context),
-                        onTap: () => ModalHelper.showModal<void>(
-                          context: context,
-                          modalBuilder: (_) => const AboutModal(),
-                        ),
+                        onTap: () => const AboutRoute().go(context),
                       ),
                       BlocBuilder<AppConfigBloc, AppConfigState>(
                         builder: (context, state) => Container(

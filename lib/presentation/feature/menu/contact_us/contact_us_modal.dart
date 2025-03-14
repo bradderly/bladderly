@@ -1,13 +1,14 @@
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/model/user_model.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/menu/contact_us/bloc/contact_us_bloc.dart';
 import 'package:bladderly/presentation/feature/menu/contact_us/cubit/contact_us_form_cubit.dart';
 import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ContactUsModal extends StatefulWidget {
   const ContactUsModal({super.key});
@@ -39,15 +40,10 @@ class _ContactUsModalState extends State<ContactUsModal> {
     }
   }
 
-  bool _isEmailValid(String email) {
-    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-    return emailRegex.hasMatch(email);
-  }
-
   void _onSendMessage(BuildContext context) {
     final formState = context.read<ContactUsFormCubit>().state;
 
-    if (!_isEmailValid(formState.email)) {
+    if (!formState.email.validateEmail()) {
       return;
     }
     context.read<ContactUsBloc>().add(
@@ -78,7 +74,7 @@ class _ContactUsModalState extends State<ContactUsModal> {
             if (state is ContactUsInitial) {
               ProgressIndicatorModal.show(context);
             } else if (state is ContactUsSuccess) {
-              Navigator.of(context).pop();
+              context.pop();
             }
           },
           child: Container(
@@ -112,10 +108,10 @@ class _ContactUsModalState extends State<ContactUsModal> {
                           'Email Address',
                           formState.email,
                           1,
-                          _isEmptyCheck && (formState.email.isEmpty || !_isEmailValid(formState.email)),
+                          _isEmptyCheck && (formState.email.isEmpty || !formState.email.validateEmail()),
                           onChanged: (value) => context.read<ContactUsFormCubit>().setEmail(value),
                         ),
-                        if (_isEmptyCheck && (formState.email.isEmpty || !_isEmailValid(formState.email)))
+                        if (_isEmptyCheck && (formState.email.isEmpty || !formState.email.validateEmail()))
                           Padding(
                             padding: const EdgeInsets.only(left: 24, top: 8),
                             child: Text(

@@ -1,23 +1,18 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 // Project imports:
-import 'package:bladderly/core/di/di.dart';
-import 'package:bladderly/domain/usecase/send_histories_export_reason_usecase.dart';
-import 'package:bladderly/presentation/feature/export/report/bloc/export_report_bloc.dart';
 import 'package:bladderly/presentation/feature/export/report/export_report_view.dart';
+import 'package:flutter/material.dart';
+// Package imports:
 
 class ExportReportBuilder extends StatelessWidget {
-  const ExportReportBuilder({super.key});
+  const ExportReportBuilder({
+    super.key,
+    required this.selectedDates,
+  });
 
+  final List<DateTime> selectedDates;
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ExportReportBloc>(
-      create: (_) => ExportReportBloc(sendHistoriesExportReasonUsecase: getIt<SendHistoriesExportReasonUsecase>()),
-      child: const ExportReportView(),
-    );
+    return ExportReportView(selectedDates: selectedDates);
   }
 }

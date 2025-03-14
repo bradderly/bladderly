@@ -1,18 +1,16 @@
 // Flutter imports:
 
+// Project imports:
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
+import 'package:bladderly/presentation/feature/tutorial/how_to_use/widget/howtouse_page_view.dart';
+import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-
-// Project imports:
-import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bladderly/presentation/feature/tutorial/how_to_use/widget/howtouse_page_view.dart';
-import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 
 class HowtouseView extends StatefulWidget {
   const HowtouseView({super.key});

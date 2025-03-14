@@ -58,7 +58,7 @@ class AuthRepositoryImpl implements AuthRepository {
       }
 
       if (response.message!.contains('Incorrect username or password')) {
-        throw const InvalidUserException(message: 'invalid user');
+        throw const InvalidUserException();
       }
 
       if (response.message!.contains('Password attempts exceeded')) {
@@ -112,7 +112,7 @@ class AuthRepositoryImpl implements AuthRepository {
     final signUpRequest = SignUpRequest(
       id: userId,
       gender: gender,
-      birthyear: '$yearOfBirth',
+      birthyear: yearOfBirth,
       social: signUpMethod,
       email: email,
       pw: password,

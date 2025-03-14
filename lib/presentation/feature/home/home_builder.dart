@@ -3,6 +3,7 @@
 // Project imports:
 import 'package:bladderly/core/di/di.dart';
 import 'package:bladderly/core/recorder/recorder_module.dart';
+import 'package:bladderly/presentation/feature/home/cubit/home_cubit.dart';
 import 'package:bladderly/presentation/feature/home/cubit/home_summary_cubit.dart';
 import 'package:bladderly/presentation/feature/home/home_view.dart';
 // Flutter imports:
@@ -22,8 +23,15 @@ class HomeBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<HomeSummaryCubit>(
-      create: (_) => HomeSummaryCubit(getHistoriesStreamUsecase: getIt())..subscribe(DateTime.now()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<HomeSummaryCubit>(
+          create: (_) => HomeSummaryCubit(getHistoriesStreamUsecase: getIt())..subscribe(DateTime.now()),
+        ),
+        BlocProvider<HomeCubit>(
+          create: (_) => HomeCubit(),
+        ),
+      ],
       child: HomeView(
         recorder: getIt<Recorder>(),
         onPressedMoreVoiding: onPressedMoreVoiding,

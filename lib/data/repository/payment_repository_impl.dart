@@ -1,10 +1,9 @@
-import 'dart:io';
-
 import 'package:bladderly/core/package_device_info/src/model/device_info_model.dart';
 import 'package:bladderly/data/api/client/api_client.dart';
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 import 'package:bladderly/data/mapper/plan_mapper.dart';
 import 'package:bladderly/domain/model/plan.dart';
+import 'package:bladderly/domain/model/product.dart';
 import 'package:bladderly/domain/repository/payment_repository.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:injectable/injectable.dart';
@@ -27,15 +26,7 @@ class PaymentRepositoryImpl implements PaymentRepository {
 
   @override
   Future<List<Plan>> getPlans() async {
-    final monthlyProductId = Platform.isAndroid ? 'monthly' : 'bladderly.unlimited.monthly';
-    final annualProductId = Platform.isAndroid ? 'annual' : 'bladderly.unlimited.annual';
-
-    final planIds = <String>{
-      monthlyProductId,
-      annualProductId,
-    };
-
-    final products = await _inAppPurchase.queryProductDetails(planIds);
+    final products = await _inAppPurchase.queryProductDetails(Product.ids);
 
     _productDetailsStream.add(products.productDetails);
 
@@ -43,19 +34,10 @@ class PaymentRepositoryImpl implements PaymentRepository {
   }
 
   @override
-  Future<void> purchaseOneTimePlan({
-    required String userId,
-    required String planId,
+  Future<void> purchasePlan({
+    required String productId,
   }) {
-    // TODO: implement purchaseOneTimePlan
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> purchaseSubscriptionPlan({
-    required String planId,
-  }) {
-    final productDetails = _productDetailsStream.value.firstWhere((element) => element.id == planId);
+    final productDetails = _productDetailsStream.value.firstWhere((element) => element.id == productId);
 
     return _inAppPurchase.buyNonConsumable(purchaseParam: PurchaseParam(productDetails: productDetails));
   }
@@ -78,5 +60,15 @@ class PaymentRepositoryImpl implements PaymentRepository {
     );
 
     return result.body!;
+  }
+
+  @override
+  Future<void> purchaseWithoutIap({
+    required String userId,
+    required String productId,
+  }) {
+    return _apiClient
+        .checkPayment(request: PaymentCheckRequest(userId: userId, device: _deviceInfoModel.os, productId: productId))
+        .then((value) => value.body!);
   }
 }

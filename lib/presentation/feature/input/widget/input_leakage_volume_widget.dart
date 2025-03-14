@@ -3,7 +3,7 @@ import 'dart:math';
 
 // Project imports:
 import 'package:bladderly/domain/model/leakage_volume.dart';
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';

@@ -1,8 +1,14 @@
 // Flutter imports:
 // Project imports:
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'dart:math';
+
+import 'package:bladderly/domain/model/membership.dart';
+import 'package:bladderly/domain/model/product.dart';
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/util/text_size_util.dart';
+import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
@@ -18,19 +24,32 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
-class PaywallView extends StatefulWidget {
-  const PaywallView({
+abstract class PaywallView extends StatelessWidget {
+  factory PaywallView({
+    Membership? membership,
+    required PaywallPlansModel plans,
+  }) {
+    if (membership == null) return _FreeUserPaywallView(plans: plans);
+
+    return _SubscriberPaywallView(membership: membership, plans: plans);
+  }
+
+  const PaywallView._({
     super.key,
+    required this.membership,
     required this.plans,
   });
 
+  final Membership? membership;
   final PaywallPlansModel plans;
 
-  @override
-  State<PaywallView> createState() => _PaywallViewState();
-}
+  void _purchase(BuildContext context) {
+    final userId = context.read<UserBloc>().state.userModelOrThrowException.id;
+    final planId = context.read<PaywallCubit>().state.selectedPlanId;
 
-class _PaywallViewState extends State<PaywallView> {
+    context.read<PaymentBloc>().add(PaymentPurchasePlan(userId: userId, planId: planId!));
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<PaymentBloc, PaymentState>(
@@ -39,6 +58,14 @@ class _PaywallViewState extends State<PaywallView> {
       },
       listener: (context, state) => switch (state) {
         PaymentPurchaseReadyInProgress() => ProgressIndicatorModal.show(context),
+        final PaymentPurchaseReadySuccess state when state.product == Product.threeDaysPass => CommonErrorModal.show(
+            context,
+            onTap: () => const PlanRoute().go(context),
+            title: 'Surprise! A Gift for You!'.tr(context),
+            content:
+                'Enjoying our fresh new look? Here’s a free 3-day pass! Hope this helps you take care of your urinary health.'
+                    .tr(context),
+          ),
         PaymentPurchaseSuccess() => context.pop(),
         PaymentPurchaseFailure() => context.pop(),
         PaymentPurchaseRestored() => context.pop(),
@@ -56,204 +83,257 @@ class _PaywallViewState extends State<PaywallView> {
         ),
         child: Scaffold(
           backgroundColor: Colors.transparent,
+          appBar: ModalAppBar(
+            backgroundColor: Colors.transparent,
+            backButton: false,
+            toolbarHeight: 45,
+          ),
           body: SafeArea(
-            child: Stack(
-              fit: StackFit.expand,
+            child: Column(
               children: [
-                ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  children: [
-                    const Gap(92),
-                    Column(
-                      children: [
-                        Assets.icon.icPaymentDiamond.svg(
-                          width: 80,
-                          height: 80,
-                        ),
-                        const Gap(16),
-                        Text(
-                          'Get Unlimited Access!'.tr(context),
-                          style: context.textStyleTheme.b24BoldOutfit.copyWith(
-                            color: context.colorTheme.neutral.shade10,
-                          ),
-                        ),
-                        const Gap(8),
-                        Builder(
-                          builder: (context) {
-                            final texts = [
-                              'Automatic voiding volume measurement'.tr(context),
-                              'PDF export reports'.tr(context),
-                            ];
-                            final textStyle =
-                                context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade10);
-
-                            final textWidth = texts
-                                .map((text) => TextSizeUtil.getSize(text: text, textStyle: textStyle))
-                                .reduce((value, element) => value.width > element.width ? value : element)
-                                .width;
-
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 20),
-                              child: Column(
-                                children: [
-                                  for (final text in texts)
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Assets.icon.icPaymentCheck.svg(),
-                                        const Gap(8),
-                                        Flexible(
-                                          child: ConstrainedBox(
-                                            constraints: BoxConstraints(minWidth: textWidth),
-                                            child: Text(
-                                              text,
-                                              style: context.textStyleTheme.b14Medium.copyWith(
-                                                color: context.colorTheme.neutral.shade10,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    const Gap(40),
-                    BlocSelector<PaywallCubit, PaywallState, String?>(
-                      selector: (state) => state.selectedPlanId,
-                      builder: (context, selectedPlanId) => Column(
-                        children: List.generate(
-                          widget.plans.length * 2 - 1,
-                          (index) {
-                            if (index.isOdd) return const Gap(12);
-
-                            final plan = widget.plans[index ~/ 2];
-
-                            return PaywallPlanWidget(
-                              onTap: (plan) => context.read<PaywallCubit>().selectPlan(plan.id),
-                              isSelected: selectedPlanId == plan.id,
-                              plan: plan,
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    const Gap(24),
-                    Column(
-                      children: [
-                        GestureDetector(
-                          behavior: HitTestBehavior.translucent,
-                          onTap: () => showModalBottomSheet<void>(
-                            context: context,
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            builder: (context) => const PromoCodeBuilder(),
-                          ),
-                          child: Center(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border(bottom: BorderSide(color: context.colorTheme.vermilion.primary.shade40)),
-                              ),
-                              child: Text(
-                                'Enter Promo Code'.tr(context),
-                                style: context.textStyleTheme.b14SemiBold.copyWith(
-                                  color: context.colorTheme.vermilion.primary.shade40,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Gap(32),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 13),
-                      child: Text(
-                        'Your subscription renews automatically and can be canceled anytime.'
-                            .tr(context)
-                            .applyWordBreak(),
-                        style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    const Gap(183),
-                  ],
-                ),
-                Positioned.fill(
-                  top: null,
-                  child: Container(
+                Expanded(
+                  child: ListView(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
-                    color: const Color(0xFFF8F8F7),
-                    child: Column(
-                      children: [
-                        const Gap(16),
-                        BlocSelector<PaywallCubit, PaywallState, bool>(
-                          selector: (state) => !state.isValid,
-                          builder: (context, isNotValid) => PrimaryButton.filled(
-                            onPressed: isNotValid
-                                ? null
-                                : () => context.read<PaymentBloc>().add(
-                                      PaymentPurchasePlan(planId: context.read<PaywallCubit>().state.selectedPlanId!),
-                                    ),
-                            backgroundColor: context.colorTheme.vermilion.primary.shade50,
-                            borderRadius: 400,
-                            shape: BoxShape.rectangle,
-                            text: 'Next'.tr(context),
-                            textColor: context.colorTheme.neutral.shade0,
-                            size: const Size.fromHeight(56),
-                          ),
+                    children: [
+                      _buildHeader(context),
+                      Gap(this is _FreeUserPaywallView ? 40 : 24),
+                      BlocSelector<PaywallCubit, PaywallState, String?>(
+                        selector: (state) => state.selectedPlanId,
+                        builder: (context, selectedPlanId) => _buildPlans(context, selectedPlanId: selectedPlanId),
+                      ),
+                      const Gap(24),
+                      _buildPromo(context),
+                      const Gap(32),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 13),
+                        child: Text(
+                          'Your subscription renews automatically and can be canceled anytime.'
+                              .tr(context)
+                              .applyWordBreak(),
+                          style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
+                          textAlign: TextAlign.center,
                         ),
-                        const Gap(24),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              behavior: HitTestBehavior.translucent,
-                              onTap: () => const TermsRoute().push<void>(context),
-                              child: Text(
-                                'Terms of Use'.tr(context),
-                                style: context.textStyleTheme.b14SemiBold.copyWith(
-                                  color: context.colorTheme.neutral.shade6,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                            ),
-                            const Gap(40),
-                            GestureDetector(
-                              behavior: HitTestBehavior.translucent,
-                              onTap: () => const PrivacyRoute().push<void>(context),
-                              child: Text(
-                                'Privacy Policy'.tr(context),
-                                style: context.textStyleTheme.b14SemiBold.copyWith(
-                                  color: context.colorTheme.neutral.shade6,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const Gap(36),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-                Positioned.fill(
-                  bottom: null,
-                  child: ModalAppBar(
-                    title: '',
-                    backgroundColor: Colors.transparent,
-                    backButton: false,
-                  ),
-                ),
+                _buildFooter(context),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildHeader(BuildContext context);
+
+  Widget _buildPlans(BuildContext context, {required String? selectedPlanId});
+
+  Widget _buildPromo(BuildContext context) {
+    return Column(
+      children: [
+        GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () => showModalBottomSheet<void>(
+            context: context,
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+            builder: (context) => const PromoCodeBuilder(),
+          ),
+          child: Center(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: context.colorTheme.vermilion.primary.shade40)),
+              ),
+              child: Text(
+                'Enter Promo Code'.tr(context),
+                style: context.textStyleTheme.b14SemiBold.copyWith(
+                  color: context.colorTheme.vermilion.primary.shade40,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFooter(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      color: const Color(0xFFF8F8F7),
+      child: Column(
+        children: [
+          const Gap(16),
+          BlocSelector<PaywallCubit, PaywallState, bool>(
+            selector: (state) => !state.isValid,
+            builder: (context, isNotValid) => PrimaryButton.filled(
+              onPressed: isNotValid ? null : () => _purchase(context),
+              backgroundColor:
+                  isNotValid ? context.colorTheme.neutral.shade6 : context.colorTheme.vermilion.primary.shade50,
+              borderRadius: 400,
+              shape: BoxShape.rectangle,
+              text: 'Next'.tr(context),
+              textColor: context.colorTheme.neutral.shade0,
+              size: const Size.fromHeight(56),
+            ),
+          ),
+          const Gap(24),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () => const TermsRoute().push<void>(context),
+                child: Text(
+                  'Terms of Use'.tr(context),
+                  style: context.textStyleTheme.b14SemiBold.copyWith(
+                    color: context.colorTheme.neutral.shade6,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+              const Gap(40),
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () => const PrivacyRoute().push<void>(context),
+                child: Text(
+                  'Privacy Policy'.tr(context),
+                  style: context.textStyleTheme.b14SemiBold.copyWith(
+                    color: context.colorTheme.neutral.shade6,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const Gap(36),
+        ],
+      ),
+    );
+  }
+}
+
+class _FreeUserPaywallView extends PaywallView {
+  const _FreeUserPaywallView({
+    required super.plans,
+  }) : super._(membership: null);
+
+  @override
+  Widget _buildHeader(BuildContext context) {
+    return Column(
+      children: [
+        Assets.icon.icPaymentDiamond.svg(
+          width: 80,
+          height: 80,
+        ),
+        const Gap(16),
+        Text(
+          'Get Unlimited Access!'.tr(context),
+          style: context.textStyleTheme.b24BoldOutfit.copyWith(
+            color: context.colorTheme.neutral.shade10,
+          ),
+        ),
+        const Gap(8),
+        Builder(
+          builder: (context) {
+            final texts = [
+              'Automatic voiding volume measurement'.tr(context),
+              'PDF export reports'.tr(context),
+            ];
+            final textStyle = context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade10);
+
+            final textWidth =
+                texts.map((text) => TextSizeUtil.getSize(text: text, textStyle: textStyle).width).reduce(max);
+
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  for (final text in texts)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Assets.icon.icPaymentCheck.svg(),
+                        const Gap(8),
+                        Flexible(
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(minWidth: textWidth),
+                            child: Text(
+                              text,
+                              style: context.textStyleTheme.b14Medium.copyWith(
+                                color: context.colorTheme.neutral.shade10,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                ],
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget _buildPlans(BuildContext context, {required String? selectedPlanId}) {
+    return Column(
+      children: [
+        if (plans.threeDaysPass != null) ...[
+          PaywallPlanWidget(
+            onTap: (plan) => context.read<PaywallCubit>().selectPlan(plan.product.id),
+            isSelected: selectedPlanId == plans.threeDaysPass!.product.id,
+            plan: plans.threeDaysPass!,
+          ),
+          const Gap(24),
+        ],
+        ...List.generate(
+          plans.withoutThreeDaysPass.length * 2 - 1,
+          (index) {
+            if (index.isOdd) return const Gap(12);
+
+            final plan = plans.withoutThreeDaysPass[index ~/ 2];
+
+            return PaywallPlanWidget(
+              onTap: (plan) => context.read<PaywallCubit>().selectPlan(plan.product.id),
+              isSelected: selectedPlanId == plan.product.id,
+              plan: plan,
+            );
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class _SubscriberPaywallView extends PaywallView {
+  const _SubscriberPaywallView({
+    required Membership super.membership,
+    required super.plans,
+  }) : super._();
+
+  @override
+  Membership get membership => super.membership!;
+
+  @override
+  Widget _buildHeader(BuildContext context) {
+    return Assets.icon.icPaymentDiamond.svg(width: 80, height: 80);
+  }
+
+  @override
+  Widget _buildPlans(BuildContext context, {required String? selectedPlanId}) {
+    return Column(
+      children: [
+        PaywallPlanWidget(
+          onTap: (_) {},
+          isSelected: false,
+          plan: plans.firstWhereByProduct(membership.product)!,
+        ),
+      ],
     );
   }
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bladderly/domain/exception/purchase_failure_exception.dart';
 import 'package:bladderly/domain/repository/payment_repository.dart';
+import 'package:bladderly/domain/repository/user_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:injectable/injectable.dart';
@@ -12,11 +13,14 @@ class InitializePurchaseHandlerUsecase {
   InitializePurchaseHandlerUsecase({
     required InAppPurchase appPurchase,
     required PaymentRepository paymentRepository,
+    required UserRepository userRepository,
   })  : _inAppPurchase = appPurchase,
-        _paymentRepository = paymentRepository;
+        _paymentRepository = paymentRepository,
+        _userRepository = userRepository;
 
   final InAppPurchase _inAppPurchase;
   final PaymentRepository _paymentRepository;
+  final UserRepository _userRepository;
   final _purchaseStatusSubject = BehaviorSubject<PurchaseStatus?>();
 
   StreamSubscription<List<PurchaseDetails>>? _subscription;
@@ -73,6 +77,13 @@ class InitializePurchaseHandlerUsecase {
       receipt: purchaseDetails.verificationData.serverVerificationData,
     );
 
+    final membership = await _userRepository.getMembershipFromServer(userId: userId);
+    final localUserId = _userRepository.getLocalUserIdByUserId(userId);
+
+    if (membership != null && localUserId != null) {
+      _userRepository.saveMembership(localUserId: localUserId, membership: membership);
+    }
+
     _purchaseStatusSubject.add(purchaseDetails.status);
 
     if (purchaseDetails.pendingCompletePurchase) {
@@ -90,6 +101,13 @@ class InitializePurchaseHandlerUsecase {
       purchaseToken: purchaseDetails.verificationData.serverVerificationData,
       receipt: purchaseDetails.productID,
     );
+
+    final membership = await _userRepository.getMembershipFromServer(userId: userId);
+    final localUserId = _userRepository.getLocalUserIdByUserId(userId);
+
+    if (membership != null && localUserId != null) {
+      _userRepository.saveMembership(localUserId: localUserId, membership: membership);
+    }
 
     _purchaseStatusSubject.add(purchaseDetails.status);
 

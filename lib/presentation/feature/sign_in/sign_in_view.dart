@@ -1,11 +1,10 @@
 // Flutter imports:
 
-// Project imports:
 import 'package:bladderly/domain/exception/invalid_user_exception.dart';
 import 'package:bladderly/domain/exception/not_found_user_exception.dart';
 // Flutter imports:
 import 'package:bladderly/domain/exception/password_attempts_exceeded_exception.dart';
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
 import 'package:bladderly/presentation/common/widget/password_input_field.dart';
@@ -33,6 +32,24 @@ class SignInView extends StatelessWidget {
     context.read<SignInBloc>().add(SignInEmail(email: state.email, password: state.password));
   }
 
+  Future<void> _onEmailFailure(BuildContext context, SignInEmailFailure state) {
+    context.pop();
+
+    return switch (state.exception) {
+      NotFoundUserException() => CommonErrorModal.showFromDominException<void>(
+          context,
+          onTap: context.pop,
+          exception: const InvalidUserException(),
+        ),
+      final InvalidUserException exception => CommonErrorModal.showFromDominException<void>(
+          context,
+          onTap: context.pop,
+          exception: exception,
+        ),
+      _ => Future.value(),
+    };
+  }
+
   void _onSocialFailure(BuildContext context, SignInSocialFailure state) {
     context.pop();
 
@@ -41,9 +58,6 @@ class SignInView extends StatelessWidget {
         NotFoundUserException() =>
           SignUpSocialRoute($extra: SignUpSocialRouteExtra(email: email, signUpMethod: state.signUpMethod.name))
               .go(context),
-
-        // TODO(eden): 이미 가입된 이메일이고 비밀번호가 일치하지 않는 경우 처리 필요
-        InvalidUserException() => null,
         final PasswordAttemptsExceededException exception => CommonErrorModal.showFromDominException<void>(
             context,
             onTap: context.pop,
@@ -59,7 +73,7 @@ class SignInView extends StatelessWidget {
     return BlocListener<SignInBloc, SignInState>(
       listener: (context, state) => switch (state) {
         SignInInProgress() => ProgressIndicatorModal.show(context),
-        SignInEmailFailure() => context.pop(),
+        SignInEmailFailure() => _onEmailFailure(context, state),
         SignInEmailSuccess() => const MainRoute().go(context),
         SignInSocialSuccess() => const MainRoute().go(context),
         SignInSocialFailure() => _onSocialFailure(context, state),

@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:bladderly/data/api/client/api_client.dart';
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 import 'package:bladderly/data/isar/isar_client.dart';
+import 'package:bladderly/data/mapper/membership_mapper.dart';
 import 'package:bladderly/data/mapper/user_mapper.dart';
 import 'package:bladderly/domain/exception/not_found_user_exception.dart';
 import 'package:bladderly/domain/model/membership.dart';
@@ -10,7 +13,7 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: UserRepository)
 class UserRepositoryImpl implements UserRepository {
-  const UserRepositoryImpl({
+  UserRepositoryImpl({
     required ApiClient apiClient,
     required IsarClient isarClient,
   })  : _apiClient = apiClient,
@@ -20,7 +23,11 @@ class UserRepositoryImpl implements UserRepository {
   final IsarClient _isarClient;
 
   @override
-  Future<String> changeName({required String userId, required String userName, String? userEmail}) async {
+  Future<String> changeName({
+    required String userId,
+    required String userName,
+    String? userEmail,
+  }) async {
     final request = UpdateUserInfoRequest(
       id: userId,
       email: userEmail,
@@ -50,15 +57,27 @@ class UserRepositoryImpl implements UserRepository {
       _isarClient.userStream.map((entity) => entity == null ? null : UserMapper.fromUserEntity(entity));
 
   @override
-  Future<Membership?> getMembership(String userId) {
-    // TODO: implement getMembership
-    throw UnimplementedError();
+  Future<Membership?> getMembershipFromServer({
+    required String userId,
+  }) async {
+    final response = await _apiClient
+        .getPayInfo(userId: userId, device: Platform.isAndroid ? 'android' : 'ios')
+        .then((response) => response.body!);
+
+    return MembershipMapper.fromGetPayResponse(response);
   }
 
   @override
-  Membership saveMembership(Membership membership) {
-    // TODO: implement saveMembership
-    throw UnimplementedError();
+  Membership saveMembership({
+    required int localUserId,
+    required Membership membership,
+  }) {
+    final entity = MembershipMapper.toMembershipEntity(
+      localUserId: localUserId,
+      membership: membership,
+    );
+
+    return MembershipMapper.fromMembershipEntity(_isarClient.saveMembership(entity));
   }
 
   @override
@@ -76,5 +95,15 @@ class UserRepositoryImpl implements UserRepository {
     }
 
     return UserMapper.fromUserEntity(_isarClient.saveUser(userEntity));
+  }
+
+  @override
+  Stream<Membership?> getMembershipStream({required int localUserId}) => _isarClient
+      .getMembershipStreamByUserId(localUserId)
+      .map((entity) => entity == null ? null : MembershipMapper.fromMembershipEntity(entity));
+
+  @override
+  int? getLocalUserIdByUserId(String userId) {
+    return _isarClient.getUserOrNullByUserId(userId)?.id;
   }
 }

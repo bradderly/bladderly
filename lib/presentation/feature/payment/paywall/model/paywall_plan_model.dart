@@ -1,10 +1,11 @@
 import 'package:bladderly/domain/model/plan.dart';
+import 'package:bladderly/domain/model/product.dart';
 import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 
 class PaywallPlanModel extends Equatable {
   const PaywallPlanModel._({
-    required this.id,
+    required this.product,
     required this.name,
     required double price,
     required double originPrice,
@@ -15,7 +16,7 @@ class PaywallPlanModel extends Equatable {
 
   factory PaywallPlanModel.fromDomain(Plan plan) {
     return PaywallPlanModel._(
-      id: plan.id,
+      product: plan.product,
       name: plan.name,
       price: plan.price,
       originPrice: plan.originPrice,
@@ -23,7 +24,7 @@ class PaywallPlanModel extends Equatable {
     );
   }
 
-  final String id;
+  final Product product;
   final String name;
   final double _price;
   final double _originPrice;
@@ -35,10 +36,12 @@ class PaywallPlanModel extends Equatable {
 
   String get originPrice => _formatPrice(_originPrice);
 
-  String get monthlyPrice => isAnnual ? _formatPrice(_price / 12) : throw UnimplementedError();
+  String get monthlyPrice =>
+      product == Product.annualSubscription ? _formatPrice(_price / 12) : throw UnimplementedError();
 
-  // TODO(eden): 추후 서버에서 데이터 내려오는식으로 변경되면 수정 필요
-  bool get isAnnual => id.contains('annual');
+  bool get isAnnualSubscription => product == Product.annualSubscription;
+
+  bool get isThreeDaysPass => product == Product.threeDaysPass;
 
   String _formatPrice(double price) {
     final hasDecimal = '$price'.contains('.');
@@ -50,7 +53,7 @@ class PaywallPlanModel extends Equatable {
 
   @override
   List<Object> get props => [
-        id,
+        product,
         name,
         price,
         originPrice,

@@ -1,7 +1,8 @@
 // Flutter imports:
 // Project imports:
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/cubit/main_tab_cubit.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/common_keyboard_actions.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
@@ -62,7 +63,7 @@ class _IntakeInputViewState extends State<IntakeInputView> {
     if (widget.isEditing) {
       return context.pop();
     } else {
-      return const MainRoute(tab: MainRouteTab.diary).go(context);
+      return const MainRoute().go(context..read<MainTabCubit>().showDiary());
     }
   }
 
@@ -91,7 +92,7 @@ class _IntakeInputViewState extends State<IntakeInputView> {
           ),
           actions: [
             GestureDetector(
-              onTap: Navigator.of(context).pop,
+              onTap: context.pop,
               child: Assets.icon.icExportClose.svg(
                 colorFilter: ColorFilter.mode(
                   context.colorTheme.neutral.shade8,

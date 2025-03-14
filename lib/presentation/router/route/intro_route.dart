@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:bladderly/presentation/feature/forgot_password/forgot_password_builder.dart';
 // Project imports:
 import 'package:bladderly/presentation/feature/intro/intro_view.dart';
-import 'package:bladderly/presentation/feature/sign_in/sing_in_builder.dart';
+import 'package:bladderly/presentation/feature/sign_in/sign_in_builder.dart';
 import 'package:bladderly/presentation/feature/sign_up/guest/sign_up_guest_builder.dart';
 import 'package:bladderly/presentation/feature/sign_up/social/sign_up_social_builder.dart';
 // Package imports:
@@ -50,7 +50,7 @@ class SignInRoute extends GoRouteData {
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) => CupertinoPage<void>(
         key: state.pageKey,
-        child: const SinginBuilder(),
+        child: const SigninBuilder(),
       );
 }
 

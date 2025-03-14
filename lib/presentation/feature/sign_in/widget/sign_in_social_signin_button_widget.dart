@@ -1,14 +1,12 @@
 // Flutter imports:
+// Project imports:
+import 'package:bladderly/domain/model/sign_up_method.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
+import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:gap/gap.dart';
 import 'package:nil/nil.dart';
-
-// Project imports:
-import 'package:bladderly/domain/model/sign_up_method.dart';
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
-import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 
 class SignInSocialSigninButtonWidget extends StatelessWidget {
   const SignInSocialSigninButtonWidget({

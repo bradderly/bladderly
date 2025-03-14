@@ -1,7 +1,7 @@
 // Flutter imports:
 
 // Project imports:
-import 'package:bladderly/presentation/common/extension/app_theme_extension.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
 // Flutter imports:
 import 'package:flutter/widgets.dart';
