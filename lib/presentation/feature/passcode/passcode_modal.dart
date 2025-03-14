@@ -41,145 +41,131 @@ class PasscodeModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DraggableScrollableSheet(
-      initialChildSize: 0.95,
-      maxChildSize: 0.95,
-      minChildSize: 0.95,
-      builder: (_, controller) {
-        return BlocBuilder<PasscodeCubit, PasscodeState>(
-          // BlocBuilder로 상태 변경 감지
-          builder: (context, state) {
-            return Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16),
-                ),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
-              child: Column(
-                children: [
-                  ModalTitle(title: 'Set Up Passcode'.tr(context)),
-                  const SizedBox(height: 38),
-                  Expanded(
-                    child: ListView(
-                      controller: controller,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 24, right: 24),
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                  color: context.colorTheme.neutral.shade2,
-                                  borderRadius: BorderRadius.circular(50),
+    return BlocBuilder<PasscodeCubit, PasscodeState>(
+      // BlocBuilder로 상태 변경 감지
+      builder: (context, state) {
+        return Container(
+          color: Colors.white,
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
+          child: Column(
+            children: [
+              ModalTitle(title: 'Set Up Passcode'.tr(context)),
+              const SizedBox(height: 38),
+              Expanded(
+                child: ListView(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 24, right: 24),
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: context.colorTheme.neutral.shade2,
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Lock with Face ID & Passcode'.tr(context),
+                                  style: context.textStyleTheme.b16Medium.copyWith(
+                                    color: context.colorTheme.neutral.shade10,
+                                  ),
                                 ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Lock with Face ID & Passcode'.tr(context),
-                                      style: context.textStyleTheme.b16Medium.copyWith(
-                                        color: context.colorTheme.neutral.shade10,
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      behavior: HitTestBehavior.translucent,
-                                      onTap: () => context.read<PasscodeCubit>().state.isLocked
-                                          ? context.read<PasscodeCubit>().unlock()
-                                          : _authenticate(context),
-                                      child: Container(
-                                        width: 51,
-                                        height: 31,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(20),
-                                          color: context.read<PasscodeCubit>().state.isLocked
-                                              ? context.colorTheme.vermilion.primary.shade50
-                                              : const Color(0x29787880),
-                                          boxShadow: const [
-                                            BoxShadow(
-                                              color: Colors.black12,
-                                              blurRadius: 5,
-                                              offset: Offset(2, 2),
-                                            ),
-                                          ],
+                                GestureDetector(
+                                  behavior: HitTestBehavior.translucent,
+                                  onTap: () => context.read<PasscodeCubit>().state.isLocked
+                                      ? context.read<PasscodeCubit>().unlock()
+                                      : _authenticate(context),
+                                  child: Container(
+                                    width: 51,
+                                    height: 31,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: context.read<PasscodeCubit>().state.isLocked
+                                          ? context.colorTheme.vermilion.primary.shade50
+                                          : const Color(0x29787880),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: Colors.black12,
+                                          blurRadius: 5,
+                                          offset: Offset(2, 2),
                                         ),
-                                        child: Stack(
-                                          children: [
-                                            // 흰색 또는 주황색 동그라미
-                                            Positioned(
-                                              left: context.read<PasscodeCubit>().state.isLocked
-                                                  ? 20.0
-                                                  : 0.0, // 오른쪽이면 20.0, 아니면 0.0
-                                              right: context.read<PasscodeCubit>().state.isLocked
-                                                  ? 0.0
-                                                  : 20.0, // 왼쪽이면 20.0, 아니면 0.0
-                                              top: 3,
-                                              bottom: 3,
-                                              child: AnimatedContainer(
-                                                duration: const Duration(milliseconds: 300),
-                                                width: 30,
-                                                height: 30,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: context.read<PasscodeCubit>().state.isLocked
-                                                      ? Colors.white // Biometric가 활성화되었으면 주황색
-                                                      : Colors.white, // 그렇지 않으면 흰색
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                                      ],
                                     ),
-                                  ],
+                                    child: Stack(
+                                      children: [
+                                        // 흰색 또는 주황색 동그라미
+                                        Positioned(
+                                          left: context.read<PasscodeCubit>().state.isLocked
+                                              ? 20.0
+                                              : 0.0, // 오른쪽이면 20.0, 아니면 0.0
+                                          right: context.read<PasscodeCubit>().state.isLocked
+                                              ? 0.0
+                                              : 20.0, // 왼쪽이면 20.0, 아니면 0.0
+                                          top: 3,
+                                          bottom: 3,
+                                          child: AnimatedContainer(
+                                            duration: const Duration(milliseconds: 300),
+                                            width: 30,
+                                            height: 30,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: context.read<PasscodeCubit>().state.isLocked
+                                                  ? Colors.white // Biometric가 활성화되었으면 주황색
+                                                  : Colors.white, // 그렇지 않으면 흰색
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 36),
-                              Text(
-                                'Passcode Message'.tr(context),
-                                style: context.textStyleTheme.b14Medium.copyWith(
-                                  color: context.colorTheme.neutral.shade6,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  BlocSelector<PasscodeCubit, PasscodeState, bool>(
-                    selector: (state) => state.isLocked,
-                    builder: (context, isLocked) {
-                      return GestureDetector(
-                        behavior: HitTestBehavior.translucent,
-                        onTap: isLocked ? () => _setPasscode(context) : null,
-                        child: Container(
-                          alignment: Alignment.center,
-                          margin: const EdgeInsets.symmetric(horizontal: 67),
-                          padding: const EdgeInsets.symmetric(vertical: 14.5),
-                          decoration: BoxDecoration(
-                            color: context.read<PasscodeCubit>().state.isLocked
-                                ? context.colorTheme.vermilion.primary.shade50
-                                : context.colorTheme.neutral.shade6,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            'Change passcode'.tr(context),
-                            style: context.textStyleTheme.b16SemiBold.copyWith(
-                              color: context.colorTheme.neutral.shade0,
+                              ],
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+                          const SizedBox(height: 36),
+                          Text(
+                            'Passcode Message'.tr(context),
+                            style: context.textStyleTheme.b14Medium.copyWith(
+                              color: context.colorTheme.neutral.shade6,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            );
-          },
+              BlocSelector<PasscodeCubit, PasscodeState, bool>(
+                selector: (state) => state.isLocked,
+                builder: (context, isLocked) {
+                  return GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: isLocked ? () => _setPasscode(context) : null,
+                    child: Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.symmetric(horizontal: 67),
+                      padding: const EdgeInsets.symmetric(vertical: 14.5),
+                      decoration: BoxDecoration(
+                        color: context.read<PasscodeCubit>().state.isLocked
+                            ? context.colorTheme.vermilion.primary.shade50
+                            : context.colorTheme.neutral.shade6,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        'Change passcode'.tr(context),
+                        style: context.textStyleTheme.b16SemiBold.copyWith(
+                          color: context.colorTheme.neutral.shade0,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         );
       },
     );

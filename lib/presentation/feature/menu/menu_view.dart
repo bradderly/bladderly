@@ -8,13 +8,10 @@ import 'package:bladderly/presentation/common/cubit/unit_cubit.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
-import 'package:bladderly/presentation/feature/about/about_modal.dart';
 import 'package:bladderly/presentation/feature/menu/contact_us/contact_us_builder.dart';
 import 'package:bladderly/presentation/feature/menu/faq/faq_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/language/language_view_modal.dart';
-import 'package:bladderly/presentation/feature/menu/profile/profile_builder.dart';
 import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
-import 'package:bladderly/presentation/feature/payment/plan/plan_builder.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -63,10 +60,7 @@ class MenuView extends StatelessWidget {
                       SettingsItem(
                         icon: Icons.person_outline,
                         title: 'User Profile'.tr(context),
-                        onTap: () => ModalHelper.showModal<void>(
-                          context: context,
-                          modalBuilder: (_) => const ProfileBuilder(),
-                        ),
+                        onTap: () => const ProfileRoute().go(context),
                       ),
                     ],
                   ),
@@ -76,10 +70,7 @@ class MenuView extends StatelessWidget {
                       SettingsItem(
                         icon: Icons.credit_card,
                         title: 'Premium Plan'.tr(context),
-                        onTap: () => ModalHelper.showModal<void>(
-                          context: context,
-                          modalBuilder: (_) => const PlanBuilder(),
-                        ),
+                        onTap: () => const PlanRoute().go(context),
                       ),
                       SettingsItem(
                         onTap: () {},
@@ -127,10 +118,7 @@ class MenuView extends StatelessWidget {
                       SettingsItem(
                         icon: Icons.info_outline,
                         title: 'About'.tr(context),
-                        onTap: () => ModalHelper.showModal<void>(
-                          context: context,
-                          modalBuilder: (_) => const AboutModal(),
-                        ),
+                        onTap: () => const AboutRoute().go(context),
                       ),
                       BlocBuilder<AppConfigBloc, AppConfigState>(
                         builder: (context, state) => Container(

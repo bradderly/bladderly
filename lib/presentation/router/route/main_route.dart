@@ -7,6 +7,7 @@ import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/plan.dart';
 import 'package:bladderly/domain/model/score.dart';
 import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
+import 'package:bladderly/presentation/feature/about/about_view.dart';
 import 'package:bladderly/presentation/feature/about/privacy/privacy_view.dart';
 import 'package:bladderly/presentation/feature/about/terms/terms_view.dart';
 import 'package:bladderly/presentation/feature/diary/detailed_list/detailed_list_builder.dart';
@@ -18,7 +19,16 @@ import 'package:bladderly/presentation/feature/input/sound_input_recording/sound
 import 'package:bladderly/presentation/feature/main/main_builder.dart';
 import 'package:bladderly/presentation/feature/menu/faq/faq_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/menu_builder.dart';
+import 'package:bladderly/presentation/feature/menu/profile/change_password/change_password_builder.dart';
+import 'package:bladderly/presentation/feature/menu/profile/delete_account/delete_account_builder.dart';
+import 'package:bladderly/presentation/feature/menu/profile/profile_modal.dart';
+import 'package:bladderly/presentation/feature/menu/profile/profile_view.dart';
+import 'package:bladderly/presentation/feature/passcode/passcode_builder.dart';
+import 'package:bladderly/presentation/feature/payment/payment_view.dart';
 import 'package:bladderly/presentation/feature/payment/paywall/paywall_builder.dart';
+import 'package:bladderly/presentation/feature/payment/plan/plan_builder.dart';
+import 'package:bladderly/presentation/feature/payment/plan_cancel/plan_cancel_builder.dart';
+import 'package:bladderly/presentation/feature/payment/promo_code/promo_code_builder.dart';
 import 'package:bladderly/presentation/feature/sign_up/regular/sign_up_regular_builder.dart';
 import 'package:bladderly/presentation/feature/symptom/model/symptom_survey_model.dart';
 import 'package:bladderly/presentation/feature/symptom/result/symptom_result_view.dart';
@@ -60,8 +70,20 @@ enum MainRouteTab {
       name: 'menu',
       routes: [
         TypedGoRoute<SignUpRegularRoute>(path: 'sign-up', name: 'sign-up-regular'),
-        TypedGoRoute<TermsRoute>(path: 'terms', name: 'terms'),
-        TypedGoRoute<PrivacyRoute>(path: 'privacy', name: 'privacy'),
+        TypedGoRoute<AboutRoute>(
+          path: 'about',
+          name: 'about',
+          routes: [
+            TypedGoRoute<TermsRoute>(
+              path: 'terms',
+              name: 'terms',
+            ),
+            TypedGoRoute<PrivacyRoute>(
+              path: 'privacy',
+              name: 'privacy',
+            ),
+          ],
+        ),
         TypedGoRoute<FaqRoute>(path: 'faq', name: 'faq'),
         TypedGoRoute<PaywallRoute>(
           name: 'paywall',
@@ -80,6 +102,46 @@ enum MainRouteTab {
                 TypedGoRoute<SymptomResultRoute>(
                   path: 'symptom-result',
                   name: 'symptom-result',
+                ),
+              ],
+            ),
+          ],
+        ),
+        TypedShellRoute<PaymentShellRouteData>(
+          routes: [
+            TypedGoRoute<PlanRoute>(
+              path: 'plan',
+              name: 'plan',
+              routes: [
+                TypedGoRoute<PlanCancelRoute>(
+                  path: 'plan-cancel',
+                  name: 'plan-cancel',
+                ),
+                TypedGoRoute<PromoCodeRoute>(
+                  path: 'promo-code',
+                  name: 'promo-code',
+                ),
+              ],
+            ),
+          ],
+        ),
+        TypedShellRoute<ProfileShellRouteData>(
+          routes: [
+            TypedGoRoute<ProfileRoute>(
+              path: 'profile',
+              name: 'profile',
+              routes: [
+                TypedGoRoute<ChangePasswordRoute>(
+                  path: 'change-password',
+                  name: 'change-password',
+                ),
+                TypedGoRoute<PasscodeRoute>(
+                  path: 'passcode',
+                  name: 'passcode',
+                ),
+                TypedGoRoute<DeleteAccountRoute>(
+                  path: 'delete-account',
+                  name: 'delete-account',
                 ),
               ],
             ),
@@ -368,6 +430,7 @@ class TermsRoute extends GoRouteData {
   Page<void> buildPage(BuildContext context, GoRouterState state) {
     return CupertinoPage<void>(
       key: state.pageKey,
+      fullscreenDialog: true,
       child: const TermsView(),
     );
   }
@@ -380,6 +443,7 @@ class PrivacyRoute extends GoRouteData {
   Page<void> buildPage(BuildContext context, GoRouterState state) {
     return CupertinoPage<void>(
       key: state.pageKey,
+      fullscreenDialog: true,
       child: const PrivacyView(),
     );
   }
@@ -452,6 +516,18 @@ class SymptomResultRouteExtra extends Equatable {
       ];
 }
 
+class AboutRoute extends GoRouteData {
+  const AboutRoute();
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return ModalBottomSheetPage(
+      key: state.pageKey,
+      child: const AboutView(),
+    );
+  }
+}
+
 class SymptomResultRoute extends GoRouteData {
   const SymptomResultRoute({
     required this.$extra,
@@ -478,6 +554,113 @@ class SymptomShellRouteData extends ShellRouteData {
     return ModalBottomSheetPage(
       key: state.pageKey,
       child: SymptomView(
+        navigator: navigator,
+      ),
+    );
+  }
+}
+
+class PlanRoute extends GoRouteData {
+  const PlanRoute();
+
+  static final $parentNavigatorKey = PaymentShellRouteData.$navigatorKey;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const PlanBuilder();
+  }
+}
+
+class PlanCancelRoute extends GoRouteData {
+  const PlanCancelRoute();
+
+  static final $parentNavigatorKey = PaymentShellRouteData.$navigatorKey;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const PlanCancelBuilder();
+  }
+}
+
+class PromoCodeRoute extends GoRouteData {
+  const PromoCodeRoute();
+
+  static final $parentNavigatorKey = PaymentShellRouteData.$navigatorKey;
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: const PromoCodeBuilder(),
+    );
+  }
+}
+
+class PaymentShellRouteData extends ShellRouteData {
+  static final $navigatorKey = GlobalKey<NavigatorState>();
+
+  @override
+  Page<void> pageBuilder(BuildContext context, GoRouterState state, Widget navigator) {
+    return ModalBottomSheetPage(
+      key: state.pageKey,
+      child: PaymentView(
+        navigator: navigator,
+      ),
+    );
+  }
+}
+
+class ChangePasswordRoute extends GoRouteData {
+  const ChangePasswordRoute();
+
+  static final $parentNavigatorKey = ProfileShellRouteData.$navigatorKey;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const ChangePasswordBuilder();
+  }
+}
+
+class PasscodeRoute extends GoRouteData {
+  const PasscodeRoute();
+
+  static final $parentNavigatorKey = ProfileShellRouteData.$navigatorKey;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const PasscodeBuilder();
+  }
+}
+
+class DeleteAccountRoute extends GoRouteData {
+  const DeleteAccountRoute();
+
+  static final $parentNavigatorKey = ProfileShellRouteData.$navigatorKey;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const DeleteAccountBuilder();
+  }
+}
+
+class ProfileRoute extends GoRouteData {
+  const ProfileRoute();
+
+  static final $parentNavigatorKey = ProfileShellRouteData.$navigatorKey;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const ProfileModal();
+  }
+}
+
+class ProfileShellRouteData extends ShellRouteData {
+  static final $navigatorKey = GlobalKey<NavigatorState>();
+
+  @override
+  Page<void> pageBuilder(BuildContext context, GoRouterState state, Widget navigator) {
+    return ModalBottomSheetPage(
+      key: state.pageKey,
+      child: ProfileView(
         navigator: navigator,
       ),
     );

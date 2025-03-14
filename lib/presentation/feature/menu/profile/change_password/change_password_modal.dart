@@ -45,225 +45,205 @@ class ChangePasswordModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DraggableScrollableSheet(
-      initialChildSize: 0.95,
-      maxChildSize: 0.95,
-      minChildSize: 0.95,
-      builder: (_, controller) {
-        return BlocListener<ChangePasswordBloc, ChangePasswordState>(
-          listener: (context, state) => switch (state) {
-            ChangePasswordInitial() => ProgressIndicatorModal.show(context),
-            ChangePasswordSuccess() => {
-                Navigator.of(context).pop(),
-              },
-            ChangePasswordFailure() => {},
-            _ => null,
+    return BlocListener<ChangePasswordBloc, ChangePasswordState>(
+      listener: (context, state) => switch (state) {
+        ChangePasswordInitial() => ProgressIndicatorModal.show(context),
+        ChangePasswordSuccess() => {
+            Navigator.of(context).pop(),
           },
-          child: Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
+        ChangePasswordFailure() => {},
+        _ => null,
+      },
+      child: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
+        child: Column(
+          children: [
+            ModalTitle(title: 'Change Password'.tr(context)),
+            Expanded(
+              child: ListView(
+                children: [
+                  const SizedBox(height: 41),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: BlocSelector<ChangePasswordFormCubit, ChangePasswordFormState, bool>(
+                      selector: (state) => state.obscureOldPassword,
+                      builder: (_, obscureOldPassword) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Old Password'.tr(context),
+                            style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
+                          ),
+                          const SizedBox(height: 16),
+                          TextField(
+                            onChanged: (value) => context.read<ChangePasswordFormCubit>().setOldPassword(value),
+                            obscureText: obscureOldPassword,
+                            obscuringCharacter: '*', // 별표로 대체
+                            style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade10),
+                            decoration: InputDecoration(
+                              hintText: 'Type old password'.tr(context),
+                              hintStyle:
+                                  context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade6),
+                              filled: true,
+                              fillColor: context.colorTheme.neutral.shade2,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none,
+                              ),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  obscureOldPassword ? Icons.visibility : Icons.visibility_off,
+                                  color: context.colorTheme.neutral.shade6,
+                                ),
+                                onPressed: context.read<ChangePasswordFormCubit>().toggleOldPasswordVisibility,
+                              ),
+                            ),
+                          ),
+                          errorText(
+                            'Your password must be at least 8 characters long.'.tr(context),
+                            context,
+                            _validateOldPassword(context.watch<ChangePasswordFormCubit>().state.oldPassword) &&
+                                context.read<ChangePasswordFormCubit>().state.isValid,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: BlocSelector<ChangePasswordFormCubit, ChangePasswordFormState, bool>(
+                      selector: (state) => state.obscureNewPassword,
+                      builder: (_, obscureNewPassword) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'New Password'.tr(context),
+                            style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
+                          ),
+                          const SizedBox(height: 16),
+                          TextField(
+                            onChanged: (value) => context.read<ChangePasswordFormCubit>().setNewPassword(value),
+                            obscureText: obscureNewPassword,
+                            obscuringCharacter: '*', // 별표로 대체
+                            style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade10),
+                            decoration: InputDecoration(
+                              hintText: 'Type new password'.tr(context),
+                              hintStyle:
+                                  context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade6),
+                              filled: true,
+                              fillColor: context.colorTheme.neutral.shade2,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none,
+                              ),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  obscureNewPassword ? Icons.visibility : Icons.visibility_off,
+                                  color: context.colorTheme.neutral.shade6,
+                                ),
+                                onPressed: context.read<ChangePasswordFormCubit>().toggleNewPasswordVisibility,
+                              ),
+                            ),
+                          ),
+                          errorText(
+                            'Password must be at least 8 characters long and include a digit, uppercase letter, and special character.'
+                                .tr(context),
+                            context,
+                            _validatePassword(context.watch<ChangePasswordFormCubit>().state.newPassword) &&
+                                context.read<ChangePasswordFormCubit>().state.isValid,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: BlocSelector<ChangePasswordFormCubit, ChangePasswordFormState, bool>(
+                      selector: (state) => state.obscureConfirmPassword,
+                      builder: (_, obscureConfirmPassword) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Confirm New Password'.tr(context),
+                            style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
+                          ),
+                          const SizedBox(height: 16),
+                          TextField(
+                            onChanged: (value) => context.read<ChangePasswordFormCubit>().setConfirmPassword(value),
+                            obscureText: obscureConfirmPassword,
+                            obscuringCharacter: '*', // 별표로 대체
+                            style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade10),
+                            decoration: InputDecoration(
+                              hintText: 'Re-type new password'.tr(context),
+                              hintStyle:
+                                  context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade6),
+                              filled: true,
+                              fillColor: context.colorTheme.neutral.shade2,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none,
+                              ),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  obscureConfirmPassword ? Icons.visibility : Icons.visibility_off,
+                                  color: context.colorTheme.neutral.shade6,
+                                ),
+                                onPressed: context.read<ChangePasswordFormCubit>().toggleConfirmPasswordVisibility,
+                              ),
+                            ),
+                          ),
+                          errorText(
+                            'Passwords do not match'.tr(context),
+                            context,
+                            context.watch<ChangePasswordFormCubit>().state.newPassword !=
+                                    context.watch<ChangePasswordFormCubit>().state.confirmPassword &&
+                                context.read<ChangePasswordFormCubit>().state.isValid,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
-            child: Column(
-              children: [
-                ModalTitle(title: 'Change Password'.tr(context)),
-                Expanded(
-                  child: ListView(
-                    controller: controller,
-                    children: [
-                      const SizedBox(height: 41),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: BlocSelector<ChangePasswordFormCubit, ChangePasswordFormState, bool>(
-                          selector: (state) => state.obscureOldPassword,
-                          builder: (_, obscureOldPassword) => Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Old Password'.tr(context),
-                                style:
-                                    context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
-                              ),
-                              const SizedBox(height: 16),
-                              TextField(
-                                onChanged: (value) => context.read<ChangePasswordFormCubit>().setOldPassword(value),
-                                obscureText: obscureOldPassword,
-                                obscuringCharacter: '*', // 별표로 대체
-                                style: context.textStyleTheme.b16Medium
-                                    .copyWith(color: context.colorTheme.neutral.shade10),
-                                decoration: InputDecoration(
-                                  hintText: 'Type old password'.tr(context),
-                                  hintStyle: context.textStyleTheme.b16Medium
-                                      .copyWith(color: context.colorTheme.neutral.shade6),
-                                  filled: true,
-                                  fillColor: context.colorTheme.neutral.shade2,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  suffixIcon: IconButton(
-                                    icon: Icon(
-                                      obscureOldPassword ? Icons.visibility : Icons.visibility_off,
-                                      color: context.colorTheme.neutral.shade6,
-                                    ),
-                                    onPressed: context.read<ChangePasswordFormCubit>().toggleOldPasswordVisibility,
-                                  ),
-                                ),
-                              ),
-                              errorText(
-                                'Your password must be at least 8 characters long.'.tr(context),
-                                context,
-                                _validateOldPassword(context.watch<ChangePasswordFormCubit>().state.oldPassword) &&
-                                    context.read<ChangePasswordFormCubit>().state.isValid,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: BlocSelector<ChangePasswordFormCubit, ChangePasswordFormState, bool>(
-                          selector: (state) => state.obscureNewPassword,
-                          builder: (_, obscureNewPassword) => Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'New Password'.tr(context),
-                                style:
-                                    context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
-                              ),
-                              const SizedBox(height: 16),
-                              TextField(
-                                onChanged: (value) => context.read<ChangePasswordFormCubit>().setNewPassword(value),
-                                obscureText: obscureNewPassword,
-                                obscuringCharacter: '*', // 별표로 대체
-                                style: context.textStyleTheme.b16Medium
-                                    .copyWith(color: context.colorTheme.neutral.shade10),
-                                decoration: InputDecoration(
-                                  hintText: 'Type new password'.tr(context),
-                                  hintStyle: context.textStyleTheme.b16Medium
-                                      .copyWith(color: context.colorTheme.neutral.shade6),
-                                  filled: true,
-                                  fillColor: context.colorTheme.neutral.shade2,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  suffixIcon: IconButton(
-                                    icon: Icon(
-                                      obscureNewPassword ? Icons.visibility : Icons.visibility_off,
-                                      color: context.colorTheme.neutral.shade6,
-                                    ),
-                                    onPressed: context.read<ChangePasswordFormCubit>().toggleNewPasswordVisibility,
-                                  ),
-                                ),
-                              ),
-                              errorText(
-                                'Password must be at least 8 characters long and include a digit, uppercase letter, and special character.'
-                                    .tr(context),
-                                context,
-                                _validatePassword(context.watch<ChangePasswordFormCubit>().state.newPassword) &&
-                                    context.read<ChangePasswordFormCubit>().state.isValid,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: BlocSelector<ChangePasswordFormCubit, ChangePasswordFormState, bool>(
-                          selector: (state) => state.obscureConfirmPassword,
-                          builder: (_, obscureConfirmPassword) => Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Confirm New Password'.tr(context),
-                                style:
-                                    context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade6),
-                              ),
-                              const SizedBox(height: 16),
-                              TextField(
-                                onChanged: (value) => context.read<ChangePasswordFormCubit>().setConfirmPassword(value),
-                                obscureText: obscureConfirmPassword,
-                                obscuringCharacter: '*', // 별표로 대체
-                                style: context.textStyleTheme.b16Medium
-                                    .copyWith(color: context.colorTheme.neutral.shade10),
-                                decoration: InputDecoration(
-                                  hintText: 'Re-type new password'.tr(context),
-                                  hintStyle: context.textStyleTheme.b16Medium
-                                      .copyWith(color: context.colorTheme.neutral.shade6),
-                                  filled: true,
-                                  fillColor: context.colorTheme.neutral.shade2,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  suffixIcon: IconButton(
-                                    icon: Icon(
-                                      obscureConfirmPassword ? Icons.visibility : Icons.visibility_off,
-                                      color: context.colorTheme.neutral.shade6,
-                                    ),
-                                    onPressed: context.read<ChangePasswordFormCubit>().toggleConfirmPasswordVisibility,
-                                  ),
-                                ),
-                              ),
-                              errorText(
-                                'Passwords do not match'.tr(context),
-                                context,
-                                context.watch<ChangePasswordFormCubit>().state.newPassword !=
-                                        context.watch<ChangePasswordFormCubit>().state.confirmPassword &&
-                                    context.read<ChangePasswordFormCubit>().state.isValid,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                BlocSelector<ChangePasswordFormCubit, ChangePasswordFormState, bool>(
-                  selector: (state) => state.isValid,
-                  builder: (context, isValid) => GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: (isValid &&
+            BlocSelector<ChangePasswordFormCubit, ChangePasswordFormState, bool>(
+              selector: (state) => state.isValid,
+              builder: (context, isValid) => GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: (isValid &&
+                        context.watch<ChangePasswordFormCubit>().state.newPassword ==
+                            context.watch<ChangePasswordFormCubit>().state.confirmPassword &&
+                        !_validatePassword(context.watch<ChangePasswordFormCubit>().state.newPassword) &&
+                        !_validateOldPassword(context.watch<ChangePasswordFormCubit>().state.oldPassword))
+                    ? () => _onChangePassword(context)
+                    : null, // Save 버튼 클릭 시 검증
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: (isValid &&
                             context.watch<ChangePasswordFormCubit>().state.newPassword ==
                                 context.watch<ChangePasswordFormCubit>().state.confirmPassword &&
                             !_validatePassword(context.watch<ChangePasswordFormCubit>().state.newPassword) &&
                             !_validateOldPassword(context.watch<ChangePasswordFormCubit>().state.oldPassword))
-                        ? () => _onChangePassword(context)
-                        : null, // Save 버튼 클릭 시 검증
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
-                      decoration: BoxDecoration(
-                        color: (isValid &&
-                                context.watch<ChangePasswordFormCubit>().state.newPassword ==
-                                    context.watch<ChangePasswordFormCubit>().state.confirmPassword &&
-                                !_validatePassword(context.watch<ChangePasswordFormCubit>().state.newPassword) &&
-                                !_validateOldPassword(context.watch<ChangePasswordFormCubit>().state.oldPassword))
-                            ? context.colorTheme.vermilion.primary.shade50
-                            : context.colorTheme.neutral.shade6,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        'Save'.tr(context),
-                        style: context.textStyleTheme.b16SemiBold.copyWith(
-                          color: context.colorTheme.neutral.shade0,
-                        ),
-                      ),
+                        ? context.colorTheme.vermilion.primary.shade50
+                        : context.colorTheme.neutral.shade6,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    'Save'.tr(context),
+                    style: context.textStyleTheme.b16SemiBold.copyWith(
+                      color: context.colorTheme.neutral.shade0,
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
-        );
-      },
+          ],
+        ),
+      ),
     );
   }
 }
