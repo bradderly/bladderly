@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class ExportPaywallView extends StatelessWidget {
   const ExportPaywallView({
@@ -57,19 +58,20 @@ class ExportPaywallView extends StatelessWidget {
           backgroundColor: Colors.transparent,
           appBar: ModalAppBar(
             backgroundColor: Colors.transparent,
-            backButton: false,
             toolbarHeight: 45,
           ),
           body: SafeArea(
             child: Stack(
               children: [
                 ListView(
+                  controller: ModalScrollController.of(context),
+                  physics: const ClampingScrollPhysics(),
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   children: [
                     Assets.icon.icGuideTourExport.svg(),
                     const Gap(16),
                     Text(
-                      'Diary Export',
+                      'Diary Export'.tr(context),
                       style: context.textStyleTheme.b24Bold,
                       textAlign: TextAlign.center,
                     ),

@@ -19,19 +19,19 @@ class ExportBloc extends Bloc<ExportEvent, ExportState> {
   final ExportHistoriesUsecase _exportHistoriesUsecase;
 
   Future<void> _onExport(ExportExportHistories event, Emitter<ExportState> emit) async {
-    emit(ExportExportHistoriesInProgress(selectedDates: state.selectedDates));
+    emit(const ExportExportHistoriesInProgress());
 
     await Future<void>.delayed(const Duration(seconds: 1));
 
     final result = await _exportHistoriesUsecase(
       userId: event.userId,
       email: event.email,
-      dates: state.selectedDates,
+      dates: event.dates,
     );
 
     result.fold(
-      (exception) => emit(ExportExportHistoriesFailure(selectedDates: state.selectedDates, exception: exception)),
-      (_) => emit(ExportExportHistoriesSuccess(selectedDates: state.selectedDates)),
+      (exception) => emit(ExportExportHistoriesFailure(exception: exception)),
+      (_) => emit(const ExportExportHistoriesSuccess()),
     );
   }
 }

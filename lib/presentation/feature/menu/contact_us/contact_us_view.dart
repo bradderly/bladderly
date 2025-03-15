@@ -76,7 +76,6 @@ class _ContactUsViewState extends State<ContactUsView> {
       child: Scaffold(
         appBar: ModalAppBar(
           title: 'Contact us'.tr(context),
-          backButton: false,
         ),
         body: SafeArea(
           child: Column(

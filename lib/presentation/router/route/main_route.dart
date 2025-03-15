@@ -25,7 +25,7 @@ import 'package:bladderly/presentation/router/route/about_route.dart';
 import 'package:bladderly/presentation/router/route/export_route.dart';
 import 'package:bladderly/presentation/router/route/payment_route.dart';
 import 'package:bladderly/presentation/router/route/profile_route.dart';
-import 'package:bladderly/presentation/router/route/symtom_route.dart';
+import 'package:bladderly/presentation/router/route/symptom_route.dart';
 // Package imports:
 import 'package:equatable/equatable.dart';
 // Flutter imports:
@@ -101,6 +101,10 @@ enum MainRouteTab {
                 TypedGoRoute<SymptomResultRoute>(
                   path: 'symptom-result',
                   name: 'symptom-result',
+                ),
+                TypedGoRoute<SymptomReferenceRoute>(
+                  path: 'symptom-description',
+                  name: 'symptom-description',
                 ),
               ],
             ),

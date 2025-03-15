@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class ExportSurveyView extends StatefulWidget {
   const ExportSurveyView({super.key});
@@ -36,12 +37,17 @@ class _ExportSurveyViewState extends State<ExportSurveyView> {
         .add(ExportSurveySendReason(userId: context.read<UserBloc>().state.userModelOrThrowException.id));
   }
 
+  void _sendReasonSuccess(BuildContext context, ExportSurveySendReasonSuccess state) {
+    context.pop();
+    Navigator.of(context, rootNavigator: true).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<ExportSurveyBloc, ExportSurveyState>(
       listener: (context, state) => switch (state) {
         ExportSurveySendReasonInProgress() => ProgressIndicatorModal.show(context),
-        ExportSurveySendReasonSuccess() => Navigator.of(context, rootNavigator: true).pop(),
+        ExportSurveySendReasonSuccess() => _sendReasonSuccess(context, state),
         ExportSurveySendReasonFailure() => context.pop(),
         _ => null,
       },
@@ -49,6 +55,8 @@ class _ExportSurveyViewState extends State<ExportSurveyView> {
         fit: StackFit.expand,
         children: [
           ListView(
+            physics: const ClampingScrollPhysics(),
+            controller: ModalScrollController.of(context),
             padding: const EdgeInsets.all(24).copyWith(bottom: 140),
             children: [
               Text(

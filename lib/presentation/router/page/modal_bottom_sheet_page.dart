@@ -15,7 +15,7 @@ class ModalBottomSheetPage<T> extends Page<T> {
     this.enableDrag = true,
     this.bounce = false,
     this.animationCurve,
-    this.duration = const Duration(milliseconds: 400),
+    this.duration = const Duration(milliseconds: 300),
   });
 
   final double? closeProgressThreshold;

@@ -13,7 +13,7 @@ import 'package:bladderly/presentation/router/route/export_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:bladderly/presentation/router/route/payment_route.dart';
 import 'package:bladderly/presentation/router/route/profile_route.dart';
-import 'package:bladderly/presentation/router/route/symtom_route.dart';
+import 'package:bladderly/presentation/router/route/symptom_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // Package imports:
@@ -241,9 +241,7 @@ class MenuView extends StatelessWidget {
                           Expanded(
                             child: GestureDetector(
                               behavior: HitTestBehavior.translucent,
-                              onTap: () {
-                                context.read<UnitCubit>().change(Unit.oz);
-                              }, //toggleUnit(unit),
+                              onTap: () => context.read<UnitCubit>().change(Unit.oz),
                               child: Container(
                                 padding: const EdgeInsets.symmetric(vertical: 12),
                                 alignment: Alignment.center,

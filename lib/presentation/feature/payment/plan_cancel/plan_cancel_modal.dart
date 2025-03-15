@@ -2,7 +2,7 @@
 // Project imports:
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/feature/menu/widget/reason_option.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +31,7 @@ class _PlanCancelModalState extends State<PlanCancelModal> {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
       child: Column(
         children: [
-          ModalTitle(title: 'Cancel plan'.tr(context)),
+          ModalAppBar(title: 'Cancel plan'.tr(context)),
           const SizedBox(height: 58),
           Expanded(
             child: ListView(

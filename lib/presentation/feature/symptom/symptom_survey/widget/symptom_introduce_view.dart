@@ -2,7 +2,7 @@
 // Project imports:
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/feature/menu/widget/modal_title_back.dart';
+import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/feature/symptom/model/symptom_survey_model.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +28,7 @@ class SymptomIntroduceView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
           child: Column(
             children: [
-              ModalTitleBack(title: symptomSurveyModel.scoreType.name.tr(context)),
+              ModalAppBar(title: symptomSurveyModel.scoreType.name.tr(context)),
               const SizedBox(height: 39.5),
               Expanded(
                 child: SingleChildScrollView(

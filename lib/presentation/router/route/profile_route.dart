@@ -12,8 +12,11 @@ class ChangePasswordRoute extends GoRouteData {
   static final $parentNavigatorKey = ProfileShellRoute.$navigatorKey;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const ChangePasswordBuilder();
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: const ChangePasswordBuilder(),
+    );
   }
 }
 
@@ -23,8 +26,11 @@ class PasscodeRoute extends GoRouteData {
   static final $parentNavigatorKey = ProfileShellRoute.$navigatorKey;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const PasscodeBuilder();
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: const PasscodeBuilder(),
+    );
   }
 }
 
@@ -34,8 +40,11 @@ class DeleteAccountRoute extends GoRouteData {
   static final $parentNavigatorKey = ProfileShellRoute.$navigatorKey;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const DeleteAccountBuilder();
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: const DeleteAccountBuilder(),
+    );
   }
 }
 
@@ -45,8 +54,11 @@ class ProfileRoute extends GoRouteData {
   static final $parentNavigatorKey = ProfileShellRoute.$navigatorKey;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const ProfileBuilder();
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: const ProfileBuilder(),
+    );
   }
 }
 

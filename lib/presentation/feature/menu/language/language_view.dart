@@ -28,7 +28,6 @@ class _LanguageViewState extends State<LanguageView> {
     return Scaffold(
       appBar: ModalAppBar(
         title: 'Language'.tr(context, appLocale: appLocale),
-        backButton: false,
       ),
       body: SafeArea(
         child: Column(
@@ -38,14 +37,12 @@ class _LanguageViewState extends State<LanguageView> {
                 shrinkWrap: true,
                 controller: ModalScrollController.of(context),
                 physics: const ClampingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  final locale = AppLocale.values[0];
-                  return _buildLanguageOption(
-                    context,
-                    isSelected: appLocale == locale,
-                    appLocale: locale,
-                  );
-                },
+                itemCount: AppLocale.values.length,
+                itemBuilder: (context, index) => _buildLanguageOption(
+                  context,
+                  isSelected: appLocale == AppLocale.values[index],
+                  appLocale: AppLocale.values[index],
+                ),
               ),
             ),
             const SizedBox(height: 16),
@@ -85,20 +82,26 @@ class _LanguageViewState extends State<LanguageView> {
       children: [
         ListTile(
           onTap: () => setState(() => this.appLocale = appLocale),
-          visualDensity: const VisualDensity(vertical: -4),
           leading: isSelected
               ? Icon(Icons.check, color: context.colorTheme.vermilion.primary.shade50)
               : const SizedBox(width: 24),
-          title: Text(
-            appLocale.text,
-            style: context.textStyleTheme.b14Medium.copyWith(
-              color: context.colorTheme.neutral.shade9,
+          title: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Text(
+              appLocale.text,
+              style: context.textStyleTheme.b16Regular.copyWith(
+                color: context.colorTheme.neutral.shade10,
+              ),
             ),
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 50),
-          child: Divider(color: context.colorTheme.neutral.shade4),
+          child: Divider(
+            color: context.colorTheme.neutral.shade4,
+            height: 1,
+            thickness: 1,
+          ),
         ),
       ],
     );

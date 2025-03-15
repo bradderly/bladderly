@@ -10,7 +10,7 @@ class ModalAppBar extends AppBar {
     super.key,
     super.backgroundColor,
     String? title,
-    bool backButton = true,
+    bool backButton = false,
     Color? iconColor,
     double toolbarHeight = 92,
   }) : super(

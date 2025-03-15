@@ -15,7 +15,6 @@ class FaqView extends StatelessWidget {
     return Scaffold(
       appBar: ModalAppBar(
         title: 'FAQ'.tr(context),
-        backButton: false,
       ),
       body: SafeArea(
         child: InAppWebView(

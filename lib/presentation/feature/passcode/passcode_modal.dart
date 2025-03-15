@@ -5,10 +5,12 @@ import 'package:bladderly/presentation/common/cubit/passcode_cubit.dart';
 // PasscodeCubit 가져오기
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/feature/passcode/input/passcode_input_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class PasscodeModal extends StatelessWidget {
   const PasscodeModal({super.key});
@@ -31,6 +33,7 @@ class PasscodeModal extends StatelessWidget {
       context: context,
       isScrollControlled: true, // 컨텐츠 크기에 맞춰서 스크롤
       backgroundColor: Colors.transparent, // 배경 투명 설정
+      useRootNavigator: true,
       builder: (context) => const PasscodeInputScreen(),
     );
 
@@ -41,18 +44,17 @@ class PasscodeModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PasscodeCubit, PasscodeState>(
-      // BlocBuilder로 상태 변경 감지
-      builder: (context, state) {
-        return Container(
-          color: Colors.white,
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
-          child: Column(
+    return Scaffold(
+      appBar: ModalAppBar(title: 'Set Up Passcode'.tr(context)),
+      body: SafeArea(
+        child: BlocBuilder<PasscodeCubit, PasscodeState>(
+          builder: (context, state) => Column(
             children: [
-              ModalTitle(title: 'Set Up Passcode'.tr(context)),
-              const SizedBox(height: 38),
               Expanded(
                 child: ListView(
+                  controller: ModalScrollController.of(context),
+                  physics: const ClampingScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 24, right: 24),
@@ -164,10 +166,11 @@ class PasscodeModal extends StatelessWidget {
                   );
                 },
               ),
+              const Gap(28),
             ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

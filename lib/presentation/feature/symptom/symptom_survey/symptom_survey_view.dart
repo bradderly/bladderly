@@ -6,14 +6,14 @@ import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/util/text_size_util.dart';
+import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
-import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:bladderly/presentation/feature/symptom/model/symptom_survey_model.dart';
 import 'package:bladderly/presentation/feature/symptom/symptom_survey/bloc/symptom_survey_bloc.dart';
 import 'package:bladderly/presentation/feature/symptom/symptom_survey/cubit/symptom_survey_form_cubit.dart';
 import 'package:bladderly/presentation/feature/symptom/symptom_survey/widget/symptom_survey_radio_button.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
-import 'package:bladderly/presentation/router/route/symtom_route.dart';
+import 'package:bladderly/presentation/router/route/symptom_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -60,8 +60,7 @@ class _SymptomSurveyViewState extends State<SymptomSurveyView> {
   Widget build(BuildContext context) {
     return BlocListener<SymptomSurveyBloc, SymptomSurveyState>(
       listener: (context, state) => switch (state) {
-        SymptomSurveySubmitInProgress() =>
-          ProgressIndicatorModal.show(SymptomShellRoute.$navigatorKey.currentContext!, useRootNavigator: false),
+        SymptomSurveySubmitInProgress() => ProgressIndicatorModal.show(context),
         SymptomSurveySubmitSuccess() => onSubmitSuccess(context, state),
         SymptomSurveySubmitFailure() => context.pop(),
         _ => null,
@@ -77,7 +76,7 @@ class _SymptomSurveyViewState extends State<SymptomSurveyView> {
           color: Colors.white,
           child: Column(
             children: [
-              ModalTitle(title: widget.symptomSurveyModel.scoreType.name.tr(context)),
+              ModalAppBar(title: widget.symptomSurveyModel.scoreType.name.tr(context)),
               const SizedBox(height: 39.5),
               Expanded(
                 child: BlocBuilder<SymptomSurveyFormCubit, SymptomSurveyFormState>(

@@ -2,6 +2,7 @@ import 'package:bladderly/domain/model/score.dart';
 import 'package:bladderly/presentation/feature/symptom/model/symptom_survey_model.dart';
 import 'package:bladderly/presentation/feature/symptom/result/symptom_result_view.dart';
 import 'package:bladderly/presentation/feature/symptom/scores/symptom_scores_builder.dart';
+import 'package:bladderly/presentation/feature/symptom/symptom_reference/symptom_reference_view.dart';
 import 'package:bladderly/presentation/feature/symptom/symptom_survey/symptom_survey_builder.dart';
 import 'package:bladderly/presentation/router/page/modal_bottom_sheet_page.dart';
 import 'package:equatable/equatable.dart';
@@ -89,6 +90,20 @@ class SymptomShellRoute extends ShellRouteData {
     return ModalBottomSheetPage<void>(
       key: state.pageKey,
       builder: (context) => navigator,
+    );
+  }
+}
+
+class SymptomReferenceRoute extends GoRouteData {
+  const SymptomReferenceRoute();
+
+  static final $parentNavigatorKey = SymptomShellRoute.$navigatorKey;
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: const SymptomReferenceView(),
     );
   }
 }

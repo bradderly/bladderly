@@ -1,44 +1,33 @@
 part of 'export_bloc.dart';
 
 sealed class ExportState extends Equatable {
-  const ExportState({
-    required this.selectedDates,
-  });
-
-  final List<DateTime> selectedDates;
+  const ExportState();
 
   @override
-  List<Object> get props => [
-        selectedDates,
-      ];
+  List<Object?> get props => [];
 }
 
 final class ExportInitial extends ExportState {
-  const ExportInitial() : super(selectedDates: const []);
+  const ExportInitial();
 }
 
 final class ExportExportHistoriesInProgress extends ExportState {
-  const ExportExportHistoriesInProgress({
-    required super.selectedDates,
-  });
+  const ExportExportHistoriesInProgress();
 }
 
 final class ExportExportHistoriesSuccess extends ExportState {
-  const ExportExportHistoriesSuccess({
-    required super.selectedDates,
-  });
+  const ExportExportHistoriesSuccess();
 }
 
 final class ExportExportHistoriesFailure extends ExportState {
   const ExportExportHistoriesFailure({
-    required super.selectedDates,
     required this.exception,
   });
 
   final Exception exception;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         ...super.props,
         exception,
       ];

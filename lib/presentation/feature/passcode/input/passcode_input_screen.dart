@@ -2,7 +2,7 @@
 
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class PasscodeInputScreen extends StatefulWidget {
@@ -81,17 +81,14 @@ class _PasscodeInputScreenState extends State<PasscodeInputScreen> {
         child: Container(
           decoration: const BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
-            ),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-          child: Column(
-            children: [
-              ModalTitle(title: 'Passcode'.tr(context)),
-              const SizedBox(height: 173),
-              Column(
+          child: ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: ModalAppBar(title: 'Passcode'.tr(context)),
+              body: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
@@ -135,7 +132,7 @@ class _PasscodeInputScreenState extends State<PasscodeInputScreen> {
                   ),
                 ],
               ),
-            ],
+            ),
           ),
         ),
       ),

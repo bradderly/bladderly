@@ -53,10 +53,7 @@ class GuideTourSetUpWidget extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
                 child: Scaffold(
-                  appBar: ModalAppBar(
-                    title: 'Bladder Diary'.tr(context),
-                    backButton: false,
-                  ),
+                  appBar: ModalAppBar(title: 'Bladder Diary'.tr(context)),
                   body: SafeArea(
                     child: InAppWebView(
                       initialUrlRequest: URLRequest(

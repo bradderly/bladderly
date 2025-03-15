@@ -12,7 +12,7 @@ import 'package:bladderly/domain/model/score_type.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/datetime_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/feature/symptom/model/symptom_survey_result_model.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -41,7 +41,7 @@ class SymptomResultView extends StatelessWidget {
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               children: [
-                ModalTitle(title: score.type.name.tr(context)),
+                ModalAppBar(title: score.type.name.tr(context)),
                 const Gap(40),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,

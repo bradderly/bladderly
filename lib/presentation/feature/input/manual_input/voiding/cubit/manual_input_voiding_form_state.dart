@@ -49,7 +49,7 @@ class ManualInputVoidingFormState extends Equatable {
   final String memo;
 
   bool get isValid {
-    if (int.tryParse(recordVolume) == null) return false;
+    if ((int.tryParse(recordVolume) ?? 0) == 0) return false;
 
     if (recordUrgency == null) return false;
 

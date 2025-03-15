@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:scrolls_to_top/scrolls_to_top.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 enum _DateType {
   selected,
@@ -65,13 +65,6 @@ class ExportCalendarView extends StatefulWidget {
 
 class _ExportCalendarViewState extends State<ExportCalendarView> {
   final today = DateUtils.dateOnly(DateTime.now());
-  late final scrollController = ScrollController();
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
-  }
 
   Future<void> onGetPlansSuccess(BuildContext context, PlanGetPlansSuccess state) async {
     final oneTimeExportPlan =
@@ -102,81 +95,75 @@ class _ExportCalendarViewState extends State<ExportCalendarView> {
         PlanGetPlansSuccess() => onGetPlansSuccess(context, state),
         _ => null,
       },
-      child: ScrollsToTop(
-        onScrollsToTop: (_) => scrollController.animateTo(
-          0,
-          duration: const Duration(milliseconds: 1000),
-          curve: Curves.easeOutCirc,
-        ),
-        child: Scaffold(
-          appBar: ExportCalendarAppBar(onTapToday: () => scrollController.jumpTo(0)),
-          body: SafeArea(
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                BlocSelector<ExportDatesCubit, ExportDatesState, List<DateTime>>(
-                  selector: (state) => state.historyDates,
-                  builder: (context, historyDates) => ListView.builder(
-                    controller: scrollController,
-                    padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 48),
-                    reverse: true,
-                    itemBuilder: (context, index) {
-                      final calendarDate = DateUtils.addMonthsToMonthDate(today, -index);
-                      return Column(
-                        key: ValueKey(calendarDate),
-                        children: [
-                          _buildCalendarHeader(context, calendarDate: calendarDate),
-                          const Gap(32),
-                          _buildCalendarWeekDay(context),
-                          const Gap(24),
-                          _buildCalendarDay(
-                            context,
-                            historyDates: historyDates,
-                            calendarDate: calendarDate,
-                          ),
-                          const Gap(48),
-                        ],
-                      );
-                    },
-                  ),
+      child: Scaffold(
+        appBar: ExportCalendarAppBar(onTapToday: () => ModalScrollController.of(context)?.jumpTo(0)),
+        body: SafeArea(
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              BlocSelector<ExportDatesCubit, ExportDatesState, List<DateTime>>(
+                selector: (state) => state.historyDates,
+                builder: (context, historyDates) => ListView.builder(
+                  controller: ModalScrollController.of(context),
+                  physics: const ClampingScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 48),
+                  reverse: true,
+                  itemBuilder: (context, index) {
+                    final calendarDate = DateUtils.addMonthsToMonthDate(today, -index);
+                    return Column(
+                      key: ValueKey(calendarDate),
+                      children: [
+                        _buildCalendarHeader(context, calendarDate: calendarDate),
+                        const Gap(32),
+                        _buildCalendarWeekDay(context),
+                        const Gap(24),
+                        _buildCalendarDay(
+                          context,
+                          historyDates: historyDates,
+                          calendarDate: calendarDate,
+                        ),
+                        const Gap(48),
+                      ],
+                    );
+                  },
                 ),
-                Positioned.fill(
-                  top: null,
-                  child: BlocSelector<ExportDatesCubit, ExportDatesState, List<DateTime>>(
-                    selector: (state) => state.selectedDates,
-                    builder: (context, selectedDates) => ExportStickeyButton(
-                      onTap: selectedDates.isEmpty
-                          ? null
-                          : () => context.read<PlanBloc>().add(const PlanGetPlans.onlyConsumable()),
-                      text: 'Continue'.tr(context),
-                      header: RichText(
-                        text: TextSpan(
-                          children: [
-                            if (selectedDates.isEmpty)
-                              TextSpan(text: 'You can export up to 7 days'.tr(context))
-                            else ...[
-                              TextSpan(text: '${selectedDates.length}'),
-                              switch (context.locale) {
-                                AppLocale.en when selectedDates.length == 1 => const TextSpan(text: ' day selected '),
-                                AppLocale.en => const TextSpan(text: ' days selected '),
-                                AppLocale.ko => const TextSpan(text: '일 선택됨 '),
-                              },
-                              TextSpan(
-                                text: '(up to 7 days)'.tr(context),
-                                style: selectedDates.length == 7 ? TextStyle(color: context.colorTheme.warning) : null,
-                              ),
-                            ],
+              ),
+              Positioned.fill(
+                top: null,
+                child: BlocSelector<ExportDatesCubit, ExportDatesState, List<DateTime>>(
+                  selector: (state) => state.selectedDates,
+                  builder: (context, selectedDates) => ExportStickeyButton(
+                    onTap: selectedDates.isEmpty
+                        ? null
+                        : () => context.read<PlanBloc>().add(const PlanGetPlans.onlyConsumable()),
+                    text: 'Continue'.tr(context),
+                    header: RichText(
+                      text: TextSpan(
+                        children: [
+                          if (selectedDates.isEmpty)
+                            TextSpan(text: 'You can export up to 7 days'.tr(context))
+                          else ...[
+                            TextSpan(text: '${selectedDates.length}'),
+                            switch (context.locale) {
+                              AppLocale.en when selectedDates.length == 1 => const TextSpan(text: ' day selected '),
+                              AppLocale.en => const TextSpan(text: ' days selected '),
+                              AppLocale.ko => const TextSpan(text: '일 선택됨 '),
+                            },
+                            TextSpan(
+                              text: '(up to 7 days)'.tr(context),
+                              style: selectedDates.length == 7 ? TextStyle(color: context.colorTheme.warning) : null,
+                            ),
                           ],
-                          style: context.textStyleTheme.b16SemiBold.copyWith(
-                            color: context.colorTheme.neutral.shade6,
-                          ),
+                        ],
+                        style: context.textStyleTheme.b16SemiBold.copyWith(
+                          color: context.colorTheme.neutral.shade6,
                         ),
                       ),
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -267,7 +254,7 @@ class _ExportCalendarViewState extends State<ExportCalendarView> {
                       height: 38,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        color: dateType.getBoxColor(context),
+                        color: isNotSameMonth ? null : dateType.getBoxColor(context),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: isNotSameMonth

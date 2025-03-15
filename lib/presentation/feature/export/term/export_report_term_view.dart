@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class ExportReportTermView extends StatefulWidget {
   const ExportReportTermView({
@@ -54,6 +55,9 @@ class _ExportReportTermViewState extends State<ExportReportTermView> {
         fit: StackFit.expand,
         children: [
           ListView(
+            shrinkWrap: true,
+            physics: const ClampingScrollPhysics(),
+            controller: ModalScrollController.of(context),
             padding: const EdgeInsets.all(24).copyWith(bottom: 140),
             children: [
               Text(
