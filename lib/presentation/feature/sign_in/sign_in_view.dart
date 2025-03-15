@@ -1,6 +1,7 @@
 // Flutter imports:
 
 import 'package:bladderly/domain/exception/invalid_user_exception.dart';
+import 'package:bladderly/domain/exception/not_found_apple_credential_exception.dart';
 import 'package:bladderly/domain/exception/not_found_user_exception.dart';
 // Flutter imports:
 import 'package:bladderly/domain/exception/password_attempts_exceeded_exception.dart';
@@ -55,6 +56,22 @@ class SignInView extends StatelessWidget {
 
     if (state.email case final String email) {
       return switch (state.exception) {
+        NotFoundAppleCredentialException() => showDialog<AlertDialog>(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: const Text(
+                'Please stop using Apple ID and Try again. Go to Settings > Apple ID > Password & Security > Apps using Apple ID > proudP > Stop using Apple ID',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Okay'.tr(context)),
+                ),
+              ],
+            ),
+          ),
         NotFoundUserException() =>
           SignUpSocialRoute($extra: SignUpSocialRouteExtra(email: email, signUpMethod: state.signUpMethod.name))
               .go(context),

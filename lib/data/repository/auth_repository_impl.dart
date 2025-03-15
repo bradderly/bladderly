@@ -192,11 +192,6 @@ class AuthRepositoryImpl implements AuthRepository {
 
     final entity = _isarClient.getAppleCredentialOrNullByUserIdentifier(userIdentifier);
 
-    if (entity?.email == null) {
-      //TODO: Show alert
-      //"Please stop using Apple ID and Try again. Go to Settings > Apple ID > Password & Security > Apps using Apple ID > proudP > Stop using Apple ID"
-    }
-
     return entity?.email ?? (throw const NotFoundAppleCredentialException(message: 'Apple Credential not found'));
   }
 
