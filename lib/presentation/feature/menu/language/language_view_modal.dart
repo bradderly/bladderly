@@ -3,12 +3,12 @@
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
-import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
+import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class LanguageViewModal extends StatefulWidget {
-  const LanguageViewModal({
+class LanguageView extends StatefulWidget {
+  const LanguageView({
     super.key,
     required this.appLocale,
   });
@@ -16,67 +16,67 @@ class LanguageViewModal extends StatefulWidget {
   final AppLocale appLocale;
 
   @override
-  State<LanguageViewModal> createState() => _LanguageViewModalState();
+  State<LanguageView> createState() => _LanguageViewState();
 }
 
-class _LanguageViewModalState extends State<LanguageViewModal> {
+class _LanguageViewState extends State<LanguageView> {
   late AppLocale appLocale = widget.appLocale;
 
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
-      initialChildSize: 0.95,
-      maxChildSize: 0.95,
-      minChildSize: 0.95,
-      builder: (_, controller) => Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
+      initialChildSize: 1,
+      minChildSize: 1,
+      expand: false,
+      builder: (context, controller) => Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: ModalAppBar(title: 'Language'.tr(context, appLocale: appLocale), backButton: false),
+        body: Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
           ),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ModalTitle(title: 'Language'.tr(context, appLocale: appLocale)),
-            const SizedBox(height: 16),
-            Expanded(
-              child: ListView(
-                controller: controller,
-                children: List.generate(AppLocale.values.length, (index) {
-                  final locale = AppLocale.values[index];
-                  return _buildLanguageOption(
-                    context,
-                    isSelected: appLocale == locale,
-                    appLocale: locale,
-                  );
-                }),
-              ),
-            ),
-            const SizedBox(height: 16),
-            GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () => context.pop(appLocale),
-              child: Container(
-                width: double.infinity,
-                margin: const EdgeInsets.symmetric(horizontal: 50),
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                decoration: BoxDecoration(
-                  color: Colors.green, // Save 버튼 스타일
-                  borderRadius: BorderRadius.circular(8),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 16),
+              Expanded(
+                child: ListView(
+                  controller: controller,
+                  children: List.generate(AppLocale.values.length, (index) {
+                    final locale = AppLocale.values[index];
+                    return _buildLanguageOption(
+                      context,
+                      isSelected: appLocale == locale,
+                      appLocale: locale,
+                    );
+                  }),
                 ),
-                alignment: Alignment.center,
-                child: Text(
-                  'Save'.tr(context, appLocale: appLocale),
-                  style: context.textStyleTheme.b16SemiBold.copyWith(
-                    color: Colors.white,
+              ),
+              const SizedBox(height: 16),
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () => context.pop(appLocale),
+                child: Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.symmetric(horizontal: 50),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  decoration: BoxDecoration(
+                    color: Colors.green, // Save 버튼 스타일
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Save'.tr(context, appLocale: appLocale),
+                    style: context.textStyleTheme.b16SemiBold.copyWith(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

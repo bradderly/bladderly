@@ -2,22 +2,23 @@ import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/model/user_model.dart';
+import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/menu/contact_us/bloc/contact_us_bloc.dart';
 import 'package:bladderly/presentation/feature/menu/contact_us/cubit/contact_us_form_cubit.dart';
-import 'package:bladderly/presentation/feature/menu/widget/modal_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
-class ContactUsModal extends StatefulWidget {
-  const ContactUsModal({super.key});
+class ContactUsView extends StatefulWidget {
+  const ContactUsView({super.key});
 
   @override
-  State<ContactUsModal> createState() => _ContactUsModalState();
+  State<ContactUsView> createState() => _ContactUsViewState();
 }
 
-class _ContactUsModalState extends State<ContactUsModal> {
+class _ContactUsViewState extends State<ContactUsView> {
   bool _isEmptyCheck = false;
   @override
   void initState() {
@@ -64,117 +65,106 @@ class _ContactUsModalState extends State<ContactUsModal> {
 
   @override
   Widget build(BuildContext context) {
-    return DraggableScrollableSheet(
-      initialChildSize: 0.95,
-      maxChildSize: 0.95,
-      minChildSize: 0.95,
-      builder: (_, controller) {
-        return BlocListener<ContactUsBloc, ContactUsState>(
-          listener: (context, state) {
-            if (state is ContactUsInitial) {
-              ProgressIndicatorModal.show(context);
-            } else if (state is ContactUsSuccess) {
-              context.pop();
-            }
-          },
-          child: Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
-              ),
-            ),
-            padding: const EdgeInsets.symmetric(vertical: 41),
-            child: Column(
-              children: [
-                ModalTitle(title: 'Contact us'.tr(context)),
-                const SizedBox(height: 42.5),
-                Expanded(
-                  child: BlocBuilder<ContactUsFormCubit, ContactUsFormState>(
-                    builder: (_, formState) => ListView(
-                      controller: controller,
-                      children: [
-                        _buildInputField(context, 'Bladderly ID', formState.id, isModified: true),
-                        _buildInputField(
-                          context,
-                          'Preferred Name',
-                          formState.name,
-                          onChanged: (value) => context.read<ContactUsFormCubit>().setName(value),
-                        ),
-                        const SizedBox(height: 8),
-                        _buildTextArea(
-                          context,
-                          'Email Address',
-                          formState.email,
-                          1,
-                          _isEmptyCheck && (formState.email.isEmpty || !formState.email.validateEmail()),
-                          onChanged: (value) => context.read<ContactUsFormCubit>().setEmail(value),
-                        ),
-                        if (_isEmptyCheck && (formState.email.isEmpty || !formState.email.validateEmail()))
-                          Padding(
-                            padding: const EdgeInsets.only(left: 24, top: 8),
-                            child: Text(
-                              'Please enter a properly formatted email address.'.tr(context),
-                              style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.warning),
-                            ),
-                          ),
-                        _buildTextArea(
-                          context,
-                          'Message',
-                          formState.message,
-                          5,
-                          _isEmptyCheck && formState.message.isEmpty,
-                          onChanged: (value) => context.read<ContactUsFormCubit>().setMessage(value),
-                        ),
-                        if (_isEmptyCheck && formState.message.isEmpty)
-                          Padding(
-                            padding: const EdgeInsets.only(left: 24, top: 8),
-                            child: Text(
-                              'Please enter a message.'.tr(context),
-                              style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.warning),
-                            ),
-                          ),
-                        const SizedBox(height: 8),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 24),
-                          child: Text(
-                            '* ${'Required fields'.tr(context)}',
-                            style: context.textStyleTheme.b14Medium.copyWith(
-                              color: context.colorTheme.neutral.shade6,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                BlocSelector<ContactUsFormCubit, ContactUsFormState, bool>(
-                  selector: (state) => state.isValid,
-                  builder: (context, isValid) => GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: isValid ? () => _onSendMessage(context) : _errorCheck,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
-                      decoration: BoxDecoration(
-                        color:
-                            isValid ? context.colorTheme.vermilion.primary.shade50 : context.colorTheme.neutral.shade6,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        'Submit'.tr(context),
-                        style: context.textStyleTheme.b16SemiBold.copyWith(
-                          color: context.colorTheme.neutral.shade0,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
+    return BlocListener<ContactUsBloc, ContactUsState>(
+      listener: (context, state) {
+        if (state is ContactUsInitial) {
+          ProgressIndicatorModal.show(context);
+        } else if (state is ContactUsSuccess) {
+          context.pop();
+        }
       },
+      child: Scaffold(
+        appBar: ModalAppBar(
+          title: 'Contact us'.tr(context),
+          backButton: false,
+        ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: BlocBuilder<ContactUsFormCubit, ContactUsFormState>(
+                  builder: (_, formState) => ListView(
+                    physics: const BouncingScrollPhysics(),
+                    children: [
+                      _buildInputField(context, 'Bladderly ID', formState.id, isModified: true),
+                      _buildInputField(
+                        context,
+                        'Preferred Name',
+                        formState.name,
+                        onChanged: (value) => context.read<ContactUsFormCubit>().setName(value),
+                      ),
+                      const SizedBox(height: 8),
+                      _buildTextArea(
+                        context,
+                        'Email Address',
+                        formState.email,
+                        1,
+                        _isEmptyCheck && (formState.email.isEmpty || !formState.email.validateEmail()),
+                        onChanged: (value) => context.read<ContactUsFormCubit>().setEmail(value),
+                      ),
+                      if (_isEmptyCheck && (formState.email.isEmpty || !formState.email.validateEmail()))
+                        Padding(
+                          padding: const EdgeInsets.only(left: 24, top: 8),
+                          child: Text(
+                            'Please enter a properly formatted email address.'.tr(context),
+                            style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.warning),
+                          ),
+                        ),
+                      _buildTextArea(
+                        context,
+                        'Message',
+                        formState.message,
+                        5,
+                        _isEmptyCheck && formState.message.isEmpty,
+                        onChanged: (value) => context.read<ContactUsFormCubit>().setMessage(value),
+                      ),
+                      if (_isEmptyCheck && formState.message.isEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 24, top: 8),
+                          child: Text(
+                            'Please enter a message.'.tr(context),
+                            style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.warning),
+                          ),
+                        ),
+                      const SizedBox(height: 8),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 24),
+                        child: Text(
+                          '* ${'Required fields'.tr(context)}',
+                          style: context.textStyleTheme.b14Medium.copyWith(
+                            color: context.colorTheme.neutral.shade6,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              BlocSelector<ContactUsFormCubit, ContactUsFormState, bool>(
+                selector: (state) => state.isValid,
+                builder: (context, isValid) => GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onTap: isValid ? () => _onSendMessage(context) : _errorCheck,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: isValid ? context.colorTheme.vermilion.primary.shade50 : context.colorTheme.neutral.shade6,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      'Submit'.tr(context),
+                      style: context.textStyleTheme.b16SemiBold.copyWith(
+                        color: context.colorTheme.neutral.shade0,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const Gap(28),
+            ],
+          ),
+        ),
+      ),
     );
   }
 

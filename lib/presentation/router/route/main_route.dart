@@ -4,6 +4,7 @@
 import 'dart:async';
 
 import 'package:bladderly/domain/model/history.dart';
+import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
 import 'package:bladderly/presentation/feature/diary/detailed_list/detailed_list_builder.dart';
 import 'package:bladderly/presentation/feature/input/intake_input/intake_input_builder.dart';
@@ -11,12 +12,15 @@ import 'package:bladderly/presentation/feature/input/manual_input/manual_input_b
 import 'package:bladderly/presentation/feature/input/sound_input_note/sound_input_note_builder.dart';
 import 'package:bladderly/presentation/feature/input/sound_input_recording/sound_input_recording_builder.dart';
 import 'package:bladderly/presentation/feature/main/main_builder.dart';
-import 'package:bladderly/presentation/feature/menu/faq/faq_view_modal.dart';
+import 'package:bladderly/presentation/feature/menu/contact_us/contact_us_builder.dart';
+import 'package:bladderly/presentation/feature/menu/faq/faq_view.dart';
+import 'package:bladderly/presentation/feature/menu/language/language_view_modal.dart';
 import 'package:bladderly/presentation/feature/menu/menu_builder.dart';
 import 'package:bladderly/presentation/feature/sign_up/regular/sign_up_regular_builder.dart';
 import 'package:bladderly/presentation/feature/tutorial/guide_tour/guide_tour_view.dart';
 import 'package:bladderly/presentation/feature/tutorial/how_to_use/how_to_use_view.dart';
 import 'package:bladderly/presentation/router/page/dialog_page.dart';
+import 'package:bladderly/presentation/router/page/modal_bottom_sheet_page.dart';
 import 'package:bladderly/presentation/router/route/about_route.dart';
 import 'package:bladderly/presentation/router/route/export_route.dart';
 import 'package:bladderly/presentation/router/route/payment_route.dart';
@@ -82,6 +86,8 @@ enum MainRouteTab {
           ],
         ),
         TypedGoRoute<FaqRoute>(path: 'faq', name: 'faq'),
+        TypedGoRoute<ContactUsRoute>(path: 'contact-us', name: 'contact-us'),
+        TypedGoRoute<LanguageRoute>(path: 'language', name: 'language'),
         TypedShellRoute<SymptomShellRoute>(
           routes: [
             TypedGoRoute<SymptomScoresRoute>(
@@ -367,14 +373,40 @@ class HowToUseRoute extends GoRouteData {
   Future<bool?> push(BuildContext context) => context.push<bool>(location);
 }
 
+class LanguageRoute extends GoRouteData {
+  const LanguageRoute({required this.originLocale});
+
+  final AppLocale originLocale;
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return ModalBottomSheetPage<void>(
+      key: state.pageKey,
+      child: LanguageView(appLocale: originLocale),
+    );
+  }
+}
+
 class FaqRoute extends GoRouteData {
   const FaqRoute();
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
-    return CupertinoPage<void>(
+    return ModalBottomSheetPage<void>(
       key: state.pageKey,
-      child: const FaqViewModal(),
+      child: const FaqView(),
+    );
+  }
+}
+
+class ContactUsRoute extends GoRouteData {
+  const ContactUsRoute();
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return ModalBottomSheetPage<void>(
+      key: state.pageKey,
+      child: const ContactUsBuilder(),
     );
   }
 }

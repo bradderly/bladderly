@@ -54,15 +54,6 @@ class _SymptomSurveyViewState extends State<SymptomSurveyView> {
 
   Future<void> onSubmitSuccess(BuildContext context, SymptomSurveySubmitSuccess state) async {
     const SymptomScoresRoute().go(context);
-
-    // context.pop();
-
-    // await ModalHelper.showModal<void>(
-    //   context: context,
-    //   modalBuilder: (_) => SymptomResultModal(score: state.score),
-    // );
-
-    // if (context.mounted) context.pop<bool>(true);
   }
 
   @override

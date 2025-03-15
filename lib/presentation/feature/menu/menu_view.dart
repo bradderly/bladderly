@@ -8,10 +8,6 @@ import 'package:bladderly/presentation/common/cubit/unit_cubit.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
-import 'package:bladderly/presentation/feature/menu/contact_us/contact_us_builder.dart';
-import 'package:bladderly/presentation/feature/menu/faq/faq_view_modal.dart';
-import 'package:bladderly/presentation/feature/menu/language/language_view_modal.dart';
-import 'package:bladderly/presentation/feature/menu/utils/modal_helper.dart';
 import 'package:bladderly/presentation/router/route/about_route.dart';
 import 'package:bladderly/presentation/router/route/export_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
@@ -92,10 +88,7 @@ class MenuView extends StatelessWidget {
                         onTap: () async {
                           final originLocale = context.read<AppLocaleCubit>().state;
 
-                          final newLocale = await ModalHelper.showModal<AppLocale>(
-                            context: context,
-                            modalBuilder: (_) => LanguageViewModal(appLocale: originLocale),
-                          );
+                          final newLocale = await LanguageRoute(originLocale: originLocale).push<AppLocale>(context);
 
                           if (context.mounted && newLocale != null) {
                             context.read<AppLocaleCubit>().changeLocale(newLocale);
@@ -108,18 +101,12 @@ class MenuView extends StatelessWidget {
                       SettingsItem(
                         icon: Icons.help_outline,
                         title: 'FAQ'.tr(context),
-                        onTap: () => ModalHelper.showModal<void>(
-                          context: context,
-                          modalBuilder: (_) => const FaqViewModal(),
-                        ),
+                        onTap: () => const FaqRoute().go(context),
                       ),
                       SettingsItem(
                         icon: Icons.phone,
                         title: 'Contact Us'.tr(context),
-                        onTap: () => ModalHelper.showModal<void>(
-                          context: context,
-                          modalBuilder: (_) => const ContactUsBuilder(),
-                        ),
+                        onTap: () => const ContactUsRoute().go(context),
                       ),
                       SettingsItem(
                         icon: Icons.info_outline,

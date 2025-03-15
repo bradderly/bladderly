@@ -14,6 +14,6 @@ class LanguageViewBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LanguageViewModal(appLocale: appLocale);
+    return LanguageView(appLocale: appLocale);
   }
 }
