@@ -88,7 +88,7 @@ class SymptomShellRoute extends ShellRouteData {
   Page<void> pageBuilder(BuildContext context, GoRouterState state, Widget navigator) {
     return ModalBottomSheetPage<void>(
       key: state.pageKey,
-      child: navigator,
+      builder: (context) => navigator,
     );
   }
 }

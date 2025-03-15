@@ -20,7 +20,7 @@ class FaqView extends StatelessWidget {
       body: SafeArea(
         child: InAppWebView(
           gestureRecognizers: const {
-            Factory(VerticalDragGestureRecognizer.new),
+            Factory(EagerGestureRecognizer.new),
           },
           initialUrlRequest: URLRequest(
             url: WebUri('https://www.bladderly.com/terms-of-use'),

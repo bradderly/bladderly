@@ -14,7 +14,7 @@ import 'package:bladderly/presentation/feature/input/sound_input_recording/sound
 import 'package:bladderly/presentation/feature/main/main_builder.dart';
 import 'package:bladderly/presentation/feature/menu/contact_us/contact_us_builder.dart';
 import 'package:bladderly/presentation/feature/menu/faq/faq_view.dart';
-import 'package:bladderly/presentation/feature/menu/language/language_view_modal.dart';
+import 'package:bladderly/presentation/feature/menu/language/language_view.dart';
 import 'package:bladderly/presentation/feature/menu/menu_builder.dart';
 import 'package:bladderly/presentation/feature/sign_up/regular/sign_up_regular_builder.dart';
 import 'package:bladderly/presentation/feature/tutorial/guide_tour/guide_tour_view.dart';
@@ -382,7 +382,7 @@ class LanguageRoute extends GoRouteData {
   Page<void> buildPage(BuildContext context, GoRouterState state) {
     return ModalBottomSheetPage<void>(
       key: state.pageKey,
-      child: LanguageView(appLocale: originLocale),
+      builder: (context) => LanguageView(appLocale: originLocale),
     );
   }
 }
@@ -394,7 +394,7 @@ class FaqRoute extends GoRouteData {
   Page<void> buildPage(BuildContext context, GoRouterState state) {
     return ModalBottomSheetPage<void>(
       key: state.pageKey,
-      child: const FaqView(),
+      builder: (context) => const FaqView(),
     );
   }
 }
@@ -406,7 +406,7 @@ class ContactUsRoute extends GoRouteData {
   Page<void> buildPage(BuildContext context, GoRouterState state) {
     return ModalBottomSheetPage<void>(
       key: state.pageKey,
-      child: const ContactUsBuilder(),
+      builder: (context) => const ContactUsBuilder(),
     );
   }
 }

@@ -12,7 +12,7 @@ class AboutRoute extends GoRouteData {
   Page<void> buildPage(BuildContext context, GoRouterState state) {
     return ModalBottomSheetPage<void>(
       key: state.pageKey,
-      child: const AboutView(),
+      builder: (_) => const AboutView(),
     );
   }
 }

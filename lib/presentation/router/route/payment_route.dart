@@ -28,8 +28,11 @@ class PlanCancelRoute extends GoRouteData {
   static final $parentNavigatorKey = PaymentShellRoute.$navigatorKey;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const PlanCancelBuilder();
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: const PlanCancelBuilder(),
+    );
   }
 }
 
@@ -53,7 +56,7 @@ class PaymentShellRoute extends ShellRouteData {
   Page<void> pageBuilder(BuildContext context, GoRouterState state, Widget navigator) {
     return ModalBottomSheetPage<void>(
       key: state.pageKey,
-      child: navigator,
+      builder: (context) => navigator,
     );
   }
 }

@@ -19,8 +19,7 @@ class ExportShellRoute extends ShellRouteData {
   Page<void> pageBuilder(BuildContext context, GoRouterState state, Widget navigator) {
     return ModalBottomSheetPage(
       key: state.pageKey,
-      useSafeArea: true,
-      child: navigator,
+      builder: (context) => navigator,
     );
   }
 }

@@ -86,6 +86,37 @@ class MenuView extends StatelessWidget {
                       ),
                       SettingsItem(
                         onTap: () async {
+                          // await Navigator.of(context).push(
+                          //   ModalSheetRoute<void>(
+                          //     builder: (context) {
+                          //       return Material(
+                          //         child: Scaffold(
+                          //           body: SafeArea(
+                          //             bottom: false,
+                          //             child: ListView(
+                          //               shrinkWrap: true,
+                          //               controller: ModalScrollController.of(context),
+                          //               physics: const ClampingScrollPhysics(),
+                          //               children: ListTile.divideTiles(
+                          //                 context: context,
+                          //                 tiles: List.generate(
+                          //                   100,
+                          //                   (index) => ListTile(
+                          //                     title: Text('Item $index'),
+                          //                   ),
+                          //                 ),
+                          //               ).toList(),
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       );
+                          //     },
+                          //     bounce: true,
+                          //     expanded: true,
+                          //     barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+                          //   ),
+                          // );
+
                           final originLocale = context.read<AppLocaleCubit>().state;
 
                           final newLocale = await LanguageRoute(originLocale: originLocale).push<AppLocale>(context);
