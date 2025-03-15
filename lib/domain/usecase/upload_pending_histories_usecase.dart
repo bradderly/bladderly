@@ -62,9 +62,13 @@ class UploadPendingHistoriesUsecase {
     required User user,
     required History history,
   }) async {
-    // await _historyRepository.uploadHistory(userId: user.userId, history: history);
+    await _historyRepository.uploadHistory(userId: user.userId, history: history);
 
-    await _historyRepository.saveHistory(history.setStatus(HistoryStatus.done));
+    if (history.deletedAt == null) {
+      await _historyRepository.saveHistory(history.setStatus(HistoryStatus.done));
+    } else {
+      _historyRepository.deleteHistoryById(history.id!);
+    }
 
     return true;
   }

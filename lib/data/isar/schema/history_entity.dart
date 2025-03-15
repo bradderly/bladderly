@@ -1,9 +1,8 @@
 // Package imports:
-import 'package:isar/isar.dart';
-
 // Project imports:
 import 'package:bladderly/domain/model/history_status.dart';
 import 'package:bladderly/domain/model/leakage_volume.dart';
+import 'package:isar/isar.dart';
 
 part 'history_entity.g.dart';
 
@@ -49,6 +48,9 @@ class HistoryEntity {
   @Name('status')
   @Enumerated(EnumType.name)
   late HistoryStatus status;
+
+  @Name('deleted_at')
+  DateTime? deletedAt;
 
   void setId(int? id) => this.id = id ?? this.id;
 }

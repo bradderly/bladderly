@@ -44,6 +44,11 @@ abstract class HistoryRepository {
 
   void deleteHistoryById(int id);
 
+  Future<void> deleteHistoryByRecordTimeFromServer({
+    required String userId,
+    required DateTime recordTime,
+  });
+
   Future<String?> uploadHistory({
     required String userId,
     required History history,

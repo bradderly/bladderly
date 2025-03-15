@@ -123,11 +123,15 @@ class HistoryRepositoryImpl implements HistoryRepository {
     required History history,
     DateTime? originRecordTime,
   }) async {
+    final recordTime = DateFormat('yyyyMMdd-HHmmss').format(originRecordTime ?? history.recordTime);
+    final newRecDate = originRecordTime == null ? null : DateFormat('yyyyMMdd-HHmmss').format(history.recordTime);
+    final deleteTime = history.deletedAt == null ? null : DateFormat('yyyyMMdd-HHmmss').format(history.recordTime);
+
     final response = await _apiClient.updateRecord(
       request: RecordUpdateRequest(
         userId: userId,
         // originRecordTime 이 있으면 수정 아니면 생성
-        recDate: DateFormat('yyyyMMdd-HHmmss').format(originRecordTime ?? history.recordTime),
+        recDate: recordTime,
         record: switch (history) {
           VoidingHistory() => RecordUpdateRequestRecord(
               isLeakage: history.isLeakage,
@@ -137,7 +141,8 @@ class HistoryRepositoryImpl implements HistoryRepository {
               recordUrgency: '${history.recordUrgency}',
               leakageMemo: history.memo,
               isManual: history.isManual,
-              newRecDate: originRecordTime == null ? null : DateFormat('yyyyMMdd-HHmmss').format(history.recordTime),
+              newRecDate: newRecDate,
+              deleteTime: deleteTime,
             ),
           IntakeHistory() => RecordUpdateRequestRecord(
               beverageType: history.beverageType,
@@ -145,14 +150,16 @@ class HistoryRepositoryImpl implements HistoryRepository {
               recordVolume: '${history.recordVolume}',
               isIntake: true,
               isManual: true,
-              newRecDate: originRecordTime == null ? null : DateFormat('yyyyMMdd-HHmmss').format(history.recordTime),
+              newRecDate: newRecDate,
+              deleteTime: deleteTime,
             ),
           LeakageHistory() => RecordUpdateRequestRecord(
               leakageVolume: history.leakageVolume.name,
               leakageMemo: history.memo,
               isLeakage: true,
               isManual: true,
-              newRecDate: originRecordTime == null ? null : DateFormat('yyyyMMdd-HHmmss').format(history.recordTime),
+              newRecDate: newRecDate,
+              deleteTime: deleteTime,
             ),
         },
       ),
@@ -161,7 +168,6 @@ class HistoryRepositoryImpl implements HistoryRepository {
     return response.body?.message;
   }
 
-  // TODO(eden): 레코드, 스코어 둘다 불러오기 때문에 레포지토리 분리해야함
   @override
   Future<Histories> getAllHistoriesFromServer(String userId) async {
     final response = await _apiClient.getAllRecords(userId: userId).then((response) => response.body!);
@@ -220,5 +226,18 @@ class HistoryRepositoryImpl implements HistoryRepository {
     }
 
     return null;
+  }
+
+  @override
+  Future<void> deleteHistoryByRecordTimeFromServer({required String userId, required DateTime recordTime}) {
+    return _apiClient
+        .updateRecord(
+          request: RecordUpdateRequest(
+            userId: userId,
+            recDate: DateFormat('yyyyMMdd-HHmmss').format(recordTime),
+            record: RecordUpdateRequestRecord(deleteTime: DateFormat('yyyyMMdd-HHmmss').format(recordTime)),
+          ),
+        )
+        .then((response) => response.body!);
   }
 }

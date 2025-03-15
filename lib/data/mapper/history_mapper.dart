@@ -17,6 +17,7 @@ class HistoryMapper {
         recordVolume: entity.recordVolume.toInt(),
         memo: entity.leakageMemo,
         status: entity.status,
+        deletedAt: entity.deletedAt,
       );
     }
 
@@ -27,6 +28,7 @@ class HistoryMapper {
         leakageVolume: entity.leakageVolume!,
         memo: entity.leakageMemo,
         status: entity.status,
+        deletedAt: entity.deletedAt,
       );
     }
 
@@ -41,6 +43,7 @@ class HistoryMapper {
       leakageVolume: entity.leakageVolume,
       memo: entity.leakageMemo,
       status: entity.status,
+      deletedAt: entity.deletedAt,
     );
   }
 
@@ -111,7 +114,8 @@ class HistoryMapper {
       ..isNocturia = history.isNocturia
       ..isLeakage = history.isLeakage
       ..leakageVolume = history.leakageVolume
-      ..status = history.status;
+      ..status = history.status
+      ..deletedAt = history.deletedAt;
   }
 
   static HistoryEntity _intakeHistoryToHistoryEntity(IntakeHistory history) {
@@ -122,7 +126,8 @@ class HistoryMapper {
       ..beverageType = history.beverageType
       ..recordVolume = history.recordVolume.toDouble()
       ..status = history.status
-      ..isIntake = true;
+      ..isIntake = true
+      ..deletedAt = history.deletedAt;
   }
 
   static HistoryEntity _leakageHistoryToHistoryEntity(LeakageHistory history) {
@@ -133,6 +138,7 @@ class HistoryMapper {
       ..isLeakage = true
       ..leakageVolume = history.leakageVolume
       ..status = history.status
-      ..recordVolume = 0.1;
+      ..recordVolume = 0.1
+      ..deletedAt = history.deletedAt;
   }
 }

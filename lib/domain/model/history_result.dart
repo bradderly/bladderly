@@ -9,7 +9,13 @@ class HistoryResult extends Equatable {
   final bool isDone;
   final String? result;
 
-  double? get volume => double.tryParse(result ?? '');
+  double? get volume {
+    if (double.tryParse(result ?? '') case final double volume) {
+      return (volume / 10).round() * 10;
+    }
+
+    return null;
+  }
 
   @override
   List<Object?> get props => [

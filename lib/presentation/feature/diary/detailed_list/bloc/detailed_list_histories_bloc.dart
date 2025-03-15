@@ -1,15 +1,14 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 // Project imports:
 import 'package:bladderly/domain/model/histories.dart';
 import 'package:bladderly/domain/usecase/delete_history_usecase.dart';
 import 'package:bladderly/domain/usecase/get_histories_stream_usecase.dart';
 import 'package:bladderly/presentation/feature/diary/detailed_list/model/detailed_list_grouped_histories_model.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
+// Package imports:
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'detailed_list_histories_event.dart';
 part 'detailed_list_histories_state.dart';
@@ -22,7 +21,7 @@ class DetailedListHistoriesBloc extends Bloc<DetailedListHistoriesEvent, Detaile
         _deleteHistoryUsecase = deleteHistoryUsecase,
         super(const DetailedListHistoriesInitial()) {
     on<DetailedListHistoriesSubscribe>(_onSubscribe);
-    on<DetailedListHistoriesDelete>(_onDelete);
+    on<DetailedListHistoriesDelete>(_onDelete, transformer: droppable());
   }
 
   final GetHistoriesStreamUsecase _getHistoriesStreamUsecase;
@@ -55,10 +54,15 @@ class DetailedListHistoriesBloc extends Bloc<DetailedListHistoriesEvent, Detaile
     );
   }
 
-  void _onDelete(DetailedListHistoriesDelete event, Emitter<DetailedListHistoriesState> emit) {
+  Future<void> _onDelete(DetailedListHistoriesDelete event, Emitter<DetailedListHistoriesState> emit) async {
     emit(DetailedListHistoriesDeleteInProgress(groupedHistoriesModel: state.groupedHistoriesModel));
 
-    _deleteHistoryUsecase(historyId: event.id).fold(
+    final result = await _deleteHistoryUsecase(
+      userId: event.userId,
+      historyId: event.id,
+    );
+
+    result.fold(
       (l) => emit(DetailedListHistoriesDeleteFailure(groupedHistoriesModel: state.groupedHistoriesModel, exception: l)),
       (r) => emit(DetailedListHistoriesDeleteSuccess(groupedHistoriesModel: state.groupedHistoriesModel)),
     );

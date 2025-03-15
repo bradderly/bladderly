@@ -229,14 +229,7 @@ class _DetailedListVoidingHistoryWidget extends DetailedListHistoryWidget {
                   RichText(
                     text: TextSpan(
                       children: switch (realIndex) {
-                        0 => [
-                            TextSpan(text: 'Volume'.tr(context)),
-                            const TextSpan(text: ' '),
-                            // TextSpan(
-                            //   text: '(${context.unitName})'.tr(context),
-                            //   style: TextStyle(color: context.colorTheme.neutral.shade6),
-                            // ),
-                          ],
+                        0 => [TextSpan(text: 'Volume'.tr(context))],
                         1 => [TextSpan(text: 'Urge Lv'.tr(context))],
                         2 when historyModel.leakageVolume != null => [TextSpan(text: 'Leakage'.tr(context))],
                         _ => const [],
@@ -300,7 +293,7 @@ class _DetailedListLeakageHistoryWidget extends DetailedListHistoryWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Total amount'.tr(context),
+                'Total amount Leakage'.tr(context),
                 style: context.textStyleTheme.b14SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
               ),
               const Gap(8),
@@ -354,7 +347,7 @@ class _DetailedListIntakeHistoryWidget extends DetailedListHistoryWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Total amount'.tr(context),
+                'Total amount intake'.tr(context),
                 style: context.textStyleTheme.b14SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
               ),
               const Gap(8),
@@ -366,7 +359,7 @@ class _DetailedListIntakeHistoryWidget extends DetailedListHistoryWidget {
                   borderRadius: BorderRadius.circular(32),
                 ),
                 child: Text(
-                  '${historyModel.recordVolume}',
+                  '${context.unitValue(historyModel.recordVolume)}',
                   style: context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade1),
                 ),
               ),

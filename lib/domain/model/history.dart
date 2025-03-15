@@ -12,6 +12,7 @@ sealed class History extends Equatable {
     required this.recordTime,
     required this.memo,
     required this.status,
+    required this.deletedAt,
   });
 
   final int? id;
@@ -24,9 +25,13 @@ sealed class History extends Equatable {
 
   final HistoryStatus status;
 
+  final DateTime? deletedAt;
+
   History setId(int id);
 
   History setStatus(HistoryStatus status);
+
+  History setDeletedAt(DateTime deletedAt);
 
   @override
   List<Object?> get props => [
@@ -43,6 +48,7 @@ class VoidingHistory extends History {
     required super.recordTime,
     required super.memo,
     required super.status,
+    super.deletedAt,
     required this.recordVolume,
     required this.recordUrgency,
     required this.isManual,
@@ -76,6 +82,7 @@ class VoidingHistory extends History {
       recordTime: recordTime,
       memo: memo,
       status: status,
+      deletedAt: deletedAt,
       recordVolume: recordVolume,
       recordUrgency: recordUrgency,
       isManual: isManual,
@@ -92,6 +99,24 @@ class VoidingHistory extends History {
       recordTime: recordTime,
       memo: memo,
       status: status,
+      deletedAt: deletedAt,
+      recordVolume: recordVolume,
+      recordUrgency: recordUrgency,
+      isManual: isManual,
+      isNocturia: isNocturia,
+      isLeakage: isLeakage,
+      leakageVolume: leakageVolume,
+    );
+  }
+
+  @override
+  VoidingHistory setDeletedAt(DateTime deletedAt) {
+    return VoidingHistory(
+      id: id,
+      recordTime: recordTime,
+      memo: memo,
+      status: status,
+      deletedAt: deletedAt,
       recordVolume: recordVolume,
       recordUrgency: recordUrgency,
       isManual: isManual,
@@ -107,6 +132,7 @@ class VoidingHistory extends History {
       recordTime: recordTime,
       memo: memo,
       status: status,
+      deletedAt: deletedAt,
       recordVolume: recordVolume,
       recordUrgency: recordUrgency,
       isManual: isManual,
@@ -134,6 +160,7 @@ class IntakeHistory extends History {
     required super.recordTime,
     required super.memo,
     required super.status,
+    super.deletedAt,
     required this.beverageType,
     required this.recordVolume,
   }) : super._();
@@ -151,6 +178,7 @@ class IntakeHistory extends History {
       recordTime: recordTime,
       memo: memo,
       status: status,
+      deletedAt: deletedAt,
       beverageType: beverageType,
       recordVolume: recordVolume,
     );
@@ -163,6 +191,20 @@ class IntakeHistory extends History {
       recordTime: recordTime,
       memo: memo,
       status: status,
+      deletedAt: deletedAt,
+      beverageType: beverageType,
+      recordVolume: recordVolume,
+    );
+  }
+
+  @override
+  IntakeHistory setDeletedAt(DateTime deletedAt) {
+    return IntakeHistory(
+      id: id,
+      recordTime: recordTime,
+      memo: memo,
+      status: status,
+      deletedAt: deletedAt,
       beverageType: beverageType,
       recordVolume: recordVolume,
     );
@@ -182,6 +224,7 @@ class LeakageHistory extends History {
     required super.recordTime,
     required super.memo,
     required super.status,
+    super.deletedAt,
     required this.leakageVolume,
   }) : super._();
 
@@ -194,6 +237,7 @@ class LeakageHistory extends History {
       recordTime: recordTime,
       memo: memo,
       status: status,
+      deletedAt: deletedAt,
       leakageVolume: leakageVolume,
     );
   }
@@ -205,6 +249,19 @@ class LeakageHistory extends History {
       recordTime: recordTime,
       memo: memo,
       status: status,
+      deletedAt: deletedAt,
+      leakageVolume: leakageVolume,
+    );
+  }
+
+  @override
+  LeakageHistory setDeletedAt(DateTime deletedAt) {
+    return LeakageHistory(
+      id: id,
+      recordTime: recordTime,
+      memo: memo,
+      status: status,
+      deletedAt: deletedAt,
       leakageVolume: leakageVolume,
     );
   }

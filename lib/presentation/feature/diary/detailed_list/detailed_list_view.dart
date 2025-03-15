@@ -1,6 +1,7 @@
 // Flutter imports:
 
 // Project imports:
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/feature/diary/detailed_list/bloc/detailed_list_histories_bloc.dart';
@@ -117,42 +118,63 @@ class _DetailedListViewState extends State<DetailedListView> {
         ),
         body: SafeArea(
           child: BlocBuilder<DetailedListHistoriesBloc, DetailedListHistoriesState>(
-            builder: (context, state) => ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 32),
-              itemCount: state.groupedHistoriesModel.keyCount,
-              itemBuilder: (context, index) {
-                final groupedHistories = state.groupedHistoriesModel.groupedHistories;
-                return DetailedListHistoriesWidget(
-                  onTapEdit: (id) =>
-                      switch (groupedHistories.values.flattened.firstWhere((element) => element.id == id)) {
-                    final DetailedListVoidingHistoryModel historyModel =>
-                      ManualInputRoute(recordTime: historyModel.recordTime).push<void>(context),
-                    final DetailedListLeakageHistoryModel historyModel =>
-                      ManualInputRoute(recordTime: historyModel.recordTime).push<void>(context),
-                    final DetailedListIntakeHistoryModel historyModel =>
-                      IntakeInputRoute.fromRecordTime(recordTime: historyModel.recordTime).push<void>(context),
-                  },
-                  onTapDelete: (id) => DetailedListDeleteHistoryModal.show(context).then((value) {
-                    if (value && context.mounted) {
-                      context.read<DetailedListHistoriesBloc>().add(DetailedListHistoriesDelete(id: id));
-                    }
-                  }),
-                  recordTime: groupedHistories.keys.elementAt(index),
-                  historyKeys: historyKeys,
-                  histories: groupedHistories.values.elementAt(index),
+            builder: (context, state) {
+              if (state.groupedHistoriesModel.isEmpty) {
+                return Container(
+                  padding: const EdgeInsets.only(bottom: 90),
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Looks like there’s nothing here yet.\nLet’s get started!',
+                    style: context.textStyleTheme.b14Medium.copyWith(
+                      color: context.colorTheme.neutral.shade6,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 );
-              },
-              separatorBuilder: (context, index) => Container(
-                padding: const EdgeInsets.symmetric(vertical: 16).copyWith(left: 54),
-                alignment: Alignment.center,
-                child: Text(
-                  state.groupedHistoriesModel.getInterval(context, index: index),
-                  style: context.textStyleTheme.b12Medium.copyWith(
-                    color: context.colorTheme.neutral.shade10,
+              }
+
+              return ListView.separated(
+                padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 32),
+                itemCount: state.groupedHistoriesModel.keyCount,
+                itemBuilder: (context, index) {
+                  final groupedHistories = state.groupedHistoriesModel.groupedHistories;
+                  return DetailedListHistoriesWidget(
+                    onTapEdit: (id) =>
+                        switch (groupedHistories.values.flattened.firstWhere((element) => element.id == id)) {
+                      final DetailedListVoidingHistoryModel historyModel =>
+                        ManualInputRoute(recordTime: historyModel.recordTime).push<void>(context),
+                      final DetailedListLeakageHistoryModel historyModel =>
+                        ManualInputRoute(recordTime: historyModel.recordTime).push<void>(context),
+                      final DetailedListIntakeHistoryModel historyModel =>
+                        IntakeInputRoute.fromRecordTime(recordTime: historyModel.recordTime).push<void>(context),
+                    },
+                    onTapDelete: (id) => DetailedListDeleteHistoryModal.show(context).then((value) {
+                      if (value && context.mounted) {
+                        context.read<DetailedListHistoriesBloc>().add(
+                              DetailedListHistoriesDelete(
+                                id: id,
+                                userId: context.read<UserBloc>().state.userModelOrThrowException.id,
+                              ),
+                            );
+                      }
+                    }),
+                    recordTime: groupedHistories.keys.elementAt(index),
+                    historyKeys: historyKeys,
+                    histories: groupedHistories.values.elementAt(index),
+                  );
+                },
+                separatorBuilder: (context, index) => Container(
+                  padding: const EdgeInsets.symmetric(vertical: 16).copyWith(left: 54),
+                  alignment: Alignment.center,
+                  child: Text(
+                    state.groupedHistoriesModel.getInterval(context, index: index),
+                    style: context.textStyleTheme.b12Medium.copyWith(
+                      color: context.colorTheme.neutral.shade10,
+                    ),
                   ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
         ),
       ),

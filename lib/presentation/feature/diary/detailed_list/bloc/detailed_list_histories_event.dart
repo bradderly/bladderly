@@ -25,13 +25,16 @@ class DetailedListHistoriesSubscribe extends DetailedListHistoriesEvent {
 
 class DetailedListHistoriesDelete extends DetailedListHistoriesEvent {
   const DetailedListHistoriesDelete({
+    required this.userId,
     required this.id,
   });
 
+  final String userId;
   final int id;
 
   @override
   List<Object> get props => [
+        userId,
         id,
       ];
 }
