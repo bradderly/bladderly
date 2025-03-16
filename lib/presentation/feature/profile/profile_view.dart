@@ -1,4 +1,5 @@
 // Project imports:
+import 'package:bladderly/domain/model/sign_up_method.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
@@ -201,16 +202,18 @@ class ProfileView extends StatelessWidget {
                   icon: Icons.lock,
                   onTap: () => const PasscodeRoute().go(context),
                 ),
-                TextIconArrowForm(
-                  title: 'Change Password'.tr(context),
-                  icon: Icons.lock_open,
-                  onTap: () => const ChangePasswordRoute().go(context),
-                ),
-                TextIconArrowForm(
-                  title: 'Sign Out'.tr(context),
-                  icon: Icons.logout,
-                  onTap: () => SignOutModal.show(context),
-                ),
+                if (userModel.signUpMethod == SignUpMethod.E)
+                  TextIconArrowForm(
+                    title: 'Change Password'.tr(context),
+                    icon: Icons.lock_open,
+                    onTap: () => const ChangePasswordRoute().go(context),
+                  ),
+                if (userModel is RegularUserModel)
+                  TextIconArrowForm(
+                    title: 'Sign Out'.tr(context),
+                    icon: Icons.logout,
+                    onTap: () => SignOutModal.show(context),
+                  ),
                 TextIconArrowForm(
                   title: 'Delete Account'.tr(context),
                   icon: Icons.delete_outline,

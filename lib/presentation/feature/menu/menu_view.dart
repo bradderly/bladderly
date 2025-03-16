@@ -74,37 +74,6 @@ class MenuView extends StatelessWidget {
                       ),
                       SettingsItem(
                         onTap: () async {
-                          // await Navigator.of(context).push(
-                          //   ModalSheetRoute<void>(
-                          //     builder: (context) {
-                          //       return Material(
-                          //         child: Scaffold(
-                          //           body: SafeArea(
-                          //             bottom: false,
-                          //             child: ListView(
-                          //               shrinkWrap: true,
-                          //               controller: ModalScrollController.of(context),
-                          //               physics: const ClampingScrollPhysics(),
-                          //               children: ListTile.divideTiles(
-                          //                 context: context,
-                          //                 tiles: List.generate(
-                          //                   100,
-                          //                   (index) => ListTile(
-                          //                     title: Text('Item $index'),
-                          //                   ),
-                          //                 ),
-                          //               ).toList(),
-                          //             ),
-                          //           ),
-                          //         ),
-                          //       );
-                          //     },
-                          //     bounce: true,
-                          //     expanded: true,
-                          //     barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
-                          //   ),
-                          // );
-
                           final originLocale = context.read<AppLocaleCubit>().state;
 
                           final newLocale = await LanguageRoute(originLocale: originLocale).push<AppLocale>(context);
@@ -148,9 +117,7 @@ class MenuView extends StatelessWidget {
                                         color: context.colorTheme.neutral.shade10,
                                       ),
                                     ),
-                                    const SizedBox(
-                                      height: 2,
-                                    ),
+                                    const SizedBox(height: 2),
                                     RichText(
                                       text: TextSpan(
                                         children: [
@@ -158,16 +125,15 @@ class MenuView extends StatelessWidget {
                                           const TextSpan(text: ' '),
                                           TextSpan(text: state.updatedDate),
                                         ],
-                                        style: context.textStyleTheme.b12Medium.copyWith(
-                                          color: context.colorTheme.neutral.shade7,
-                                        ),
+                                        style: context.textStyleTheme.b12Medium
+                                            .copyWith(color: context.colorTheme.neutral.shade7),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                               Text(
-                                state.currentVersion,
+                                '${state.currentVersion}${state.currentBuild}',
                                 style: context.textStyleTheme.b14Medium
                                     .copyWith(color: context.colorTheme.vermilion.primary.shade50),
                               ),

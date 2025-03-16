@@ -11,17 +11,20 @@ class CommonErrorModal extends StatelessWidget {
     required this.content,
     this.onTap,
     this.title,
+    this.buttonText,
   });
 
   final VoidCallback? onTap;
   final String? title;
   final String content;
+  final String? buttonText;
 
   static Future<T?> show<T>(
     BuildContext context, {
+    required VoidCallback onTap,
     required String content,
-    VoidCallback? onTap,
     String? title,
+    String? buttonText,
     bool barrierDismissible = false,
   }) {
     return showDialog<T>(
@@ -31,6 +34,7 @@ class CommonErrorModal extends StatelessWidget {
         content: content,
         onTap: onTap,
         title: title,
+        buttonText: buttonText,
       ),
     );
   }
@@ -39,6 +43,7 @@ class CommonErrorModal extends StatelessWidget {
     BuildContext context, {
     required VoidCallback onTap,
     required DomainException exception,
+    String? buttonText,
     bool barrierDismissible = false,
   }) {
     return show<T>(
@@ -46,6 +51,7 @@ class CommonErrorModal extends StatelessWidget {
       onTap: onTap,
       title: exception.title,
       content: exception.message,
+      buttonText: buttonText,
       barrierDismissible: barrierDismissible,
     );
   }
@@ -78,7 +84,7 @@ class CommonErrorModal extends StatelessWidget {
             backgroundColor: context.colorTheme.vermilion.primary.shade50,
             borderRadius: 400,
             shape: BoxShape.rectangle,
-            text: 'Okay'.tr(context),
+            text: (buttonText ?? 'Okay').tr(context),
             textColor: context.colorTheme.neutral.shade0,
             size: const Size.fromHeight(56),
           ),

@@ -1,9 +1,11 @@
 // Flutter imports:
 // Project imports:
+import 'package:bladderly/presentation/common/bloc/membership_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/model/user_model.dart';
+import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/menu/widget/reason_option.dart';
@@ -34,9 +36,17 @@ class _DeleteAccountModalState extends State<DeleteAccountModal> {
     'Other',
   ];
 
-  void _onDeleteAccount(
+  Future<void> _onDeleteAccount(
     BuildContext context,
-  ) {
+  ) async {
+    if (context.read<MembershipBloc>().state.membership?.subscription?.isValid == true) {
+      return CommonErrorModal.show<void>(
+        context,
+        onTap: () => Navigator.of(context).pop(),
+        content: 'Cancel plan Message body',
+      );
+    }
+
     final userModel = context.read<UserBloc>().state.userModelOrThrowException;
     final emailText = userModel is RegularUserModel ? userModel.email : '';
     context.read<DeleteAccountBloc>().add(

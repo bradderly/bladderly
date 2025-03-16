@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:bladderly/domain/model/app_config.dart';
 import 'package:bladderly/domain/model/app_version.dart';
 import 'package:bladderly/domain/usecase/load_app_config_usecase.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:intl/intl.dart';
 
@@ -20,15 +23,29 @@ class AppConfigBloc extends HydratedBloc<AppConfigEvent, AppConfigState> {
   final LoadAppConfigUsecase _loadAppConfigUsecase;
 
   Future<void> _onLoad(AppConfigLoad event, Emitter<AppConfigState> emit) async {
-    emit(const AppConfigLoadInProgress());
+    emit(
+      AppConfigLoadInProgress(
+        appConfig: state._appConfig,
+        versionMap: state._versionMap,
+        latestVersions: state._latestVersions,
+      ),
+    );
 
     final result = await _loadAppConfigUsecase();
 
     result.fold(
-      (exception) => emit(AppConfigLoadFailure(exception: exception, versionMap: state._versionMap)),
+      (exception) => emit(
+        AppConfigLoadFailure(
+          exception: exception,
+          versionMap: state._versionMap,
+          appConfig: state._appConfig,
+          latestVersions: state._latestVersions,
+        ),
+      ),
       (appConfig) => emit(
         AppConfigLoadSuccess(
           appConfig: appConfig,
+          latestVersions: {...state._latestVersions}.toList()..add(appConfig.appVersion.latestVersion),
           versionMap: {
             ...state._versionMap,
             appConfig.appVersion.currentVersion: DateTime.now().millisecondsSinceEpoch,

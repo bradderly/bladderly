@@ -10,6 +10,8 @@ import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/passcode_cubit.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
+import 'package:bladderly/presentation/feature/splash/cubit/splash_cubit.dart';
+import 'package:bladderly/presentation/feature/splash/modal/splash_soft_update_modal.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/intro_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
@@ -18,7 +20,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -35,7 +39,7 @@ class _SplashViewState extends State<SplashView> {
 
   @override
   void initState() {
-    subject.map((value) => value.initialized && value.waitingSuccess).listen((value) => value ? landPage() : null);
+    subject.map((value) => value.initialized && value.waitingSuccess).listen((value) => value ? onInitialized() : null);
 
     context.read<AppConfigBloc>().add(const AppConfigLoad());
 
@@ -61,9 +65,13 @@ class _SplashViewState extends State<SplashView> {
     );
   }
 
-  Future<void> landPage() async {
+  Future<void> onInitialized() async {
     final alreadyLoggedIn = context.read<UserBloc>().state is UserLoadSuccess;
     final isLocked = context.read<PasscodeCubit>().state.isLocked;
+
+    await checkAppVersion(context);
+
+    if (!mounted) return;
 
     /// 로그인이 되어 있지 않으면 IntroRoute로 이동
     if (!alreadyLoggedIn) return const IntroRoute().go(context);
@@ -92,11 +100,36 @@ class _SplashViewState extends State<SplashView> {
     return context.read<DeviceBloc>().add(const DeviceCheckSupport());
   }
 
+  Future<void> checkAppVersion(BuildContext context) async {
+    final state = context.read<AppConfigBloc>().state;
+
+    if (state.needForceUpdate) {
+      return CommonErrorModal.show<void>(
+        context,
+        onTap: () => launchUrlString(context.read<AppConfigBloc>().state.storeUrl),
+        title: 'Mandatory Update title',
+        content: 'Mandatory Update body',
+        buttonText: 'Mandatory Update button',
+      );
+    }
+    final alreadyChecked = context.read<SplashCubit>().state.isAlreadyChecked(state.currentVersion);
+
+    if (state.needSoftUpdate && !alreadyChecked) {
+      return SplashSoftUpdateModal.show(
+        context,
+        onTapUpdate: () => launchUrlString(state.storeUrl),
+        onTapLater: () => context
+          ..read<SplashCubit>().onCheckVersion(state.currentVersion)
+          ..pop(),
+      );
+    }
+  }
+
   Future<void> onCheckSupportedDeviceSuccess(BuildContext context, DeviceCheckSupportSuccess state) {
     return switch (state.deviceSupportStatus.exception) {
       final DomainException exception => CommonErrorModal.showFromDominException<void>(
           context,
-          onTap: landPage,
+          onTap: onInitialized,
           exception: exception,
         ),
       _ => Future<void>.sync(() => setSubjectValue(initialized: true)),

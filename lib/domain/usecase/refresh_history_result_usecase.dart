@@ -1,4 +1,6 @@
+import 'package:bladderly/core/network_checker/network_checker.dart';
 import 'package:bladderly/domain/exception/get_history_result_failure_exception.dart';
+import 'package:bladderly/domain/exception/network_not_connected_exception.dart';
 import 'package:bladderly/domain/mixin/history_result_usecase_mixin.dart';
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/history_status.dart';
@@ -10,14 +12,19 @@ import 'package:injectable/injectable.dart';
 class RefreshHistoryResultUsecase with HistoryResultUsecaseMixin {
   const RefreshHistoryResultUsecase({
     required HistoryRepository historyRepository,
-  }) : _historyRepository = historyRepository;
+    required NetworkChecker networkChecker,
+  })  : _historyRepository = historyRepository,
+        _networkChecker = networkChecker;
 
   final HistoryRepository _historyRepository;
+  final NetworkChecker _networkChecker;
 
   Future<Either<Exception, void>> call({
     required String userId,
     required int historyId,
   }) async {
+    if (!await _networkChecker.isConnected) throw const NetworkNotConnectedException();
+
     final history = _historyRepository.getHistoryById(historyId);
 
     if (history is! VoidingHistory) return const Right(null);

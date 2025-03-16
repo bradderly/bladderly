@@ -105,18 +105,23 @@ class _MainViewState extends State<MainView> {
       ..add(MembershipInitialize(userId: context.read<UserBloc>().state.userModelOrThrowException.id));
   }
 
-  void onHistoryResultGetFailure(BuildContext context, HistoryResultGetFailure state) {
+  Future<void> onHistoryResultGetFailure(BuildContext context, HistoryResultGetFailure state) async {
     if (!context.mounted) return;
-
-    if (state.exception case final GetHistoryResultFailureException exception) {
-      GetHistoryResultFailureModal.show(
-        context,
-        onEdit: () => ManualInputRoute(recordTime: exception.recordTime).go(context..pop()),
-        onMaintain: context.pop,
-        message: exception.message,
-        recordTime: exception.recordTime,
-      );
-    }
+    return switch (state.exception) {
+      final GetHistoryResultFailureException exception => GetHistoryResultFailureModal.show(
+          context,
+          onEdit: () => ManualInputRoute(recordTime: exception.recordTime).go(context..pop()),
+          onMaintain: context.pop,
+          message: exception.message,
+          recordTime: exception.recordTime,
+        ),
+      final NetworkNotConnectedException exception => CommonErrorModal.showFromDominException<void>(
+          context,
+          onTap: context.pop,
+          exception: exception,
+        ),
+      _ => null,
+    };
   }
 
   void onMembershipInitializeFailure(BuildContext context, MembershipInitializeFailure state) {

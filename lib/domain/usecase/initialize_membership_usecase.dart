@@ -26,7 +26,7 @@ class InitializeMembershipUsecase {
       if (localUserId == null) throw const NotFoundUserException(message: 'User not found');
 
       if (!await _networkChecker.isConnected) {
-        throw NetworkNotConnectedException();
+        throw const NetworkNotConnectedException();
       }
 
       final membership = await _userRepository.getMembershipFromServer(

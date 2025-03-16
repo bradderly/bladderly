@@ -4,6 +4,6 @@ class PasswordAttemptsExceededException extends DomainException {
   const PasswordAttemptsExceededException()
       : super(
           title: 'Sign-in Failed',
-          message: 'Too many sign-in attempts. Please try again in a few hours.',
+          message: 'Sign-in failed multiple body',
         );
 }

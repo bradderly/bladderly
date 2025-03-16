@@ -1,5 +1,7 @@
+import 'package:bladderly/domain/exception/code_mismatch_exception.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/forgot_password/bloc/forgot_password_bloc.dart';
 import 'package:bladderly/presentation/feature/forgot_password/cubit/forgot_password_form_cubit.dart';
@@ -14,6 +16,19 @@ import 'package:go_router/go_router.dart';
 class ForgotPasswordView extends StatelessWidget {
   const ForgotPasswordView({super.key});
 
+  Future<void> _onChangePasswordFailure(BuildContext context, ForgotPasswordChangePasswordFailure state) async {
+    context.pop();
+
+    return switch (state.exception) {
+      final CodeMismatchException exception => CommonErrorModal.showFromDominException(
+          context,
+          onTap: context.pop,
+          exception: exception,
+        ),
+      _ => null,
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<ForgotPasswordBloc, ForgotPasswordState>(
@@ -23,7 +38,7 @@ class ForgotPasswordView extends StatelessWidget {
         ForgotPasswordSendVerificationCodeFailure() => context.pop(),
         ForgotPasswordChangePasswordInProgress() => ProgressIndicatorModal.show(context),
         ForgotPasswordChangePasswordSuccess() => const SignInRoute().go(context),
-        ForgotPasswordChangePasswordFailure() => context.pop(),
+        ForgotPasswordChangePasswordFailure() => _onChangePasswordFailure(context, state),
         _ => null,
       },
       child: Scaffold(

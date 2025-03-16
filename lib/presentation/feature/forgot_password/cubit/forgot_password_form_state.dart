@@ -60,7 +60,7 @@ class ForgotPasswordFormState extends Equatable {
   }
 
   bool get isPasswordAtLeastOneSpecialCharacter {
-    return RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(password);
+    return password.checkHasLeastOneSpecialCharacter;
   }
 
   bool get isVerficationCodeValid {

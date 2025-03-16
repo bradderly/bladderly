@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:bladderly/core/di/di.dart';
+import 'package:bladderly/core/network_checker/network_checker.dart';
 import 'package:bladderly/core/recorder/recorder_module.dart';
 import 'package:bladderly/domain/exception/domain_exception.dart';
+import 'package:bladderly/domain/exception/network_not_connected_exception.dart';
 import 'package:bladderly/domain/model/plan.dart';
 import 'package:bladderly/presentation/common/bloc/device_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/plan_bloc.dart';
@@ -131,6 +134,18 @@ class _LockedHomeSoundInputWidget extends HomeSoundInputWidget {
 
   @override
   Future<void> _onTap(BuildContext context) async {
+    final isNetworkConnected = await getIt<NetworkChecker>().isConnected;
+
+    if (!context.mounted) return;
+
+    if (!isNetworkConnected) {
+      return CommonErrorModal.showFromDominException<void>(
+        context,
+        onTap: context.pop,
+        exception: const NetworkNotConnectedException(),
+      );
+    }
+
     final completer = Completer<List<Plan>>();
 
     context.read<PlanBloc>().add(PlanGetPlans.subscription(completer: completer));

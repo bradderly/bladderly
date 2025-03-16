@@ -8,6 +8,7 @@ import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 import 'package:bladderly/data/isar/isar_client.dart';
 import 'package:bladderly/data/isar/schema/apple_credential_entity.dart';
 import 'package:bladderly/data/mapper/user_mapper.dart';
+import 'package:bladderly/domain/exception/code_mismatch_exception.dart';
 import 'package:bladderly/domain/exception/invalid_user_exception.dart';
 import 'package:bladderly/domain/exception/not_found_apple_credential_exception.dart';
 import 'package:bladderly/domain/exception/not_found_user_exception.dart';
@@ -272,9 +273,13 @@ class AuthRepositoryImpl implements AuthRepository {
     required String email,
     required String password,
     required String verificationCode,
-  }) {
-    return _apiClient
+  }) async {
+    final response = await _apiClient
         .confirmPassword(request: ConfirmPwRequest(email: email, newPw: password, verificationCode: verificationCode))
         .then((response) => response.body!);
+
+    if (response.message?.contains('CodeMismatchException') == true) {
+      throw const CodeMismatchException();
+    }
   }
 }

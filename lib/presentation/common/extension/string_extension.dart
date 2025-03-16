@@ -21,4 +21,8 @@ extension StringExtension on String {
   bool validateEmail() {
     return RegExp(r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+').hasMatch(this);
   }
+
+  bool get checkHasLeastOneSpecialCharacter {
+    return RegExp(r'''[!"#$%&\'()*+,\-./:;<=>?@\[\\\]^_`{|}~]''').hasMatch(this);
+  }
 }

@@ -10,6 +10,7 @@ abstract class UserModel extends Equatable {
     required this.id,
     required this.gender,
     required this.yearOfBirth,
+    required this.signUpMethod,
   });
 
   factory UserModel.fromDomain(User user) {
@@ -18,6 +19,7 @@ abstract class UserModel extends Equatable {
         id: user.userId,
         gender: user.gender,
         yearOfBirth: user.yearOfBirth,
+        signUpMethod: user.signUpMethod,
       );
     }
 
@@ -28,6 +30,7 @@ abstract class UserModel extends Equatable {
       name: user.name ?? 'Bladderly User',
       disease: user.disease ?? '',
       email: user.email!,
+      signUpMethod: user.signUpMethod,
     );
   }
 
@@ -37,11 +40,14 @@ abstract class UserModel extends Equatable {
 
   final int yearOfBirth;
 
+  final SignUpMethod signUpMethod;
+
   @override
   List<Object?> get props => [
         id,
         gender,
         yearOfBirth,
+        signUpMethod,
       ];
 }
 
@@ -50,6 +56,7 @@ class GuestUserModel extends UserModel {
     required super.id,
     required super.gender,
     required super.yearOfBirth,
+    required super.signUpMethod,
   });
 }
 
@@ -58,6 +65,7 @@ class RegularUserModel extends UserModel {
     required super.id,
     required super.gender,
     required super.yearOfBirth,
+    required super.signUpMethod,
     required this.name,
     required this.email,
     required this.disease,
