@@ -21,10 +21,10 @@ class PurchasePlanUsecase {
   }) async {
     try {
       if (productId == Product.threeDaysPass.id) {
-        // await _paymentRepository.purchaseWithoutIap(
-        //   productId: productId,
-        //   userId: userId,
-        // );
+        await _paymentRepository.purchaseWithoutIap(
+          productId: productId,
+          userId: userId,
+        );
 
         final membership = await _userRepository.getMembershipFromServer(userId: userId);
 
