@@ -5,7 +5,7 @@ import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/password_input_field.dart';
 import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:bladderly/presentation/feature/sign_in/widget/sign_in_field_widget.dart';
-import 'package:bladderly/presentation/feature/sign_up/regular/cubit/sign_up_regular_form_cubit.dart';
+import 'package:bladderly/presentation/feature/sign_up/method/cubit/sign_up_method_form_cubit.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:flutter/material.dart';
 // Package imports:
@@ -13,24 +13,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:gap/gap.dart';
 
-class SignUpRegularAccountInfoView extends StatefulWidget {
-  const SignUpRegularAccountInfoView({
+class SignUpMethodAccountInfoView extends StatelessWidget {
+  const SignUpMethodAccountInfoView({
     super.key,
-    required this.pageController,
+    required this.onContinue,
   });
 
-  final PageController pageController;
+  final VoidCallback onContinue;
 
-  @override
-  State<SignUpRegularAccountInfoView> createState() => _SignUpRegularAccountInfoViewState();
-}
-
-class _SignUpRegularAccountInfoViewState extends State<SignUpRegularAccountInfoView>
-    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-
     return Stack(
       children: [
         ListView(
@@ -42,7 +34,7 @@ class _SignUpRegularAccountInfoViewState extends State<SignUpRegularAccountInfoV
             ),
             const Gap(24),
             Text(
-              'It’s free, secure and easy.\nWe will save your data safely.'.tr(context),
+              'Just 3 seconds is enough. Sign up and store your data for free and securely!'.tr(context),
               style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade10),
             ),
             const Gap(44),
@@ -54,7 +46,7 @@ class _SignUpRegularAccountInfoViewState extends State<SignUpRegularAccountInfoV
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: TextField(
-                  onChanged: (value) => context.read<SignUpRegularFormCubit>().setEmail(value),
+                  onChanged: (value) => context.read<SignUpMethodFormCubit>().setEmail(value),
                   autocorrect: false,
                   enableSuggestions: false,
                   decoration: const InputDecoration(
@@ -70,10 +62,10 @@ class _SignUpRegularAccountInfoViewState extends State<SignUpRegularAccountInfoV
             const Gap(24),
             SignInFieldWidget(
               text: 'Password'.tr(context),
-              child: BlocBuilder<SignUpRegularFormCubit, SignUpRegularFormState>(
+              child: BlocBuilder<SignUpMethodFormCubit, SignUpMethodFormState>(
                 builder: (context, state) => PasswordInputField(
-                  onChanged: context.read<SignUpRegularFormCubit>().setPassword,
-                  onToggleObsecureText: context.read<SignUpRegularFormCubit>().toggleObsecurePassword,
+                  onChanged: context.read<SignUpMethodFormCubit>().setPassword,
+                  onToggleObsecureText: context.read<SignUpMethodFormCubit>().toggleObsecurePassword,
                   obsecureText: state.obsecurePassword,
                 ),
               ),
@@ -84,7 +76,7 @@ class _SignUpRegularAccountInfoViewState extends State<SignUpRegularAccountInfoV
               style: context.textStyleTheme.b14SemiBold.copyWith(color: context.colorTheme.neutral.shade6),
             ),
             const Gap(16),
-            BlocBuilder<SignUpRegularFormCubit, SignUpRegularFormState>(
+            BlocBuilder<SignUpMethodFormCubit, SignUpMethodFormState>(
               buildWhen: (previous, current) => previous.password != current.password,
               builder: (context, state) => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,10 +127,10 @@ class _SignUpRegularAccountInfoViewState extends State<SignUpRegularAccountInfoV
           child: KeyboardVisibilityBuilder(
             builder: (context, isKeyboardVisible) => isKeyboardVisible
                 ? const SizedBox.shrink()
-                : BlocSelector<SignUpRegularFormCubit, SignUpRegularFormState, bool>(
+                : BlocSelector<SignUpMethodFormCubit, SignUpMethodFormState, bool>(
                     selector: (state) => state.isValid,
                     builder: (context, isValid) => PrimaryButton.filled(
-                      onPressed: isValid ? () => widget.pageController.jumpToPage(1) : null,
+                      onPressed: isValid ? onContinue : null,
                       backgroundColor:
                           isValid ? context.colorTheme.vermilion.primary.shade50 : context.colorTheme.neutral.shade6,
                       borderRadius: 400,
@@ -153,7 +145,4 @@ class _SignUpRegularAccountInfoViewState extends State<SignUpRegularAccountInfoV
       ],
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

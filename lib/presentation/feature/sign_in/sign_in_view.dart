@@ -11,10 +11,10 @@ import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
 import 'package:bladderly/presentation/common/widget/password_input_field.dart';
 import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
+import 'package:bladderly/presentation/common/widget/social_signin_button_widget.dart';
 import 'package:bladderly/presentation/feature/sign_in/bloc/signin_bloc.dart';
 import 'package:bladderly/presentation/feature/sign_in/cubit/sign_in_form_cubit.dart';
 import 'package:bladderly/presentation/feature/sign_in/widget/sign_in_field_widget.dart';
-import 'package:bladderly/presentation/feature/sign_in/widget/sign_in_social_signin_button_widget.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/intro_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
@@ -201,7 +201,7 @@ class SignInView extends StatelessWidget {
                 ),
               ),
               const Gap(32),
-              SignInSocialSigninButtonWidget(
+              SocialSigninButtonWidget(
                 onTap: (signUpMethod) => context.read<SignInBloc>().add(SignInSocial(signUpMethod: signUpMethod)),
               ),
             ],

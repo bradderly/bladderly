@@ -3,10 +3,10 @@ import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'sign_up_regular_form_state.dart';
+part 'sign_up_method_form_state.dart';
 
-class SignUpRegularFormCubit extends Cubit<SignUpRegularFormState> {
-  SignUpRegularFormCubit() : super(const SignUpRegularFormState());
+class SignUpMethodFormCubit extends Cubit<SignUpMethodFormState> {
+  SignUpMethodFormCubit() : super(const SignUpMethodFormState());
 
   void setEmail(String email) {
     emit(state.copyWith(email: email));
@@ -18,5 +18,9 @@ class SignUpRegularFormCubit extends Cubit<SignUpRegularFormState> {
 
   void toggleObsecurePassword(bool obsecurePassword) {
     emit(state.copyWith(obsecurePassword: obsecurePassword));
+  }
+
+  void reset() {
+    emit(const SignUpMethodFormState());
   }
 }

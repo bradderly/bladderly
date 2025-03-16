@@ -95,9 +95,11 @@ class _WaitHowToUseHomeSoundInputWidget extends HomeSoundInputWidget {
               ),
               child: Row(
                 children: [
-                  Text(
-                    'Learn to use this function before starting'.tr(context),
-                    style: context.textStyleTheme.b14SemiBold.copyWith(color: context.colorTheme.neutral.shade0),
+                  Expanded(
+                    child: Text(
+                      'Learn to use this function before starting'.tr(context).applyWordBreak(),
+                      style: context.textStyleTheme.b14SemiBold.copyWith(color: context.colorTheme.neutral.shade0),
+                    ),
                   ),
                   RotatedBox(
                     quarterTurns: 1,

@@ -4,6 +4,7 @@ import 'package:bladderly/domain/exception/age_restriction_exception.dart';
 import 'package:bladderly/domain/model/sex.dart';
 import 'package:bladderly/domain/model/user.dart';
 import 'package:bladderly/domain/repository/auth_repository.dart';
+import 'package:bladderly/domain/repository/user_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
@@ -11,9 +12,12 @@ import 'package:injectable/injectable.dart';
 class SignUpGuestUsecase {
   const SignUpGuestUsecase({
     required AuthRepository authRepository,
-  }) : _authRepository = authRepository;
+    required UserRepository userRepository,
+  })  : _authRepository = authRepository,
+        _userRepository = userRepository;
 
   final AuthRepository _authRepository;
+  final UserRepository _userRepository;
 
   Future<Either<Exception, User>> call({
     required Gender gender,
@@ -29,6 +33,8 @@ class SignUpGuestUsecase {
         gender: gender,
         yearOfBirth: yearOfBirth,
       );
+
+      _userRepository.saveUser(user);
 
       return Right(user);
     } on Exception catch (e) {

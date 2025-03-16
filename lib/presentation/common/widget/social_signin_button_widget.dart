@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:nil/nil.dart';
 
-class SignInSocialSigninButtonWidget extends StatelessWidget {
-  const SignInSocialSigninButtonWidget({
+class SocialSigninButtonWidget extends StatelessWidget {
+  const SocialSigninButtonWidget({
     super.key,
     required this.onTap,
   });

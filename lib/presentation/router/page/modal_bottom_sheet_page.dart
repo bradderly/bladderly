@@ -38,10 +38,10 @@ class ModalBottomSheetPage<T> extends Page<T> {
       closeProgressThreshold: closeProgressThreshold,
       containerBuilder: containerBuilder,
       builder: (context) => SafeArea(
+        bottom: false,
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: Container(
-            margin: EdgeInsets.only(top: MediaQuery.sizeOf(context).height * 0.05 - MediaQuery.paddingOf(context).top),
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.vertical(top: Radius.circular(16)),

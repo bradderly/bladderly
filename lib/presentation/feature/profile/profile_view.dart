@@ -19,8 +19,8 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 // Package imports:
 
-class ProfileModal extends StatelessWidget {
-  const ProfileModal({super.key});
+class ProfileView extends StatelessWidget {
+  const ProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +82,7 @@ class ProfileModal extends StatelessWidget {
                         const SizedBox(height: 16),
                         GestureDetector(
                           behavior: HitTestBehavior.translucent,
-                          onTap: () => const SignUpRegularRoute().go(context),
+                          onTap: () => const SignUpMethodRoute().push<void>(context),
                           child: Container(
                             alignment: Alignment.center,
                             padding: const EdgeInsets.symmetric(
@@ -93,7 +93,7 @@ class ProfileModal extends StatelessWidget {
                               borderRadius: BorderRadius.circular(400),
                             ),
                             child: Text(
-                              'Create an Account or Sign In'.tr(context),
+                              'Create an Account'.tr(context),
                               textAlign: TextAlign.center,
                               style:
                                   context.textStyleTheme.b16SemiBold.copyWith(color: context.colorTheme.neutral.shade0),
@@ -207,7 +207,7 @@ class ProfileModal extends StatelessWidget {
                   onTap: () => const ChangePasswordRoute().go(context),
                 ),
                 TextIconArrowForm(
-                  title: 'Sign out'.tr(context),
+                  title: 'Sign Out'.tr(context),
                   icon: Icons.logout,
                   onTap: () => SignOutModal.show(context),
                 ),

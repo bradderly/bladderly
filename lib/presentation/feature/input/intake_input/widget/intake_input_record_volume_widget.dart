@@ -64,7 +64,13 @@ class _IntakeInputRecordVolumeWidgetState extends State<IntakeInputRecordVolumeW
               final recordVolumeModel = IntakeInputRecordVolumeModel.values[index];
 
               return GestureDetector(
-                onTap: () => widget.onChangedVolume(recordVolumeModel.copyWith(value: widget.recordVolumeModel?.value)),
+                onTap: () {
+                  if (recordVolumeModel is IntakeInputDrinkMoreVolumeModel) {
+                    widget.focusNode.requestFocus();
+                  }
+
+                  widget.onChangedVolume(recordVolumeModel.copyWith(value: widget.recordVolumeModel?.value));
+                },
                 child: _buildVolumeType(
                   isSelected: recordVolumeModel.runtimeType == widget.recordVolumeModel.runtimeType,
                   recordVolumeModel: recordVolumeModel,

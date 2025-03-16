@@ -1,7 +1,7 @@
-part of 'sign_up_regular_form_cubit.dart';
+part of 'sign_up_method_form_cubit.dart';
 
-class SignUpRegularFormState extends Equatable {
-  const SignUpRegularFormState({
+class SignUpMethodFormState extends Equatable {
+  const SignUpMethodFormState({
     this.email = '',
     this.password = '',
     this.obsecurePassword = true,
@@ -42,12 +42,12 @@ class SignUpRegularFormState extends Equatable {
     return RegExp(r'[!@#$%^&*(),.?":{}|<>-]').hasMatch(password);
   }
 
-  SignUpRegularFormState copyWith({
+  SignUpMethodFormState copyWith({
     String? email,
     String? password,
     bool? obsecurePassword,
   }) {
-    return SignUpRegularFormState(
+    return SignUpMethodFormState(
       email: email ?? this.email,
       password: password ?? this.password,
       obsecurePassword: obsecurePassword ?? this.obsecurePassword,

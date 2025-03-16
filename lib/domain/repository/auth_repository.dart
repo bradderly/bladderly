@@ -24,8 +24,9 @@ abstract class AuthRepository {
     required String disease,
   });
 
-  /// SNS 로그인을 통한 회원가입
+  /// SNS 로그인을 통한 회원가입 userId가 있는 경우 정회원 전환, 없는 경우 회원 가입
   Future<User> signUpSocial({
+    required String? userId,
     required SignUpMethod signUpMethod,
     required Gender gender,
     required int yearOfBirth,

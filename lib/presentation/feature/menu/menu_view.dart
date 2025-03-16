@@ -8,6 +8,7 @@ import 'package:bladderly/presentation/common/cubit/unit_cubit.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
+import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/router/route/about_route.dart';
 import 'package:bladderly/presentation/router/route/export_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
@@ -18,7 +19,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 class MenuView extends StatelessWidget {
   const MenuView({super.key});
@@ -28,6 +28,15 @@ class MenuView extends StatelessWidget {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
+        appBar: ModalAppBar(
+          backgroundColor: context.colorTheme.neutral.shade2,
+          title: 'Menu'.tr(context),
+          titleStyle: context.textStyleTheme.b24Bold.copyWith(
+            color: context.colorTheme.neutral.shade10,
+          ),
+          toolbarHeight: 69,
+          centerTitle: false,
+        ),
         backgroundColor: context.colorTheme.neutral.shade2,
         body: SafeArea(
           child: Padding(
@@ -35,27 +44,6 @@ class MenuView extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 18),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Menu'.tr(context),
-                          style: context.textStyleTheme.b24BoldOutfit.copyWith(
-                            color: context.colorTheme.neutral.shade10,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: context.pop,
-                          icon: Icon(
-                            Icons.close,
-                            color: context.colorTheme.neutral.shade8,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                   SettingsSection(
                     title: 'Profile'.tr(context),
                     items: [

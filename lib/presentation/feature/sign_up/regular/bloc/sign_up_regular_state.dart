@@ -11,6 +11,27 @@ final class SignUpRegularInitial extends SignUpRegularState {
   const SignUpRegularInitial();
 }
 
+final class SignUpRegularCheckDuplicateEmailInProgress extends SignUpRegularState {
+  const SignUpRegularCheckDuplicateEmailInProgress();
+}
+
+final class SignUpRegularCheckDuplicateEmailSuccess extends SignUpRegularState {
+  const SignUpRegularCheckDuplicateEmailSuccess();
+}
+
+final class SignUpRegularCheckDuplicateEmailFailure extends SignUpRegularState {
+  const SignUpRegularCheckDuplicateEmailFailure({
+    required this.exception,
+  });
+
+  final Exception exception;
+
+  @override
+  List<Object> get props => [
+        exception,
+      ];
+}
+
 final class SignUpRegularSubmitInProgress extends SignUpRegularState {
   const SignUpRegularSubmitInProgress();
 }

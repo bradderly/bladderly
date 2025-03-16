@@ -4,6 +4,7 @@
 import 'dart:async';
 
 import 'package:bladderly/domain/model/history.dart';
+import 'package:bladderly/domain/model/sign_up_method.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
 import 'package:bladderly/presentation/feature/diary/detailed_list/detailed_list_builder.dart';
@@ -16,6 +17,8 @@ import 'package:bladderly/presentation/feature/menu/contact_us/contact_us_builde
 import 'package:bladderly/presentation/feature/menu/faq/faq_view.dart';
 import 'package:bladderly/presentation/feature/menu/language/language_view.dart';
 import 'package:bladderly/presentation/feature/menu/menu_builder.dart';
+import 'package:bladderly/presentation/feature/sign_up/consent/sign_up_consent_builder.dart';
+import 'package:bladderly/presentation/feature/sign_up/method/sign_up_method_builder.dart';
 import 'package:bladderly/presentation/feature/sign_up/regular/sign_up_regular_builder.dart';
 import 'package:bladderly/presentation/feature/tutorial/guide_tour/guide_tour_view.dart';
 import 'package:bladderly/presentation/feature/tutorial/how_to_use/how_to_use_view.dart';
@@ -67,10 +70,23 @@ enum MainRouteTab {
       path: 'export-paywall',
     ),
     TypedGoRoute<MenuRoute>(
-      path: 'menu',
       name: 'menu',
+      path: 'menu',
       routes: [
-        TypedGoRoute<SignUpRegularRoute>(path: 'sign-up', name: 'sign-up-regular'),
+        TypedGoRoute<SignUpMethodRoute>(
+          name: 'sign-up-method',
+          path: 'sign-up',
+          routes: [
+            TypedGoRoute<SignUpConsentRoute>(
+              name: 'sign-up-consent',
+              path: 'consent',
+            ),
+            TypedGoRoute<SignUpRegularRoute>(
+              name: 'sign-up-regular',
+              path: 'sign-up',
+            ),
+          ],
+        ),
         TypedGoRoute<AboutRoute>(
           path: 'about',
           name: 'about',
@@ -337,14 +353,73 @@ class DetailedListRoute extends GoRouteData {
   }
 }
 
-class SignUpRegularRoute extends GoRouteData {
-  const SignUpRegularRoute();
+class SignUpMethodRoute extends GoRouteData {
+  const SignUpMethodRoute();
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
     return CupertinoPage<void>(
       key: state.pageKey,
-      child: const SignUpRegularBuilder(),
+      fullscreenDialog: true,
+      child: const SignUpMethodBuilder(),
+    );
+  }
+}
+
+class SignUpRegularRouteExtra extends Equatable {
+  const SignUpRegularRouteExtra({
+    required this.signUpMethod,
+    required this.email,
+    required this.password,
+  });
+
+  final SignUpMethod signUpMethod;
+  final String email;
+  final String password;
+
+  @override
+  List<Object> get props => [
+        signUpMethod,
+        email,
+        password,
+      ];
+}
+
+class SignUpRegularRoute extends GoRouteData {
+  const SignUpRegularRoute({
+    this.$extra,
+  });
+  final SignUpRegularRouteExtra? $extra;
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: SignUpRegularBuilder(
+        signUpMethod: $extra!.signUpMethod,
+        email: $extra!.email,
+        password: $extra!.password,
+      ),
+    );
+  }
+
+  @override
+  FutureOr<String?> redirect(BuildContext context, GoRouterState state) {
+    if ($extra == null) {
+      return const ProfileRoute().location;
+    }
+
+    return super.redirect(context, state);
+  }
+}
+
+class SignUpConsentRoute extends GoRouteData {
+  const SignUpConsentRoute();
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: const SignUpConsentBuilder(),
     );
   }
 }

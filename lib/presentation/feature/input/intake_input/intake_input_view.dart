@@ -36,10 +36,12 @@ class IntakeInputView extends StatefulWidget {
 }
 
 class _IntakeInputViewState extends State<IntakeInputView> {
+  final recordTypeFocusNode = FocusNode(debugLabel: 'recordTypeFocusNode');
   final recordVolumeFocusNode = FocusNode(debugLabel: 'recordVolumeFocusNode');
 
   @override
   void dispose() {
+    recordTypeFocusNode.dispose();
     recordVolumeFocusNode.dispose();
     super.dispose();
   }
@@ -118,6 +120,7 @@ class _IntakeInputViewState extends State<IntakeInputView> {
                         selector: (state) => state.beverageModel,
                         builder: (context, beverageModel) => IntakeInputBeverageTypeWidget(
                           onChanged: context.read<IntakeInputFormCubit>().setBeverageModel,
+                          focusNode: recordTypeFocusNode,
                           beverageModel: beverageModel,
                         ),
                       ),

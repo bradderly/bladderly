@@ -1,23 +1,27 @@
 // Package imports:
-import 'package:dartz/dartz.dart';
-import 'package:injectable/injectable.dart';
-
 // Project imports:
 import 'package:bladderly/domain/model/sex.dart';
 import 'package:bladderly/domain/model/sign_up_method.dart';
 import 'package:bladderly/domain/model/user.dart';
 import 'package:bladderly/domain/repository/auth_repository.dart';
+import 'package:bladderly/domain/repository/user_repository.dart';
 import 'package:bladderly/domain/util/password_util.dart';
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class SignUpSocialUsecase {
   const SignUpSocialUsecase({
     required AuthRepository authRepository,
-  }) : _authRepository = authRepository;
+    required UserRepository userRepository,
+  })  : _authRepository = authRepository,
+        _userRepository = userRepository;
 
   final AuthRepository _authRepository;
+  final UserRepository _userRepository;
 
   Future<Either<Exception, User>> call({
+    required String? userId,
     required SignUpMethod signUpMethod,
     required Gender gender,
     required int yearOfBirth,
@@ -27,6 +31,7 @@ class SignUpSocialUsecase {
   }) async {
     try {
       final user = await _authRepository.signUpSocial(
+        userId: userId,
         signUpMethod: signUpMethod,
         gender: gender,
         yearOfBirth: yearOfBirth,
@@ -35,6 +40,8 @@ class SignUpSocialUsecase {
         userName: userName,
         disease: disease,
       );
+
+      _userRepository.saveUser(user);
 
       return Right(user);
     } catch (e) {

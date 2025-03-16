@@ -68,9 +68,7 @@ class AuthRepositoryImpl implements AuthRepository {
       throw UnknownException(message: response.message!);
     }
 
-    final user = UserMapper.fromLoginResponseUserInfo(userInfo: userInfo, email: email);
-
-    return _saveUserToLocal(user);
+    return UserMapper.fromLoginResponseUserInfo(userInfo: userInfo, email: email);
   }
 
   @override
@@ -88,14 +86,12 @@ class AuthRepositoryImpl implements AuthRepository {
 
     final response = await _apiClient.signUp(request: signUpRequest).then((response) => response.body!);
 
-    final user = User(
+    return User(
       userId: response.id!,
       gender: gender,
       yearOfBirth: yearOfBirth,
       signUpMethod: SignUpMethod.N,
     );
-
-    return _saveUserToLocal(user);
   }
 
   @override
@@ -129,6 +125,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<User> signUpSocial({
+    required String? userId,
     required SignUpMethod signUpMethod,
     required Gender gender,
     required int yearOfBirth,
@@ -138,6 +135,7 @@ class AuthRepositoryImpl implements AuthRepository {
     required String disease,
   }) async {
     final signUpRequest = SignUpRequest(
+      id: userId,
       gender: gender.name,
       birthyear: '$yearOfBirth',
       social: signUpMethod.name,
@@ -151,7 +149,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
     final response = await _apiClient.signUp(request: signUpRequest).then((response) => response.body!);
 
-    final user = User(
+    return User(
       userId: response.id!,
       signUpMethod: signUpMethod,
       gender: gender,
@@ -160,8 +158,6 @@ class AuthRepositoryImpl implements AuthRepository {
       name: userName,
       disease: disease,
     );
-
-    return _saveUserToLocal(user);
   }
 
   @override
@@ -253,12 +249,6 @@ class AuthRepositoryImpl implements AuthRepository {
     final response = await _apiClient.checkPromo(userId: userId, code: code).then((response) => response.body!);
 
     return response.message ?? (throw Exception('Check Promo failed'));
-  }
-
-  User _saveUserToLocal(User user) {
-    _isarClient.saveUser(UserMapper.toUserEntity(user));
-
-    return user;
   }
 
   void _clearUserFromLocal() {

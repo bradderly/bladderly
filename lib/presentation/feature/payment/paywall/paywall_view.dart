@@ -93,7 +93,6 @@ abstract class PaywallView extends StatelessWidget {
           backgroundColor: Colors.transparent,
           appBar: ModalAppBar(
             backgroundColor: Colors.transparent,
-            backButton: false,
             toolbarHeight: 45,
           ),
           body: SafeArea(

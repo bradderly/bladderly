@@ -27,13 +27,14 @@ class SignUpEmailUsecase {
     required String password,
     required String userName,
     required String disease,
+    required SignUpMethod signUpMethod,
   }) async {
     try {
       final user = _userRepository.getUserOrNullByUserId(userId)?.copyWith(
             email: email,
             name: userName,
             disease: disease,
-            signUpMethod: SignUpMethod.E,
+            signUpMethod: signUpMethod,
           );
 
       if (user == null) {
@@ -47,7 +48,7 @@ class SignUpEmailUsecase {
         disease: user.disease!,
         gender: user.gender.name,
         yearOfBirth: '${user.yearOfBirth}',
-        signUpMethod: SignUpMethod.E.name,
+        signUpMethod: user.signUpMethod.name,
         password: password,
       );
 

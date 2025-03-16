@@ -10,11 +10,13 @@ class ModalAppBar extends AppBar {
     super.key,
     super.backgroundColor,
     String? title,
+    TextStyle? titleStyle,
     bool backButton = false,
     Color? iconColor,
     double toolbarHeight = 92,
+    bool centerTitle = true,
   }) : super(
-          centerTitle: true,
+          centerTitle: centerTitle,
           automaticallyImplyLeading: false,
           leading: backButton
               ? Builder(
@@ -29,9 +31,10 @@ class ModalAppBar extends AppBar {
               : Builder(
                   builder: (context) => Text(
                     title,
-                    style: context.textStyleTheme.b16SemiBold.copyWith(
-                      color: context.colorTheme.neutral.shade10,
-                    ),
+                    style: titleStyle ??
+                        context.textStyleTheme.b16SemiBold.copyWith(
+                          color: context.colorTheme.neutral.shade10,
+                        ),
                   ),
                 ),
           actions: backButton

@@ -37,8 +37,8 @@ class CommonErrorModal extends StatelessWidget {
 
   static Future<T?> showFromDominException<T>(
     BuildContext context, {
+    required VoidCallback onTap,
     required DomainException exception,
-    VoidCallback? onTap,
     bool barrierDismissible = false,
   }) {
     return show<T>(

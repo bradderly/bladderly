@@ -13,11 +13,29 @@ class IntakeInputBeverageTypeWidget extends StatelessWidget {
   const IntakeInputBeverageTypeWidget({
     super.key,
     required this.onChanged,
+    required this.focusNode,
     required this.beverageModel,
   });
 
   final ValueChanged<IntakeInputBeverageModel> onChanged;
+  final FocusNode focusNode;
   final IntakeInputBeverageModel? beverageModel;
+
+  void _onTap(
+    BuildContext context, {
+    required BeverageTypeModel beverageTypeModel,
+  }) {
+    if (beverageTypeModel == BeverageTypeModel.others) {
+      focusNode.requestFocus();
+    }
+
+    onChanged(
+      switch (beverageModel) {
+        final IntakeInputBeverageModel beverageModel => beverageModel.copyWith(typeModel: beverageTypeModel),
+        _ => IntakeInputBeverageModel.onlyType(beverageTypeModel),
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +58,7 @@ class IntakeInputBeverageTypeWidget extends StatelessWidget {
             return GestureDetector(
               onTap: () => beverageModel?.typeModel == beverageTypeModel
                   ? null
-                  : onChanged(
-                      switch (beverageModel) {
-                        final IntakeInputBeverageModel beverageModel =>
-                          beverageModel.copyWith(typeModel: beverageTypeModel),
-                        _ => IntakeInputBeverageModel.onlyType(beverageTypeModel),
-                      },
-                    ),
+                  : _onTap(context, beverageTypeModel: beverageTypeModel),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
                 decoration: BoxDecoration(
@@ -105,9 +117,9 @@ class IntakeInputBeverageTypeWidget extends StatelessWidget {
                     const Gap(16),
                     TextFormField(
                       onChanged: (value) => onChanged(beverageModel.copyWith(typeValue: value)),
+                      focusNode: focusNode,
                       initialValue: beverageModel.typeValue,
                       scrollPadding: const EdgeInsets.only(bottom: 12),
-                      autofocus: true,
                       autocorrect: false,
                       enableSuggestions: false,
                       decoration: InputDecoration(
