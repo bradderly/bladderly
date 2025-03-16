@@ -14,9 +14,12 @@ import 'package:bladderly/presentation/common/extension/datetime_extension.dart'
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/feature/symptom/model/symptom_survey_result_model.dart';
+import 'package:bladderly/presentation/feature/symptom/scores/cubit/symptom_scores_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class SymptomResultView extends StatelessWidget {
   const SymptomResultView({
@@ -26,124 +29,134 @@ class SymptomResultView extends StatelessWidget {
 
   final Score score;
 
-  SymptomSurveyResultModel get result => SymptomSurveyResultModel.fromTotalScore(score.totalScore, score.type);
+  SymptomSurveyResultModel get result => SymptomSurveyResultModel.fromTotalScore(
+        totalScore: score.totalScore,
+        surveyType: score.type,
+      );
 
   @override
   Widget build(BuildContext context) {
-    final isIPSS = score.type == ScoreType.IPSS;
-
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.only(top: 40, bottom: 28),
-      child: Column(
-        children: [
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              children: [
-                ModalAppBar(title: score.type.name.tr(context)),
-                const Gap(40),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _buildDate(context),
-                    const Gap(40),
-                    Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.only(top: 24, bottom: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: context.shadowTheme.shadow1,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: GaugeWidget(
-                        totalScore: score.totalScore,
-                        scoreType: score.type,
-                      ),
-                    ),
-                    const Gap(32),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: IntrinsicHeight(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: List.generate(7, (index) {
-                            if (index.isEven) {
-                              return VerticalDivider(
-                                color: context.colorTheme.neutral.shade4,
-                                width: 1,
-                                thickness: 1,
-                              );
-                            }
-
-                            final result = isIPSS
-                                ? SymptomSurveyResultModel.values.sublist(1)[index ~/ 2]
-                                : SymptomSurveyResultModel.values.sublist(1)[index ~/ 2];
-
-                            return Expanded(
-                              child: Column(
-                                children: [
-                                  Text(
-                                    result.text.tr(context),
-                                    style: context.textStyleTheme.b14SemiBold.copyWith(
-                                      color: context.colorTheme.neutral.shade7,
-                                    ),
-                                  ),
-                                  Text(
-                                    isIPSS
-                                        ? '${result.ipssMin}-${result.ipssMax}'
-                                        : '${result.oabssMin}-${result.oabssMax}',
-                                    style: context.textStyleTheme.b14SemiBold.copyWith(
-                                      color: context.colorTheme.neutral.shade7,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }),
+    return Scaffold(
+      appBar: ModalAppBar(title: score.type.name.tr(context)),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView(
+                controller: ModalScrollController.of(context),
+                physics: const ClampingScrollPhysics(),
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _buildDate(context),
+                      const Gap(40),
+                      Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.only(top: 24, bottom: 20),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: context.shadowTheme.shadow1,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: GaugeWidget(
+                          totalScore: score.totalScore,
+                          scoreType: score.type,
                         ),
                       ),
-                    ),
-                    const Gap(32),
-                    Text(
-                      result.description.applyWordBreak(),
-                      style: context.textStyleTheme.b16Medium.copyWith(
-                        color: context.colorTheme.neutral.shade10,
+                      const Gap(32),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: IntrinsicHeight(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: List.generate(7, (index) {
+                              if (index.isEven) {
+                                return VerticalDivider(
+                                  color: context.colorTheme.neutral.shade4,
+                                  width: 1,
+                                  thickness: 1,
+                                );
+                              }
+
+                              final result = SymptomSurveyResultModel.values.sublist(1)[index ~/ 2];
+
+                              return Expanded(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      result.text.tr(context),
+                                      style: context.textStyleTheme.b14SemiBold.copyWith(
+                                        color: context.colorTheme.neutral.shade7,
+                                      ),
+                                    ),
+                                    Text(
+                                      switch (score.type) {
+                                        ScoreType.IPSS => '${result.ipssMin}-${result.ipssMax}',
+                                        ScoreType.OABSS => '${result.oabssMin}-${result.oabssMax}',
+                                      },
+                                      style: context.textStyleTheme.b14SemiBold.copyWith(
+                                        color: context.colorTheme.neutral.shade7,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+                          ),
+                        ),
                       ),
-                    ),
-                    const Gap(20),
-                    Text(
-                      'This is not a diagnosis. Consult with your doctor or medical professional if you have concerns about your condition.'
-                          .tr(context),
-                      style: context.textStyleTheme.b14Medium.copyWith(
-                        color: context.colorTheme.neutral.shade6,
+                      const Gap(32),
+                      if (score.type == ScoreType.IPSS) ...[
+                        Text(
+                          result.description.tr(context).applyWordBreak(),
+                          style: context.textStyleTheme.b16Medium.copyWith(
+                            color: context.colorTheme.neutral.shade10,
+                          ),
+                        ),
+                        const Gap(20),
+                      ],
+                      Text(
+                        'This is not a diagnosis. Consult with your doctor or medical professional if you have concerns about your condition.'
+                            .tr(context),
+                        style: context.textStyleTheme.b14Medium.copyWith(
+                          color: context.colorTheme.neutral.shade6,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                const Gap(24),
-              ],
-            ),
-          ),
-          GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: context.pop,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
-              decoration: BoxDecoration(
-                color: context.colorTheme.vermilion.primary.shade50,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                'Confirm'.tr(context),
-                style: context.textStyleTheme.b16SemiBold.copyWith(
-                  color: context.colorTheme.neutral.shade0,
-                ),
+                    ],
+                  ),
+                  const Gap(24),
+                ],
               ),
             ),
-          ),
-          const Gap(12),
-        ],
+            GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () => switch (score.type) {
+                ScoreType.IPSS => context
+                  ..read<SymptomScoresCubit>().expandIpss()
+                  ..pop(),
+                ScoreType.OABSS => context
+                  ..read<SymptomScoresCubit>().expandOabss()
+                  ..pop(),
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
+                decoration: BoxDecoration(
+                  color: context.colorTheme.vermilion.primary.shade50,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  'Confirm'.tr(context),
+                  style: context.textStyleTheme.b16SemiBold.copyWith(
+                    color: context.colorTheme.neutral.shade0,
+                  ),
+                ),
+              ),
+            ),
+            const Gap(12),
+          ],
+        ),
       ),
     );
   }
@@ -177,8 +190,8 @@ class GaugeWidget extends StatelessWidget {
   final ScoreType scoreType;
 
   SymptomSurveyResultModel get result => SymptomSurveyResultModel.fromTotalScore(
-        totalScore,
-        scoreType,
+        surveyType: scoreType,
+        totalScore: totalScore,
       );
 
   @override

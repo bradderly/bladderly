@@ -233,23 +233,4 @@ class _ManualInputVoidingWidgetState extends State<ManualInputVoidingWidget> wit
       ),
     );
   }
-
-  //   Widget _buildSaveButton() {
-  //   return ListenableBuilder(
-  //     listenable: recordVolumeFocusNode,
-  //     builder: (context, child) => Positioned.fill(
-  //       top: null,
-  //       bottom: 28 + (recordVolumeFocusNode.hasFocus ? 51 : 0),
-  //       child: child!,
-  //     ),
-  //     child: Center(
-  //       child: BlocBuilder<ManualInputVoidingFormCubit, ManualInputVoidingFormState>(
-  //         buildWhen: (prev, curr) => prev.isValid != curr.isValid,
-  //         builder: (context, state) => InputSaveButton(
-  //           onPressed: state.isValid ? () => _onSave(context, state) : null,
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 }

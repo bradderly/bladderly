@@ -4,6 +4,7 @@
 import 'dart:async';
 
 import 'package:bladderly/domain/model/history.dart';
+import 'package:bladderly/domain/model/score_type.dart';
 import 'package:bladderly/domain/model/sign_up_method.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
@@ -110,9 +111,19 @@ enum MainRouteTab {
               path: 'symptom-scores',
               name: 'symptom-scores',
               routes: [
-                TypedGoRoute<SymptomSurveyRoute>(
-                  path: 'symptom-survey',
-                  name: 'symptom-survey',
+                TypedGoRoute<SymptomDetailRoute>(
+                  path: 'symptom-detail',
+                  name: 'symptom-detail',
+                ),
+                TypedGoRoute<SymptomIntroduceRoute>(
+                  path: 'symptom-introduce',
+                  name: 'symptom-introduce',
+                  routes: [
+                    TypedGoRoute<SymptomSurveyRoute>(
+                      path: 'symptom-survey',
+                      name: 'symptom-survey',
+                    ),
+                  ],
                 ),
                 TypedGoRoute<SymptomResultRoute>(
                   path: 'symptom-result',

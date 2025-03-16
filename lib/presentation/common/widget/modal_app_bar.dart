@@ -9,14 +9,13 @@ class ModalAppBar extends AppBar {
   ModalAppBar({
     super.key,
     super.backgroundColor,
-    String? title,
-    TextStyle? titleStyle,
+    double super.toolbarHeight = 92,
+    bool super.centerTitle = true,
     bool backButton = false,
     Color? iconColor,
-    double toolbarHeight = 92,
-    bool centerTitle = true,
+    String? title,
+    TextStyle? titleStyle,
   }) : super(
-          centerTitle: centerTitle,
           automaticallyImplyLeading: false,
           leading: backButton
               ? Builder(
@@ -51,7 +50,41 @@ class ModalAppBar extends AppBar {
                   ),
                   const Gap(4),
                 ],
-          toolbarHeight: toolbarHeight,
+          systemOverlayStyle: backgroundColor == Colors.transparent ? SystemUiOverlayStyle.dark : null,
+        );
+
+  ModalAppBar.withTitleWidget({
+    super.key,
+    super.backgroundColor,
+    super.title,
+    double super.toolbarHeight = 92,
+    bool super.centerTitle = true,
+    bool backButton = false,
+    Color? iconColor,
+  }) : super(
+          automaticallyImplyLeading: false,
+          leading: backButton
+              ? Builder(
+                  builder: (context) => IconButton(
+                    onPressed: context.pop,
+                    icon: Assets.icon.icCommonArrowBack.svg(),
+                  ),
+                )
+              : null,
+          actions: backButton
+              ? null
+              : [
+                  Builder(
+                    builder: (context) => IconButton(
+                      onPressed: context.pop,
+                      icon: Icon(
+                        Icons.close,
+                        color: iconColor ?? context.colorTheme.neutral.shade10,
+                      ),
+                    ),
+                  ),
+                  const Gap(4),
+                ],
           systemOverlayStyle: backgroundColor == Colors.transparent ? SystemUiOverlayStyle.dark : null,
         );
 }

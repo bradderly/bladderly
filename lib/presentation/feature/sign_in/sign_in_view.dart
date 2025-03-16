@@ -91,8 +91,14 @@ class SignInView extends StatelessWidget {
       listener: (context, state) => switch (state) {
         SignInInProgress() => ProgressIndicatorModal.show(context),
         SignInEmailFailure() => _onEmailFailure(context, state),
-        SignInEmailSuccess() => const MainRoute().go(context),
-        SignInSocialSuccess() => const MainRoute().go(context),
+        SignInEmailSuccess() => Future.delayed(
+            const Duration(milliseconds: 100),
+            context.mounted ? () => const MainRoute().go(context) : null,
+          ),
+        SignInSocialSuccess() => Future.delayed(
+            const Duration(milliseconds: 100),
+            context.mounted ? () => const MainRoute().go(context) : null,
+          ),
         SignInSocialFailure() => _onSocialFailure(context, state),
         _ => null,
       },

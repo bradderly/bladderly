@@ -30,7 +30,7 @@ class ForgotPasswordSendVerificationCodeView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 24).copyWith(top: 30, bottom: 104),
           children: [
             Text(
-              'We will email you a verification code to reset your password',
+              'We will email you a verification code to reset your password'.tr(context),
               style: context.textStyleTheme.b24Bold.copyWith(
                 color: context.colorTheme.neutral.shade10,
               ),

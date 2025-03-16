@@ -7,17 +7,19 @@ import 'package:bladderly/presentation/common/extension/build_context_extension.
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/util/text_size_util.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
+import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/symptom/model/symptom_survey_model.dart';
-import 'package:bladderly/presentation/feature/symptom/symptom_survey/bloc/symptom_survey_bloc.dart';
-import 'package:bladderly/presentation/feature/symptom/symptom_survey/cubit/symptom_survey_form_cubit.dart';
-import 'package:bladderly/presentation/feature/symptom/symptom_survey/widget/symptom_survey_radio_button.dart';
+import 'package:bladderly/presentation/feature/symptom/survey/bloc/symptom_survey_bloc.dart';
+import 'package:bladderly/presentation/feature/symptom/survey/cubit/symptom_survey_form_cubit.dart';
+import 'package:bladderly/presentation/feature/symptom/survey/widget/symptom_survey_radio_button.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:bladderly/presentation/router/route/symptom_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class SymptomSurveyView extends StatefulWidget {
   const SymptomSurveyView({super.key, required this.symptomSurveyModel});
@@ -53,7 +55,9 @@ class _SymptomSurveyViewState extends State<SymptomSurveyView> {
   }
 
   Future<void> onSubmitSuccess(BuildContext context, SymptomSurveySubmitSuccess state) async {
-    const SymptomScoresRoute().go(context);
+    context.pop();
+
+    SymptomResultRoute($extra: SymptomResultRouteExtra(score: state.score)).go(context);
   }
 
   @override
@@ -71,109 +75,97 @@ class _SymptomSurveyViewState extends State<SymptomSurveyView> {
           if (didPop) return;
           onPreviousQuestion();
         },
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
-          color: Colors.white,
-          child: Column(
-            children: [
-              ModalAppBar(title: widget.symptomSurveyModel.scoreType.name.tr(context)),
-              const SizedBox(height: 39.5),
-              Expanded(
-                child: BlocBuilder<SymptomSurveyFormCubit, SymptomSurveyFormState>(
-                  builder: (context, state) {
-                    final question = widget.symptomSurveyModel.questions[state.index];
+        child: Scaffold(
+          appBar: ModalAppBar(title: widget.symptomSurveyModel.scoreType.name.tr(context)),
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: BlocBuilder<SymptomSurveyFormCubit, SymptomSurveyFormState>(
+                      builder: (context, state) {
+                        final question = widget.symptomSurveyModel.questions[state.index];
 
-                    return ListView(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      children: [
-                        _buildProgressBar(
-                          context,
-                          current: state.index + 1,
-                          max: widget.symptomSurveyModel.questionCount,
-                        ),
-                        const Gap(40),
-                        _buildQuestionTitle(question.title),
-                        const Gap(24),
-                        _buildQuestionDescription(question.content),
-                        const Gap(40),
-                        ...List.generate(
-                          question.answers.length * 2 - 1,
-                          (index) {
-                            if (index.isOdd) return const Gap(24);
-
-                            final answer = question.answers[index ~/ 2];
-                            final isSelected = state.answers.contains(answer);
-
-                            return GestureDetector(
-                              onTap: () => context.read<SymptomSurveyFormCubit>().setAnswer(answer),
-                              behavior: HitTestBehavior.translucent,
-                              child: SymptomSurveyAnswerWidget(
-                                isSelected: isSelected,
-                                answer: answer,
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.translucent,
-                        onTap: onPreviousQuestion,
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          decoration: BoxDecoration(
-                            color: context.colorTheme.neutral.shade6,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            '<- ${'Previous'.tr(context)}',
-                            style: context.textStyleTheme.b16SemiBold.copyWith(
-                              color: context.colorTheme.neutral.shade0,
+                        return ListView(
+                          controller: ModalScrollController.of(context),
+                          physics: const ClampingScrollPhysics(),
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          children: [
+                            _buildProgressBar(
+                              context,
+                              current: state.index + 1,
+                              max: widget.symptomSurveyModel.questionCount,
                             ),
+                            const Gap(40),
+                            _buildQuestionTitle(question.title),
+                            const Gap(24),
+                            _buildQuestionDescription(question.content),
+                            const Gap(40),
+                            ...List.generate(
+                              question.answers.length * 2 - 1,
+                              (index) {
+                                if (index.isOdd) return const Gap(24);
+
+                                final answer = question.answers[index ~/ 2];
+                                final isSelected = state.answers.contains(answer);
+
+                                return GestureDetector(
+                                  onTap: () => context.read<SymptomSurveyFormCubit>().setAnswer(answer),
+                                  behavior: HitTestBehavior.translucent,
+                                  child: SymptomSurveyAnswerWidget(
+                                    isSelected: isSelected,
+                                    answer: answer,
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: PrimaryButton.filled(
+                            onPressed: onPreviousQuestion,
+                            backgroundColor: context.colorTheme.neutral.shade6,
+                            borderRadius: 8,
+                            shape: BoxShape.rectangle,
+                            text: '<- ${'Previous'.tr(context)}'.tr(context),
+                            textColor: context.colorTheme.neutral.shade0,
+                            size: const Size(256, 43),
                           ),
                         ),
-                      ),
-                    ),
-                    const Gap(16),
-                    BlocSelector<SymptomSurveyFormCubit, SymptomSurveyFormState, bool>(
-                      selector: (state) => state.hasAnswer,
-                      builder: (context, hasAnswer) => Expanded(
-                        child: GestureDetector(
-                          behavior: HitTestBehavior.translucent,
-                          onTap: hasAnswer ? onNextQuestion : null,
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            decoration: BoxDecoration(
-                              color: hasAnswer
+                        const Gap(16),
+                        BlocBuilder<SymptomSurveyFormCubit, SymptomSurveyFormState>(
+                          buildWhen: (prev, curr) => prev.hasAnswer != curr.hasAnswer,
+                          builder: (context, state) => Expanded(
+                            child: PrimaryButton.filled(
+                              onPressed: state.hasAnswer ? onNextQuestion : null,
+                              backgroundColor: state.hasAnswer
                                   ? context.colorTheme.vermilion.primary.shade50
                                   : context.colorTheme.neutral.shade6,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Text(
-                              '${'Next'.tr(context)} ->',
-                              style: context.textStyleTheme.b16SemiBold.copyWith(
-                                color: context.colorTheme.neutral.shade0,
-                              ),
+                              borderRadius: 8,
+                              shape: BoxShape.rectangle,
+                              text: '${state.isLastQuestion ? 'Submit'.tr(context) : 'Next'.tr(context)} ->',
+                              textColor: context.colorTheme.neutral.shade0,
+                              size: const Size(256, 43),
                             ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  const Gap(28),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

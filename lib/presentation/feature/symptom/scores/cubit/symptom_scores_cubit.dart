@@ -6,25 +6,51 @@ import 'package:bladderly/domain/usecase/get_scores_stream_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'symptom_scores_form_state.dart';
+part 'symptom_scores_state.dart';
 
-class SymptomScoresFormCubit extends Cubit<SymptomScoresFormState> {
-  SymptomScoresFormCubit({
+class SymptomScoresCubit extends Cubit<SymptomScoresState> {
+  SymptomScoresCubit({
     required GetScoresStreamUsecase getScoresStreamUsecase,
   })  : _getScoresStreamUsecase = getScoresStreamUsecase,
-        super(const SymptomScoresFormState(Scores.empty()));
+        super(const SymptomScoresState()) {
+    _listen();
+  }
 
   final GetScoresStreamUsecase _getScoresStreamUsecase;
 
   StreamSubscription<Scores>? _subscription;
 
-  void setData() {
+  void _listen() {
     _getScoresStreamUsecase().then(
       (result) => result.fold(
         (l) => null,
         (r) => _subscription = r.listen(_listener),
       ),
     );
+  }
+
+  void expandIpss() {
+    emit(state.copyWith(isExpandedIpss: true));
+  }
+
+  void collapseIpss() {
+    emit(state.copyWith(isExpandedIpss: false));
+  }
+
+  void toggleIpss() {
+    return state.isExpandedIpss ? collapseIpss() : expandIpss();
+  }
+
+  void expandOabss() {
+    emit(state.copyWith(isExpandedOabss: true));
+  }
+
+  void collapseOabss() {
+    emit(state.copyWith(isExpandedOabss: false));
+  }
+
+  void toggleOabss() {
+    return state.isExpandedOabss ? collapseOabss() : expandOabss();
   }
 
   void _clearSubscription() {
@@ -41,6 +67,6 @@ class SymptomScoresFormCubit extends Cubit<SymptomScoresFormState> {
   void _listener(Scores scores) {
     if (isClosed) return;
 
-    emit(SymptomScoresFormState(scores));
+    emit(state.copyWith(scores: scores));
   }
 }

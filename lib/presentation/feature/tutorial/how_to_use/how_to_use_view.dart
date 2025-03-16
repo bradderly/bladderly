@@ -40,13 +40,17 @@ class _HowtouseViewState extends State<HowtouseView> {
           ],
         ),
         actions: [
-          GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () => context.pop<bool>(true),
-            child: Text(
-              'Skip ->',
-              style: context.textStyleTheme.b16SemiBold.copyWith(
-                color: context.colorTheme.vermilion.primary.shade50,
+          ListenableBuilder(
+            listenable: pageController,
+            builder: (context, child) => pageController.page?.round() == 5 ? const SizedBox.shrink() : child!,
+            child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () => context.pop<bool>(true),
+              child: Text(
+                'Skip ->',
+                style: context.textStyleTheme.b16SemiBold.copyWith(
+                  color: context.colorTheme.vermilion.primary.shade50,
+                ),
               ),
             ),
           ),

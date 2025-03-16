@@ -42,6 +42,7 @@ class SymptomSurveyModel extends Equatable {
   final ScoreType scoreType;
   final Duration _duration;
   final String description;
+
   final SymptomSurveyQuestionsModel questions;
 
   int get duration => _duration.inMinutes;

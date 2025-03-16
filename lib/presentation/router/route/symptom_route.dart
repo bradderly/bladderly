@@ -1,10 +1,16 @@
+import 'dart:async';
+
 import 'package:bladderly/domain/model/score.dart';
-import 'package:bladderly/presentation/feature/symptom/model/symptom_survey_model.dart';
+import 'package:bladderly/domain/model/score_type.dart';
+import 'package:bladderly/presentation/feature/symptom/detail/symptom_detail_modal.dart';
+import 'package:bladderly/presentation/feature/symptom/introduce/symptom_introduce_view.dart';
+import 'package:bladderly/presentation/feature/symptom/reference/symptom_reference_view.dart';
 import 'package:bladderly/presentation/feature/symptom/result/symptom_result_view.dart';
-import 'package:bladderly/presentation/feature/symptom/scores/symptom_scores_builder.dart';
-import 'package:bladderly/presentation/feature/symptom/symptom_reference/symptom_reference_view.dart';
-import 'package:bladderly/presentation/feature/symptom/symptom_survey/symptom_survey_builder.dart';
+import 'package:bladderly/presentation/feature/symptom/scores/symptom_scores_view.dart';
+import 'package:bladderly/presentation/feature/symptom/survey/symptom_survey_builder.dart';
+import 'package:bladderly/presentation/feature/symptom/symptom_builder.dart';
 import 'package:bladderly/presentation/router/page/modal_bottom_sheet_page.dart';
+import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
@@ -16,37 +22,24 @@ class SymptomScoresRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const SymptomScoresBuilder();
+    return const SymptomScoresView();
   }
-}
-
-class SymptomSurveyRouteExtra extends Equatable {
-  const SymptomSurveyRouteExtra({
-    required this.symptomSurveyModel,
-  });
-
-  final SymptomSurveyModel symptomSurveyModel;
-
-  @override
-  List<Object> get props => [
-        symptomSurveyModel,
-      ];
 }
 
 class SymptomSurveyRoute extends GoRouteData {
   const SymptomSurveyRoute({
-    required this.$extra,
+    required this.scoreType,
   });
 
   static final $parentNavigatorKey = SymptomShellRoute.$navigatorKey;
 
-  final SymptomSurveyRouteExtra? $extra;
+  final ScoreType scoreType;
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
     return CupertinoPage<void>(
       key: state.pageKey,
-      child: SymptomSurveyBuilder(symptomSurveyModel: $extra!.symptomSurveyModel),
+      child: SymptomSurveyBuilder(scoreType: scoreType),
     );
   }
 }
@@ -89,7 +82,7 @@ class SymptomShellRoute extends ShellRouteData {
   Page<void> pageBuilder(BuildContext context, GoRouterState state, Widget navigator) {
     return ModalBottomSheetPage<void>(
       key: state.pageKey,
-      builder: (context) => navigator,
+      builder: (context) => SymptomBuilder(navigator: navigator),
     );
   }
 }
@@ -104,6 +97,63 @@ class SymptomReferenceRoute extends GoRouteData {
     return CupertinoPage<void>(
       key: state.pageKey,
       child: const SymptomReferenceView(),
+    );
+  }
+}
+
+class SymptomDetailRouteExtra extends Equatable {
+  const SymptomDetailRouteExtra({
+    required this.score,
+  });
+
+  final Score score;
+
+  @override
+  List<Object> get props => [
+        score,
+      ];
+}
+
+class SymptomDetailRoute extends GoRouteData {
+  const SymptomDetailRoute({
+    required this.$extra,
+  });
+
+  static final $parentNavigatorKey = SymptomShellRoute.$navigatorKey;
+
+  final SymptomDetailRouteExtra? $extra;
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: SymptomDetailView(
+        score: $extra!.score,
+      ),
+    );
+  }
+
+  @override
+  FutureOr<String?> redirect(BuildContext context, GoRouterState state) {
+    if ($extra == null) return const SymptomScoresRoute().location;
+
+    return super.redirect(context, state);
+  }
+}
+
+class SymptomIntroduceRoute extends GoRouteData {
+  const SymptomIntroduceRoute({required this.scoreType});
+
+  final ScoreType scoreType;
+  static final $parentNavigatorKey = SymptomShellRoute.$navigatorKey;
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return CupertinoPage<void>(
+      key: state.pageKey,
+      child: SymptomIntroduceView(
+        scoreType: scoreType,
+      ),
     );
   }
 }
