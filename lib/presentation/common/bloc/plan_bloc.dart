@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bladderly/domain/model/plan.dart';
 import 'package:bladderly/domain/model/product.dart';
 import 'package:bladderly/domain/usecase/get_paywall_plans_usecase.dart';
@@ -13,7 +15,7 @@ class PlanBloc extends Bloc<PlanEvent, PlanState> {
     required GetPaywallPlansUsecase getPaywallPlansUsecase,
   })  : _getPaywallPlansUsecase = getPaywallPlansUsecase,
         super(const PlanInitial()) {
-    on<PlanGetPlans>(_onGetPlans, transformer: restartable());
+    on<PlanGetPlans>(_onGetPlans, transformer: droppable());
   }
 
   final GetPaywallPlansUsecase _getPaywallPlansUsecase;
@@ -25,7 +27,10 @@ class PlanBloc extends Bloc<PlanEvent, PlanState> {
 
     result.fold(
       (exception) => emit(PlanGetPlansFailure(exception: exception)),
-      (plans) => emit(PlanGetPlansSuccess(plans: plans)),
+      (plans) {
+        event.completer?.complete(plans);
+        emit(PlanGetPlansSuccess(plans: plans));
+      },
     );
   }
 }

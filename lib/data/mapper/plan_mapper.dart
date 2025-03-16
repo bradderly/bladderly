@@ -9,8 +9,8 @@ abstract class PlanMapper {
     return Plan(
       product: Product.fromId(productDetails.id),
       name: productDetails.title,
-      price: productDetails.rawPrice,
-      originPrice: productDetails.rawPrice,
+      price: double.tryParse(productDetails.price.replaceAll(RegExp('[^0-9.]'), '')) ?? productDetails.rawPrice,
+      originPrice: double.tryParse(productDetails.price.replaceAll(RegExp('[^0-9.]'), '')) ?? productDetails.rawPrice,
       symbol: productDetails.currencySymbol,
     );
   }

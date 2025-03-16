@@ -82,7 +82,7 @@ class PlanView extends StatelessWidget {
                       },
                     ),
                     TextArrow(
-                      title: 'Enter Promo Code'.tr(context),
+                      title: 'Enter promo code'.tr(context),
                       onTap: () => const PromoCodeRoute().go(context),
                     ),
                     const Gap(130),

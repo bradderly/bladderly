@@ -59,7 +59,7 @@ class PlanSubscriptionWidget extends StatelessWidget {
                 Assets.icon.icPaymentCheck.svg(),
                 const Gap(4),
                 Text(
-                  ['Automatic voiding volume measurement', 'Unlimited PDF export'][index].tr(context),
+                  ['Automatic voiding volume measurement', 'PDF export reports'][index].tr(context),
                   style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.neutral.shade10),
                 ),
               ],

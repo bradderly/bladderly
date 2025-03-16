@@ -1,13 +1,20 @@
+import 'dart:async';
+import 'dart:ui';
+
 import 'package:bladderly/core/recorder/recorder_module.dart';
 import 'package:bladderly/domain/exception/domain_exception.dart';
+import 'package:bladderly/domain/model/plan.dart';
 import 'package:bladderly/presentation/common/bloc/device_bloc.dart';
+import 'package:bladderly/presentation/common/bloc/plan_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+import 'package:bladderly/presentation/router/route/payment_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 abstract class HomeSoundInputWidget extends StatelessWidget {
@@ -97,7 +104,7 @@ class _WaitHowToUseHomeSoundInputWidget extends HomeSoundInputWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      'Learn to use this function before starting'.tr(context).applyWordBreak(),
+                      'lock msg howto'.tr(context).applyWordBreak(),
                       style: context.textStyleTheme.b14SemiBold.copyWith(color: context.colorTheme.neutral.shade0),
                     ),
                   ),
@@ -121,10 +128,73 @@ class _LockedHomeSoundInputWidget extends HomeSoundInputWidget {
   const _LockedHomeSoundInputWidget({
     super.key,
   }) : super._();
+
   @override
   Future<void> _onTap(BuildContext context) async {
-    // TODO: implement _onTap
+    final completer = Completer<List<Plan>>();
+
+    context.read<PlanBloc>().add(PlanGetPlans.subscription(completer: completer));
+
+    final plans = await completer.future;
+
+    if (context.mounted) return PaywallRoute($extra: PaywallRouteExtra(plans: plans)).push<void>(context);
   }
+
+  @override
+  Widget _buildOverlayWidget(BuildContext context) => Stack(
+        fit: StackFit.expand,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+              child: ColoredBox(
+                color: const Color(0xFFBCBCB7).withValues(alpha: 0.6),
+              ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+            decoration: BoxDecoration(
+              color: context.colorTheme.neutral.shade0.withValues(alpha: 0.72),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Row(
+                    children: [
+                      Assets.icon.icHomeLock.svg(),
+                      const Gap(9),
+                      Expanded(
+                        child: Text(
+                          'lock msg pay'.tr(context).applyWordBreak(),
+                          style: context.textStyleTheme.b14SemiBold.copyWith(color: context.colorTheme.neutral.shade10),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Gap(7),
+                Padding(
+                  padding: const EdgeInsets.only(left: 49),
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(text: 'lock msg pay link'.tr(context)),
+                        const TextSpan(text: ' ->'),
+                      ],
+                      style: context.textStyleTheme.b14SemiBold
+                          .copyWith(color: context.colorTheme.vermilion.primary.shade50),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
 }
 
 class _UnlockedHomeSoundInputWidget extends HomeSoundInputWidget {
@@ -143,20 +213,11 @@ class _UnlockedHomeSoundInputWidget extends HomeSoundInputWidget {
     if (!context.mounted) return;
 
     if (!granted) {
-      return showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Microphone permission title'.tr(context)),
-          content: Text('Microphone permission body'.tr(context)),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Okay'.tr(context)),
-            ),
-          ],
-        ),
+      return CommonErrorModal.show<void>(
+        context,
+        onTap: context.pop,
+        title: 'Microphone permission title',
+        content: 'Microphone permission body',
       );
     }
 

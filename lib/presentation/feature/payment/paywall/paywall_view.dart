@@ -154,7 +154,7 @@ abstract class PaywallView extends StatelessWidget {
                 border: Border(bottom: BorderSide(color: context.colorTheme.vermilion.primary.shade40)),
               ),
               child: Text(
-                'Enter Promo Code'.tr(context),
+                'Enter promo code'.tr(context),
                 style: context.textStyleTheme.b14SemiBold.copyWith(
                   color: context.colorTheme.vermilion.primary.shade40,
                 ),
