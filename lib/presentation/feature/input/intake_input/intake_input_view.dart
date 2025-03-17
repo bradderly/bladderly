@@ -4,6 +4,7 @@ import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/main_tab_cubit.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
 import 'package:bladderly/presentation/common/widget/common_keyboard_actions.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/input/intake_input/bloc/intake_input_bloc.dart';
@@ -38,6 +39,15 @@ class IntakeInputView extends StatefulWidget {
 class _IntakeInputViewState extends State<IntakeInputView> {
   final recordTypeFocusNode = FocusNode(debugLabel: 'recordTypeFocusNode');
   final recordVolumeFocusNode = FocusNode(debugLabel: 'recordVolumeFocusNode');
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (context.read<IntakeInputFormCubit>().state.beverageModel?.typeModel == BeverageTypeModel.others) {
+      recordTypeFocusNode.requestFocus();
+    }
+  }
 
   @override
   void dispose() {
