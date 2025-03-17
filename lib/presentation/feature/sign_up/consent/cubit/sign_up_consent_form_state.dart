@@ -2,9 +2,9 @@ part of 'sign_up_consent_form_cubit.dart';
 
 class SignUpConsentFormState extends Equatable {
   const SignUpConsentFormState({
-    this.agreedToTermAndPrivacyPolicy = false,
-    this.agreedToPersonalDataCollectionAndProcessing = false,
-    this.agreedToDataTransferAndStorageOutside = false,
+    this.agreedToTermAndPrivacyPolicy = true,
+    this.agreedToPersonalDataCollectionAndProcessing = true,
+    this.agreedToDataTransferAndStorageOutside = true,
   });
 
   final bool agreedToTermAndPrivacyPolicy;

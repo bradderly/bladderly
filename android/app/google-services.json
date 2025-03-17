@@ -39,6 +39,14 @@
           }
         },
         {
+          "client_id": "588541542318-ohepetj7s99i78tlfqik5qnh96s1mvnu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.soundable.diaryandroid.us",
+            "certificate_hash": "02c15c1472cea53babf0a91ccf7d388ce0b00f56"
+          }
+        },
+        {
           "client_id": "588541542318-fdr7o3dojdjabdt6nj44k8f07chd88sr.apps.googleusercontent.com",
           "client_type": 3
         }

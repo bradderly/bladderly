@@ -114,10 +114,11 @@ class SignUpConsentView extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 74),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    begin: const Alignment(0.50, 0),
-                    end: const Alignment(0.50, 0.29),
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: const [0.0, 0.3],
                     colors: [
-                      context.colorTheme.neutral.shade0.withValues(alpha: 0),
+                      context.colorTheme.neutral.shade0.withAlpha(0),
                       context.colorTheme.neutral.shade0,
                     ],
                   ),
@@ -139,7 +140,7 @@ class SignUpConsentView extends StatelessWidget {
                             isValid ? context.colorTheme.vermilion.primary.shade50 : context.colorTheme.neutral.shade2,
                         borderRadius: 400,
                         shape: BoxShape.rectangle,
-                        text: 'Yes, Delete the record'.tr(context),
+                        text: 'Accept All and Create Account'.tr(context),
                         textColor: isValid ? context.colorTheme.neutral.shade0 : context.colorTheme.neutral.shade10,
                         size: const Size.fromHeight(56),
                       ),
