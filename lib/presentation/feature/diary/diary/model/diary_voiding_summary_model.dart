@@ -2,14 +2,14 @@
 // Project imports:
 import 'package:bladderly/domain/model/histories.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
-import 'package:bladderly/presentation/common/extension/double_extension.dart';
 import 'package:bladderly/presentation/common/extension/duration_extension.dart';
+import 'package:bladderly/presentation/common/extension/num_extension.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 
 class DiaryVoidingSummaryModel extends Equatable {
   const DiaryVoidingSummaryModel({
-    required List<double> volumes,
+    required List<int> volumes,
     required this.daytimeFrequency,
     required this.nighttimeFrequency,
     required this.leakageFrequency,
@@ -33,7 +33,7 @@ class DiaryVoidingSummaryModel extends Equatable {
 
   factory DiaryVoidingSummaryModel.fromDomain(Histories histories) {
     return DiaryVoidingSummaryModel(
-      volumes: histories.voidings.map((e) => e.recordVolume).toList(),
+      volumes: histories.voidings.map((e) => e.recordVolume.toRoundVolume()).toList(),
       daytimeFrequency: histories.voidings.daytimeFrequency,
       nighttimeFrequency: histories.voidings.nighttimeFrequency,
       leakageFrequency: histories.leakageFrequency,
@@ -45,7 +45,7 @@ class DiaryVoidingSummaryModel extends Equatable {
     );
   }
 
-  final List<double> _volumes;
+  final List<int> _volumes;
   final int daytimeFrequency;
   final int nighttimeFrequency;
   final int leakageFrequency;
@@ -59,7 +59,7 @@ class DiaryVoidingSummaryModel extends Equatable {
   ///
   ///  실제 데이터는 전부 int값을 저장하고 있어서 int값이 저장되지 않은 테스트 데이터 이외에는 전부 상관이 없음
   int getTotalVolume(BuildContext context) {
-    return _volumes.map((e) => e.toInt()).map(context.unitValue).fold<int>(0, (a, b) => a + b);
+    return _volumes.map(context.unitValue).fold<int>(0, (a, b) => a + b);
   }
 
   @override

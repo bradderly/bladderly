@@ -106,7 +106,7 @@ class HomeVoidingWidget extends StatelessWidget {
                 Text(
                   [
                     '${homeVoidingSummaryModel.frequency}',
-                    '${homeVoidingSummaryModel.totalVoid}',
+                    '${homeVoidingSummaryModel.getTotalVolume(context)}',
                     homeVoidingSummaryModel.lastRecord,
                   ][index ~/ 2],
                   style: context.textStyleTheme.b24Bold.copyWith(color: context.colorTheme.neutral.shade10),

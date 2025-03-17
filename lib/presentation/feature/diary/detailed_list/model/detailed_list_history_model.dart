@@ -3,7 +3,7 @@
 // Project imports:
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/leakage_volume.dart';
-import 'package:bladderly/presentation/common/extension/double_extension.dart';
+import 'package:bladderly/presentation/common/extension/num_extension.dart';
 import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 // Package imports:
@@ -43,7 +43,7 @@ sealed class DetailedListHistoryModel extends Equatable {
           recordTime: history.recordTime,
           memo: history.memo,
           beverageType: history.beverageType,
-          recordVolume: history.recordVolume,
+          recordVolume: history.recordVolume.toRoundVolume(),
         ),
     };
   }
