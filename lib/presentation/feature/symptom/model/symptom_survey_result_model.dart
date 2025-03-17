@@ -43,59 +43,60 @@ enum SymptomSurveyResultModel {
 
   const SymptomSurveyResultModel({
     required this.text,
-    required this.description,
+    required String description,
     required this.ipssMin,
     required this.ipssMax,
     required this.oabssMin,
     required this.oabssMax,
-  });
+  }) : _description = description;
 
   factory SymptomSurveyResultModel.fromTotalScore({
     required ScoreType surveyType,
     required int totalScore,
   }) {
-    for (final model in SymptomSurveyResultModel.values) {
-      final min = surveyType == ScoreType.IPSS ? model.ipssMin : model.oabssMin;
-      final max = surveyType == ScoreType.IPSS ? model.ipssMax : model.oabssMax;
+    return SymptomSurveyResultModel.values.firstWhere(
+      (model) {
+        final min = surveyType == ScoreType.IPSS ? model.ipssMin : model.oabssMin;
+        final max = surveyType == ScoreType.IPSS ? model.ipssMax : model.oabssMax;
 
-      if (totalScore >= min && totalScore <= max) {
-        return model;
-      }
-    }
-
-    throw ArgumentError('Invalid score: $totalScore');
+        return totalScore >= min && totalScore <= max;
+      },
+    );
   }
 
   final String text;
-  final String description;
+  final String _description;
   final int ipssMin;
   final int ipssMax;
   final int oabssMin;
   final int oabssMax;
 
   SvgGenImage get icon {
-    switch (this) {
-      case noSymptom:
-        return Assets.icon.icSymptomFace1;
-      case mild:
-        return Assets.icon.icSymptomFace2;
-      case moderate:
-        return Assets.icon.icSymptomFace3;
-      case severe:
-        return Assets.icon.icSymptomFace4;
-    }
+    return switch (this) {
+      noSymptom => Assets.icon.icSymptomFace1,
+      mild => Assets.icon.icSymptomFace2,
+      moderate => Assets.icon.icSymptomFace3,
+      severe => Assets.icon.icSymptomFace4,
+    };
   }
 
   Color get color {
-    switch (this) {
-      case noSymptom:
-        return const Color(0xFF94A22F);
-      case mild:
-        return const Color(0xFF94A22F);
-      case moderate:
-        return const Color(0xFFFF8D38);
-      case severe:
-        return const Color(0xFFFF6442);
+    return switch (this) {
+      noSymptom => const Color(0xFF94A22F),
+      mild => const Color(0xFF94A22F),
+      moderate => const Color(0xFFFF8D38),
+      severe => const Color(0xFFFF6442),
+    };
+  }
+
+  String getDescription({
+    required ScoreType scoreType,
+    required int? qolScore,
+  }) {
+    if (this == moderate && scoreType == ScoreType.IPSS && (qolScore ?? 0) > 2) {
+      return 'Your score indicates moderate prostate symptoms with noticeable discomfort. It is recommended to seek medical assistance. Medication or procedures may be necessary.';
     }
+
+    return _description;
   }
 }

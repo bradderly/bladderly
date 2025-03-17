@@ -21,6 +21,10 @@ class Score extends Equatable {
     return answers[index];
   }
 
+  int? get qolAnswer {
+    return type == ScoreType.IPSS ? answers[7] : null;
+  }
+
   int get totalScore {
     return List.generate(answers.length, getScoreByAnswerIndex).reduce((a, b) => a + b);
   }
