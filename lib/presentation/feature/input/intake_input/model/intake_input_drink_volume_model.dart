@@ -61,7 +61,7 @@ sealed class IntakeInputRecordVolumeModel extends Equatable {
 final class IntakeInputDrinkSmallVolumeModel extends IntakeInputRecordVolumeModel {
   const IntakeInputDrinkSmallVolumeModel({
     required super.value,
-  }) : super._(type: 'Small', typeValue: '236');
+  }) : super._(type: 'Small', typeValue: '240');
 
   @override
   SvgGenImage get icon => Assets.icon.icInputDrinkVolumeSmall;
@@ -70,7 +70,7 @@ final class IntakeInputDrinkSmallVolumeModel extends IntakeInputRecordVolumeMode
 final class IntakeInputDrinkMediumVolumeModel extends IntakeInputRecordVolumeModel {
   const IntakeInputDrinkMediumVolumeModel({
     required super.value,
-  }) : super._(type: 'Medium', typeValue: '354');
+  }) : super._(type: 'Medium', typeValue: '360');
 
   @override
   SvgGenImage get icon => Assets.icon.icInputDrinkVolumeMedium;
@@ -79,7 +79,7 @@ final class IntakeInputDrinkMediumVolumeModel extends IntakeInputRecordVolumeMod
 final class IntakeInputDrinkLargeVolumeModel extends IntakeInputRecordVolumeModel {
   const IntakeInputDrinkLargeVolumeModel({
     required super.value,
-  }) : super._(type: 'Large', typeValue: '473');
+  }) : super._(type: 'Large', typeValue: '480');
 
   @override
   SvgGenImage get icon => Assets.icon.icInputDrinkVolumeLarge;
