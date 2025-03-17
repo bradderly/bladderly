@@ -1,13 +1,15 @@
 // Package imports:
 // Project imports:
 import 'package:bladderly/domain/model/histories.dart';
+import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/double_extension.dart';
 import 'package:bladderly/presentation/common/extension/duration_extension.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/widgets.dart';
 
 class DiaryVoidingSummaryModel extends Equatable {
   const DiaryVoidingSummaryModel({
-    required this.totalVolume,
+    required List<double> volumes,
     required this.daytimeFrequency,
     required this.nighttimeFrequency,
     required this.leakageFrequency,
@@ -16,10 +18,10 @@ class DiaryVoidingSummaryModel extends Equatable {
     required this.maxInterval,
     required this.meanInterval,
     required this.minInterval,
-  });
+  }) : _volumes = volumes;
 
   const DiaryVoidingSummaryModel.none()
-      : totalVolume = 0,
+      : _volumes = const [],
         daytimeFrequency = 0,
         nighttimeFrequency = 0,
         leakageFrequency = 0,
@@ -31,7 +33,7 @@ class DiaryVoidingSummaryModel extends Equatable {
 
   factory DiaryVoidingSummaryModel.fromDomain(Histories histories) {
     return DiaryVoidingSummaryModel(
-      totalVolume: histories.voidings.totalVolume.toRoundVolume(),
+      volumes: histories.voidings.map((e) => e.recordVolume).toList(),
       daytimeFrequency: histories.voidings.daytimeFrequency,
       nighttimeFrequency: histories.voidings.nighttimeFrequency,
       leakageFrequency: histories.leakageFrequency,
@@ -43,7 +45,7 @@ class DiaryVoidingSummaryModel extends Equatable {
     );
   }
 
-  final int totalVolume;
+  final List<double> _volumes;
   final int daytimeFrequency;
   final int nighttimeFrequency;
   final int leakageFrequency;
@@ -53,9 +55,17 @@ class DiaryVoidingSummaryModel extends Equatable {
   final String meanInterval;
   final String minInterval;
 
+  /// 로컬 DB를 double로 설계해서 int로 파싱 필요
+  ///
+  ///  실제 데이터는 전부 int값을 저장하고 있어서 int값이 저장되지 않은 테스트 데이터 이외에는 전부 상관이 없음
+  int getTotalVolume(BuildContext context) {
+    return _volumes.map((e) => e.toInt()).map(context.unitValue).fold<int>(0, (a, b) => a + b);
+  }
+
   @override
   List<Object?> get props => [
-        totalVolume,
+        _volumes,
+        getTotalVolume,
         daytimeFrequency,
         nighttimeFrequency,
         leakageFrequency,
