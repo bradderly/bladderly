@@ -198,26 +198,26 @@ class ProfileView extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 TextIconArrowForm(
+                  onTap: () => const PasscodeRoute().go(context),
                   title: 'Set Up Passcode'.tr(context),
                   icon: Icons.lock,
-                  onTap: () => const PasscodeRoute().go(context),
                 ),
                 if (userModel.signUpMethod == SignUpMethod.E)
                   TextIconArrowForm(
+                    onTap: () => const ChangePasswordRoute().go(context),
                     title: 'Change Password'.tr(context),
                     icon: Icons.lock_open,
-                    onTap: () => const ChangePasswordRoute().go(context),
                   ),
                 if (userModel is RegularUserModel)
                   TextIconArrowForm(
+                    onTap: () => SignOutModal.show(context),
                     title: 'Sign Out'.tr(context),
                     icon: Icons.logout,
-                    onTap: () => SignOutModal.show(context),
                   ),
                 TextIconArrowForm(
-                  title: 'Delete Account'.tr(context),
-                  icon: Icons.delete_outline,
                   onTap: () => const DeleteAccountRoute().go(context),
+                  title: userModel is GuestUserModel ? 'Delete All Data'.tr(context) : 'Delete Account'.tr(context),
+                  icon: Icons.delete_outline,
                 ),
                 const SizedBox(height: 40),
               ],
