@@ -5,6 +5,7 @@ import 'package:bladderly/domain/exception/not_found_apple_credential_exception.
 import 'package:bladderly/domain/exception/not_found_user_exception.dart';
 // Flutter imports:
 import 'package:bladderly/domain/exception/password_attempts_exceeded_exception.dart';
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
@@ -64,9 +65,7 @@ class SignInView extends StatelessWidget {
               ),
               actions: [
                 TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+                  onPressed: context.pop,
                   child: Text('Okay'.tr(context)),
                 ),
               ],
@@ -87,21 +86,23 @@ class SignInView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SignInBloc, SignInState>(
-      listener: (context, state) => switch (state) {
-        SignInInProgress() => ProgressIndicatorModal.show(context),
-        SignInEmailFailure() => _onEmailFailure(context, state),
-        SignInEmailSuccess() => Future.delayed(
-            const Duration(milliseconds: 100),
-            context.mounted ? () => const MainRoute().go(context) : null,
-          ),
-        SignInSocialSuccess() => Future.delayed(
-            const Duration(milliseconds: 100),
-            context.mounted ? () => const MainRoute().go(context) : null,
-          ),
-        SignInSocialFailure() => _onSocialFailure(context, state),
-        _ => null,
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<SignInBloc, SignInState>(
+          listener: (context, state) => switch (state) {
+            SignInInProgress() => ProgressIndicatorModal.show(context),
+            SignInEmailFailure() => _onEmailFailure(context, state),
+            SignInSocialFailure() => _onSocialFailure(context, state),
+            _ => null,
+          },
+        ),
+        BlocListener<UserBloc, UserState>(
+          listener: (context, state) => switch (state) {
+            UserLoadSuccess() => const MainRoute().go(context),
+            _ => null,
+          },
+        ),
+      ],
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: 77,
