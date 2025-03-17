@@ -41,7 +41,11 @@ class _RecorderImpl implements Recorder, RecorderFileLoader {
     _subject.add(RecorderReady(recordTime: recordTime));
 
     return _recorder.start(
-      RecordConfig(bitRate: Platform.isAndroid ? 64000 : 128000, numChannels: 1),
+      RecordConfig(
+        bitRate: Platform.isAndroid ? 64000 : 128000,
+        numChannels: 1,
+        androidConfig: const AndroidRecordConfig(audioSource: AndroidAudioSource.mic),
+      ),
       path: filePath,
     );
   }
