@@ -52,7 +52,7 @@ class _IntakeInputViewState extends State<IntakeInputView> {
       hashId: context.read<UserBloc>().state.userModelOrThrowException.id,
       recordTime: state.recordTime,
       beverageType: state.beverageModel!.value,
-      recordVolume: state.recordVolumeModel!.volume,
+      recordVolume: state.unit.parseToMl(state.recordVolumeModel!.volume),
       memo: state.memo,
     );
 
