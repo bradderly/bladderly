@@ -14,3 +14,19 @@ class SignUpMethodSelect extends SignUpMethodEvent {
         method,
       ];
 }
+
+class SignUpMethodCheckDuplicateEmail extends SignUpMethodEvent {
+  const SignUpMethodCheckDuplicateEmail({
+    required this.method,
+    required this.email,
+  });
+
+  final SignUpMethod method;
+  final String email;
+
+  @override
+  List<Object?> get props => [
+        method,
+        email,
+      ];
+}

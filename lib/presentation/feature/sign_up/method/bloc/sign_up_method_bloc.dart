@@ -17,6 +17,7 @@ class SignUpMethodBloc extends Bloc<SignUpMethodEvent, SignUpMethodState> {
         _checkAlreadyExistUserUsecase = checkAlreadyExistUserUsecase,
         super(const SignUpMethodInitial()) {
     on<SignUpMethodSelect>(_onSelect, transformer: droppable());
+    on<SignUpMethodCheckDuplicateEmail>(_onCheckDuplicateEmail, transformer: droppable());
   }
 
   final SignInSocialUsecase _signInSocialUsecase;
@@ -33,16 +34,28 @@ class SignUpMethodBloc extends Bloc<SignUpMethodEvent, SignUpMethodState> {
 
     return result.fold(
       (exception) => emit(SignUpMethodSelectFailure(exception: exception, method: event.method)),
-      (email) async {
-        final result = await _checkAlreadyExistUserUsecase(email: 'sos199999@naver.com');
+      (email) => emit(SignUpMethodSelectSuccess(method: event.method, email: email)),
+    );
+  }
 
-        return result.fold(
-          (exception) => emit(SignUpMethodSelectFailure(exception: exception, method: event.method)),
-          (alreadyExist) => alreadyExist
-              ? emit(SignUpMethodSelectFailure(exception: AlreadyExistUserException(), method: event.method))
-              : emit(SignUpMethodSelectSuccess(method: event.method, email: email)),
-        );
-      },
+  Future<void> _onCheckDuplicateEmail(SignUpMethodCheckDuplicateEmail event, Emitter<SignUpMethodState> emit) async {
+    emit(SignUpMethodCheckDuplicateEmailInProgress(email: event.email, method: event.method));
+
+    final result = await _checkAlreadyExistUserUsecase(email: event.email);
+
+    return result.fold(
+      (exception) => emit(
+        SignUpMethodCheckDuplicateEmailFailure(exception: exception, email: event.email, method: event.method),
+      ),
+      (alreadyExist) => alreadyExist
+          ? emit(
+              SignUpMethodCheckDuplicateEmailFailure(
+                exception: AlreadyExistUserException(),
+                method: event.method,
+                email: event.email,
+              ),
+            )
+          : emit(SignUpMethodCheckDuplicateEmailSuccess(method: event.method, email: event.email)),
     );
   }
 }

@@ -20,16 +20,35 @@ class SignUpMethodView extends StatelessWidget {
     context.pop();
 
     if (state.email case final String email) {
-      return _signUp(
-        context,
-        signUpMethod: state.method,
-        email: email,
-        password: PasswordUtil.generatePassword(email),
-      );
+      return context.read<SignUpMethodBloc>().add(SignUpMethodCheckDuplicateEmail(email: email, method: state.method));
     }
   }
 
   Future<void> _onSelectFailure(BuildContext context, SignUpMethodSelectFailure state) async {
+    context.pop();
+  }
+
+  Future<void> _onCheckDuplicateEmailSuccess(
+    BuildContext context,
+    SignUpMethodCheckDuplicateEmailSuccess state,
+  ) async {
+    context.pop();
+
+    final formState = context.read<SignUpMethodFormCubit>().state;
+
+    final isAgreed = await const SignUpConsentRoute().push<bool>(context);
+
+    if (isAgreed == true && context.mounted) {
+      final extra = SignUpRegularRouteExtra(
+        signUpMethod: state.method,
+        email: state.email,
+        password: state.method == SignUpMethod.E ? formState.password : PasswordUtil.generatePassword(state.email),
+      );
+      return SignUpRegularRoute($extra: extra).push<void>(context);
+    }
+  }
+
+  Future<void> _onCheckDuplicateEmailFailure(BuildContext context, SignUpMethodCheckDuplicateEmailFailure state) async {
     context.pop();
 
     if (state.exception case final AlreadyExistUserException exception) {
@@ -41,18 +60,19 @@ class SignUpMethodView extends StatelessWidget {
     }
   }
 
-  Future<void> _signUp(
+  void selectMethod(
     BuildContext context, {
-    required SignUpMethod signUpMethod,
-    required String email,
-    required String password,
-  }) async {
-    final isAgreed = await const SignUpConsentRoute().push<bool>(context);
+    required SignUpMethod method,
+  }) {
+    context.read<SignUpMethodBloc>().add(SignUpMethodSelect(method));
+  }
 
-    if (isAgreed == true && context.mounted) {
-      final extra = SignUpRegularRouteExtra(signUpMethod: signUpMethod, email: email, password: password);
-      return SignUpRegularRoute($extra: extra).push<void>(context);
-    }
+  void checkDuplicateEmail(
+    BuildContext context, {
+    required SignUpMethod method,
+  }) {
+    final email = context.read<SignUpMethodFormCubit>().state.email;
+    context.read<SignUpMethodBloc>().add(SignUpMethodCheckDuplicateEmail(email: email, method: method));
   }
 
   @override
@@ -62,6 +82,9 @@ class SignUpMethodView extends StatelessWidget {
         SignUpMethodSelectInProgress() => ProgressIndicatorModal.show(context),
         SignUpMethodSelectSuccess() => _onSelectSuccess(context, state),
         SignUpMethodSelectFailure() => _onSelectFailure(context, state),
+        SignUpMethodCheckDuplicateEmailInProgress() => ProgressIndicatorModal.show(context),
+        SignUpMethodCheckDuplicateEmailSuccess() => _onCheckDuplicateEmailSuccess(context, state),
+        SignUpMethodCheckDuplicateEmailFailure() => _onCheckDuplicateEmailFailure(context, state),
         _ => null,
       },
       child: Scaffold(
@@ -74,19 +97,28 @@ class SignUpMethodView extends StatelessWidget {
         ),
         body: SafeArea(
           child: BlocBuilder<SignUpMethodBloc, SignUpMethodState>(
-            builder: (context, state) {
-              if (state is SignUpMethodSelectSuccess && state.shouldInputAccountInfo) {
-                return SignUpMethodAccountInfoView(
-                  onContinue: () => _signUp(
-                    context,
-                    signUpMethod: state.method,
-                    email: context.read<SignUpMethodFormCubit>().state.email,
-                    password: context.read<SignUpMethodFormCubit>().state.password,
-                  ),
-                );
-              }
-
-              return const SignUpMethodWidget();
+            builder: (context, state) => switch (state) {
+              SignUpMethodInitial() => SignUpMethodWidget(
+                  onSignUp: (method) => selectMethod(context, method: method),
+                ),
+              SignUpMethodSelectInProgress() => SignUpMethodWidget(
+                  onSignUp: (method) => selectMethod(context, method: method),
+                ),
+              SignUpMethodSelectSuccess() => SignUpMethodAccountInfoView(
+                  onContinue: () => checkDuplicateEmail(context, method: state.method),
+                ),
+              SignUpMethodSelectFailure() => SignUpMethodWidget(
+                  onSignUp: (method) => selectMethod(context, method: method),
+                ),
+              SignUpMethodCheckDuplicateEmailInProgress() => SignUpMethodAccountInfoView(
+                  onContinue: () => checkDuplicateEmail(context, method: state.method),
+                ),
+              SignUpMethodCheckDuplicateEmailSuccess() => SignUpMethodAccountInfoView(
+                  onContinue: () => checkDuplicateEmail(context, method: state.method),
+                ),
+              SignUpMethodCheckDuplicateEmailFailure() => SignUpMethodAccountInfoView(
+                  onContinue: () => checkDuplicateEmail(context, method: state.method),
+                ),
             },
           ),
         ),

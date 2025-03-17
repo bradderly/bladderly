@@ -15,6 +15,7 @@ final class SignUpMethodSelectInProgress extends SignUpMethodState {
   const SignUpMethodSelectInProgress({
     required this.method,
   });
+
   final SignUpMethod method;
 
   @override
@@ -52,8 +53,63 @@ final class SignUpMethodSelectFailure extends SignUpMethodState {
   final SignUpMethod method;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
+        ...super.props,
         exception,
         method,
+      ];
+}
+
+final class SignUpMethodCheckDuplicateEmailInProgress extends SignUpMethodState {
+  const SignUpMethodCheckDuplicateEmailInProgress({
+    required this.method,
+    required this.email,
+  });
+
+  final SignUpMethod method;
+  final String email;
+
+  @override
+  List<Object?> get props => [
+        ...super.props,
+        method,
+        email,
+      ];
+}
+
+final class SignUpMethodCheckDuplicateEmailSuccess extends SignUpMethodState {
+  const SignUpMethodCheckDuplicateEmailSuccess({
+    required this.method,
+    required this.email,
+  });
+
+  final SignUpMethod method;
+  final String email;
+
+  @override
+  List<Object?> get props => [
+        ...super.props,
+        method,
+        email,
+      ];
+}
+
+final class SignUpMethodCheckDuplicateEmailFailure extends SignUpMethodState {
+  const SignUpMethodCheckDuplicateEmailFailure({
+    required this.exception,
+    required this.method,
+    required this.email,
+  });
+
+  final Exception exception;
+  final SignUpMethod method;
+  final String email;
+
+  @override
+  List<Object?> get props => [
+        ...super.props,
+        exception,
+        method,
+        email,
       ];
 }

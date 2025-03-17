@@ -5,13 +5,16 @@ import 'package:bladderly/presentation/common/extension/build_context_extension.
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:bladderly/presentation/common/widget/social_signin_button_widget.dart';
-import 'package:bladderly/presentation/feature/sign_up/method/bloc/sign_up_method_bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
 class SignUpMethodWidget extends StatelessWidget {
-  const SignUpMethodWidget({super.key});
+  const SignUpMethodWidget({
+    super.key,
+    required this.onSignUp,
+  });
+
+  final void Function(SignUpMethod) onSignUp;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,7 @@ class SignUpMethodWidget extends StatelessWidget {
           ),
           const Spacer(),
           PrimaryButton.filled(
-            onPressed: () => context.read<SignUpMethodBloc>().add(const SignUpMethodSelect(SignUpMethod.E)),
+            onPressed: () => onSignUp(SignUpMethod.E),
             backgroundColor: context.colorTheme.vermilion.primary.shade50,
             borderRadius: 400,
             shape: BoxShape.rectangle,
@@ -41,7 +44,7 @@ class SignUpMethodWidget extends StatelessWidget {
           ),
           const Gap(32),
           SocialSigninButtonWidget(
-            onTap: (signUpMethod) => context.read<SignUpMethodBloc>().add(SignUpMethodSelect(signUpMethod)),
+            onTap: onSignUp,
           ),
           if (Platform.isAndroid) const Gap(72),
         ],
