@@ -15,16 +15,17 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-class DeleteAccountModal extends StatefulWidget {
-  const DeleteAccountModal({super.key});
+class DeleteAccountView extends StatefulWidget {
+  const DeleteAccountView({super.key});
 
   @override
-  State<DeleteAccountModal> createState() => _DeleteAccountModalState();
+  State<DeleteAccountView> createState() => _DeleteAccountViewState();
 }
 
-class _DeleteAccountModalState extends State<DeleteAccountModal> {
+class _DeleteAccountViewState extends State<DeleteAccountView> {
   String? selectedReason;
 
   final List<String> reasons = [
@@ -39,6 +40,8 @@ class _DeleteAccountModalState extends State<DeleteAccountModal> {
   Future<void> _onDeleteAccount(
     BuildContext context,
   ) async {
+    context.pop();
+
     if (context.read<MembershipBloc>().state.membership?.subscription?.isValid == true) {
       return CommonErrorModal.show<void>(
         context,
@@ -64,7 +67,6 @@ class _DeleteAccountModalState extends State<DeleteAccountModal> {
       listener: (context, state) => switch (state) {
         DeleteAccountInitial() => ProgressIndicatorModal.show(context),
         DeleteAccountSuccess() => context.signOut(),
-        DeleteAccountFailure() => {},
         _ => null,
       },
       child: Scaffold(
