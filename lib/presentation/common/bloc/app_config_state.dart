@@ -20,7 +20,8 @@ sealed class AppConfigState extends Equatable {
   AppVersion get appVersion => _appConfig!.appVersion;
 
   String get currentVersion => appVersion.currentVersion;
-  String get currentBuild => kDebugMode ? ' (${appVersion.currentBuild})' : '';
+  // String get currentBuild => kDebugMode ? ' (${appVersion.currentBuild})' : '';
+  String get currentBuild => appVersion.currentBuild;
 
   bool get needForceUpdate {
     return _compareVersions(appVersion.currentVersion, appVersion.minVersion) < 0;

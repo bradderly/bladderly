@@ -4,7 +4,7 @@ description: "A new Flutter project."
 publish_to: "none"
 
 # android : have to update /android/app/build.gradle's build
-version: 3.1.0+63
+version: 3.1.0+65
 # ios
 # version: 3.1.0+6
 
@@ -72,7 +72,6 @@ dependencies:
   modal_bottom_sheet: 3.0.0
   flutter_blue_plus: 1.35.3
   url_launcher: 6.3.1
-
 
 dev_dependencies:
   flutter_test:

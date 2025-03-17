@@ -133,7 +133,7 @@ class MenuView extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                '${state.currentVersion}${state.currentBuild}',
+                                '${state.currentVersion} (${state.currentBuild})',
                                 style: context.textStyleTheme.b14Medium
                                     .copyWith(color: context.colorTheme.vermilion.primary.shade50),
                               ),
