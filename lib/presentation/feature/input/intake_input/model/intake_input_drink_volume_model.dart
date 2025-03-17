@@ -1,5 +1,6 @@
 // Package imports:
 // Project imports:
+import 'package:bladderly/domain/model/unit.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:equatable/equatable.dart';
 
@@ -43,9 +44,9 @@ sealed class IntakeInputRecordVolumeModel extends Equatable {
     };
   }
 
-  int get volume {
+  int getVolume(Unit unit) {
     return switch (this) {
-      IntakeInputDrinkMoreVolumeModel() => int.tryParse(value) ?? 0,
+      IntakeInputDrinkMoreVolumeModel() => unit.parseToMl(int.tryParse(value) ?? 0),
       _ => int.tryParse(typeValue) ?? 0,
     };
   }

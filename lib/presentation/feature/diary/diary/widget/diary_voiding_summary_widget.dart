@@ -146,7 +146,7 @@ class DiaryVoidingSummaryWidget extends StatelessWidget {
               color: context.colorTheme.neutral.shade10,
             ),
             children: [
-              TextSpan(text: '${context.unitValue(diaryVodingSummaryModel.totalVolume)}'),
+              TextSpan(text: '${diaryVodingSummaryModel.getTotalVolume}'),
               const WidgetSpan(child: SizedBox(width: 4)),
               TextSpan(text: context.unitName),
             ],
