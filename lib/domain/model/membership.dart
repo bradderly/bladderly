@@ -45,9 +45,11 @@ class MembershipSubscription extends Equatable {
 
   final bool autoRenewal;
 
-  bool get isValid {
-    final isSameOrAfterThanStartDate = DateTime.now().isAfter(startDate) || DateTime.now().isAtSameMomentAs(startDate);
-    final isSameOrBeforeThanEndDate = DateTime.now().isBefore(endDate) || DateTime.now().isAtSameMomentAs(endDate);
+  bool get isValid => validate(DateTime.now());
+
+  bool validate(DateTime dateTime) {
+    final isSameOrAfterThanStartDate = dateTime.isAfter(startDate) || dateTime.isAtSameMomentAs(startDate);
+    final isSameOrBeforeThanEndDate = dateTime.isBefore(endDate) || dateTime.isAtSameMomentAs(endDate);
 
     return isSameOrAfterThanStartDate && isSameOrBeforeThanEndDate;
   }

@@ -10,6 +10,7 @@ import 'package:bladderly/presentation/common/bloc/membership_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/main_tab_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
+import 'package:bladderly/presentation/common/cubit/timer_cubit.dart';
 import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
 import 'package:bladderly/presentation/common/widget/get_history_result_failure_modal.dart';
 import 'package:bladderly/presentation/feature/diary/diary/diary_builder.dart';
@@ -161,6 +162,17 @@ class _MainViewState extends State<MainView> {
             MembershipInitializeFailure() => onMembershipInitializeFailure(context, state),
             _ => null,
           },
+        ),
+
+        /// 타이머 돌려서 멤버쉽 만료일자에 멤버쉽 재조회
+        BlocListener<TimerCubit, DateTime>(
+          listenWhen: (prev, curr) {
+            final subscription = context.read<MembershipBloc>().state.membership?.subscription;
+            return subscription?.validate(curr) != subscription?.validate(prev);
+          },
+          listener: (context, state) => context
+              .read<MembershipBloc>()
+              .add(MembershipInitialize(userId: context.read<UserBloc>().state.userModelOrThrowException.id)),
         ),
       ],
       child: Stack(

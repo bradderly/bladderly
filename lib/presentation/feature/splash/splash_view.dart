@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:bladderly/core/bio_auth/bio_auth.dart';
+import 'package:bladderly/core/method_channel/bladdery_method_channel.dart';
 import 'package:bladderly/domain/exception/domain_exception.dart';
 import 'package:bladderly/presentation/common/bloc/app_config_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/device_bloc.dart';
@@ -12,6 +13,7 @@ import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
 import 'package:bladderly/presentation/feature/splash/cubit/splash_cubit.dart';
 import 'package:bladderly/presentation/feature/splash/modal/splash_soft_update_modal.dart';
+import 'package:bladderly/presentation/feature/splash/model/splash_initialization_model.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/intro_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
@@ -25,27 +27,34 @@ import 'package:rxdart/rxdart.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class SplashView extends StatefulWidget {
-  const SplashView({super.key});
+  const SplashView({
+    super.key,
+    required this.methodChannel,
+  });
+
+  final BladderyMethodChannel methodChannel;
 
   @override
   State<SplashView> createState() => _SplashViewState();
 }
 
 class _SplashViewState extends State<SplashView> {
-  final subject =
-      BehaviorSubject<({bool waitingSuccess, bool initialized})>.seeded((waitingSuccess: false, initialized: false));
+  final subject = BehaviorSubject<SplashInitializationModel>.seeded(const SplashInitializationModel());
 
   late final deviceBloc = context.read<DeviceBloc>();
 
   @override
   void initState() {
-    subject.map((value) => value.initialized && value.waitingSuccess).listen((value) => value ? onInitialized() : null);
+    subject.listen((value) => value.isAllInitialized ? onInitialized() : null);
 
     context.read<AppConfigBloc>().add(const AppConfigLoad());
 
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => Future.wait([Firebase.initializeApp(), Translation().initialize()]).then(
-        (_) => Future<void>.delayed(const Duration(seconds: 1), () => setSubjectValue(waitingSuccess: true)),
+        (_) => Future<void>.delayed(
+          const Duration(seconds: 1),
+          () => subject.value = subject.value.copyWith(splashTime: true),
+        ),
       ),
     );
 
@@ -56,13 +65,6 @@ class _SplashViewState extends State<SplashView> {
   void dispose() {
     subject.close();
     super.dispose();
-  }
-
-  void setSubjectValue({bool? waitingSuccess, bool? initialized}) {
-    subject.value = (
-      waitingSuccess: waitingSuccess ?? subject.value.waitingSuccess,
-      initialized: initialized ?? subject.value.initialized
-    );
   }
 
   Future<void> onInitialized() async {
@@ -92,12 +94,23 @@ class _SplashViewState extends State<SplashView> {
     }
   }
 
-  void onAppConfigLoadSuccess(BuildContext context, AppConfigLoadSuccess state) {
-    if (deviceBloc.state is DeviceCheckSupportSuccess) {
-      return setSubjectValue(initialized: true);
-    }
+  Future<void> onAppConfigLoadSuccess(BuildContext context, AppConfigLoadSuccess state) async {
+    subject.value = subject.value.copyWith(appConfig: true);
 
-    return context.read<DeviceBloc>().add(const DeviceCheckSupport());
+    context.read<DeviceBloc>().add(const DeviceCheckSupport());
+    final isLiveListen = await widget.methodChannel.checkLiveListen().onError((_, __) => false);
+
+    if (!context.mounted) return;
+
+    if (!isLiveListen) return Future<void>.sync(() => subject.value = subject.value.copyWith(liveListen: true));
+
+    return CommonErrorModal.show<void>(
+      context,
+      onTap: () => context.pop(subject.value = subject.value.copyWith(liveListen: true)),
+      title: 'Detected: Hearing aid or Live Listen feature',
+      content:
+          'Please disconnect or turn off your hearing aid or the Live Listen feature, as keeping them on can alter your results.',
+    );
   }
 
   Future<void> checkAppVersion(BuildContext context) async {
@@ -132,7 +145,7 @@ class _SplashViewState extends State<SplashView> {
           onTap: onInitialized,
           exception: exception,
         ),
-      _ => Future<void>.sync(() => setSubjectValue(initialized: true)),
+      _ => Future<void>.sync(() => subject.value = subject.value.copyWith(device: true)),
     };
   }
 
@@ -143,14 +156,14 @@ class _SplashViewState extends State<SplashView> {
         BlocListener<AppConfigBloc, AppConfigState>(
           listener: (context, state) => switch (state) {
             AppConfigLoadSuccess() => onAppConfigLoadSuccess(context, state),
-            AppConfigLoadFailure() => setSubjectValue(initialized: true),
+            AppConfigLoadFailure() => subject.value = subject.value.copyWith(appConfig: true),
             _ => null,
           },
         ),
         BlocListener<DeviceBloc, DeviceState>(
           listener: (context, state) => switch (state) {
             DeviceCheckSupportSuccess() => onCheckSupportedDeviceSuccess(context, state),
-            DeviceCheckSupportFailure() => setSubjectValue(initialized: true),
+            DeviceCheckSupportFailure() => subject.value = subject.value.copyWith(device: true),
             _ => null,
           },
         ),
