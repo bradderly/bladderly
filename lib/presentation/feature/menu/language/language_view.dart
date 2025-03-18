@@ -4,6 +4,7 @@ import 'package:bladderly/presentation/common/extension/build_context_extension.
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
+import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -46,24 +47,16 @@ class _LanguageViewState extends State<LanguageView> {
               ),
             ),
             const SizedBox(height: 16),
-            GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () => context.pop(appLocale),
-              child: Container(
-                width: double.infinity,
-                margin: const EdgeInsets.symmetric(horizontal: 50),
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                decoration: BoxDecoration(
-                  color: Colors.green, // Save 버튼 스타일
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  'Save'.tr(context, appLocale: appLocale),
-                  style: context.textStyleTheme.b16SemiBold.copyWith(
-                    color: Colors.white,
-                  ),
-                ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: PrimaryButton.filled(
+                onPressed: () => context.pop(appLocale),
+                backgroundColor: context.colorTheme.vermilion.primary.shade50,
+                borderRadius: 8,
+                shape: BoxShape.rectangle,
+                text: 'Save'.tr(context),
+                textColor: context.colorTheme.neutral.shade0,
+                size: const Size(256, 48),
               ),
             ),
             const SizedBox(height: 28),
