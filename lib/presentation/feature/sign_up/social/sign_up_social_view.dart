@@ -1,12 +1,5 @@
 // Flutter imports:
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-
 // Project imports:
 import 'package:bladderly/domain/model/sex.dart';
 import 'package:bladderly/domain/model/sign_up_method.dart';
@@ -16,6 +9,11 @@ import 'package:bladderly/presentation/feature/sign_up/widget/sign_up_additional
 import 'package:bladderly/presentation/feature/sign_up/widget/sign_up_required_info_builder.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class SignUpSocialView extends StatefulWidget {
   const SignUpSocialView({
@@ -72,10 +70,15 @@ class _SignUpSocialViewState extends State<SignUpSocialView> {
             physics: const NeverScrollableScrollPhysics(),
             children: [
               SignUpRequiredInfoBuilder(
-                onSubmit: (state) {
-                  gender = state.gender!;
-                  yearOfBirth = state.yearOfBirth;
-                  pageController.jumpToPage(1);
+                onSubmit: (state) async {
+                  final isAgreed = await const SignUpConsentRoute().push<bool>(context);
+
+                  if (isAgreed == true && context.mounted) {
+                    gender = state.gender!;
+                    yearOfBirth = state.yearOfBirth;
+
+                    pageController.jumpToPage(1);
+                  }
                 },
                 yearOfBirthFocusNode: yearOfBirthFocusNode,
               ),
