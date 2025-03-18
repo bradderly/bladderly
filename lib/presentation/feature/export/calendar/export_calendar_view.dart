@@ -123,6 +123,7 @@ class _ExportCalendarViewState extends State<ExportCalendarView> {
                           calendarDate: calendarDate,
                         ),
                         const Gap(48),
+                        const Gap(161),
                       ],
                     );
                   },
