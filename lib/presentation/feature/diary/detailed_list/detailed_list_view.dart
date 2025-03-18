@@ -1,6 +1,8 @@
 // Flutter imports:
 
 // Project imports:
+import 'dart:math';
+
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
@@ -74,6 +76,33 @@ class _DetailedListViewState extends State<DetailedListView> {
     });
   }
 
+  Future<void> onTapEdit(
+    BuildContext context, {
+    required int id,
+  }) {
+    final groupedHistories = context.read<DetailedListHistoriesBloc>().state.groupedHistoriesModel.groupedHistories;
+    return switch (groupedHistories.values.flattened.firstWhere((element) => element.id == id)) {
+      final DetailedListVoidingHistoryModel historyModel =>
+        ManualInputRoute(recordTime: historyModel.recordTime).push<void>(context),
+      final DetailedListLeakageHistoryModel historyModel =>
+        ManualInputRoute(recordTime: historyModel.recordTime).push<void>(context),
+      final DetailedListIntakeHistoryModel historyModel =>
+        IntakeInputRoute.fromRecordTime(recordTime: historyModel.recordTime).push<void>(context),
+    };
+  }
+
+  Future<void> onTapDelete(
+    BuildContext context, {
+    required int id,
+  }) async {
+    final shouldDelete = await DetailedListDeleteHistoryModal.show(context);
+
+    if (shouldDelete && context.mounted) {
+      final userId = context.read<UserBloc>().state.userModelOrThrowException.id;
+      context.read<DetailedListHistoriesBloc>().add(DetailedListHistoriesDelete(id: id, userId: userId));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<DetailedListHistoriesBloc, DetailedListHistoriesState>(
@@ -133,46 +162,31 @@ class _DetailedListViewState extends State<DetailedListView> {
                 );
               }
 
-              return ListView.separated(
+              return ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 32),
-                itemCount: state.groupedHistoriesModel.keyCount,
-                itemBuilder: (context, index) {
+                children: List.generate(max(0, state.groupedHistoriesModel.keyCount * 2 - 1), (index) {
+                  if (index.isOdd) {
+                    return Container(
+                      padding: const EdgeInsets.symmetric(vertical: 16).copyWith(left: 54),
+                      alignment: Alignment.center,
+                      child: Text(
+                        state.groupedHistoriesModel.getInterval(context, index: index ~/ 2),
+                        style: context.textStyleTheme.b12Medium.copyWith(
+                          color: context.colorTheme.neutral.shade10,
+                        ),
+                      ),
+                    );
+                  }
+
                   final groupedHistories = state.groupedHistoriesModel.groupedHistories;
                   return DetailedListHistoriesWidget(
-                    onTapEdit: (id) =>
-                        switch (groupedHistories.values.flattened.firstWhere((element) => element.id == id)) {
-                      final DetailedListVoidingHistoryModel historyModel =>
-                        ManualInputRoute(recordTime: historyModel.recordTime).push<void>(context),
-                      final DetailedListLeakageHistoryModel historyModel =>
-                        ManualInputRoute(recordTime: historyModel.recordTime).push<void>(context),
-                      final DetailedListIntakeHistoryModel historyModel =>
-                        IntakeInputRoute.fromRecordTime(recordTime: historyModel.recordTime).push<void>(context),
-                    },
-                    onTapDelete: (id) => DetailedListDeleteHistoryModal.show(context).then((value) {
-                      if (value && context.mounted) {
-                        context.read<DetailedListHistoriesBloc>().add(
-                              DetailedListHistoriesDelete(
-                                id: id,
-                                userId: context.read<UserBloc>().state.userModelOrThrowException.id,
-                              ),
-                            );
-                      }
-                    }),
-                    recordTime: groupedHistories.keys.elementAt(index),
+                    onTapEdit: (id) => onTapEdit(context, id: id),
+                    onTapDelete: (id) => onTapDelete(context, id: id),
+                    recordTime: groupedHistories.keys.elementAt(index ~/ 2),
                     historyKeys: historyKeys,
-                    histories: groupedHistories.values.elementAt(index),
+                    histories: groupedHistories.values.elementAt(index ~/ 2),
                   );
-                },
-                separatorBuilder: (context, index) => Container(
-                  padding: const EdgeInsets.symmetric(vertical: 16).copyWith(left: 54),
-                  alignment: Alignment.center,
-                  child: Text(
-                    state.groupedHistoriesModel.getInterval(context, index: index),
-                    style: context.textStyleTheme.b12Medium.copyWith(
-                      color: context.colorTheme.neutral.shade10,
-                    ),
-                  ),
-                ),
+                }),
               );
             },
           ),
