@@ -41,7 +41,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        def build = 11
+        def build = 15
         buildConfigField "int", "build", "$build"
         archivesBaseName = "bladderly_v" + versionName + "(" + build + ")-" + versionCode
 

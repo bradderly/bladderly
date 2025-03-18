@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "588541542318-5v5u1v4cgo1svrph5phkecsgumm4ifh8.apps.googleusercontent.com",
+          "client_id": "588541542318-escg88i1iu3lv26lvvl0mi5rnkk4vkkm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.soundable.diaryandroid.us",
-            "certificate_hash": "921887ad5971a18e8be3cbbbfe346399a3b91f57"
+            "certificate_hash": "17a994cd5e0b19d030ed4cf70593f175f0ff3cfb"
           }
         },
         {
@@ -44,6 +44,14 @@
           "android_info": {
             "package_name": "com.soundable.diaryandroid.us",
             "certificate_hash": "02c15c1472cea53babf0a91ccf7d388ce0b00f56"
+          }
+        },
+        {
+          "client_id": "588541542318-r0g2in6t52n9ccm3t5t95k2fbqmkc6jm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.soundable.diaryandroid.us",
+            "certificate_hash": "921887ad5971a18e8be3cbbbfe346399a3b91f57"
           }
         },
         {

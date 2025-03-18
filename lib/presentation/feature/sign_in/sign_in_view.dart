@@ -48,13 +48,38 @@ class SignInView extends StatelessWidget {
           onTap: context.pop,
           exception: exception,
         ),
-      _ => Future.value(),
+      _ => showDialog<AlertDialog>(
+          context: context,
+          builder: (context) => AlertDialog(
+            content: Text(
+              state.exception.toString(),
+            ),
+            actions: [
+              TextButton(
+                onPressed: context.pop,
+                child: Text('Okay'.tr(context)),
+              ),
+            ],
+          ),
+        ),
     };
   }
 
   void _onSocialFailure(BuildContext context, SignInSocialFailure state) {
     context.pop();
-
+    // showDialog<AlertDialog>(
+    //   context: context,
+    //   builder: (context) => AlertDialog(
+    //     title: Text(state.email ?? "null"),
+    //     content: Text(state.exception.toString()),
+    //     actions: [
+    //       TextButton(
+    //         onPressed: context.pop,
+    //         child: Text('Okay'.tr(context)),
+    //       ),
+    //     ],
+    //   ),
+    // );
     if (state.email case final String email) {
       return switch (state.exception) {
         NotFoundAppleCredentialException() => showDialog<AlertDialog>(
@@ -79,7 +104,20 @@ class SignInView extends StatelessWidget {
             onTap: context.pop,
             exception: exception,
           ),
-        _ => null,
+        _ => showDialog<AlertDialog>(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: Text(
+                state.exception.toString(),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: context.pop,
+                  child: Text('Okay'.tr(context)),
+                ),
+              ],
+            ),
+          ),
       };
     }
   }
