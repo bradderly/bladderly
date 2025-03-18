@@ -3,7 +3,7 @@ import 'package:bladderly/domain/model/plan.dart';
 abstract class PaymentRepository {
   Future<List<Plan>> getPlans();
 
-  Future<void> purchasePlan({
+  Future<bool> purchasePlan({
     required String productId,
   });
 

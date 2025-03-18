@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:in_app_purchase_android/billing_client_wrappers.dart';
+
 enum Product {
   threeDaysPass(type: ProductType.nonRenewalSubscription),
   annualSubscription(type: ProductType.renewalSubscription),
@@ -25,6 +27,17 @@ enum Product {
   }
 
   static Set<String> get ids => Product.values.map((product) => product.id).toSet();
+
+  ReplacementMode? getReplacementModeByNewProduct(Product newProduct) {
+    return switch (this) {
+      /// monthly upgrade to annual
+      monthlySubscription when newProduct == annualSubscription => ReplacementMode.chargeFullPrice,
+
+      /// annual downgrade to monthly
+      annualSubscription when newProduct == monthlySubscription => ReplacementMode.deferred,
+      _ => null,
+    };
+  }
 }
 
 enum ProductType {
