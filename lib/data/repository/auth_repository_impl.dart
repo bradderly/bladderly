@@ -262,10 +262,12 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> sendVerificationCode({
+  Future<String> sendVerificationCode({
     required String email,
   }) {
-    return _apiClient.forgotPassword(request: PostEmailRequest(email: email)).then((response) => response.body!);
+    return _apiClient
+        .forgotPassword(request: PostEmailRequest(email: email))
+        .then((response) => response.body!.message!);
   }
 
   @override

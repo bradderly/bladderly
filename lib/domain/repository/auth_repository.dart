@@ -74,7 +74,7 @@ abstract class AuthRepository {
     required String code,
   });
 
-  Future<void> sendVerificationCode({
+  Future<String> sendVerificationCode({
     required String email,
   });
 

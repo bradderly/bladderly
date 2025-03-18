@@ -1,3 +1,4 @@
+import 'package:bladderly/domain/exception/reset_social_user_password_exception.dart';
 import 'package:bladderly/domain/repository/auth_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
@@ -14,8 +15,11 @@ class SendVerificationCodeUsecase {
     required String email,
   }) async {
     try {
-      await _authRepository.sendVerificationCode(email: email);
-      return const Right(null);
+      final message = await _authRepository.sendVerificationCode(email: email);
+
+      if (message == 'success') return const Right(null);
+
+      return Left(ResetSocialUserPasswordException.fromMessage(message));
     } catch (e) {
       return Left(e is Exception ? e : Exception(e.toString()));
     }
