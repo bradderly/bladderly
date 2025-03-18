@@ -5,7 +5,6 @@ import 'package:bladderly/domain/model/app_version.dart';
 import 'package:bladderly/domain/usecase/load_app_config_usecase.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:intl/intl.dart';
 

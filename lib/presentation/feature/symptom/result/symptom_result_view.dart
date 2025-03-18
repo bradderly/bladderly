@@ -60,10 +60,7 @@ class SymptomResultView extends StatelessWidget {
                           boxShadow: context.shadowTheme.shadow1,
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: GaugeWidget(
-                          totalScore: score.totalScore,
-                          scoreType: score.type,
-                        ),
+                        child: GaugeWidget(score: score),
                       ),
                       const Gap(32),
                       Padding(
@@ -110,7 +107,10 @@ class SymptomResultView extends StatelessWidget {
                       const Gap(32),
                       if (score.type == ScoreType.IPSS) ...[
                         Text(
-                          result.description.tr(context).applyWordBreak(),
+                          result
+                              .getDescription(scoreType: score.type, qolScore: score.qolAnswer)
+                              .tr(context)
+                              .applyWordBreak(),
                           style: context.textStyleTheme.b16Medium.copyWith(
                             color: context.colorTheme.neutral.shade10,
                           ),
@@ -154,7 +154,7 @@ class SymptomResultView extends StatelessWidget {
                 ),
               ),
             ),
-            const Gap(12),
+            const Gap(28),
           ],
         ),
       ),
@@ -185,23 +185,16 @@ class SymptomResultView extends StatelessWidget {
 }
 
 class GaugeWidget extends StatelessWidget {
-  const GaugeWidget({super.key, required this.totalScore, required this.scoreType});
-  final int totalScore;
-  final ScoreType scoreType;
+  const GaugeWidget({super.key, required this.score});
+  final Score score;
 
   SymptomSurveyResultModel get result => SymptomSurveyResultModel.fromTotalScore(
-        surveyType: scoreType,
-        totalScore: totalScore,
+        surveyType: score.type,
+        totalScore: score.totalScore,
       );
 
   @override
   Widget build(BuildContext context) {
-    var totalMaxScore = 0;
-    if (scoreType == ScoreType.IPSS) {
-      totalMaxScore = 35;
-    } else if (scoreType == ScoreType.OABSS) {
-      totalMaxScore = 15;
-    }
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -209,7 +202,7 @@ class GaugeWidget extends StatelessWidget {
           children: [
             CustomPaint(
               size: const Size(220, 110),
-              painter: GaugePainter(totalScore / totalMaxScore),
+              painter: GaugePainter(score.totalScore / score.type.maxTotalScore),
             ),
             Positioned(
               bottom: 16,
@@ -227,7 +220,7 @@ class GaugeWidget extends StatelessWidget {
         ),
         const Gap(4),
         Text(
-          '${'Score:'.tr(context)} $totalScore',
+          '${'Score:'.tr(context)} ${score.totalScore}',
           style: context.textStyleTheme.b14Medium.copyWith(
             color: context.colorTheme.neutral.shade7,
           ),

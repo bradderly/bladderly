@@ -45,7 +45,7 @@ class _DeleteAccountViewState extends State<DeleteAccountView> {
     if (context.read<MembershipBloc>().state.membership?.subscription?.isValid == true) {
       return CommonErrorModal.show<void>(
         context,
-        onTap: () => Navigator.of(context).pop(),
+        onTap: context.pop,
         content: 'Cancel plan Message body',
       );
     }
@@ -93,13 +93,9 @@ class _DeleteAccountViewState extends State<DeleteAccountView> {
                       const SizedBox(height: 47),
                       ...reasons.map(
                         (reason) => ReasonOption(
+                          onSelect: () => setState(() => selectedReason = reason),
                           reason: reason.tr(context),
                           isSelected: selectedReason == reason,
-                          onSelect: () {
-                            setState(() {
-                              selectedReason = reason;
-                            });
-                          },
                         ),
                       ),
                     ],
@@ -107,12 +103,9 @@ class _DeleteAccountViewState extends State<DeleteAccountView> {
                 ),
                 GestureDetector(
                   behavior: HitTestBehavior.translucent,
-                  onTap: () {
-                    if (selectedReason == null) {
-                      return;
-                    }
-                    DeleteAccountConfirmModal.show(context, onConfirm: () => _onDeleteAccount(context));
-                  },
+                  onTap: selectedReason == null
+                      ? null
+                      : () => DeleteAccountConfirmModal.show(context, onConfirm: () => _onDeleteAccount(context)),
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
                     decoration: BoxDecoration(

@@ -5,7 +5,6 @@ import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 import 'package:bladderly/data/isar/isar_client.dart';
 import 'package:bladderly/data/mapper/membership_mapper.dart';
 import 'package:bladderly/data/mapper/user_mapper.dart';
-import 'package:bladderly/domain/exception/not_found_user_exception.dart';
 import 'package:bladderly/domain/model/membership.dart';
 import 'package:bladderly/domain/model/user.dart';
 import 'package:bladderly/domain/repository/user_repository.dart';
@@ -82,20 +81,11 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  User migrateUser({required String userId, required User user}) {
-    final userEntity = _isarClient.getUserOrNullByUserId(userId)
-      ?..changeUserInfo(
-        email: user.email,
-        name: user.name,
-        signUpMethod: user.signUpMethod.name,
-        userId: user.userId,
-      );
-
-    if (userEntity == null) {
-      throw const NotFoundUserException(message: 'not found user');
-    }
-
-    return UserMapper.fromUserEntity(_isarClient.saveUser(userEntity));
+  User migrateUser({
+    required String userId,
+    required User user,
+  }) {
+    return UserMapper.fromUserEntity(_isarClient.migrateUser(userId, UserMapper.toUserEntity(user)));
   }
 
   @override

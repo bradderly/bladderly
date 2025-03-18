@@ -37,6 +37,8 @@ abstract class IsarClient {
 
   UserEntity saveUser(UserEntity userEntity);
 
+  UserEntity migrateUser(String userId, UserEntity userEntity);
+
   void deleteUserByUserId(String userId);
 
   void clearAll();
@@ -206,5 +208,16 @@ class _IsarClientImpl implements IsarClient {
     return _isar.writeTxnSync(
       () => _isar.membershipEntitys.getSync(_isar.membershipEntitys.putByUserIdSync(membershipEntity))!,
     );
+  }
+
+  @override
+  UserEntity migrateUser(String userId, UserEntity userEntity) {
+    return _isar.writeTxnSync(() {
+      final id = _isar.userEntitys.getByUserIdSync(userId)!.id;
+
+      userEntity.id = id;
+
+      return _isar.userEntitys.getSync(_isar.userEntitys.putSync(userEntity))!;
+    });
   }
 }

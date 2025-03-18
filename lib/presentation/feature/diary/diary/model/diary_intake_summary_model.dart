@@ -2,6 +2,7 @@
 // Project imports:
 import 'package:bladderly/domain/model/histories.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
+import 'package:bladderly/presentation/common/extension/num_extension.dart';
 import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
@@ -20,7 +21,7 @@ class DiaryIntakeSummaryModel extends Equatable {
 
   factory DiaryIntakeSummaryModel.fromDomain(IntakeHistories intakeHistories) {
     return DiaryIntakeSummaryModel(
-      volumes: intakeHistories.map((history) => history.recordVolume).toList(),
+      volumes: intakeHistories.map((history) => history.recordVolume.toRoundVolume()).toList(),
       frequency: intakeHistories.length,
       beverageTypeRateMap: BeverageTypeModel.values
           .map((beverateType) => MapEntry(beverateType, intakeHistories.getVolumeRateByBeverageType(beverateType.name)))
@@ -35,6 +36,7 @@ class DiaryIntakeSummaryModel extends Equatable {
   final List<int> _volumes;
   final int frequency;
   final Map<BeverageTypeModel, double> beverageTypeRateMap;
+
   int getTotalVolume(BuildContext context) {
     return _volumes.map(context.unitValue).fold<int>(0, (previousValue, element) => previousValue + element);
   }
