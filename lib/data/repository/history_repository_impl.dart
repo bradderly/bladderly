@@ -133,7 +133,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
         // originRecordTime 이 있으면 수정 아니면 생성
         recDate: recordTime,
         record: switch (history) {
-          VoidingHistory() => RecordUpdateRequestRecord(
+          VoidingHistory() => RecordUpdateRequest$Record(
               isLeakage: history.isLeakage,
               isNocturia: history.isNocturia,
               recordVolume: '${history.recordVolume}',
@@ -144,7 +144,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
               newRecDate: newRecDate,
               deleteTime: deleteTime,
             ),
-          IntakeHistory() => RecordUpdateRequestRecord(
+          IntakeHistory() => RecordUpdateRequest$Record(
               beverageType: history.beverageType,
               leakageMemo: history.memo,
               recordVolume: '${history.recordVolume}',
@@ -153,7 +153,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
               newRecDate: newRecDate,
               deleteTime: deleteTime,
             ),
-          LeakageHistory() => RecordUpdateRequestRecord(
+          LeakageHistory() => RecordUpdateRequest$Record(
               leakageVolume: history.leakageVolume.name,
               leakageMemo: history.memo,
               isLeakage: true,
@@ -235,7 +235,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
           request: RecordUpdateRequest(
             userId: userId,
             recDate: DateFormat('yyyyMMdd-HHmmss').format(recordTime),
-            record: RecordUpdateRequestRecord(deleteTime: DateFormat('yyyyMMdd-HHmmss').format(recordTime)),
+            record: RecordUpdateRequest$Record(deleteTime: DateFormat('yyyyMMdd-HHmmss').format(recordTime)),
           ),
         )
         .then((response) => response.body!);

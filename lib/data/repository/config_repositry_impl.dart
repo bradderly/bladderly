@@ -44,47 +44,10 @@ class ConfigRepositryImpl implements ConfigRepository {
   }
 
   @override
-  Future<List<String>> getSupportedDevices() {
-    return Future.value(
-      [
-        'development',
-        'iPn8__',
-        'iPn8p_',
-        'iPnX__',
-        'iPnXr_',
-        'iPnXs_',
-        'iPnXsM',
-        'iPn11_',
-        'iPn11p',
-        'iPn11pM',
-        'iPnSE2',
-        'iPhone12_8',
-        'iPn12mi',
-        'iPn12_',
-        'iPn12p',
-        'iPn12pM',
-        'iPhone14_2',
-        'iPhone14_4',
-        'iPhone14_5',
-        'iPhone14_3',
-        'iPn13p',
-        'iPn13mi',
-        'iPn13_',
-        'iPn13pM',
-        'iPhone14_6',
-        'iPhone14_7',
-        'iPhone14_8',
-        'iPhone15_2',
-        'iPhone15_3',
-        'iPhone15_4',
-        'iPhone15_5',
-        'iPhone16_1',
-        'iPhone16_2',
-        'iPhone17_1',
-        'iPhone17_2',
-        'iPhone17_3',
-        'iPhone17_4',
-      ],
-    );
+  Future<List<String>> getSupportedDevices() async {
+    final response =
+        await _apiClient.getSupportModels(os: Platform.isAndroid ? 'android' : 'ios').then((value) => value.body!);
+
+    return response.models ?? [];
   }
 }

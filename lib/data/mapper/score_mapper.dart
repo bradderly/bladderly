@@ -8,11 +8,11 @@ import 'package:bladderly/domain/model/score_type.dart';
 class ScoreMapper {
   const ScoreMapper._();
 
-  static Score? fromGetAllScoreResponseList(GetAllScoreResponseList score) {
+  static Score? fromGetAllScoreResponseList(GetAllResultResponse$Scores$Item score) {
     return Score(
       date: DateTime.parse(score.scoreDate!.replaceFirst('-', 'T')),
       type: ScoreType.values.byName(score.scoreName!),
-      answers: score.scoreValue ?? [],
+      answers: score.scoreValue?.map((e) => e is int ? e : int.parse('$e')).toList() ?? [],
       status: ScoreStatus.done,
     );
   }

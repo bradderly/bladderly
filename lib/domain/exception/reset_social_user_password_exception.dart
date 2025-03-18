@@ -20,10 +20,4 @@ class ResetSocialUserPasswordException extends DomainException {
           title: 'No Password Reset Needed',
           message: 'You signed up with Google. Try "Continue with Google" to log in.',
         );
-
-  const ResetSocialUserPasswordException._()
-      : super(
-          title: 'No Password Reset Needed',
-          message: 'You signed up with Google. Try "Continue with Google" to log in.',
-        );
 }

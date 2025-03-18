@@ -152,4 +152,9 @@ abstract class ApiClient extends ChopperService {
   Future<Response<SimpleResponse>> updateUserName({
     @Body() required UpdateUserInfoRequest request,
   });
+
+  @Get(path: '/support-models')
+  Future<Response<GetSupportModelsResponse>> getSupportModels({
+    @Query('device') required String os,
+  });
 }

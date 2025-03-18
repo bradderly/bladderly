@@ -48,7 +48,7 @@ class MembershipMapper {
       };
   }
 
-  static MembershipSubscription? _fromGetPayResponsePayInfo(GetPayResponsePayInfo payInfo) {
+  static MembershipSubscription? _fromGetPayResponsePayInfo(GetPayResponse$PayInfo payInfo) {
     try {
       return MembershipSubscription(
         product: Product.fromId(payInfo.productId!),

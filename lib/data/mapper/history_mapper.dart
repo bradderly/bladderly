@@ -47,7 +47,7 @@ class HistoryMapper {
     );
   }
 
-  static History? fromGetAllResultResponseList(GetAllResultResponseList record) {
+  static History? fromGetAllResultResponseList(GetAllResultResponse$Records$Item record) {
     try {
       const status = HistoryStatus.done;
       final recordTime = DateTime.parse(record.recordTime!.replaceAll('-', ' '));

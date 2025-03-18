@@ -30,7 +30,7 @@ class UserMapper {
   }
 
   static User fromLoginResponseUserInfo({
-    required LoginResponseUserInfo userInfo,
+    required LoginResponse$UserInfo userInfo,
     required String email,
   }) {
     return User(
