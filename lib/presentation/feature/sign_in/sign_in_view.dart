@@ -85,8 +85,8 @@ class SignInView extends StatelessWidget {
           ),
         ),
       NotFoundUserException() => SignUpSocialRoute(
-              $extra: SignUpSocialRouteExtra(email: state.email ?? '', signUpMethod: state.signUpMethod.name))
-          .go(context),
+          $extra: SignUpSocialRouteExtra(email: state.email ?? '', signUpMethod: state.signUpMethod.name),
+        ).go(context),
       final PasswordAttemptsExceededException exception => CommonErrorModal.showFromDominException<void>(
           context,
           onTap: context.pop,
@@ -147,7 +147,7 @@ class SignInView extends StatelessWidget {
               ),
               const Gap(24),
               Text(
-                'Just 3 seconds is enough. Sign up and store your data for free and securely!'.tr(context),
+                'Just 3 seconds is enough. Log in and store your data for free and securely!'.tr(context),
                 style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade10),
               ),
               const Gap(44),
