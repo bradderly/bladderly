@@ -67,59 +67,47 @@ class SignInView extends StatelessWidget {
 
   void _onSocialFailure(BuildContext context, SignInSocialFailure state) {
     context.pop();
-    // showDialog<AlertDialog>(
-    //   context: context,
-    //   builder: (context) => AlertDialog(
-    //     title: Text(state.email ?? "null"),
-    //     content: Text(state.exception.toString()),
-    //     actions: [
-    //       TextButton(
-    //         onPressed: context.pop,
-    //         child: Text('Okay'.tr(context)),
-    //       ),
-    //     ],
-    //   ),
-    // );
-    if (state.email case final String email) {
-      return switch (state.exception) {
-        NotFoundAppleCredentialException() => showDialog<AlertDialog>(
-            context: context,
-            builder: (context) => AlertDialog(
-              content: const Text(
-                'Please stop using Apple ID and Try again. Go to Settings > Apple ID > Password & Security > Apps using Apple ID > proudP > Stop using Apple ID',
-              ),
-              actions: [
-                TextButton(
-                  onPressed: context.pop,
-                  child: Text('Okay'.tr(context)),
-                ),
-              ],
+
+    // if (state.email case final String email) {
+    return switch (state.exception) {
+      NotFoundAppleCredentialException() => showDialog<AlertDialog>(
+          context: context,
+          builder: (context) => AlertDialog(
+            content: const Text(
+              'Please stop using Apple ID and Try again. Go to Settings > Apple ID > Password & Security > Apps using Apple ID > proudP > Stop using Apple ID',
             ),
-          ),
-        NotFoundUserException() =>
-          SignUpSocialRoute($extra: SignUpSocialRouteExtra(email: email, signUpMethod: state.signUpMethod.name))
-              .go(context),
-        final PasswordAttemptsExceededException exception => CommonErrorModal.showFromDominException<void>(
-            context,
-            onTap: context.pop,
-            exception: exception,
-          ),
-        _ => showDialog<AlertDialog>(
-            context: context,
-            builder: (context) => AlertDialog(
-              content: Text(
-                state.exception.toString(),
+            actions: [
+              TextButton(
+                onPressed: context.pop,
+                child: Text('Okay'.tr(context)),
               ),
-              actions: [
-                TextButton(
-                  onPressed: context.pop,
-                  child: Text('Okay'.tr(context)),
-                ),
-              ],
-            ),
+            ],
           ),
-      };
-    }
+        ),
+      NotFoundUserException() => SignUpSocialRoute(
+              $extra: SignUpSocialRouteExtra(email: state.email ?? '', signUpMethod: state.signUpMethod.name))
+          .go(context),
+      final PasswordAttemptsExceededException exception => CommonErrorModal.showFromDominException<void>(
+          context,
+          onTap: context.pop,
+          exception: exception,
+        ),
+      _ => showDialog<AlertDialog>(
+          context: context,
+          builder: (context) => AlertDialog(
+            content: Text(
+              state.exception.toString(),
+            ),
+            actions: [
+              TextButton(
+                onPressed: context.pop,
+                child: Text('Okay'.tr(context)),
+              ),
+            ],
+          ),
+        ),
+    };
+    // }
   }
 
   @override
