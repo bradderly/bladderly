@@ -162,31 +162,34 @@ class _DetailedListViewState extends State<DetailedListView> {
                 );
               }
 
-              return ListView(
+              /// TODO: 성능 이슈 발생시 위젯 크기 계산 로직 적용 필욘
+              return SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 32),
-                children: List.generate(max(0, state.groupedHistoriesModel.keyCount * 2 - 1), (index) {
-                  if (index.isOdd) {
-                    return Container(
-                      padding: const EdgeInsets.symmetric(vertical: 16).copyWith(left: 54),
-                      alignment: Alignment.center,
-                      child: Text(
-                        state.groupedHistoriesModel.getInterval(context, index: index ~/ 2),
-                        style: context.textStyleTheme.b12Medium.copyWith(
-                          color: context.colorTheme.neutral.shade10,
+                child: Column(
+                  children: List.generate(max(0, state.groupedHistoriesModel.keyCount * 2 - 1), (index) {
+                    if (index.isOdd) {
+                      return Container(
+                        padding: const EdgeInsets.symmetric(vertical: 16).copyWith(left: 54),
+                        alignment: Alignment.center,
+                        child: Text(
+                          state.groupedHistoriesModel.getInterval(context, index: index ~/ 2),
+                          style: context.textStyleTheme.b12Medium.copyWith(
+                            color: context.colorTheme.neutral.shade10,
+                          ),
                         ),
-                      ),
-                    );
-                  }
+                      );
+                    }
 
-                  final groupedHistories = state.groupedHistoriesModel.groupedHistories;
-                  return DetailedListHistoriesWidget(
-                    onTapEdit: (id) => onTapEdit(context, id: id),
-                    onTapDelete: (id) => onTapDelete(context, id: id),
-                    recordTime: groupedHistories.keys.elementAt(index ~/ 2),
-                    historyKeys: historyKeys,
-                    histories: groupedHistories.values.elementAt(index ~/ 2),
-                  );
-                }),
+                    final groupedHistories = state.groupedHistoriesModel.groupedHistories;
+                    return DetailedListHistoriesWidget(
+                      onTapEdit: (id) => onTapEdit(context, id: id),
+                      onTapDelete: (id) => onTapDelete(context, id: id),
+                      recordTime: groupedHistories.keys.elementAt(index ~/ 2),
+                      historyKeys: historyKeys,
+                      histories: groupedHistories.values.elementAt(index ~/ 2),
+                    );
+                  }),
+                ),
               );
             },
           ),

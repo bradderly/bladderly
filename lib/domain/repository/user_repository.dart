@@ -25,6 +25,8 @@ abstract class UserRepository {
 
   Stream<Membership?> getMembershipStream({required int localUserId});
 
+  Membership? getMembershipOrNullByLocalUserId(int localUserId);
+
   /// 주어진 userId에 해당하는 엔티티의 데이터를 주어진 User의 데이터로 변경한다
   User migrateUser({
     required String userId,

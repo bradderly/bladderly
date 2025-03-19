@@ -6,6 +6,7 @@ import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 import 'package:bladderly/data/mapper/plan_mapper.dart';
 import 'package:bladderly/domain/model/plan.dart';
 import 'package:bladderly/domain/model/product.dart';
+import 'package:bladderly/domain/model/promo_result.dart';
 import 'package:bladderly/domain/repository/payment_repository.dart';
 import 'package:collection/collection.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -120,5 +121,17 @@ class PaymentRepositoryImpl implements PaymentRepository {
     return _apiClient
         .checkPayment(request: PaymentCheckRequest(userId: userId, device: _deviceInfoModel.os, productId: productId))
         .then((value) => value.body!);
+  }
+
+  @override
+  Future<PromoResult> checkPromo({
+    required String userId,
+    required String code,
+  }) async {
+    // final response = await _apiClient.checkPromo(userId: userId, code: code).then((response) => response.body!);
+
+    return PromoResult(result: 'response.message', popup: '');
+
+    // return response.message ?? (throw Exception('Check Promo failed'));
   }
 }

@@ -99,4 +99,10 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   int? getLocalUserIdByUserId(String userId) => _isarClient.getUserOrNullByUserId(userId)?.id;
+
+  @override
+  Membership? getMembershipOrNullByLocalUserId(int localUserId) {
+    final entity = _isarClient.getMembershipOrNullByUserId(localUserId);
+    return entity == null ? null : MembershipMapper.fromMembershipEntity(entity);
+  }
 }

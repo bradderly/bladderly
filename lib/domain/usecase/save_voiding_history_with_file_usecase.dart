@@ -3,7 +3,6 @@
 // Project imports:
 import 'package:bladderly/core/network_checker/network_checker.dart';
 import 'package:bladderly/core/recorder/recorder_module.dart';
-import 'package:bladderly/domain/exception/not_found_user_exception.dart';
 import 'package:bladderly/domain/exception/not_found_voiding_sound_file_exception.dart';
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/history_status.dart';
@@ -45,8 +44,9 @@ class SaveVoidingHistoryWithFileUsecase {
     String? memo,
   }) async {
     try {
-      final user = _userRepository.getUserOrNullByUserId(userId) ??
-          (throw const NotFoundUserException(message: 'User not found'));
+      final user = _userRepository.getUserOrNullByUserId(userId)!;
+      final localUserId = _userRepository.getLocalUserIdByUserId(userId)!;
+      final membership = _userRepository.getMembershipOrNullByLocalUserId(localUserId);
 
       final file = _recorderFileLoader.getFile(recordTime)..readAsBytesSync();
 
@@ -69,6 +69,10 @@ class SaveVoidingHistoryWithFileUsecase {
         ),
       );
 
+      final usedMembership = membership?.use();
+
+      if (usedMembership != null) _userRepository.saveMembership(localUserId: localUserId, membership: usedMembership);
+
       final isNetworkConnected = await _networkChecker.isConnected;
 
       if (!isNetworkConnected) return Right(history);
@@ -83,10 +87,8 @@ class SaveVoidingHistoryWithFileUsecase {
       final processingHistory = await _historyRepository.saveHistory(history.setStatus(HistoryStatus.processing));
 
       return Right(processingHistory);
-    } on Exception catch (e) {
-      return Left(e);
     } catch (e) {
-      return Left(Exception(e.toString()));
+      return Left(e is Exception ? e : Exception(e.toString()));
     }
   }
 }

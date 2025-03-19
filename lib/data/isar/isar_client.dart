@@ -58,6 +58,8 @@ abstract class IsarClient {
   Stream<MembershipEntity?> getMembershipStreamByUserId(int userId);
 
   MembershipEntity saveMembership(MembershipEntity membershipEntity);
+
+  MembershipEntity? getMembershipOrNullByUserId(int userId);
 }
 
 class _IsarClientImpl implements IsarClient {
@@ -219,5 +221,10 @@ class _IsarClientImpl implements IsarClient {
 
       return _isar.userEntitys.getSync(_isar.userEntitys.putSync(userEntity))!;
     });
+  }
+
+  @override
+  MembershipEntity? getMembershipOrNullByUserId(int userId) {
+    return _isar.membershipEntitys.getByUserIdSync(userId);
   }
 }

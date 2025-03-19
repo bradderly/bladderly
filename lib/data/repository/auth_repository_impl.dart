@@ -243,16 +243,6 @@ class AuthRepositoryImpl implements AuthRepository {
     return response.message ?? (throw Exception('Contact Us failed'));
   }
 
-  @override
-  Future<String> checkPromo({
-    required String userId,
-    required String code,
-  }) async {
-    final response = await _apiClient.checkPromo(userId: userId, code: code).then((response) => response.body!);
-
-    return response.message ?? (throw Exception('Check Promo failed'));
-  }
-
   void _clearUserFromLocal() {
     _isarClient.clearAll();
   }
