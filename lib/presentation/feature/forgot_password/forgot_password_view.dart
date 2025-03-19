@@ -17,7 +17,7 @@ import 'package:go_router/go_router.dart';
 class ForgotPasswordView extends StatelessWidget {
   const ForgotPasswordView({super.key});
 
-  Future<void> _onChangePasswordFailure(BuildContext context, ForgotPasswordChangePasswordFailure state) async {
+  Future<void> _onChangePasswordFailure(BuildContext context, ForgotPasswordResetPasswordFailure state) async {
     context.pop();
 
     return switch (state.exception) {
@@ -53,9 +53,9 @@ class ForgotPasswordView extends StatelessWidget {
         ForgotPasswordSendVerificationCodeInProgress() => ProgressIndicatorModal.show(context),
         ForgotPasswordSendVerificationCodeSuccess() => context.pop(),
         ForgotPasswordSendVerificationCodeFailure() => _onSendVerificationCodeFailure(context, state),
-        ForgotPasswordChangePasswordInProgress() => ProgressIndicatorModal.show(context),
-        ForgotPasswordChangePasswordSuccess() => const SignInRoute().go(context),
-        ForgotPasswordChangePasswordFailure() => _onChangePasswordFailure(context, state),
+        ForgotPasswordResetPasswordInProgress() => ProgressIndicatorModal.show(context),
+        ForgotPasswordResetPasswordSuccess() => const SignInRoute().go(context),
+        ForgotPasswordResetPasswordFailure() => _onChangePasswordFailure(context, state),
         _ => null,
       },
       child: Scaffold(

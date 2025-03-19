@@ -4,6 +4,7 @@ import 'dart:async';
 // Project imports:
 import 'package:bladderly/data/api/client/exception/api_response_body_empty_exception.dart';
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
+import 'package:bladderly/domain/exception/code_mismatch_exception.dart';
 // Package imports:
 import 'package:chopper/chopper.dart';
 import 'package:http/http.dart' as http;
@@ -12,6 +13,11 @@ class ApiResponseExceptionInterceptor implements ResponseInterceptor {
   const ApiResponseExceptionInterceptor();
   @override
   FutureOr<Response> onResponse(Response response) {
+    if (response.base.request?.url.path.contains('confirm-pw') == true &&
+        response.bodyString.contains('${const CodeMismatchException().runtimeType}')) {
+      throw const CodeMismatchException();
+    }
+
     if (response.body == null && response is! Response<LoginResponse>) {
       _logResponse(response);
       throw const ApiResponseBodyEmptyException();
