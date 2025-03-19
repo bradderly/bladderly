@@ -5,7 +5,7 @@ import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/model/user_model.dart';
-import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
+import 'package:bladderly/presentation/common/widget/common_message_modal.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/menu/widget/reason_option.dart';
@@ -43,7 +43,7 @@ class _DeleteAccountViewState extends State<DeleteAccountView> {
     context.pop();
 
     if (context.read<MembershipBloc>().state.membership?.subscription?.isValid == true) {
-      return CommonErrorModal.show<void>(
+      return CommonMessageModal.show<void>(
         context,
         onTap: context.pop,
         content: 'Cancel plan Message body',

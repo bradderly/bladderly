@@ -6,8 +6,8 @@ import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-class CommonErrorModal extends StatelessWidget {
-  const CommonErrorModal._({
+class CommonMessageModal extends StatelessWidget {
+  const CommonMessageModal._({
     required this.content,
     this.onTap,
     this.title,
@@ -30,7 +30,7 @@ class CommonErrorModal extends StatelessWidget {
     return showDialog<T>(
       context: context,
       barrierDismissible: barrierDismissible,
-      builder: (context) => CommonErrorModal._(
+      builder: (context) => CommonMessageModal._(
         content: content,
         onTap: onTap,
         title: title,

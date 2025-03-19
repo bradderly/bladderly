@@ -77,7 +77,7 @@ abstract class ApiClient extends ChopperService {
   });
 
   @Get(path: '/check-promo')
-  Future<Response<ResultResponse>> checkPromo({
+  Future<Response<PromoReponse>> checkPromo({
     @Query('user_id') required String userId,
     @Query('code') required String code,
   });

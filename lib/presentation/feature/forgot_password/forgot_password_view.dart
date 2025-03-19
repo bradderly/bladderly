@@ -2,7 +2,7 @@ import 'package:bladderly/domain/exception/code_mismatch_exception.dart';
 import 'package:bladderly/domain/exception/reset_social_user_password_exception.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
+import 'package:bladderly/presentation/common/widget/common_message_modal.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/forgot_password/bloc/forgot_password_bloc.dart';
 import 'package:bladderly/presentation/feature/forgot_password/cubit/forgot_password_form_cubit.dart';
@@ -21,7 +21,7 @@ class ForgotPasswordView extends StatelessWidget {
     context.pop();
 
     return switch (state.exception) {
-      final CodeMismatchException exception => CommonErrorModal.showFromDominException(
+      final CodeMismatchException exception => CommonMessageModal.showFromDominException(
           context,
           onTap: context.pop,
           exception: exception,
@@ -37,7 +37,7 @@ class ForgotPasswordView extends StatelessWidget {
     context.pop();
 
     return switch (state.exception) {
-      final ResetSocialUserPasswordException exception => CommonErrorModal.showFromDominException(
+      final ResetSocialUserPasswordException exception => CommonMessageModal.showFromDominException(
           context,
           onTap: context.pop,
           exception: exception,

@@ -2,7 +2,7 @@
 // Project imports:
 import 'package:bladderly/domain/exception/age_restriction_exception.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
-import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
+import 'package:bladderly/presentation/common/widget/common_message_modal.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/sign_up/cubit/sign_up_required_info_form_cubit.dart';
 import 'package:bladderly/presentation/feature/sign_up/guest/bloc/signup_guest_bloc.dart';
@@ -47,7 +47,7 @@ class _SignUpGuestViewState extends State<SignUpGuestView> {
     context.pop();
 
     return switch (state.exception) {
-      final AgeRestrictionException exception => CommonErrorModal.showFromDominException<void>(
+      final AgeRestrictionException exception => CommonMessageModal.showFromDominException<void>(
           context,
           onTap: context.pop,
           exception: exception,

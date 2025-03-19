@@ -3,7 +3,7 @@
 import 'package:bladderly/presentation/common/cubit/passcode_cubit.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
+import 'package:bladderly/presentation/common/widget/common_message_modal.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,7 +40,7 @@ class _PasscodeAuthViewState extends State<PasscodeAuthView> {
     if (isCorrect) return const MainRoute().go(context);
 
     if (attemptCount == 5) {
-      await CommonErrorModal.show<void>(
+      await CommonMessageModal.show<void>(
         context,
         onTap: context.pop,
         title: 'Passcode failed 5 times title',

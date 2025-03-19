@@ -1,5 +1,6 @@
 // Package imports:
 // Project imports:
+import 'package:bladderly/domain/model/promo_result.dart';
 import 'package:bladderly/domain/repository/payment_repository.dart';
 import 'package:bladderly/domain/repository/user_repository.dart';
 import 'package:dartz/dartz.dart';
@@ -16,7 +17,7 @@ class CheckPromoCodeUsecase {
   final PaymentRepository _paymentRepository;
   final UserRepository _userRepository;
 
-  Future<Either<Exception, String>> call({
+  Future<Either<Exception, PromoResult>> call({
     required String userId,
     required String code,
   }) async {
@@ -33,7 +34,7 @@ class CheckPromoCodeUsecase {
         if (membership != null) _userRepository.saveMembership(localUserId: localUserId, membership: membership);
       }
 
-      return Right(result.popup);
+      return Right(result);
     } catch (e) {
       return Left(e is Exception ? e : Exception(e.toString()));
     }

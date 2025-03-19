@@ -8,7 +8,7 @@ import 'package:bladderly/domain/exception/password_attempts_exceeded_exception.
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
+import 'package:bladderly/presentation/common/widget/common_message_modal.dart';
 import 'package:bladderly/presentation/common/widget/password_input_field.dart';
 import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
@@ -38,29 +38,20 @@ class SignInView extends StatelessWidget {
     context.pop();
 
     return switch (state.exception) {
-      NotFoundUserException() => CommonErrorModal.showFromDominException<void>(
+      NotFoundUserException() => CommonMessageModal.showFromDominException<void>(
           context,
           onTap: context.pop,
           exception: const InvalidUserException(),
         ),
-      final InvalidUserException exception => CommonErrorModal.showFromDominException<void>(
+      final InvalidUserException exception => CommonMessageModal.showFromDominException<void>(
           context,
           onTap: context.pop,
           exception: exception,
         ),
-      _ => showDialog<AlertDialog>(
-          context: context,
-          builder: (context) => AlertDialog(
-            content: Text(
-              state.exception.toString(),
-            ),
-            actions: [
-              TextButton(
-                onPressed: context.pop,
-                child: Text('Okay'.tr(context)),
-              ),
-            ],
-          ),
+      _ => CommonMessageModal.show(
+          context,
+          onTap: context.pop,
+          content: state.exception.toString(),
         ),
     };
   }
@@ -70,41 +61,24 @@ class SignInView extends StatelessWidget {
 
     // if (state.email case final String email) {
     return switch (state.exception) {
-      NotFoundAppleCredentialException() => showDialog<AlertDialog>(
-          context: context,
-          builder: (context) => AlertDialog(
-            content: const Text(
+      NotFoundAppleCredentialException() => CommonMessageModal.show<void>(
+          context,
+          onTap: context.pop,
+          content:
               'Please stop using Apple ID and Try again. Go to Settings > Apple ID > Password & Security > Apps using Apple ID > proudP > Stop using Apple ID',
-            ),
-            actions: [
-              TextButton(
-                onPressed: context.pop,
-                child: Text('Okay'.tr(context)),
-              ),
-            ],
-          ),
         ),
       NotFoundUserException() => SignUpSocialRoute(
           $extra: SignUpSocialRouteExtra(email: state.email ?? '', signUpMethod: state.signUpMethod.name),
         ).go(context),
-      final PasswordAttemptsExceededException exception => CommonErrorModal.showFromDominException<void>(
+      final PasswordAttemptsExceededException exception => CommonMessageModal.showFromDominException<void>(
           context,
           onTap: context.pop,
           exception: exception,
         ),
-      _ => showDialog<AlertDialog>(
-          context: context,
-          builder: (context) => AlertDialog(
-            content: Text(
-              state.exception.toString(),
-            ),
-            actions: [
-              TextButton(
-                onPressed: context.pop,
-                child: Text('Okay'.tr(context)),
-              ),
-            ],
-          ),
+      _ => CommonMessageModal.show<void>(
+          context,
+          onTap: context.pop,
+          content: state.exception.toString(),
         ),
     };
     // }

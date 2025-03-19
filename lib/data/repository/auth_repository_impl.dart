@@ -79,12 +79,13 @@ class AuthRepositoryImpl implements AuthRepository {
     required int yearOfBirth,
   }) async {
     final signUpRequest = SignUpRequest(
-        gender: gender.name,
-        birthyear: '$yearOfBirth',
-        device: _deviceInfoModel.name,
-        region: _deviceInfoModel.region,
-        social: SignUpMethod.N.name,
-        env: kDebugMode ? 'sandbox' : null);
+      gender: gender.name,
+      birthyear: '$yearOfBirth',
+      device: _deviceInfoModel.name,
+      region: _deviceInfoModel.region,
+      social: SignUpMethod.N.name,
+      env: kDebugMode ? 'sandbox' : null,
+    );
 
     final response = await _apiClient.signUp(request: signUpRequest).then((response) => response.body!);
 

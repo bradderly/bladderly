@@ -11,7 +11,7 @@ import 'package:bladderly/presentation/common/bloc/device_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/plan_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
+import 'package:bladderly/presentation/common/widget/common_message_modal.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:bladderly/presentation/router/route/payment_route.dart';
@@ -139,7 +139,7 @@ class _LockedHomeSoundInputWidget extends HomeSoundInputWidget {
     if (!context.mounted) return;
 
     if (!isNetworkConnected) {
-      return CommonErrorModal.showFromDominException<void>(
+      return CommonMessageModal.showFromDominException<void>(
         context,
         onTap: context.pop,
         exception: const NetworkNotConnectedException(),
@@ -228,7 +228,7 @@ class _UnlockedHomeSoundInputWidget extends HomeSoundInputWidget {
     if (!context.mounted) return;
 
     if (!granted) {
-      return CommonErrorModal.show<void>(
+      return CommonMessageModal.show<void>(
         context,
         onTap: context.pop,
         title: 'Microphone permission title',
@@ -241,7 +241,7 @@ class _UnlockedHomeSoundInputWidget extends HomeSoundInputWidget {
     if (state is! DeviceCheckSupportSuccess) return;
 
     if (state.deviceSupportStatus.exception case final DomainException exception) {
-      await CommonErrorModal.showFromDominException<void>(
+      await CommonMessageModal.showFromDominException<void>(
         context,
         onTap: context.pop,
         exception: exception,

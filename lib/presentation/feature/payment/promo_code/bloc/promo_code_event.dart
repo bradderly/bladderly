@@ -7,8 +7,8 @@ sealed class PromoCodeEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class PromoCode extends PromoCodeEvent {
-  const PromoCode({
+class PromoCodeCheck extends PromoCodeEvent {
+  const PromoCodeCheck({
     required this.userId,
     required this.code,
   });

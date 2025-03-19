@@ -3,7 +3,7 @@
   "info": {
     "title": "Bladderly for Flutter",
     "contact": {},
-    "version": "0.0.10"
+    "version": "0.0.11"
   },
   "servers": [
     {
@@ -210,7 +210,7 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "description": "success or fail"
+                      "description": "success or error message"
                     },
                     "result": {
                       "type": "string",
@@ -218,9 +218,10 @@
                     },
                     "popup": {
                       "type": "string",
-                      "description": "popup message"
+                      "description": "popup message when exist or expired"
                     }
-                  }
+                  },
+                  "description": "promotion code check result"
                 }
               }
             }
@@ -2632,6 +2633,24 @@
           }
         },
         "description": "payment information"
+      },
+      "PromoReponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "success or error message"
+          },
+          "result": {
+            "type": "string",
+            "description": "exist or not exist or expired"
+          },
+          "popup": {
+            "type": "string",
+            "description": "popup message when exist or expired"
+          }
+        },
+        "description": "promotion code check result"
       },
       "RecordUpdateRequestRecord": {
         "type": "object",

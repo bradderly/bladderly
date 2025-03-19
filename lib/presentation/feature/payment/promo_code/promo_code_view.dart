@@ -4,11 +4,13 @@
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/common/widget/common_message_modal.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/payment/promo_code/bloc/promo_code_bloc.dart';
 import 'package:bladderly/presentation/feature/payment/promo_code/cubit/promo_code_form_cubit.dart';
 import 'package:bladderly/presentation/feature/payment/promo_code/promo_contact_us/promo_contact_us_builder.dart';
+import 'package:bladderly/presentation/router/route/main_route.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,77 +18,28 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-class PromoCodeModal extends StatefulWidget {
-  const PromoCodeModal({super.key});
+class PromoCodeView extends StatelessWidget {
+  const PromoCodeView({super.key});
 
-  @override
-  State<PromoCodeModal> createState() => _PromoCodeModalState();
-}
+  Future<void> _onCheckSuccess(BuildContext context, PromoCodeCheckSuccess state) async {
+    context.pop();
 
-class _PromoCodeModalState extends State<PromoCodeModal> {
-  void failToast() {
-    showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        content: IntrinsicHeight(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Invalid Code',
-                style: context.textStyleTheme.b18Bold.copyWith(
-                  color: context.colorTheme.neutral.shade10,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                'That promo code didn’t work. Try entering it again, and if you’re still having trouble, email us at hello@bladderly.com for assistance.',
-                style: context.textStyleTheme.b14SemiBold.copyWith(
-                  color: context.colorTheme.neutral.shade10,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 8),
-              const Divider(),
-              const SizedBox(height: 5),
-              GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: () => context.pop(),
-                child: Container(
-                  width: 300,
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Okay',
-                    style: context.textStyleTheme.b14SemiBold.copyWith(
-                      color: const Color(0xFF007AFF),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return CommonMessageModal.show<void>(
+      context,
+      onTap: () => state.promoResult.needCheckMembership ? const MainRoute().go(context) : context.pop(),
+      content: state.promoResult.popup,
     );
   }
 
+  Future<void> _onCheckFailure(BuildContext context, PromoCodeCheckFailure state) async {}
   @override
   Widget build(BuildContext context) {
     return BlocListener<PromoCodeBloc, PromoCodeState>(
-      listener: (context, state) {
-        if (state is PromoCodeProgress) {
-          ProgressIndicatorModal.show(context); // 로딩 표시
-        } else if (state is PromoCodeSuccess) {
-          context
-            ..pop() // 성공 시 모달 닫기
-            ..pop(); // 화면 뒤로가기
-        } else if (state is PromoCodeFailure) {
-          // 실패 시 에러 처리
-          failToast();
-        }
+      listener: (context, state) => switch (state) {
+        PromoCodeCheckInProgress() => ProgressIndicatorModal.show(context),
+        PromoCodeCheckSuccess() => _onCheckSuccess(context, state),
+        PromoCodeCheckFailure() => _onCheckFailure(context, state),
+        _ => null
       },
       child: Scaffold(
         appBar: ModalAppBar(title: 'Promo Code'.tr(context)),
@@ -165,7 +118,7 @@ class _PromoCodeModalState extends State<PromoCodeModal> {
                       return;
                     }
 
-                    final promoCode = PromoCode(
+                    final promoCode = PromoCodeCheck(
                       userId: context.read<UserBloc>().state.userModelOrThrowException.id, // 여기에 실제 사용자 ID를 넣어야 합니다.
                       code: tempCode,
                     );

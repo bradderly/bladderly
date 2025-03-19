@@ -11,7 +11,7 @@ import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/main_tab_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/timer_cubit.dart';
-import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
+import 'package:bladderly/presentation/common/widget/common_message_modal.dart';
 import 'package:bladderly/presentation/common/widget/get_history_result_failure_modal.dart';
 import 'package:bladderly/presentation/feature/diary/diary/diary_builder.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_tab_scroll_section_model.dart';
@@ -116,7 +116,7 @@ class _MainViewState extends State<MainView> {
           message: exception.message,
           recordTime: exception.recordTime,
         ),
-      final NetworkNotConnectedException exception => CommonErrorModal.showFromDominException<void>(
+      final NetworkNotConnectedException exception => CommonMessageModal.showFromDominException<void>(
           context,
           onTap: context.pop,
           exception: exception,
@@ -129,7 +129,7 @@ class _MainViewState extends State<MainView> {
     if (!context.mounted) return;
 
     if (state.exception case final NetworkNotConnectedException exception) {
-      CommonErrorModal.showFromDominException<void>(
+      CommonMessageModal.showFromDominException<void>(
         context,
         onTap: context.pop,
         exception: exception,
