@@ -1,13 +1,6 @@
-import 'package:bladderly/domain/model/plan.dart';
 import 'package:bladderly/domain/model/promo_result.dart';
 
 abstract class PaymentRepository {
-  Future<List<Plan>> getPlans();
-
-  Future<bool> purchasePlan({
-    required String productId,
-  });
-
   Future<void> verifyPayment({
     required String userId,
     required String productId,
