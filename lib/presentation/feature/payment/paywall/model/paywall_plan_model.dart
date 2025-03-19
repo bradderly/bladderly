@@ -46,7 +46,8 @@ class PaywallPlanModel extends Equatable {
   String _formatPrice(double price) {
     final hasDecimal = '$price'.contains('.');
 
-    final decimalPlaces = hasDecimal ? '$price'.split('.').last.length : 0;
+    // final decimalPlaces = hasDecimal ? '$price'.split('.').last.length : 0;
+    final decimalPlaces = hasDecimal ? 2 : 0;
 
     return NumberFormat.currency(symbol: _symbol, decimalDigits: decimalPlaces).format(price);
   }

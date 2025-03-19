@@ -103,14 +103,15 @@ abstract class PaywallView extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     children: [
                       _buildHeader(context),
-                      Gap(this is _FreeUserPaywallView ? 40 : 24),
+                      // Gap(this is _FreeUserPaywallView ? 24 : 24),
+                      const Gap(24),
                       BlocSelector<PaywallCubit, PaywallState, String?>(
                         selector: (state) => state.selectedPlanId,
                         builder: (context, selectedPlanId) => _buildPlans(context, selectedPlanId: selectedPlanId),
                       ),
                       const Gap(24),
                       _buildPromo(context),
-                      const Gap(32),
+                      const Gap(24),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 13),
                         child: Text(

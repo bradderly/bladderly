@@ -146,9 +146,10 @@ class _PaywallPlanWidget extends PaywallPlanWidget {
               RichText(
                 text: TextSpan(
                   children: [
-                    TextSpan(text: plan.monthlyPrice),
-                    const TextSpan(text: ' / '),
-                    TextSpan(text: 'Month'.tr(context)),
+                    switch (context.locale) {
+                      AppLocale.en => TextSpan(text: '${plan.monthlyPrice} / Month'),
+                      AppLocale.ko => TextSpan(text: '매월 ${plan.monthlyPrice}'),
+                    },
                   ],
                   style: context.textStyleTheme.b12SemiBold.copyWith(
                     color: context.colorTheme.neutral.shade7,

@@ -32,7 +32,14 @@ class PaymentRepositoryImpl implements PaymentRepository {
   Future<List<Plan>> getPlans() async {
     final products = await _inAppPurchase.queryProductDetails(Product.ids);
 
-    _productDetailsStream.add(products.productDetails);
+    if (Platform.isAndroid) {
+      final activeProducts = products.productDetails.where((details) {
+        return (details as GooglePlayProductDetails).rawPrice != 0.0; // except free trial for promo code
+      }).toList();
+      _productDetailsStream.add(activeProducts);
+    } else {
+      _productDetailsStream.add(products.productDetails);
+    }
 
     return _productDetailsStream.value.map(PlanMapper.fromProdutDetails).toList();
   }

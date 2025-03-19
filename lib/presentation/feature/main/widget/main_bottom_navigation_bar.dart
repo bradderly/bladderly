@@ -36,14 +36,14 @@ class MainBottomNavigationBar extends StatelessWidget {
                   color: Colors.transparent,
                   child: Column(
                     children: [
-                      [Assets.icon.icMainHome.svg, Assets.icon.icMainDiary.svg][index](
+                      [Assets.icon.icMainRecord.svg, Assets.icon.icMainDiary.svg][index](
                         colorFilter: ColorFilter.mode(
                           isSelected ? context.colorTheme.neutral.shade10 : context.colorTheme.neutral.shade6,
                           BlendMode.srcIn,
                         ),
                       ),
                       Text(
-                        ['Home', 'Diary'][index].tr(context),
+                        ['Record', 'Diary'][index].tr(context),
                         style: context.textStyleTheme.b12Medium.copyWith(
                           color: isSelected ? context.colorTheme.neutral.shade10 : context.colorTheme.neutral.shade6,
                         ),

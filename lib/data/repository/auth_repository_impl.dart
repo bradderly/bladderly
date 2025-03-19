@@ -19,6 +19,7 @@ import 'package:bladderly/domain/model/sex.dart';
 import 'package:bladderly/domain/model/sign_up_method.dart';
 import 'package:bladderly/domain/model/user.dart';
 import 'package:bladderly/domain/repository/auth_repository.dart';
+import 'package:flutter/foundation.dart';
 // Package imports:
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
@@ -78,12 +79,12 @@ class AuthRepositoryImpl implements AuthRepository {
     required int yearOfBirth,
   }) async {
     final signUpRequest = SignUpRequest(
-      gender: gender.name,
-      birthyear: '$yearOfBirth',
-      device: _deviceInfoModel.name,
-      region: _deviceInfoModel.region,
-      social: SignUpMethod.N.name,
-    );
+        gender: gender.name,
+        birthyear: '$yearOfBirth',
+        device: _deviceInfoModel.name,
+        region: _deviceInfoModel.region,
+        social: SignUpMethod.N.name,
+        env: kDebugMode ? 'sandbox' : null);
 
     final response = await _apiClient.signUp(request: signUpRequest).then((response) => response.body!);
 
