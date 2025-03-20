@@ -67,7 +67,7 @@ class _ManualInputLeakageViewState extends State<ManualInputLeakageView> with Au
     if (widget.isEditing) {
       return context.pop();
     } else {
-      return const MainRoute().go(context..read<MainTabCubit>().showDiary());
+      return const MainRoute().go(context..read<MainTabCubit>().showDiary(checkRate: true));
     }
   }
 

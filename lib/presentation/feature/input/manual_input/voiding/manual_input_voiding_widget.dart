@@ -90,7 +90,7 @@ class _ManualInputVoidingWidgetState extends State<ManualInputVoidingWidget> wit
     if (widget.isEditing) {
       return context.pop();
     } else {
-      return const MainRoute().go(context..read<MainTabCubit>().showDiary());
+      return const MainRoute().go(context..read<MainTabCubit>().showDiary(checkRate: true));
     }
   }
 

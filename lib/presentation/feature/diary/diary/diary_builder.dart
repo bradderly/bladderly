@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:bladderly/core/rate_checker/rating_helper.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -17,12 +18,18 @@ class DiaryBuilder extends StatelessWidget {
   const DiaryBuilder({
     super.key,
     required this.diaryTabScrollSectionModel,
+    required this.checkRate,
   });
 
   final DiaryTabScrollSectionModel? diaryTabScrollSectionModel;
+  final bool checkRate;
 
   @override
   Widget build(BuildContext context) {
+    if (checkRate) {
+      getIt<RatingHelper>().checkAndShowRateDialog(context);
+    }
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<DiaryCubit>(

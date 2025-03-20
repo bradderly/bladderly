@@ -21,9 +21,11 @@ final class MainTabHome extends MainTabState {
 final class MainTabDiary extends MainTabState {
   const MainTabDiary({
     required this.diaryTabScrollSectionModel,
+    required this.checkRate,
   });
 
   final DiaryTabScrollSectionModel diaryTabScrollSectionModel;
+  final bool checkRate;
 
   @override
   List<Object> get props => [

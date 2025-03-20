@@ -6,6 +6,7 @@ import 'package:bladderly/data/isar/schema/apple_credential_entity.dart';
 import 'package:bladderly/data/isar/schema/history_entity.dart';
 // Package imports:
 import 'package:bladderly/data/isar/schema/membership_entity.dart';
+import 'package:bladderly/data/isar/schema/rate_trigger_entity.dart';
 import 'package:bladderly/data/isar/schema/score_entity.dart';
 import 'package:bladderly/data/isar/schema/user_entity.dart';
 import 'package:injectable/injectable.dart';
@@ -26,6 +27,7 @@ abstract class IsarModule {
         AppleCredentialEntitySchema,
         ScoreEntitySchema,
         MembershipEntitySchema,
+        RateTriggerEntitySchema,
       ],
       directory: applicationDocumentsDirectory.path,
     );

@@ -59,7 +59,7 @@ class SoundInputNoteView extends StatelessWidget {
 
     SoundInputNoteUploadSuccessModal.show(
       context,
-      onGoToDiary: () => const MainRoute().go(context..read<MainTabCubit>().showDiary()),
+      onGoToDiary: () => const MainRoute().go(context..read<MainTabCubit>().showDiary(checkRate: true)),
     );
   }
 

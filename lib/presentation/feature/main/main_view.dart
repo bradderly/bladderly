@@ -190,10 +190,12 @@ class _MainViewState extends State<MainView> {
                   onPressedMoreIntake: () =>
                       context.read<MainTabCubit>().showDiary(scrollSection: DiaryTabScrollSectionModel.intake),
                 ),
-                BlocSelector<MainTabCubit, MainTabState, DiaryTabScrollSectionModel?>(
-                  selector: (state) => state is MainTabDiary ? state.diaryTabScrollSectionModel : null,
-                  builder: (context, diaryTabScrollSectionModel) =>
-                      DiaryBuilder(diaryTabScrollSectionModel: diaryTabScrollSectionModel),
+                BlocSelector<MainTabCubit, MainTabState, MainTabDiary?>(
+                  selector: (state) => state is MainTabDiary ? state : null,
+                  builder: (context, state) => DiaryBuilder(
+                    diaryTabScrollSectionModel: state?.diaryTabScrollSectionModel,
+                    checkRate: state?.checkRate ?? false,
+                  ),
                 ),
               ],
             ),

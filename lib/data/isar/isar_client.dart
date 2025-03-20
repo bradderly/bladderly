@@ -4,6 +4,7 @@
 import 'package:bladderly/data/isar/schema/apple_credential_entity.dart';
 import 'package:bladderly/data/isar/schema/history_entity.dart';
 import 'package:bladderly/data/isar/schema/membership_entity.dart';
+import 'package:bladderly/data/isar/schema/rate_trigger_entity.dart';
 import 'package:bladderly/data/isar/schema/score_entity.dart';
 import 'package:bladderly/data/isar/schema/user_entity.dart';
 import 'package:bladderly/domain/model/history_status.dart';
@@ -58,6 +59,10 @@ abstract class IsarClient {
   Stream<MembershipEntity?> getMembershipStreamByUserId(int userId);
 
   MembershipEntity saveMembership(MembershipEntity membershipEntity);
+
+  Future<RateTriggerEntity> getRateTrigger();
+
+  Future<void> updateRateTrigger(RateTriggerEntity rateTriggerEntity);
 }
 
 class _IsarClientImpl implements IsarClient {
@@ -219,5 +224,25 @@ class _IsarClientImpl implements IsarClient {
 
       return _isar.userEntitys.getSync(_isar.userEntitys.putSync(userEntity))!;
     });
+  }
+
+  @override
+  Future<RateTriggerEntity> getRateTrigger() async {
+    final rateTrigger = await _isar.rateTriggerEntitys.where().findFirst();
+    if (rateTrigger == null) {
+      final newTrigger = RateTriggerEntity();
+      final id = await _isar.writeTxn(() {
+        return _isar.rateTriggerEntitys.put(newTrigger);
+        ;
+      });
+      final insertedTrigger = await _isar.rateTriggerEntitys.get(id);
+      return insertedTrigger!;
+    }
+    return rateTrigger;
+  }
+
+  @override
+  Future<void> updateRateTrigger(RateTriggerEntity rateTriggerEntity) async {
+    await _isar.writeTxn(() => _isar.rateTriggerEntitys.put(rateTriggerEntity));
   }
 }
