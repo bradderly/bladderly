@@ -8,6 +8,12 @@ class AppVersion extends Equatable {
     required this.currentBuild,
   });
 
+  const AppVersion.empty({
+    required this.currentVersion,
+    required this.currentBuild,
+  })  : minVersion = currentVersion,
+        latestVersion = currentVersion;
+
   final String minVersion;
   final String latestVersion;
   final String currentVersion;

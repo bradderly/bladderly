@@ -71,6 +71,8 @@ final class MembershipInitializeFailure extends MembershipState {
 
   final Exception exception;
 
+  bool get isTodayInitialized => DateUtils.isSameDay(_lastInitializedAt, DateTime.now());
+
   @override
   List<Object?> get props => [
         ...super.props,

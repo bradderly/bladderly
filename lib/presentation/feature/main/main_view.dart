@@ -128,7 +128,8 @@ class _MainViewState extends State<MainView> {
   void onMembershipInitializeFailure(BuildContext context, MembershipInitializeFailure state) {
     if (!context.mounted) return;
 
-    if (state.exception case final NetworkNotConnectedException exception) {
+    if (state.exception case final NetworkNotConnectedException exception
+        when !state.isValidMembership && !state.isTodayInitialized) {
       CommonMessageModal.showFromDominException<void>(
         context,
         onTap: context.pop,

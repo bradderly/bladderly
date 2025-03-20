@@ -3,12 +3,13 @@ import 'package:bladderly/domain/usecase/get_membership_stream_usecase.dart';
 import 'package:bladderly/domain/usecase/initialize_membership_usecase.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'membership_event.dart';
 part 'membership_state.dart';
 
-class MembershipBloc extends Bloc<MembershipEvent, MembershipState> {
+class MembershipBloc extends HydratedBloc<MembershipEvent, MembershipState> {
   MembershipBloc({
     required GetMembershipStreamUsecase getMembershipStreamUsecase,
     required InitializeMembershipUsecase initializeMembershipUsecase,
@@ -35,7 +36,7 @@ class MembershipBloc extends Bloc<MembershipEvent, MembershipState> {
         stream,
         onData: (membership) => MembershipLoadSuccess(
           membership: membership,
-          lastInitializedAt: DateTime.now(),
+          lastInitializedAt: state._lastInitializedAt,
         ),
         onError: (e, s) => MembershipLoadFailure(
           membership: state.membership,
@@ -66,5 +67,22 @@ class MembershipBloc extends Bloc<MembershipEvent, MembershipState> {
         ),
       ),
     );
+  }
+
+  @override
+  MembershipState? fromJson(Map<String, dynamic> json) {
+    return MembershipInitial(
+      lastInitializedAt: switch (json['last_initialized_at']) {
+        final int lastInitializedAt => DateTime.fromMillisecondsSinceEpoch(lastInitializedAt),
+        _ => null,
+      },
+    );
+  }
+
+  @override
+  Map<String, dynamic>? toJson(MembershipState state) {
+    return {
+      'last_initialized_at': state._lastInitializedAt?.millisecondsSinceEpoch,
+    };
   }
 }
