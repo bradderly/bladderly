@@ -10,7 +10,7 @@ import 'package:bladderly/presentation/common/bloc/device_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/passcode_cubit.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
-import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
+import 'package:bladderly/presentation/common/widget/common_message_modal.dart';
 import 'package:bladderly/presentation/feature/splash/cubit/splash_cubit.dart';
 import 'package:bladderly/presentation/feature/splash/modal/splash_soft_update_modal.dart';
 import 'package:bladderly/presentation/feature/splash/model/splash_initialization_model.dart';
@@ -104,7 +104,7 @@ class _SplashViewState extends State<SplashView> {
 
     if (!isLiveListen) return Future<void>.sync(() => subject.value = subject.value.copyWith(liveListen: true));
 
-    return CommonErrorModal.show<void>(
+    return CommonMessageModal.show<void>(
       context,
       onTap: () => context.pop(subject.value = subject.value.copyWith(liveListen: true)),
       title: 'Detected: Hearing aid or Live Listen feature',
@@ -117,7 +117,7 @@ class _SplashViewState extends State<SplashView> {
     final state = context.read<AppConfigBloc>().state;
 
     if (state.needForceUpdate) {
-      return CommonErrorModal.show<void>(
+      return CommonMessageModal.show<void>(
         context,
         onTap: () => launchUrlString(context.read<AppConfigBloc>().state.storeUrl),
         title: 'Mandatory Update title',
@@ -140,7 +140,7 @@ class _SplashViewState extends State<SplashView> {
 
   Future<void> onCheckSupportedDeviceSuccess(BuildContext context, DeviceCheckSupportSuccess state) {
     return switch (state.deviceSupportStatus.exception) {
-      final DomainException exception => CommonErrorModal.showFromDominException<void>(
+      final DomainException exception => CommonMessageModal.showFromDominException<void>(
           context,
           onTap: onInitialized,
           exception: exception,

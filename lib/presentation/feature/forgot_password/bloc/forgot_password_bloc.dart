@@ -15,7 +15,7 @@ class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> 
         _resetPasswordUsecase = resetPasswordUsecase,
         super(const ForgotPasswordInitial()) {
     on<ForgotPasswordSendVerificationCode>(_onSendVerificationCode, transformer: droppable());
-    on<ForgotPasswordChangePassword>(_onChangePassword, transformer: droppable());
+    on<ForgotPasswordChangePassword>(_onResetPassword, transformer: droppable());
   }
 
   final SendVerificationCodeUsecase _sendVerificationCodeUsecase;
@@ -37,11 +37,11 @@ class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> 
     );
   }
 
-  Future<void> _onChangePassword(
+  Future<void> _onResetPassword(
     ForgotPasswordChangePassword event,
     Emitter<ForgotPasswordState> emit,
   ) async {
-    emit(const ForgotPasswordChangePasswordInProgress());
+    emit(const ForgotPasswordResetPasswordInProgress());
 
     final result = await _resetPasswordUsecase(
       email: event.email,
@@ -50,8 +50,8 @@ class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> 
     );
 
     result.fold(
-      (exception) => emit(ForgotPasswordChangePasswordFailure(exception: exception)),
-      (_) => emit(const ForgotPasswordChangePasswordSuccess()),
+      (exception) => emit(ForgotPasswordResetPasswordFailure(exception: exception)),
+      (_) => emit(const ForgotPasswordResetPasswordSuccess()),
     );
   }
 }

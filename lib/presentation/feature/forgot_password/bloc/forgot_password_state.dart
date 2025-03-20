@@ -42,16 +42,16 @@ final class ForgotPasswordSendVerificationCodeFailure extends ForgotPasswordStat
       ];
 }
 
-final class ForgotPasswordChangePasswordInProgress extends ForgotPasswordState {
-  const ForgotPasswordChangePasswordInProgress();
+final class ForgotPasswordResetPasswordInProgress extends ForgotPasswordState {
+  const ForgotPasswordResetPasswordInProgress();
 }
 
-final class ForgotPasswordChangePasswordSuccess extends ForgotPasswordState {
-  const ForgotPasswordChangePasswordSuccess();
+final class ForgotPasswordResetPasswordSuccess extends ForgotPasswordState {
+  const ForgotPasswordResetPasswordSuccess();
 }
 
-final class ForgotPasswordChangePasswordFailure extends ForgotPasswordState {
-  const ForgotPasswordChangePasswordFailure({
+final class ForgotPasswordResetPasswordFailure extends ForgotPasswordState {
+  const ForgotPasswordResetPasswordFailure({
     required this.exception,
   });
 

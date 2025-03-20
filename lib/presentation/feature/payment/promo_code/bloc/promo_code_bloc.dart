@@ -1,5 +1,6 @@
 // Package imports:
 // Project imports:
+import 'package:bladderly/domain/model/promo_result.dart';
 import 'package:bladderly/domain/usecase/check_promo_code_usecase.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
@@ -15,7 +16,7 @@ class PromoCodeBloc extends Bloc<PromoCodeEvent, PromoCodeState> {
         super(const PromoCodeInitial()) {
     on<PromoCodeEvent>(
       (event, emit) => switch (event) {
-        PromoCode() => _onCheckPromo(event, emit),
+        PromoCodeCheck() => _onCheck(event, emit),
       },
       transformer: droppable(),
     );
@@ -23,14 +24,14 @@ class PromoCodeBloc extends Bloc<PromoCodeEvent, PromoCodeState> {
 
   final CheckPromoCodeUsecase _checkPromoCodeUsecase;
 
-  Future<void> _onCheckPromo(PromoCode event, Emitter<PromoCodeState> emit) async {
-    emit(const PromoCodeProgress());
+  Future<void> _onCheck(PromoCodeCheck event, Emitter<PromoCodeState> emit) async {
+    emit(const PromoCodeCheckInProgress());
 
     final result = await _checkPromoCodeUsecase(userId: event.userId, code: event.code);
 
     result.fold(
-      (exception) => emit(PromoCodeFailure(exception: exception)),
-      (success) => emit(const PromoCodeSuccess()),
+      (exception) => emit(PromoCodeCheckFailure(exception: exception)),
+      (promoResult) => emit(PromoCodeCheckSuccess(promoResult: promoResult)),
     );
   }
 }

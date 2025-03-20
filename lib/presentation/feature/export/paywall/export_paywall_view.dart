@@ -2,7 +2,7 @@ import 'package:bladderly/domain/model/plan.dart';
 import 'package:bladderly/presentation/common/bloc/plan_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
+import 'package:bladderly/presentation/common/widget/common_message_modal.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:bladderly/presentation/feature/export/paywall/model/export_plan_model.dart';
@@ -27,7 +27,7 @@ class ExportPaywallView extends StatelessWidget {
   ExportPlanModel get plan => ExportPlanModel.fromDomain(_plan);
 
   Future<void> _onNext(BuildContext context) async {
-    await CommonErrorModal.show<bool>(
+    await CommonMessageModal.show<bool>(
       context,
       onTap: context.pop,
       title: 'Surprise! A Gift for You!',

@@ -69,11 +69,6 @@ abstract class AuthRepository {
     required String message,
   });
 
-  Future<String> checkPromo({
-    required String userId,
-    required String code,
-  });
-
   Future<String> sendVerificationCode({
     required String email,
   });

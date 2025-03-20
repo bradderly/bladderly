@@ -1,7 +1,7 @@
 import 'package:bladderly/domain/exception/already_exist_user_exception.dart';
 import 'package:bladderly/domain/model/sign_up_method.dart';
 import 'package:bladderly/domain/util/password_util.dart';
-import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
+import 'package:bladderly/presentation/common/widget/common_message_modal.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/sign_up/method/bloc/sign_up_method_bloc.dart';
 import 'package:bladderly/presentation/feature/sign_up/method/cubit/sign_up_method_form_cubit.dart';
@@ -52,7 +52,7 @@ class SignUpMethodView extends StatelessWidget {
     context.pop();
 
     if (state.exception case final AlreadyExistUserException exception) {
-      return CommonErrorModal.showFromDominException<void>(
+      return CommonMessageModal.showFromDominException<void>(
         context,
         onTap: context.pop,
         exception: exception,

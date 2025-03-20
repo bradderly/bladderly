@@ -11,16 +11,26 @@ final class PromoCodeInitial extends PromoCodeState {
   const PromoCodeInitial();
 }
 
-final class PromoCodeProgress extends PromoCodeState {
-  const PromoCodeProgress();
+final class PromoCodeCheckInProgress extends PromoCodeState {
+  const PromoCodeCheckInProgress();
 }
 
-final class PromoCodeSuccess extends PromoCodeState {
-  const PromoCodeSuccess();
+final class PromoCodeCheckSuccess extends PromoCodeState {
+  const PromoCodeCheckSuccess({
+    required this.promoResult,
+  });
+
+  final PromoResult promoResult;
+
+  @override
+  List<Object> get props => [
+        ...super.props,
+        promoResult,
+      ];
 }
 
-final class PromoCodeFailure extends PromoCodeState {
-  const PromoCodeFailure({
+final class PromoCodeCheckFailure extends PromoCodeState {
+  const PromoCodeCheckFailure({
     required this.exception,
   });
 

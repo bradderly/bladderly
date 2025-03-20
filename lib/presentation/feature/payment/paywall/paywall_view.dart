@@ -8,7 +8,7 @@ import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/util/text_size_util.dart';
-import 'package:bladderly/presentation/common/widget/common_error_modal.dart';
+import 'package:bladderly/presentation/common/widget/common_message_modal.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
@@ -57,7 +57,7 @@ abstract class PaywallView extends StatelessWidget {
     context.pop();
 
     if (state.product == Product.threeDaysPass) {
-      CommonErrorModal.show<void>(
+      CommonMessageModal.show<void>(
         context,
         onTap: () => const PlanRoute().go(context),
         title: 'Surprise! A Gift for You!',

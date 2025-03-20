@@ -63,6 +63,7 @@ abstract class IsarClient {
   Future<RateTriggerEntity> getRateTrigger();
 
   Future<void> updateRateTrigger(RateTriggerEntity rateTriggerEntity);
+  MembershipEntity? getMembershipOrNullByUserId(int userId);
 }
 
 class _IsarClientImpl implements IsarClient {
@@ -244,5 +245,7 @@ class _IsarClientImpl implements IsarClient {
   @override
   Future<void> updateRateTrigger(RateTriggerEntity rateTriggerEntity) async {
     await _isar.writeTxn(() => _isar.rateTriggerEntitys.put(rateTriggerEntity));
+  MembershipEntity? getMembershipOrNullByUserId(int userId) {
+    return _isar.membershipEntitys.getByUserIdSync(userId);
   }
 }

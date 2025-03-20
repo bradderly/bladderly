@@ -28,7 +28,7 @@ enum Product {
 
   static Set<String> get ids => Product.values.map((product) => product.id).toSet();
 
-  ReplacementMode? getReplacementModeByNewProduct(Product newProduct) {
+  ReplacementMode? calculateReplacementModeByNewProduct(Product newProduct) {
     return switch (this) {
       /// monthly upgrade to annual
       monthlySubscription when newProduct == annualSubscription => ReplacementMode.chargeFullPrice,
