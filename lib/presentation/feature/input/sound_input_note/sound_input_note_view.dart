@@ -85,6 +85,7 @@ class SoundInputNoteView extends StatelessWidget {
         onPopInvokedWithResult: (didPop, result) {},
         child: Scaffold(
           appBar: AppBar(
+            centerTitle: true,
             automaticallyImplyLeading: false,
             toolbarHeight: 58,
             title: Padding(
