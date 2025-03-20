@@ -30,18 +30,20 @@ class DiaryView extends StatefulWidget {
   State<DiaryView> createState() => _DiaryViewState();
 }
 
-class _DiaryViewState extends State<DiaryView> with AutomaticKeepAliveClientMixin {
+class _DiaryViewState extends State<DiaryView> with AutomaticKeepAliveClientMixin, WidgetsBindingObserver {
   final scrollController = ScrollController();
   final voidingSummaryKey = GlobalKey();
   final voidingSummaryExpandController = ValueNotifier(false);
   final intakeSummaryKey = GlobalKey();
   final intakeSummaryExpandController = ValueNotifier(false);
 
-  final today = DateUtils.dateOnly(DateTime.now());
+  DateTime today = DateUtils.dateOnly(DateTime.now());
 
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addObserver(this);
 
     if (widget.diaryTabScrollSectionModel case final DiaryTabScrollSectionModel diaryTabScrollSectionModel) {
       scrollToSection(diaryTabScrollSectionModel);
@@ -63,7 +65,22 @@ class _DiaryViewState extends State<DiaryView> with AutomaticKeepAliveClientMixi
     scrollController.dispose();
     voidingSummaryExpandController.dispose();
     intakeSummaryExpandController.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      final isSameDay = DateUtils.isSameDay(today, DateTime.now());
+
+      if (isSameDay) return;
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() => today = DateUtils.dateOnly(DateTime.now()));
+        context.read<DiaryCubit>().subscribe(today);
+      });
+    }
   }
 
   void scrollToSection(DiaryTabScrollSectionModel scrollSection) {
