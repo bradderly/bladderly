@@ -234,7 +234,6 @@ class _IsarClientImpl implements IsarClient {
       final newTrigger = RateTriggerEntity();
       final id = await _isar.writeTxn(() {
         return _isar.rateTriggerEntitys.put(newTrigger);
-        ;
       });
       final insertedTrigger = await _isar.rateTriggerEntitys.get(id);
       return insertedTrigger!;
@@ -245,6 +244,9 @@ class _IsarClientImpl implements IsarClient {
   @override
   Future<void> updateRateTrigger(RateTriggerEntity rateTriggerEntity) async {
     await _isar.writeTxn(() => _isar.rateTriggerEntitys.put(rateTriggerEntity));
+  }
+
+  @override
   MembershipEntity? getMembershipOrNullByUserId(int userId) {
     return _isar.membershipEntitys.getByUserIdSync(userId);
   }
