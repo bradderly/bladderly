@@ -2,6 +2,8 @@
 
 // Project imports:
 import 'package:bladderly/core/recorder/recorder_module.dart';
+import 'package:bladderly/presentation/common/bloc/membership_bloc.dart';
+import 'package:bladderly/presentation/common/cubit/timer_cubit.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/home/cubit/home_cubit.dart';
@@ -53,10 +55,13 @@ class HomeVoidingWidget extends StatelessWidget {
           const Gap(12),
           BlocSelector<HomeCubit, HomeState, bool>(
             selector: (state) => state.showHowToUse,
-            builder: (context, showHowToUse) => HomeSoundInputWidget(
-              isActivated: true,
-              showHowToUse: showHowToUse,
-              recorder: recorder,
+            builder: (context, showHowToUse) => BlocSelector<TimerCubit, DateTime, bool>(
+              selector: (state) => context.read<MembershipBloc>().state.isValidMembership,
+              builder: (context, isValidMembership) => HomeSoundInputWidget(
+                isActivated: isValidMembership,
+                showHowToUse: showHowToUse,
+                recorder: recorder,
+              ),
             ),
           ),
           const Gap(12),

@@ -80,8 +80,7 @@ sealed class DetailedListHistoryWidget extends StatelessWidget {
               ),
             ],
           ),
-          if (historyModel is DetailedListVoidingHistoryModel &&
-              (historyModel as DetailedListVoidingHistoryModel).recordVolume == 0)
+          if (historyModel case final DetailedListVoidingHistoryModel historyModel when historyModel.recordVolume == 0)
             _buildNA(context),
           const Divider(color: Color(0xFFE6E6E6), thickness: 1, height: 35),
           _buildBody(context),

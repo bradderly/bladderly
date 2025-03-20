@@ -32,9 +32,11 @@ abstract class PaywallView extends StatelessWidget {
     required PaywallPlansModel plans,
     required String? offerToken,
   }) {
-    if (subscription == null) return _FreeUserPaywallView(plans: plans);
+    if (subscription case final MembershipSubscription subscription when subscription.isValid) {
+      return _SubscriberPaywallView(subscription: subscription, plans: plans, offerToken: offerToken);
+    }
 
-    return _SubscriberPaywallView(subscription: subscription, plans: plans, offerToken: offerToken);
+    return _FreeUserPaywallView(plans: plans);
   }
 
   const PaywallView._({
@@ -110,8 +112,7 @@ abstract class PaywallView extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     children: [
                       _buildHeader(context),
-                      // Gap(this is _FreeUserPaywallView ? 24 : 24),
-                      const Gap(24),
+                      Gap(this is _FreeUserPaywallView ? 40 : 24),
                       BlocSelector<PaywallCubit, PaywallState, String?>(
                         selector: (state) => state.selectedPlanId,
                         builder: (context, selectedPlanId) => _buildPlans(context, selectedPlanId: selectedPlanId),

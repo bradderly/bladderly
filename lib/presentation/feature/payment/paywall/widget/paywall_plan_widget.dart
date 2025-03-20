@@ -179,6 +179,8 @@ class _MyPaywallPlanWidget extends PaywallPlanWidget {
 
   @override
   Widget? _buildRenwAt(BuildContext context) {
+    if (renewAt == null) return null;
+
     return Column(
       children: [
         const Gap(8),
@@ -189,8 +191,8 @@ class _MyPaywallPlanWidget extends PaywallPlanWidget {
               const TextSpan(text: ' '),
               TextSpan(
                 text: switch (context.locale) {
-                  AppLocale.en => DateFormat('MMMM dd, yyyy').format(DateTime.now()),
-                  AppLocale.ko => DateFormat('yyyy년 M월 d일에 진행됩니다').format(DateTime.now()),
+                  AppLocale.en => DateFormat('MMMM dd, yyyy').format(renewAt!),
+                  AppLocale.ko => DateFormat('yyyy년 M월 d일에 진행됩니다').format(renewAt!),
                 },
               ),
             ],
