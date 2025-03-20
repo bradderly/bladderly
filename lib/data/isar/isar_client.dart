@@ -220,30 +220,25 @@ class _IsarClientImpl implements IsarClient {
   UserEntity migrateUser(String userId, UserEntity userEntity) {
     return _isar.writeTxnSync(() {
       final id = _isar.userEntitys.getByUserIdSync(userId)!.id;
-
-      userEntity.id = id;
-
-      return _isar.userEntitys.getSync(_isar.userEntitys.putSync(userEntity))!;
+      return _isar.userEntitys.getSync(_isar.userEntitys.putSync(userEntity..id = id))!;
     });
   }
 
   @override
   Future<RateTriggerEntity> getRateTrigger() async {
     final rateTrigger = await _isar.rateTriggerEntitys.where().findFirst();
-    if (rateTrigger == null) {
-      final newTrigger = RateTriggerEntity();
-      final id = await _isar.writeTxn(() {
-        return _isar.rateTriggerEntitys.put(newTrigger);
-      });
-      final insertedTrigger = await _isar.rateTriggerEntitys.get(id);
-      return insertedTrigger!;
-    }
-    return rateTrigger;
+
+    if (rateTrigger != null) return rateTrigger;
+
+    return _isar
+        .writeTxn(() => _isar.rateTriggerEntitys.put(RateTriggerEntity()))
+        .then(_isar.rateTriggerEntitys.get)
+        .then((entity) => entity!);
   }
 
   @override
-  Future<void> updateRateTrigger(RateTriggerEntity rateTriggerEntity) async {
-    await _isar.writeTxn(() => _isar.rateTriggerEntitys.put(rateTriggerEntity));
+  Future<void> updateRateTrigger(RateTriggerEntity rateTriggerEntity) {
+    return _isar.writeTxn(() => _isar.rateTriggerEntitys.put(rateTriggerEntity));
   }
 
   @override
