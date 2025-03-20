@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 enum _DiaryCalendarModalType {
   calendar,
@@ -37,9 +38,9 @@ class DiaryCalendarBottomSheet extends StatefulWidget {
     required DateTime selectedDate,
     required List<DateTime> highlightedDates,
   }) {
-    return showModalBottomSheet<DateTime>(
+    return showMaterialModalBottomSheet<DateTime>(
       context: context,
-      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
       builder: (context) => DiaryCalendarBottomSheet._(
         minDate: minDate,
         maxDate: maxDate,
@@ -65,82 +66,97 @@ class _DiaryCalendarBottomSheetState extends State<DiaryCalendarBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
-          child: Column(
-            children: [
-              _buildHeader(context),
-              const Gap(40),
-              switch (_diaryCalendarModalType) {
-                _DiaryCalendarModalType.calendar => _buildCalendar(context),
-                _DiaryCalendarModalType.month => _buildMonths(context),
-              },
-            ],
-          ),
-        ),
-        Divider(height: 1, thickness: 1, color: context.colorTheme.neutral.shade5),
-        Padding(
-          padding: const EdgeInsets.only(top: 16, left: 16, bottom: 24, right: 22),
-          child: IntrinsicHeight(
-            child: Row(
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: SafeArea(
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            decoration: BoxDecoration(
+              color: context.colorTheme.neutral.shade0,
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                GestureDetector(
-                  onTap: () => setState(
-                    () {
-                      calendarDate = DateTime(widget.today.year, widget.today.month);
-                      selectedDate = widget.today;
-                    },
-                  ),
-                  behavior: HitTestBehavior.translucent,
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: 90,
-                    child: Text(
-                      'Today'.tr(context),
-                      style: context.textStyleTheme.b16SemiBold.copyWith(
-                        color: context.colorTheme.vermilion.primary.shade50,
-                      ),
-                    ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
+                  child: Column(
+                    children: [
+                      _buildHeader(context),
+                      const Gap(40),
+                      switch (_diaryCalendarModalType) {
+                        _DiaryCalendarModalType.calendar => _buildCalendar(context),
+                        _DiaryCalendarModalType.month => _buildMonths(context),
+                      },
+                    ],
                   ),
                 ),
-                const Spacer(),
-                Builder(
-                  builder: (context) {
-                    final isDisabled = switch (_diaryCalendarModalType) {
-                      _DiaryCalendarModalType.calendar => false,
-                      _DiaryCalendarModalType.month => true,
-                    };
-
-                    return GestureDetector(
-                      onTap: isDisabled ? null : () => context.pop<DateTime>(selectedDate),
-                      behavior: HitTestBehavior.translucent,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                        decoration: BoxDecoration(
-                          color: isDisabled
-                              ? context.colorTheme.neutral.shade5
-                              : context.colorTheme.vermilion.primary.shade50,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          'Done'.tr(context),
-                          style: context.textStyleTheme.b16SemiBold.copyWith(
-                            color: context.colorTheme.neutral.shade0,
+                Divider(height: 1, thickness: 1, color: context.colorTheme.neutral.shade5),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16, left: 16, bottom: 24, right: 22),
+                  child: IntrinsicHeight(
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () => setState(
+                            () {
+                              calendarDate = DateTime(widget.today.year, widget.today.month);
+                              selectedDate = widget.today;
+                            },
+                          ),
+                          behavior: HitTestBehavior.translucent,
+                          child: Container(
+                            alignment: Alignment.center,
+                            width: 90,
+                            child: Text(
+                              'Today'.tr(context),
+                              style: context.textStyleTheme.b16SemiBold.copyWith(
+                                color: context.colorTheme.vermilion.primary.shade50,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
+                        const Spacer(),
+                        Builder(
+                          builder: (context) {
+                            final isDisabled = switch (_diaryCalendarModalType) {
+                              _DiaryCalendarModalType.calendar => false,
+                              _DiaryCalendarModalType.month => true,
+                            };
+
+                            return GestureDetector(
+                              onTap: isDisabled ? null : () => context.pop<DateTime>(selectedDate),
+                              behavior: HitTestBehavior.translucent,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                                decoration: BoxDecoration(
+                                  color: isDisabled
+                                      ? context.colorTheme.neutral.shade5
+                                      : context.colorTheme.vermilion.primary.shade50,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Text(
+                                  'Done'.tr(context),
+                                  style: context.textStyleTheme.b16SemiBold.copyWith(
+                                    color: context.colorTheme.neutral.shade0,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 
@@ -173,19 +189,27 @@ class _DiaryCalendarBottomSheetState extends State<DiaryCalendarBottomSheet> {
           ),
         ),
         const Spacer(),
-        if (calendarDate.isAfter(minCalendarDate))
-          GestureDetector(
-            onTap: () => setState(() => calendarDate = DateUtils.addMonthsToMonthDate(calendarDate, -1)),
+        Opacity(
+          opacity: calendarDate.isAfter(minCalendarDate) ? 1 : 0.3,
+          child: GestureDetector(
+            onTap: calendarDate.isAfter(minCalendarDate)
+                ? () => setState(() => calendarDate = DateUtils.addMonthsToMonthDate(calendarDate, -1))
+                : null,
             behavior: HitTestBehavior.translucent,
             child: Assets.icon.icDiaryLeftArrow.svg(),
           ),
-        if (calendarDate.isAfter(minCalendarDate) && calendarDate.isBefore(maxCalendarDate)) const Gap(16),
-        if (calendarDate.isBefore(maxCalendarDate))
-          GestureDetector(
-            onTap: () => setState(() => calendarDate = DateUtils.addMonthsToMonthDate(calendarDate, 1)),
+        ),
+        const Gap(16),
+        Opacity(
+          opacity: calendarDate.isBefore(maxCalendarDate) ? 1 : 0,
+          child: GestureDetector(
+            onTap: calendarDate.isBefore(maxCalendarDate)
+                ? () => setState(() => calendarDate = DateUtils.addMonthsToMonthDate(calendarDate, 1))
+                : null,
             behavior: HitTestBehavior.translucent,
             child: Assets.icon.icDiaryRightArrow.svg(),
           ),
+        ),
       ],
     );
   }
