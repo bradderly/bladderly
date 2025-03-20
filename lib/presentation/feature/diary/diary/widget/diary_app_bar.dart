@@ -124,21 +124,24 @@ class _DiaryAppBarState extends State<DiaryAppBar> {
                         builder: (context) {
                           final isTodaySelected = widget.today == selectedDate;
                           final color = isTodaySelected
-                              ? context.colorTheme.vermilion.secondary.shade30
-                              : context.colorTheme.neutral.shade5;
+                              ? context.colorTheme.neutral.shade5
+                              : context.colorTheme.vermilion.secondary.shade30;
 
-                          return Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: color,
-                                width: 2,
+                          return GestureDetector(
+                            onTap: isTodaySelected ? null : () => onTap(index: 3, date: widget.today),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: color,
+                                  width: 2,
+                                ),
+                                borderRadius: BorderRadius.circular(100),
                               ),
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                            child: Text(
-                              'Today'.tr(context),
-                              style: context.textStyleTheme.b16SemiBold.copyWith(color: color),
+                              child: Text(
+                                'Today'.tr(context),
+                                style: context.textStyleTheme.b16SemiBold.copyWith(color: color),
+                              ),
                             ),
                           );
                         },
