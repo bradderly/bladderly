@@ -48,6 +48,7 @@ class GetPaywallPlansUsecase {
     return Plan(
       product: Product.fromId(productDetails.id),
       name: productDetails is GooglePlayProductDetails ? productDetails.productDetails.name : productDetails.title,
+      priceStr: productDetails.price.replaceAll(RegExp('[^0-9.]'), ''),
       price: double.tryParse(productDetails.price.replaceAll(RegExp('[^0-9.]'), '')) ?? productDetails.rawPrice,
       originPrice: double.tryParse(productDetails.price.replaceAll(RegExp('[^0-9.]'), '')) ?? productDetails.rawPrice,
       symbol: productDetails.currencySymbol,

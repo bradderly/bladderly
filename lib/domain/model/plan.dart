@@ -5,6 +5,7 @@ class Plan extends Equatable {
   const Plan({
     required this.product,
     required this.name,
+    required this.priceStr,
     required this.price,
     required this.originPrice,
     required this.symbol,
@@ -12,14 +13,18 @@ class Plan extends Equatable {
 
   final Product product;
   final String name;
+  final String priceStr;
   final double price;
   final double originPrice;
   final String symbol;
 
   @override
   List<Object> get props => [
+        product,
         name,
+        priceStr,
         price,
         originPrice,
+        symbol,
       ];
 }
