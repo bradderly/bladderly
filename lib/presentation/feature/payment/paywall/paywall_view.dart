@@ -17,7 +17,6 @@ import 'package:bladderly/presentation/feature/payment/paywall/cubit/paywall_cub
 import 'package:bladderly/presentation/feature/payment/paywall/model/paywall_plan_model.dart';
 import 'package:bladderly/presentation/feature/payment/paywall/model/paywall_plans_model.dart';
 import 'package:bladderly/presentation/feature/payment/paywall/widget/paywall_plan_widget.dart';
-import 'package:bladderly/presentation/feature/payment/promo_code/promo_code_builder.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/about_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
@@ -31,26 +30,34 @@ abstract class PaywallView extends StatelessWidget {
   factory PaywallView({
     MembershipSubscription? subscription,
     required PaywallPlansModel plans,
+    required String? offerToken,
   }) {
     if (subscription == null) return _FreeUserPaywallView(plans: plans);
 
-    return _SubscriberPaywallView(subscription: subscription, plans: plans);
+    return _SubscriberPaywallView(subscription: subscription, plans: plans, offerToken: offerToken);
   }
 
   const PaywallView._({
     super.key,
     required this.subscription,
     required this.plans,
+    required this.offerToken,
   });
 
   final MembershipSubscription? subscription;
   final PaywallPlansModel plans;
+  final String? offerToken;
 
   void _purchase(BuildContext context) {
     final userId = context.read<UserBloc>().state.userModelOrThrowException.id;
     final planId = context.read<PaywallCubit>().state.selectedPlanId;
 
-    context.read<PaymentBloc>().add(PaymentPurchasePlan(userId: userId, planId: planId!));
+    context.read<PaymentBloc>().add(
+          PaymentPurchasePlan(
+            userId: userId,
+            planId: planId!,
+          ),
+        );
   }
 
   void _onReadySuccess(BuildContext context, PaymentPurchaseReadySuccess state) {
@@ -143,12 +150,7 @@ abstract class PaywallView extends StatelessWidget {
       children: [
         GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: () => showModalBottomSheet<void>(
-            context: context,
-            isScrollControlled: true,
-            backgroundColor: Colors.transparent,
-            builder: (context) => const PromoCodeBuilder(),
-          ),
+          onTap: () => const PaywallPromoCodeRoute().push<void>(context),
           child: Center(
             child: Container(
               decoration: BoxDecoration(
@@ -226,7 +228,7 @@ abstract class PaywallView extends StatelessWidget {
 class _FreeUserPaywallView extends PaywallView {
   const _FreeUserPaywallView({
     required super.plans,
-  }) : super._(subscription: null);
+  }) : super._(subscription: null, offerToken: null);
 
   @override
   Widget _buildHeader(BuildContext context) {
@@ -322,6 +324,7 @@ class _SubscriberPaywallView extends PaywallView {
   const _SubscriberPaywallView({
     required MembershipSubscription super.subscription,
     required super.plans,
+    required super.offerToken,
   }) : super._();
 
   @override

@@ -51,7 +51,9 @@ class PaymentRepositoryImpl implements PaymentRepository {
     required String userId,
     required String code,
   }) async {
-    final response = await _apiClient.checkPromo(userId: userId, code: code).then((response) => response.body!);
+    final response = await _apiClient
+        .checkPromo(userId: userId, code: code, os: _deviceInfoModel.os)
+        .then((response) => response.body!);
 
     return PromoResult(result: response.result!, popup: response.popup!);
   }

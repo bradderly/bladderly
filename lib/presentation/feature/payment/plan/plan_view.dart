@@ -18,7 +18,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:nil/nil.dart';
 
 class PlanView extends StatelessWidget {
   const PlanView({super.key});
@@ -78,7 +77,7 @@ class PlanView extends StatelessWidget {
                             ],
                           );
                         }
-                        return const Nil();
+                        return const SizedBox.shrink();
                       },
                     ),
                     TextArrow(

@@ -1,34 +1,71 @@
 // Flutter imports:
 
 // Project imports:
+import 'dart:async';
+import 'dart:io';
+
+import 'package:bladderly/domain/model/plan.dart';
+import 'package:bladderly/domain/model/promo_result.dart';
+import 'package:bladderly/presentation/common/bloc/plan_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/common_message_modal.dart';
+import 'package:bladderly/presentation/common/widget/common_modal.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/payment/promo_code/bloc/promo_code_bloc.dart';
 import 'package:bladderly/presentation/feature/payment/promo_code/cubit/promo_code_form_cubit.dart';
 import 'package:bladderly/presentation/feature/payment/promo_code/promo_contact_us/promo_contact_us_builder.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
+import 'package:bladderly/presentation/router/route/payment_route.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class PromoCodeView extends StatelessWidget {
   const PromoCodeView({super.key});
 
+  Future<bool?> _onOfferPromoResult(BuildContext context, OfferPromoResult result) async {
+    if (Platform.isIOS) {
+      return canLaunchUrlString(result.code).then((value) => value ? launchUrlString(result.code) : null);
+    }
+
+    final completer = Completer<List<Plan>>();
+
+    context.read<PlanBloc>().add(PlanGetPlans.subscription(completer: completer));
+
+    final plans = await completer.future;
+
+    if (!context.mounted) return null;
+
+    return PaywallRoute($extra: PaywallRouteExtra(plans: plans), offerToken: result.code)
+        .push<void>(context)
+        .then((_) => null);
+  }
+
   Future<void> _onCheckSuccess(BuildContext context, PromoCodeCheckSuccess state) async {
     context.pop();
 
-    return CommonMessageModal.show<void>(
-      context,
-      onTap: () => state.promoResult.needCheckMembership ? const MainRoute().go(context) : context.pop(),
-      content: state.promoResult.popup,
-    );
+    return switch (state.promoResult) {
+      final OfferPromoResult result => _onOfferPromoResult(context, result),
+      final MembershipPromoResult result => CommonMessageModal.show<void>(
+          context,
+          onTap: () => result.isValid ? const MainRoute().go(context) : context.pop(),
+          content: result.popup,
+        ),
+      final NonePromoResult result => CommonMessageModal.show<void>(
+          context,
+          onTap: context.pop,
+          title: result.title,
+          content: result.popup,
+        ),
+      _ => null,
+    };
   }
 
   Future<void> _onCheckFailure(BuildContext context, PromoCodeCheckFailure state) async {}
@@ -69,22 +106,19 @@ class PromoCodeView extends StatelessWidget {
                       const SizedBox(height: 16),
                       BlocBuilder<PromoCodeFormCubit, PromoCodeFormState>(
                         builder: (_, formState) => TextFormField(
+                          onChanged: context.read<PromoCodeFormCubit>().setCode,
                           initialValue: formState.code,
                           decoration: InputDecoration(
-                            hintText: 'XXX-XXX',
                             filled: true,
-                            fillColor: context.colorTheme.neutral.shade2,
-                            hintStyle: context.textStyleTheme.b16Medium.copyWith(
-                              color: context.colorTheme.neutral.shade9,
-                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide.none,
                             ),
+                            hintText: 'XXX-XXX',
+                            fillColor: context.colorTheme.neutral.shade2,
+                            hintStyle:
+                                context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade6),
                           ),
-                          onChanged: (value) {
-                            context.read<PromoCodeFormCubit>().setCode(value);
-                          },
                         ),
                       ),
                     ],
@@ -93,11 +127,9 @@ class PromoCodeView extends StatelessWidget {
                 Center(
                   child: GestureDetector(
                     behavior: HitTestBehavior.translucent,
-                    onTap: () => showDialog<void>(
-                      context: context,
-                      builder: (context) {
-                        return const PromoContactUsBuilder();
-                      },
+                    onTap: () => CommonModal.show<void>(
+                      context,
+                      child: const PromoContactUsBuilder(),
                     ),
                     child: Text(
                       'Having trouble finding the code?'.tr(context),

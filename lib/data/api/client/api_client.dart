@@ -80,6 +80,7 @@ abstract class ApiClient extends ChopperService {
   Future<Response<PromoReponse>> checkPromo({
     @Query('user_id') required String userId,
     @Query('code') required String code,
+    @Query('device') required String os,
   });
 
   @Get(path: '/get-pay-info')

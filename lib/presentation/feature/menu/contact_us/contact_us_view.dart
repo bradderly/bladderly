@@ -48,7 +48,7 @@ class _ContactUsViewState extends State<ContactUsView> {
       return;
     }
     context.read<ContactUsBloc>().add(
-          ContactUs(
+          ContactUsSubmit(
             userId: formState.id,
             userEmail: formState.email,
             userName: formState.name,
@@ -69,7 +69,7 @@ class _ContactUsViewState extends State<ContactUsView> {
       listener: (context, state) {
         if (state is ContactUsInitial) {
           ProgressIndicatorModal.show(context);
-        } else if (state is ContactUsSuccess) {
+        } else if (state is ContactUsSubmitSuccess) {
           context.pop();
         }
       },

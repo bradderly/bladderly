@@ -158,6 +158,12 @@ enum MainRouteTab {
         TypedGoRoute<PaywallRoute>(
           name: 'paywall',
           path: 'paywall',
+          routes: [
+            TypedGoRoute<PaywallPromoCodeRoute>(
+              name: 'paywall-promo-code',
+              path: 'promo-code',
+            ),
+          ],
         ),
         TypedShellRoute<ProfileShellRoute>(
           routes: [

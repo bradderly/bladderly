@@ -9,7 +9,8 @@ import 'package:injectable/injectable.dart';
 
 @module
 abstract class PurchasePlanUsecaseModule {
-  @LazySingleton(env: ['android'])
+  @Named('android')
+  @lazySingleton
   PurchasePlanUsecase getAndroidPurchasePlan({
     required PaymentRepository paymentRepository,
     required UserRepository userRepository,
@@ -22,7 +23,8 @@ abstract class PurchasePlanUsecaseModule {
     );
   }
 
-  @LazySingleton(env: ['ios'])
+  @Named('iOS')
+  @lazySingleton
   PurchasePlanUsecase getIosPurchasePlan({
     required PaymentRepository paymentRepository,
     required UserRepository userRepository,

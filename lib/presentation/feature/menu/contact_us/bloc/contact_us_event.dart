@@ -7,8 +7,8 @@ sealed class ContactUsEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class ContactUs extends ContactUsEvent {
-  const ContactUs({
+class ContactUsSubmit extends ContactUsEvent {
+  const ContactUsSubmit({
     required this.userId,
     required this.userEmail,
     required this.userName,

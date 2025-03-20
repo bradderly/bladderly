@@ -1,5 +1,7 @@
 // Package imports:
 // Project imports:
+import 'dart:async';
+
 import 'package:bladderly/domain/model/promo_result.dart';
 import 'package:bladderly/domain/repository/payment_repository.dart';
 import 'package:bladderly/domain/repository/user_repository.dart';
@@ -29,9 +31,13 @@ class CheckPromoCodeUsecase {
 
       final localUserId = _userRepository.getLocalUserIdByUserId(userId);
 
-      if (result.needCheckMembership && localUserId != null) {
-        final membership = await _userRepository.getMembershipFromServer(userId: userId);
-        if (membership != null) _userRepository.saveMembership(localUserId: localUserId, membership: membership);
+      if (result case final MembershipPromoResult result when result.isValid && localUserId != null) {
+        unawaited(
+          Future<void>.sync(() async {
+            final membership = await _userRepository.getMembershipFromServer(userId: userId);
+            if (membership != null) _userRepository.saveMembership(localUserId: localUserId, membership: membership);
+          }),
+        );
       }
 
       return Right(result);

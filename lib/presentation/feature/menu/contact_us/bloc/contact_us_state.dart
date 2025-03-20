@@ -11,16 +11,16 @@ final class ContactUsInitial extends ContactUsState {
   const ContactUsInitial();
 }
 
-final class ContactUsProgress extends ContactUsState {
-  const ContactUsProgress();
+final class ContactUsSubmitInProgress extends ContactUsState {
+  const ContactUsSubmitInProgress();
 }
 
-final class ContactUsSuccess extends ContactUsState {
-  const ContactUsSuccess();
+final class ContactUsSubmitSuccess extends ContactUsState {
+  const ContactUsSubmitSuccess();
 }
 
-final class ContactUsFailure extends ContactUsState {
-  const ContactUsFailure({
+final class ContactUsSubmitFailure extends ContactUsState {
+  const ContactUsSubmitFailure({
     required this.exception,
   });
 

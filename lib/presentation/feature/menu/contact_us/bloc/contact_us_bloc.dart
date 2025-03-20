@@ -13,18 +13,13 @@ class ContactUsBloc extends Bloc<ContactUsEvent, ContactUsState> {
     required ContactUsUsecase contactUsUsecase,
   })  : _contactUsUsecase = contactUsUsecase,
         super(const ContactUsInitial()) {
-    on<ContactUsEvent>(
-      (event, emit) => switch (event) {
-        ContactUs() => _sendContactUsMessage(event, emit),
-      },
-      transformer: droppable(),
-    );
+    on<ContactUsSubmit>(_onSubmit, transformer: droppable());
   }
 
   final ContactUsUsecase _contactUsUsecase;
 
-  Future<void> _sendContactUsMessage(ContactUs event, Emitter<ContactUsState> emit) async {
-    emit(const ContactUsProgress());
+  Future<void> _onSubmit(ContactUsSubmit event, Emitter<ContactUsState> emit) async {
+    emit(const ContactUsSubmitInProgress());
 
     final result = await _contactUsUsecase(
       userId: event.userId,
@@ -34,8 +29,8 @@ class ContactUsBloc extends Bloc<ContactUsEvent, ContactUsState> {
     );
 
     result.fold(
-      (exception) => emit(ContactUsFailure(exception: exception)),
-      (success) => emit(const ContactUsSuccess()),
+      (exception) => emit(ContactUsSubmitFailure(exception: exception)),
+      (success) => emit(const ContactUsSubmitSuccess()),
     );
   }
 }

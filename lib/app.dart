@@ -32,6 +32,7 @@ import 'package:bladderly/presentation/router/app_router.dart';
 import 'package:bladderly/presentation/theme/color/color_theme.dart';
 import 'package:bladderly/presentation/theme/shadow/shadow_theme.dart';
 import 'package:bladderly/presentation/theme/text_style/text_style_theme.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -101,7 +102,7 @@ class _BladderlyAppState extends State<BladderlyApp> {
         BlocProvider<PaymentBloc>(
           create: (_) => PaymentBloc(
             initializePurchaseHandlerUsecase: getIt<InitializePurchaseHandlerUsecase>(),
-            purchasePlanUsecase: getIt<PurchasePlanUsecase>(),
+            purchasePlanUsecase: getIt<PurchasePlanUsecase>(instanceName: defaultTargetPlatform.name),
           ),
         ),
         BlocProvider<DeviceBloc>(
