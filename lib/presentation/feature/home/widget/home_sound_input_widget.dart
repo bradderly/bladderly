@@ -238,14 +238,14 @@ class _UnlockedHomeSoundInputWidget extends HomeSoundInputWidget {
 
     final state = context.read<DeviceBloc>().state;
 
-    if (state is! DeviceCheckSupportSuccess) return;
-
-    if (state.deviceSupportStatus.exception case final DomainException exception) {
-      await CommonMessageModal.showFromDominException<void>(
-        context,
-        onTap: context.pop,
-        exception: exception,
-      );
+    if (state case final DeviceCheckSupportSuccess state) {
+      if (state.deviceSupportStatus.exception case final DomainException exception) {
+        await CommonMessageModal.showFromDominException<void>(
+          context,
+          onTap: context.pop,
+          exception: exception,
+        );
+      }
     }
 
     if (!context.mounted) return;

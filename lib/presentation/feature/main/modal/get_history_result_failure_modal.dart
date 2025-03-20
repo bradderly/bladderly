@@ -88,8 +88,8 @@ class GetHistoryResultFailureModal extends StatelessWidget {
                     const Gap(8),
                     Text(
                       switch (context.locale) {
-                        AppLocale.en => DateFormat('hh:ss a, MMMM dd, yyyy').format(recordTime),
-                        AppLocale.ko => DateFormat('a hh:ss, yyyy년 MM월 dd일', context.locale.name).format(recordTime),
+                        AppLocale.en => DateFormat('hh:mm a, MMMM dd, yyyy').format(recordTime),
+                        AppLocale.ko => DateFormat('a hh:mm, yyyy년 MM월 dd일', context.locale.name).format(recordTime),
                       },
                       style: context.textStyleTheme.b14SemiBold.copyWith(
                         color: context.colorTheme.neutral.shade8,
