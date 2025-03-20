@@ -15,6 +15,7 @@ class GuideTourView extends StatefulWidget {
 
 class _GuideTourViewState extends State<GuideTourView> {
   final globalKey = GlobalKey<State<StatefulWidget>>();
+  final pageController = PageController();
 
   late double height = 0;
 
@@ -38,26 +39,34 @@ class _GuideTourViewState extends State<GuideTourView> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+
+    pageController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Center(
-            child: AbsorbPointer(
-              child: Opacity(
-                opacity: 0,
-                child: Stack(
-                  key: globalKey,
-                  children: const [
-                    GuideTourSetUpWidget(),
-                    GuideTourExportWidget(),
-                  ],
+          if (height == 0)
+            Center(
+              child: AbsorbPointer(
+                child: Opacity(
+                  opacity: 0,
+                  child: Stack(
+                    key: globalKey,
+                    children: [
+                      GuideTourSetUpWidget(onNext: () {}),
+                      const GuideTourExportWidget(),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
           if (height != 0)
             Center(
               child: Container(
@@ -70,10 +79,17 @@ class _GuideTourViewState extends State<GuideTourView> {
                 child: SizedBox(
                   height: height,
                   child: PageView(
+                    controller: pageController,
+                    physics: const NeverScrollableScrollPhysics(),
                     onPageChanged: (index) => setState(() => context.read<MainTabCubit>().showIndex(step = index)),
-                    children: const [
-                      GuideTourSetUpWidget(),
-                      GuideTourExportWidget(),
+                    children: [
+                      GuideTourSetUpWidget(
+                        onNext: () => pageController.nextPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        ),
+                      ),
+                      const GuideTourExportWidget(),
                     ],
                   ),
                 ),
