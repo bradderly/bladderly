@@ -20,6 +20,7 @@ import 'package:bladderly/presentation/common/bloc/history_result_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/membership_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/plan_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
+import 'package:bladderly/presentation/common/cubit/diary_date_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/locale_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/main_tab_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/passcode_cubit.dart';
@@ -128,6 +129,9 @@ class _BladderlyAppState extends State<BladderlyApp> {
         ),
         BlocProvider<TimerCubit>(
           create: (_) => TimerCubit(),
+        ),
+        BlocProvider<DiaryDateCubit>(
+          create: (_) => DiaryDateCubit(),
         ),
       ],
       child: BlocListener<AppLocaleCubit, AppLocale>(

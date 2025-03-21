@@ -135,10 +135,6 @@ class _AndroidPurchasePlanUsecase extends PurchasePlanUsecase {
       ),
     );
   }
-
-  ProductDetails _getProductDetails(List<ProductDetails> productDetails, String productId) {
-    return productDetails.firstWhereOrNull((product) => product.id == productId)!;
-  }
 }
 
 class _IosPurchasePlanUsecase extends PurchasePlanUsecase {
