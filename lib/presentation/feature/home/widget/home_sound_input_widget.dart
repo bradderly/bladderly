@@ -89,6 +89,12 @@ class _WaitHowToUseHomeSoundInputWidget extends HomeSoundInputWidget {
   Widget _buildOverlayWidget(BuildContext context) => Stack(
         fit: StackFit.expand,
         children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: context.colorTheme.vermilion.primary.shade40.withValues(alpha: 0.3),
+            ),
+          ),
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Assets.icon.icHomeSoundInputOverlay.svg(fit: BoxFit.cover),
