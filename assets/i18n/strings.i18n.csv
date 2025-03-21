@@ -1,7 +1,4 @@
 key,en,ko
-(hr:mins),(hr:mins),(시간:분)
-(pricing variable & calculation),(pricing variable & calculation),(pricing variable & calculation)
-(pricing variable),(pricing variable),(pricing variable)
 (up to 7 days),(up to 7 days),(최대 7일)
 {a} / Month,{a} / Month,매월 {a}
 {a} days selected,{a} days selected,{n}일 선택됨
@@ -72,7 +69,7 @@ Consent to Personal Data Processing and Usage body,"Bladderly values your privac
 Contact us,Contact us,문의하기
 Continue,Continue,다음
 Continue with Apple,Continue with Apple,Apple로 계속하기
-Continue with Email,Continue with Apple,Email로 계속하기
+Continue with Email,Continue with Email,Email로 계속하기
 Continue with Google,Continue with Google,Google로 계속하기
 Create an Account,Create an Account,회원가입
 Current plan,Current plan,현재 상품
@@ -86,6 +83,7 @@ Delete account Message,"Sorry to see you go, please tell us why you are deleting
 Delete account popup Message,Deleting your account will permanently remove all of your Bladderly information.\n\nAre you sure you want to delete your account?,탈퇴하면 그동안 기록한 정보가 모두 삭제됩니다.\n\n계정을 삭제할까요?
 Delete All Data,Delete All Data,데이터 삭제
 Delete Message,Are you sure you want to delete the record?,기록을 삭제할까요?
+Deutsch,Deutsch,Deutsch
 Diary,Diary,다이어리
 Diary Export,Diary Export,배뇨일지 내보내기
 Did it leak?,Did it leak?,요실금이 있었나요?
@@ -96,6 +94,7 @@ Email Address,Email Address,이메일 주소
 Email ID,Email ID,이메일 주소
 Enable notifications for reminders to guide you on your Bladderly journey.,Enable notifications for reminders to guide you on your Bladderly journey.,블래덜리와 함께 꾸준히 관리할 수 있도록 알림을 보내드릴게요!
 End date,End date,종료일
+English (United States),English (United States),English (United States)
 Ensure the microphone is facing the toilet bowl.,Ensure the microphone is facing the toilet bowl.,마이크가 변기 중앙을 향하도록 하세요.
 Ensure you can see the water in the toilet bowl.,Ensure you can see the water in the toilet bowl.,물이 내려다 보이는 정도가 좋아요.
 Enter promo code,Enter promo code,프로모션 코드 등록하기
@@ -140,7 +139,6 @@ Hearing aid or Live Listen detected body,"Please disconnect or turn off your hea
 Hearing aid or Live Listen detected button,Okay,확인
 Hearing aid or Live Listen detected title,Detected: Hearing aid or Live Listen feature,보청기 또는 실시간 듣기 기능이 켜져 있습니다.
 Hold your phone on your lap,Hold your phone on your lap,스마트폰을 쥔 손을 무릎에 올리세요.
-Home,Home,홈
 hour,hour,시간
 hours,hours,시간
 How to use,How to use,사용 방법
@@ -154,7 +152,9 @@ I’m new here,I’m new here,처음 오셨나요?
 In what situation did it occur?,In what situation did it occur?,어떤 상황에서 발생했나요?
 Intake,Intake,수분 섭취
 International Prostate Symptom Score,International Prostate Symptom Score,국제전립선 증상점수
-Invalid Code,Invalid Code,사용할 수 없는 코드입니다.
+Invalid promo body,"That promo code didn’t work. Try entering it again, and if you’re still having trouble, email us at hello@bladderly.com for assistance.","프로모션 코드를 등록할 수 없습니다. 다시 시도해 보세요. 문제가 있을 경우, hello@bladderly.com으로 이메일을 보내세요."
+Invalid promo button,Okay,확인
+Invalid promo title,Invalid Code,사용할 수 없는 코드입니다.
 IPSS,IPSS,IPSS
 IPSS Desc,This test is devised to help men determine how bothersome their symptoms are and check how effective their treatment is.\n\nTake the following 8-question quiz  and get a personalized urinary health score.,이 검사는 전립선비대증과 관련된 배뇨의 저장과 배출 관련 증상들을 정량화하여 알려줍니다. 증상의 경중에 따라 치료방침을 결정하거나 약물이나 수술적 치료 후 경과 관찰에 유용하게 사용할 수 있습니다.
 IPSS Title 1,Incomplete emptying,잔뇨감
@@ -223,11 +223,13 @@ IPSS8_answer4,Mostly dissatisfied,대체로 불만이다
 IPSS8_answer5,Unhappy,괴롭다
 IPSS8_answer6,Terrible,견딜 수 없다
 Issued records,Issued records,배뇨 시각
+Japanese,日本語,日本語
 juice,juice,주스
 Just 3 seconds is enough. Log in and store your data for free and securely!,Just 3 seconds is enough. Log in and store your data for free and securely!,3초면 충분해요. 로그인하고 안전하게 데이터를 보관하세요.
 Just 3 seconds is enough. Sign up and store your data for free and securely!,Just 3 seconds is enough. Sign up and store your data for free and securely!,3초면 충분해요. 회원가입하고 안전하게 데이터를 보관하세요.
 Keep the record without data,Keep the record without data,기록하지 않고 나가기
 Knees shoulder-width apart,Knees shoulder-width apart,양 무릎을 어깨 너비로 벌립니다.
+Korean,한국어,한국어
 L,L,L
 Language,Language,언어
 Large,Large,L
@@ -278,6 +280,7 @@ Mild,Mild,경증
 Min,Min,최소
 minute,minute,분
 minutes,minutes,분
+ml,ml,ml
 Moderate,Moderate,중등증
 Monthly,Monthly,월간 요금제
 Monthly subscriber,Monthly subscriber,월간 구독자
@@ -377,6 +380,7 @@ Proportion,Proportion,비율
 Prostate Symptom,Prostate Symptom,전립선 증상
 Purchase information,Purchase information,구독 정보
 Re-type new password,Re-type new password,새로운 비밀번호를 다시 입력 하세요.
+Record,Record,입력
 Recording save Message,Your recording is saved and ready for AI processing.,분석이 완료되면 배뇨량이 자동저장됩니다.
 Recording saved!,Recording saved!,측정이 완료되었습니다!
 Recording started!,Recording started!,측정이 시작되었습니다.
@@ -411,7 +415,8 @@ Sign-in failed button,Okay,확인
 Sign-in failed multiple body,Too many sign-in attempts. Please try again in a few hours.,로그인 실패 횟수가 초과되었습니다. 나중에 다시 시도하세요.
 Sign-in failed multiple button,Okay,확인
 Sign-in failed multiple title,Sign-in Failed,로그인할 수 없습니다.
-Sign-in failed title,Sign-in Failed,로그인 실패
+"Sign-in failed title
+",Sign-in Failed,로그인 실패
 Sign-up failed body,"You can’t create this account because you’ve already made one before. To log in, please go to Menu > Contact Us and send us a message.",이미 있던 계정으로는 가입할 수 없습니다. 로그인하려면 메뉴 > 문의하기에서 메시지를 보내주세요.
 Sign-up failed button,Okay,확인
 Sign-up failed title,Account Already Exists,계정이 이미 있어요
@@ -441,7 +446,6 @@ Tell us about you!,Tell us about you!,당신에 대해 알려주세요!
 Terms of Use,Terms of Use,이용약관
 Terms of Use & Privacy Policy Agreement,Terms of Use & Privacy Policy Agreement,이용약관 및 개인정보 보호 정책 동의
 Terms of Use & Privacy Policy Agreement body,I have read and agree to Bladderly's Terms of Service and Privacy Policy.,"블래덜리의 이용약관 및 개인정보 보호 정책을 확인하였으며, 이에 동의합니다."
-"That promo code didn’t work. Try entering it again, and if you’re still having trouble, email us at hello@bladderly.com for assistance.","That promo code didn’t work. Try entering it again, and if you’re still having trouble, email us at hello@bladderly.com for assistance.","프로모션 코드를 등록할 수 없습니다. 다시 시도해 보세요. 문제가 있을 경우, hello@bladderly.com으로 이메일을 보내세요."
 The passcode you entered is incorrect.\nPlease try again.,The passcode you entered is incorrect.\nPlease try again.,비밀번호가 올바르지 않습니다. 다시 입력하세요.
 Then start urinating.,Then start urinating.,배뇨를 시작하세요.
 This is not a diagnosis. Consult with your doctor or medical professional if you have concerns about your condition.,This is not a diagnosis. Consult with your doctor or medical professional if you have concerns about your condition.,이 결과는 진단이 아닙니다. 건강 상태가 걱정되시면 의사와 상담하세요.
@@ -511,4 +515,5 @@ Your score indicates mild prostate symptoms. Ongoing observation or lifestyle ch
 "Your score indicates moderate prostate symptoms that do not significantly impact your quality of life. If discomfort occurs, medication or procedures may be required.","Your score indicates moderate prostate symptoms that do not significantly impact your quality of life. If discomfort occurs, medication or procedures may be required.","현재 점수는 중등도 전립선 증상을 나타내지만, 삶의 질에 큰 영향을 미치지는 않습니다. 불편함이 느껴진다면 약물 치료나 시술이 필요할 수 있습니다."
 Your score indicates moderate prostate symptoms with noticeable discomfort. It is recommended to seek medical assistance. Medication or procedures may be necessary.,Your score indicates moderate prostate symptoms with noticeable discomfort. It is recommended to seek medical assistance. Medication or procedures may be necessary.,"현재 점수는 중등도 전립선 증상으로 불편함이 느껴지는 수준입니다. 의료 상담을 받는 것이 좋으며, 약물 치료나 시술이 필요할 수 있습니다."
 Your score indicates severe prostate symptoms with noticeable discomfort. It is recommended to seek medical assistance. Medication or procedures may be necessary.,Your score indicates severe prostate symptoms with noticeable discomfort. It is recommended to seek medical assistance. Medication or procedures may be necessary.,"현재 점수는 심한 전립선 증상으로 불편함이 뚜렷한 상태입니다. 의료 상담을 받는 것이 권장되며, 약물 치료나 시술이 필요할 수 있습니다."
+Your subscription renews automatically and can be canceled anytime.,Your subscription renews automatically and can be canceled anytime.,"구독은 자동 갱신되며, 언제든지 취소할 수 있습니다."
 Your subscription renews automatically and can be canceled anytime. ,Your subscription renews automatically and can be canceled anytime. ,"구독은 자동 갱신되며, 언제든지 취소할 수 있습니다."
