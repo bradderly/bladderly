@@ -143,10 +143,6 @@ enum MainRouteTab {
               name: 'plan',
               path: 'plan',
               routes: [
-                TypedGoRoute<PlanCancelRoute>(
-                  name: 'plan-cancel',
-                  path: 'plan-cancel',
-                ),
                 TypedGoRoute<PlanPromoCodeRoute>(
                   name: 'promo-code',
                   path: 'promo-code',

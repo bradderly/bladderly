@@ -1,90 +1,78 @@
 // Flutter imports:
 // Project imports:
-import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
-import 'package:bladderly/presentation/common/extension/string_extension.dart';
-import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
-import 'package:bladderly/presentation/feature/menu/widget/reason_option.dart';
-import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:io';
 
-class PlanCancelModal extends StatefulWidget {
-  const PlanCancelModal({super.key});
+import 'package:app_settings/app_settings.dart';
+import 'package:bladderly/presentation/common/bloc/membership_bloc.dart';
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
+import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+
+class PlanCancelView extends StatefulWidget {
+  const PlanCancelView._();
+
+  static Future<void> show(BuildContext context) {
+    return showDialog(
+      context: context,
+      barrierColor: Colors.transparent,
+      useRootNavigator: false,
+      builder: (_) => const PlanCancelView._(),
+    );
+  }
 
   @override
-  State<PlanCancelModal> createState() => _PlanCancelModalState();
+  State<PlanCancelView> createState() => _PlanCancelViewState();
 }
 
-class _PlanCancelModalState extends State<PlanCancelModal> {
-  String? selectedReason;
+class _PlanCancelViewState extends State<PlanCancelView> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance
+      ..addObserver(this)
+      ..addPostFrameCallback((_) => initialize());
+  }
 
-  final List<String> reasons = [
-    'I achieved my goal',
-    'I think the service is too pricey',
-    'I want to resume the subscription later on',
-    'I have technical difficulties',
-    'Other',
-  ];
+  @override
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  Future<void> initialize() async {
+    unawaited(ProgressIndicatorModal.show(context, useRootNavigator: false));
+
+    if (Platform.isIOS) return AppSettings.openAppSettings(type: AppSettingsType.subscriptions);
+
+    if (Platform.isAndroid) {
+      return launchUrlString('https://play.google.com/store/account/subscriptions')
+          .then((_) => null)
+          .catchError((e) => null);
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      final userId = context.read<UserBloc>().state.userModelOrThrowException.id;
+
+      context.read<MembershipBloc>().add(MembershipInitialize(userId: userId));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 41),
-      child: Column(
-        children: [
-          ModalAppBar(title: 'Cancel plan'.tr(context)),
-          const SizedBox(height: 58),
-          Expanded(
-            child: ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 32),
-                  child: Text(
-                    'Delete account Message'.tr(context),
-                    style: context.textStyleTheme.b16Medium.copyWith(
-                      color: context.colorTheme.neutral.shade10,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 59),
-                ...reasons.map(
-                  (reason) => ReasonOption(
-                    reason: reason.tr(context),
-                    isSelected: selectedReason == reason,
-                    onSelect: () {
-                      setState(() {
-                        selectedReason = reason;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-          GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () {
-              if (selectedReason == null) {
-                return;
-              }
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
-              decoration: BoxDecoration(
-                color: (selectedReason == null)
-                    ? context.colorTheme.neutral.shade6
-                    : context.colorTheme.vermilion.primary.shade50,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                'Next'.tr(context),
-                style: context.textStyleTheme.b16SemiBold.copyWith(
-                  color: context.colorTheme.neutral.shade0,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+    return BlocListener<MembershipBloc, MembershipState>(
+      listener: (context, state) => switch (state) {
+        MembershipInitializeSuccess() || MembershipInitializeFailure() when context.mounted => context.pop(),
+        _ => null
+      },
+      child: const SizedBox.shrink(),
     );
   }
 }

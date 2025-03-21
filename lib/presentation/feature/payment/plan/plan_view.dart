@@ -14,6 +14,7 @@ import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/feature/menu/widget/text_arrow_form.dart';
 import 'package:bladderly/presentation/feature/payment/plan/widget/plan_non_subscription_widget.dart';
 import 'package:bladderly/presentation/feature/payment/plan/widget/plan_subscription_widget.dart';
+import 'package:bladderly/presentation/feature/payment/plan_cancel/plan_cancel_modal.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:bladderly/presentation/router/route/payment_route.dart';
 // Flutter imports:
@@ -80,7 +81,7 @@ class PlanView extends StatelessWidget {
                               title: 'Change plan'.tr(context),
                             ),
                             TextArrow(
-                              onTap: () => const PlanCancelRoute().go(context),
+                              onTap: () => PlanCancelView.show(context),
                               title: 'Cancel plan'.tr(context),
                             ),
                           ],

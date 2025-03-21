@@ -17,7 +17,7 @@ class MembershipBloc extends HydratedBloc<MembershipEvent, MembershipState> {
         _initializeMembershipUsecase = initializeMembershipUsecase,
         super(const MembershipInitial()) {
     on<MembershipLoad>(_onLoad, transformer: sequential());
-    on<MembershipInitialize>(_onInitialize, transformer: sequential());
+    on<MembershipInitialize>(_onInitialize, transformer: restartable());
   }
 
   final GetMembershipStreamUsecase _getMembershipStreamUsecase;

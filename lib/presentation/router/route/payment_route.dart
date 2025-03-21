@@ -1,7 +1,6 @@
 import 'package:bladderly/domain/model/plan.dart';
 import 'package:bladderly/presentation/feature/payment/paywall/paywall_builder.dart';
 import 'package:bladderly/presentation/feature/payment/plan/plan_builder.dart';
-import 'package:bladderly/presentation/feature/payment/plan_cancel/plan_cancel_builder.dart';
 import 'package:bladderly/presentation/feature/payment/promo_code/promo_code_builder.dart';
 import 'package:bladderly/presentation/router/page/modal_bottom_sheet_page.dart';
 import 'package:equatable/equatable.dart';
@@ -16,20 +15,6 @@ class PlanRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const PlanBuilder();
-  }
-}
-
-class PlanCancelRoute extends GoRouteData {
-  const PlanCancelRoute();
-
-  static final $parentNavigatorKey = PaymentShellRoute.$navigatorKey;
-
-  @override
-  Page<void> buildPage(BuildContext context, GoRouterState state) {
-    return CupertinoPage<void>(
-      key: state.pageKey,
-      child: const PlanCancelBuilder(),
-    );
   }
 }
 
