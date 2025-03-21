@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bladderly/data/api/client/api_client.dart';
 import 'package:bladderly/domain/model/app_version.dart';
 import 'package:bladderly/domain/repository/config_repository.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -20,7 +21,9 @@ class ConfigRepositryImpl implements ConfigRepository {
 
   @override
   Future<AppVersion> getAppVersion() async {
-    final response = await _apiClient.getVersion(device: 'ios').then((value) => value.body!);
+    final response =
+        await _apiClient.getVersion(device: defaultTargetPlatform.name.toLowerCase()).then((value) => value.body!);
+
     late String build;
     if (Platform.isIOS) {
       build = _packageInfo.buildNumber;
