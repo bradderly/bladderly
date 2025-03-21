@@ -33,8 +33,8 @@ class PlanCancelRoute extends GoRouteData {
   }
 }
 
-class PromoCodeRoute extends GoRouteData {
-  const PromoCodeRoute();
+class PlanPromoCodeRoute extends GoRouteData {
+  const PlanPromoCodeRoute();
 
   static final $parentNavigatorKey = PaymentShellRoute.$navigatorKey;
 
@@ -75,16 +75,14 @@ class PaywallRouteExtra extends Equatable {
 class PaywallRoute extends GoRouteData {
   const PaywallRoute({
     required this.$extra,
-    this.offerToken,
   });
 
-  final String? offerToken;
   final PaywallRouteExtra? $extra;
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) => CupertinoPage<void>(
         key: state.pageKey,
-        child: PaywallBuilder(plans: $extra!.plans, offerToken: offerToken),
+        child: PaywallBuilder(plans: $extra!.plans),
       );
 }
 

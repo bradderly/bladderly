@@ -147,12 +147,13 @@ class _LockedHomeSoundInputWidget extends HomeSoundInputWidget {
     }
 
     final completer = Completer<List<Plan>>();
-
     context.read<PlanBloc>().add(PlanGetPlans.subscription(completer: completer));
 
-    final plans = await completer.future;
-
-    if (context.mounted) return PaywallRoute($extra: PaywallRouteExtra(plans: plans)).push<void>(context);
+    return completer.future
+        .then(
+          (plans) => context.mounted ? PaywallRoute($extra: PaywallRouteExtra(plans: plans)).push<void>(context) : null,
+        )
+        .onError((error, stackTrace) => null);
   }
 
   @override

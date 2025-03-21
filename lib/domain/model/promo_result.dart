@@ -33,6 +33,12 @@ class OfferPromoResult extends PromoResult {
   }) : super._();
 
   final String code;
+
+  @override
+  List<Object> get props => [
+        ...super.props,
+        code,
+      ];
 }
 
 class MembershipPromoResult extends PromoResult {
@@ -45,6 +51,12 @@ class MembershipPromoResult extends PromoResult {
   final String _result;
 
   bool get isValid => _result == 'exist';
+
+  @override
+  List<Object> get props => [
+        ...super.props,
+        _result,
+      ];
 }
 
 class NonePromoResult extends PromoResult {

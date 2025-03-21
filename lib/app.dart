@@ -4,6 +4,7 @@ import 'package:bladderly/core/di/di.dart';
 import 'package:bladderly/domain/usecase/check_supported_device_usecase.dart';
 import 'package:bladderly/domain/usecase/get_history_result_usecase.dart';
 import 'package:bladderly/domain/usecase/get_membership_stream_usecase.dart';
+import 'package:bladderly/domain/usecase/get_paywall_plan_usecase.dart';
 import 'package:bladderly/domain/usecase/get_paywall_plans_usecase.dart';
 import 'package:bladderly/domain/usecase/get_user_stream_usecase.dart';
 import 'package:bladderly/domain/usecase/get_user_usecase.dart';
@@ -120,7 +121,10 @@ class _BladderlyAppState extends State<BladderlyApp> {
           create: (_) => MainTabCubit(),
         ),
         BlocProvider<PlanBloc>(
-          create: (_) => PlanBloc(getPaywallPlansUsecase: getIt<GetPaywallPlansUsecase>()),
+          create: (_) => PlanBloc(
+            getPaywallPlansUsecase: getIt<GetPaywallPlansUsecase>(),
+            getPaywallPlanUsecase: getIt<GetPaywallPlanUsecase>(),
+          ),
         ),
         BlocProvider<TimerCubit>(
           create: (_) => TimerCubit(),

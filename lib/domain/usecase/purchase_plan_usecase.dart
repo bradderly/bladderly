@@ -47,13 +47,13 @@ abstract class PurchasePlanUsecase {
   Future<Either<Exception, bool>> call({
     required String userId,
     required String productId,
-    String? offerToken,
+    String? offerCode,
   }) async {
     try {
       if (productId == Product.threeDaysPass.id) {
         await _purchaseWithoutIap(productId: productId, userId: userId);
       } else {
-        await _purchaseWithIap(productId: productId, offerToken: offerToken);
+        await _purchaseWithIap(productId: productId, offerCode: offerCode);
       }
 
       return const Right(true);
@@ -75,7 +75,7 @@ abstract class PurchasePlanUsecase {
     if (membership != null) _userRepository.saveMembership(localUserId: localUserId, membership: membership);
   }
 
-  Future<bool> _purchaseWithIap({required String productId, String? offerToken});
+  Future<bool> _purchaseWithIap({required String productId, String? offerCode});
 }
 
 class _AndroidPurchasePlanUsecase extends PurchasePlanUsecase {
@@ -96,13 +96,18 @@ class _AndroidPurchasePlanUsecase extends PurchasePlanUsecase {
   @override
   Future<bool> _purchaseWithIap({
     required String productId,
-    String? offerToken,
+    String? offerCode,
   }) async {
     final platformAdditional = _inAppPurchase.getPlatformAddition<InAppPurchaseAndroidPlatformAddition>();
-    final productDetails = await _inAppPurchase
+    final products = await _inAppPurchase
         .queryProductDetails(Product.ids)
-        .then((response) => response.productDetails.cast<GooglePlayProductDetails>())
-        .then((e) => e.firstWhereOrNull((product) => product.id == productId && product.offerToken == offerToken));
+        .then((value) => value.productDetails.cast<GooglePlayProductDetails>());
+
+    final productDetails = products.firstWhereOrNull((product) {
+      final subscriptionOfferDetails = product.productDetails.subscriptionOfferDetails?[product.subscriptionIndex!];
+
+      return product.id == productId && subscriptionOfferDetails?.offerId == offerCode;
+    });
 
     /// TODO:쿼리에 없는 제품을 구매하려고 할때 대응 필요
     if (productDetails == null) {
@@ -116,7 +121,7 @@ class _AndroidPurchasePlanUsecase extends PurchasePlanUsecase {
         );
 
     final currentProduct = Product.values.firstWhereOrNull((product) => product.id == pastPurchase?.productID);
-    final newProduct = Product.values.byName(productDetails.id);
+    final newProduct = Product.fromId(productDetails.id);
     final replacementMode = currentProduct?.calculateReplacementModeByNewProduct(newProduct);
 
     final changeSubscriptionParam = pastPurchase == null
@@ -129,6 +134,10 @@ class _AndroidPurchasePlanUsecase extends PurchasePlanUsecase {
         changeSubscriptionParam: changeSubscriptionParam,
       ),
     );
+  }
+
+  ProductDetails _getProductDetails(List<ProductDetails> productDetails, String productId) {
+    return productDetails.firstWhereOrNull((product) => product.id == productId)!;
   }
 }
 
@@ -148,7 +157,7 @@ class _IosPurchasePlanUsecase extends PurchasePlanUsecase {
   final InAppPurchase _inAppPurchase;
 
   @override
-  Future<bool> _purchaseWithIap({required String productId, String? offerToken}) async {
+  Future<bool> _purchaseWithIap({required String productId, String? offerCode}) async {
     final productDetails = await _inAppPurchase.queryProductDetails(Product.ids).then(
           (response) => response.productDetails.firstWhereOrNull((product) => product.id == productId),
         );

@@ -12,7 +12,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PromoCodeBuilder extends StatelessWidget {
-  const PromoCodeBuilder({super.key});
+  const PromoCodeBuilder({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

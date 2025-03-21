@@ -49,7 +49,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
     final result = await _purchasePlanUsecase(
       userId: event.userId,
       productId: event.planId,
-      offerToken: event.offerToken,
+      offerCode: event.offerToken,
     );
 
     result.fold(

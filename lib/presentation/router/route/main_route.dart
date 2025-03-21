@@ -140,16 +140,16 @@ enum MainRouteTab {
         TypedShellRoute<PaymentShellRoute>(
           routes: [
             TypedGoRoute<PlanRoute>(
-              path: 'plan',
               name: 'plan',
+              path: 'plan',
               routes: [
                 TypedGoRoute<PlanCancelRoute>(
-                  path: 'plan-cancel',
                   name: 'plan-cancel',
+                  path: 'plan-cancel',
                 ),
-                TypedGoRoute<PromoCodeRoute>(
-                  path: 'promo-code',
+                TypedGoRoute<PlanPromoCodeRoute>(
                   name: 'promo-code',
+                  path: 'promo-code',
                 ),
               ],
             ),

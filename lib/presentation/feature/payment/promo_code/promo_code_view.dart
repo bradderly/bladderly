@@ -14,11 +14,11 @@ import 'package:bladderly/presentation/common/widget/common_message_modal.dart';
 import 'package:bladderly/presentation/common/widget/common_modal.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
+import 'package:bladderly/presentation/feature/payment/bloc/payment_bloc.dart';
 import 'package:bladderly/presentation/feature/payment/promo_code/bloc/promo_code_bloc.dart';
 import 'package:bladderly/presentation/feature/payment/promo_code/cubit/promo_code_form_cubit.dart';
 import 'package:bladderly/presentation/feature/payment/promo_code/promo_contact_us/promo_contact_us_builder.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
-import 'package:bladderly/presentation/router/route/payment_route.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,24 +28,27 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class PromoCodeView extends StatelessWidget {
-  const PromoCodeView({super.key});
+  const PromoCodeView({
+    super.key,
+  });
 
-  Future<bool?> _onOfferPromoResult(BuildContext context, OfferPromoResult result) async {
+  Future<void> _onOfferPromoResult(BuildContext context, OfferPromoResult result) async {
     if (Platform.isIOS) {
       return canLaunchUrlString(result.code).then((value) => value ? launchUrlString(result.code) : null);
     }
 
-    final completer = Completer<List<Plan>>();
+    final userId = context.read<UserBloc>().state.userModelOrThrowException.id;
+    final completer = Completer<Plan?>();
 
-    context.read<PlanBloc>().add(PlanGetPlans.subscription(completer: completer));
+    context.read<PlanBloc>().add(PlanGetPlanByOfferCode(offerCode: result.code, completer: completer));
 
-    final plans = await completer.future;
+    final plan = await completer.future.onError((_, __) => null);
 
-    if (!context.mounted) return null;
+    if (plan == null || !context.mounted) return;
 
-    return PaywallRoute($extra: PaywallRouteExtra(plans: plans), offerToken: result.code)
-        .push<void>(context)
-        .then((_) => null);
+    context
+        .read<PaymentBloc>()
+        .add(PaymentPurchasePlan(userId: userId, planId: plan.product.id, offerToken: result.code));
   }
 
   Future<void> _onCheckSuccess(BuildContext context, PromoCodeCheckSuccess state) async {

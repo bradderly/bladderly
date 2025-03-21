@@ -1,14 +1,30 @@
+import 'dart:async';
+
+import 'package:bladderly/domain/model/plan.dart';
 import 'package:bladderly/presentation/common/bloc/plan_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
+import 'package:bladderly/presentation/router/route/main_route.dart';
+import 'package:bladderly/presentation/router/route/payment_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
 class PlanNonSubscriptionWidget extends StatelessWidget {
   const PlanNonSubscriptionWidget({super.key});
+
+  Future<void> _onTapLearnMore(BuildContext context) async {
+    final completer = Completer<List<Plan>>();
+    context.read<PlanBloc>().add(PlanGetPlans.subscription(completer: completer));
+
+    return completer.future
+        .then(
+          (plans) => context.mounted ? PaywallRoute($extra: PaywallRouteExtra(plans: plans)).push<void>(context) : null,
+        )
+        .onError((error, stackTrace) => null);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +91,7 @@ class PlanNonSubscriptionWidget extends StatelessWidget {
                 ),
                 const Gap(16),
                 PrimaryButton.filled(
-                  onPressed: () => context.read<PlanBloc>().add(const PlanGetPlans.subscription()),
+                  onPressed: () => _onTapLearnMore(context),
                   shape: BoxShape.rectangle,
                   backgroundColor: context.colorTheme.vermilion.primary.shade50,
                   borderRadius: 30,

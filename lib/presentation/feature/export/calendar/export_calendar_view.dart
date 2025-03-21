@@ -67,8 +67,7 @@ class _ExportCalendarViewState extends State<ExportCalendarView> {
   final today = DateUtils.dateOnly(DateTime.now());
 
   Future<void> onGetPlansSuccess(BuildContext context, PlanGetPlansSuccess state) async {
-    final oneTimeExportPlan =
-        context.read<PlanBloc>().state.plans.firstWhereOrNull((plan) => plan.product == Product.oneTimeExport);
+    final oneTimeExportPlan = state.plans.firstWhereOrNull((plan) => plan.product == Product.oneTimeExport);
 
     final isValidMembership = context.read<MembershipBloc>().state.isValidMembership;
 

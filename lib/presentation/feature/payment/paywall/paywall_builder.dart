@@ -11,11 +11,9 @@ class PaywallBuilder extends StatelessWidget {
   const PaywallBuilder({
     super.key,
     required this.plans,
-    this.offerToken,
   });
 
   final List<Plan> plans;
-  final String? offerToken;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,6 @@ class PaywallBuilder extends StatelessWidget {
       child: PaywallView(
         subscription: context.read<MembershipBloc>().state.membership?.subscription,
         plans: PaywallPlansModel.fromDomain(plans),
-        offerToken: offerToken,
       ),
     );
   }

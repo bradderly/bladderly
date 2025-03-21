@@ -1,5 +1,6 @@
 // Flutter imports:
 // Project imports:
+import 'dart:io';
 import 'dart:math';
 
 import 'package:bladderly/domain/model/membership.dart';
@@ -30,10 +31,9 @@ abstract class PaywallView extends StatelessWidget {
   factory PaywallView({
     MembershipSubscription? subscription,
     required PaywallPlansModel plans,
-    required String? offerToken,
   }) {
     if (subscription case final MembershipSubscription subscription when subscription.isValid) {
-      return _SubscriberPaywallView(subscription: subscription, plans: plans, offerToken: offerToken);
+      return _SubscriberPaywallView(subscription: subscription, plans: plans);
     }
 
     return _FreeUserPaywallView(plans: plans);
@@ -43,12 +43,10 @@ abstract class PaywallView extends StatelessWidget {
     super.key,
     required this.subscription,
     required this.plans,
-    required this.offerToken,
   });
 
   final MembershipSubscription? subscription;
   final PaywallPlansModel plans;
-  final String? offerToken;
 
   void _purchase(BuildContext context) {
     final userId = context.read<UserBloc>().state.userModelOrThrowException.id;
@@ -86,7 +84,7 @@ abstract class PaywallView extends StatelessWidget {
         PaymentPurchaseSuccess() => context.pop(),
         PaymentPurchaseFailure() => context.pop(),
         PaymentPurchaseRestored() => context.pop(),
-        PaymentPurchaseCanceled() => context.pop(),
+        PaymentPurchaseCanceled() => Platform.isAndroid ? null : context.pop(),
         _ => null,
       },
       child: Container(
@@ -229,7 +227,7 @@ abstract class PaywallView extends StatelessWidget {
 class _FreeUserPaywallView extends PaywallView {
   const _FreeUserPaywallView({
     required super.plans,
-  }) : super._(subscription: null, offerToken: null);
+  }) : super._(subscription: null);
 
   @override
   Widget _buildHeader(BuildContext context) {
@@ -325,7 +323,6 @@ class _SubscriberPaywallView extends PaywallView {
   const _SubscriberPaywallView({
     required MembershipSubscription super.subscription,
     required super.plans,
-    required super.offerToken,
   }) : super._();
 
   @override
