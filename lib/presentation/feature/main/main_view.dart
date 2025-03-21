@@ -8,6 +8,7 @@ import 'package:bladderly/domain/exception/network_not_connected_exception.dart'
 import 'package:bladderly/presentation/common/bloc/history_result_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/membership_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
+import 'package:bladderly/presentation/common/cubit/diary_date_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/main_tab_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/timer_cubit.dart';
@@ -186,10 +187,12 @@ class _MainViewState extends State<MainView> {
               controller: pageController,
               children: [
                 HomeBuilder(
-                  onPressedMoreVoiding: () =>
-                      context.read<MainTabCubit>().showDiary(scrollSection: DiaryTabScrollSectionModel.voiding),
-                  onPressedMoreIntake: () =>
-                      context.read<MainTabCubit>().showDiary(scrollSection: DiaryTabScrollSectionModel.intake),
+                  onPressedMoreVoiding: () => context
+                    ..read<DiaryDateCubit>().changeDate(DateTime.now())
+                    ..read<MainTabCubit>().showDiary(scrollSection: DiaryTabScrollSectionModel.voiding),
+                  onPressedMoreIntake: () => context
+                    ..read<DiaryDateCubit>().changeDate(DateTime.now())
+                    ..read<MainTabCubit>().showDiary(scrollSection: DiaryTabScrollSectionModel.intake),
                 ),
                 BlocSelector<MainTabCubit, MainTabState, MainTabDiary?>(
                   selector: (state) => state is MainTabDiary ? state : null,
