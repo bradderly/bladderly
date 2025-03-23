@@ -11,8 +11,8 @@ final class ChangePasswordInitial extends ChangePasswordState {
   const ChangePasswordInitial();
 }
 
-final class ChangePasswordProgress extends ChangePasswordState {
-  const ChangePasswordProgress();
+final class ChangePasswordInProgress extends ChangePasswordState {
+  const ChangePasswordInProgress();
 }
 
 final class ChangePasswordSuccess extends ChangePasswordState {

@@ -1,10 +1,9 @@
 // Package imports:
+// Project imports:
+import 'package:bladderly/domain/usecase/change_password_usecase.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-// Project imports:
-import 'package:bladderly/domain/usecase/change_password_usecase.dart';
 
 part 'change_password_event.dart';
 part 'change_password_state.dart';
@@ -25,7 +24,7 @@ class ChangePasswordBloc extends Bloc<ChangePasswordEvent, ChangePasswordState> 
   final ChangePasswordUsecase _chagnePasswordUsecase;
 
   Future<void> _onChangePassord(ChangePassword event, Emitter<ChangePasswordState> emit) async {
-    emit(const ChangePasswordProgress());
+    emit(const ChangePasswordInProgress());
 
     final result = await _chagnePasswordUsecase(
       email: event.email,

@@ -1,9 +1,8 @@
 // Package imports:
-import 'package:dartz/dartz.dart';
-import 'package:injectable/injectable.dart';
-
 // Project imports:
 import 'package:bladderly/domain/repository/auth_repository.dart';
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class ChangePasswordUsecase {
@@ -24,6 +23,7 @@ class ChangePasswordUsecase {
         newPw: newPw,
         oldPw: oldPw,
       );
+
       return Right(result);
     } on Exception catch (e) {
       return Left(e);

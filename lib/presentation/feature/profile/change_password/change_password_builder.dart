@@ -3,7 +3,7 @@
 import 'package:bladderly/core/di/di.dart';
 import 'package:bladderly/domain/usecase/change_password_usecase.dart';
 import 'package:bladderly/presentation/feature/profile/change_password/bloc/change_password_bloc.dart';
-import 'package:bladderly/presentation/feature/profile/change_password/change_password_modal.dart';
+import 'package:bladderly/presentation/feature/profile/change_password/change_password_view.dart';
 import 'package:bladderly/presentation/feature/profile/change_password/cubit/change_password_form_cubit.dart';
 import 'package:flutter/widgets.dart';
 // Package imports:
@@ -25,7 +25,7 @@ class ChangePasswordBuilder extends StatelessWidget {
           create: (_) => ChangePasswordFormCubit(),
         ),
       ],
-      child: const ChangePasswordModal(),
+      child: const ChangePasswordView(),
     );
   }
 }

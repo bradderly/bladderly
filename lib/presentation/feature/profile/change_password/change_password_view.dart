@@ -1,10 +1,13 @@
 // Flutter imports:
 // Project imports:
+import 'package:bladderly/domain/exception/invalid_user_exception.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/model/user_model.dart';
+import 'package:bladderly/presentation/common/widget/common_message_modal.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
+import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/profile/change_password/bloc/change_password_bloc.dart';
 import 'package:bladderly/presentation/feature/profile/change_password/cubit/change_password_form_cubit.dart';
@@ -15,15 +18,15 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-class ChangePasswordModal extends StatelessWidget {
-  const ChangePasswordModal({super.key});
+class ChangePasswordView extends StatelessWidget {
+  const ChangePasswordView({super.key});
 
   // 기존 비밀번호 검증 (8자리 이상만 확인)
   bool _validateOldPassword(String password) {
     return password.length < 8;
   }
 
-  // 비밀번호 검증 함수s
+  // 비밀번호 검증 함수
   bool _validatePassword(String password) {
     // 길이 검증: 최소 8자
     if (password.length < 8) return true;
@@ -32,7 +35,8 @@ class ChangePasswordModal extends StatelessWidget {
     // 대문자 포함 여부 검증
     if (!password.contains(RegExp('[A-Z]'))) return true;
     // 특수문자 포함 여부 검증
-    if (!password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) return true;
+    if (!password.checkHasLeastOneSpecialCharacter) return true;
+
     return false;
   }
 
@@ -46,13 +50,26 @@ class ChangePasswordModal extends StatelessWidget {
         .add(ChangePassword(email: emailText, oldPw: state.oldPassword, newPw: state.newPassword));
   }
 
+  Future<void> _onChangeFailure(BuildContext context, ChangePasswordFailure state) async {
+    context.pop();
+
+    return switch (state.exception) {
+      final InvalidUserException exception => CommonMessageModal.showFromDominException(
+          context,
+          onTap: context.pop,
+          exception: exception,
+        ),
+      _ => null,
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<ChangePasswordBloc, ChangePasswordState>(
       listener: (context, state) => switch (state) {
-        ChangePasswordInitial() => ProgressIndicatorModal.show(context),
+        ChangePasswordInProgress() => ProgressIndicatorModal.show(context),
         ChangePasswordSuccess() => context.pop(),
-        ChangePasswordFailure() => {},
+        ChangePasswordFailure() => _onChangeFailure(context, state),
         _ => null,
       },
       child: Scaffold(
@@ -219,34 +236,27 @@ class ChangePasswordModal extends StatelessWidget {
               ),
               BlocSelector<ChangePasswordFormCubit, ChangePasswordFormState, bool>(
                 selector: (state) => state.isValid,
-                builder: (context, isValid) => GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: (isValid &&
+                builder: (context, isValid) => PrimaryButton.filled(
+                  onPressed: (isValid &&
                           context.watch<ChangePasswordFormCubit>().state.newPassword ==
                               context.watch<ChangePasswordFormCubit>().state.confirmPassword &&
                           !_validatePassword(context.watch<ChangePasswordFormCubit>().state.newPassword) &&
                           !_validateOldPassword(context.watch<ChangePasswordFormCubit>().state.oldPassword))
                       ? () => _onChangePassword(context)
                       : null, // Save 버튼 클릭 시 검증
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 12),
-                    decoration: BoxDecoration(
-                      color: (isValid &&
-                              context.watch<ChangePasswordFormCubit>().state.newPassword ==
-                                  context.watch<ChangePasswordFormCubit>().state.confirmPassword &&
-                              !_validatePassword(context.watch<ChangePasswordFormCubit>().state.newPassword) &&
-                              !_validateOldPassword(context.watch<ChangePasswordFormCubit>().state.oldPassword))
-                          ? context.colorTheme.vermilion.primary.shade50
-                          : context.colorTheme.neutral.shade6,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      'Save'.tr(context),
-                      style: context.textStyleTheme.b16SemiBold.copyWith(
-                        color: context.colorTheme.neutral.shade0,
-                      ),
-                    ),
-                  ),
+
+                  backgroundColor: (isValid &&
+                          context.watch<ChangePasswordFormCubit>().state.newPassword ==
+                              context.watch<ChangePasswordFormCubit>().state.confirmPassword &&
+                          !_validatePassword(context.watch<ChangePasswordFormCubit>().state.newPassword) &&
+                          !_validateOldPassword(context.watch<ChangePasswordFormCubit>().state.oldPassword))
+                      ? context.colorTheme.vermilion.primary.shade50
+                      : context.colorTheme.neutral.shade6,
+                  borderRadius: 8,
+                  shape: BoxShape.rectangle,
+                  text: 'Save'.tr(context),
+                  textColor: context.colorTheme.neutral.shade0,
+                  size: const Size(256, 48),
                 ),
               ),
               const Gap(28),
@@ -264,7 +274,7 @@ Widget errorText(String text, BuildContext context, bool isError) {
   }
 
   return Padding(
-    padding: const EdgeInsets.only(left: 24, right: 24, top: 16),
+    padding: const EdgeInsets.only(top: 16),
     child: Text(
       text,
       style: context.textStyleTheme.b14Medium.copyWith(color: context.colorTheme.warning),

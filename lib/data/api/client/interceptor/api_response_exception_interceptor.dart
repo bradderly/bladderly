@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:bladderly/data/api/client/exception/api_response_body_empty_exception.dart';
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 import 'package:bladderly/domain/exception/code_mismatch_exception.dart';
+import 'package:bladderly/domain/exception/invalid_user_exception.dart';
 import 'package:bladderly/domain/exception/reset_social_user_password_exception.dart';
 // Package imports:
 import 'package:chopper/chopper.dart';
@@ -23,6 +24,10 @@ class ApiResponseExceptionInterceptor implements ResponseInterceptor {
     if (response.base.request?.url.path.contains('forgot-pw') == true && response.statusCode != 200) {
       final message = SimpleResponse.fromJson(jsonDecode(response.bodyString) as Map<String, dynamic>).message;
       throw ResetSocialUserPasswordException.fromMessage(message!);
+    }
+
+    if (response.base.request?.url.path.contains('change-pw') == true && response.statusCode == 401) {
+      throw const InvalidUserException.fromChangePw();
     }
 
     if (response.body == null && response is! Response<LoginResponse>) {

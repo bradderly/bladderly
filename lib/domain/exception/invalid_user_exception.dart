@@ -7,4 +7,9 @@ class InvalidUserException extends DomainException {
           title: 'Sign-in failed title',
           message: 'Sign-in failed body',
         );
+
+  const InvalidUserException.fromChangePw()
+      : super(
+          message: 'Password change failed body',
+        );
 }
