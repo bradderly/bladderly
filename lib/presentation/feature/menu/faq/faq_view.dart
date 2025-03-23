@@ -22,7 +22,7 @@ class FaqView extends StatelessWidget {
             Factory(EagerGestureRecognizer.new),
           },
           initialUrlRequest: URLRequest(
-            url: WebUri('https://www.bladderly.com/terms-of-use'),
+            url: WebUri('https://www.bladderly.com/faq'),
           ),
         ),
       ),
