@@ -7,6 +7,7 @@ import 'package:bladderly/presentation/common/extension/build_context_extension.
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/feature/passcode/input/passcode_input_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -70,7 +71,11 @@ class PasscodeModal extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Lock with Face ID & Passcode'.tr(context),
+                                  switch (defaultTargetPlatform) {
+                                    TargetPlatform.iOS => 'Lock with Face ID & Passcode'.tr(context),
+                                    TargetPlatform.android => 'Lock with Passcode'.tr(context),
+                                    _ => '',
+                                  },
                                   style: context.textStyleTheme.b16Medium.copyWith(
                                     color: context.colorTheme.neutral.shade10,
                                   ),
