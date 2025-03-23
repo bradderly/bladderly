@@ -27,7 +27,7 @@ class ContactUsFormState extends Equatable {
     );
   }
 
-  bool get isValid => id.isNotEmpty && name.isNotEmpty && email.isNotEmpty && message.isNotEmpty;
+  bool get isValid => id.isNotEmpty && email.isNotEmpty && message.isNotEmpty;
 
   @override
   List<Object> get props => [
