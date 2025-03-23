@@ -44,8 +44,6 @@ class _SignUpSocialViewState extends State<SignUpSocialView> {
       listener: (context, state) => switch (state) {
         SignUpSocialSubmitInProgress() => ProgressIndicatorModal.show(context),
         SignUpSocialSubmitSuccess() => const MainRoute().go(context),
-
-        // TODO(eden): 소셜 회원가입 실패 처리 필요.
         SignUpSocialSubmitFailure() => context.pop(),
         _ => null,
       },

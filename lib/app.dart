@@ -1,6 +1,8 @@
 // Flutter imports:
 // Project imports:
 import 'package:bladderly/core/di/di.dart';
+import 'package:bladderly/core/notification/notification.dart';
+import 'package:bladderly/core/notification/notification_module.dart';
 import 'package:bladderly/domain/usecase/check_supported_device_usecase.dart';
 import 'package:bladderly/domain/usecase/get_history_result_usecase.dart';
 import 'package:bladderly/domain/usecase/get_membership_stream_usecase.dart';
@@ -34,6 +36,7 @@ import 'package:bladderly/presentation/router/app_router.dart';
 import 'package:bladderly/presentation/theme/color/color_theme.dart';
 import 'package:bladderly/presentation/theme/shadow/shadow_theme.dart';
 import 'package:bladderly/presentation/theme/text_style/text_style_theme.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // Package imports:
@@ -55,7 +58,12 @@ class _ScrollBehavior extends ScrollBehavior {
 }
 
 class BladderlyApp extends StatefulWidget {
-  const BladderlyApp({super.key});
+  const BladderlyApp({
+    super.key,
+    required this.notificationService,
+  });
+
+  final NotificationService notificationService;
 
   @override
   State<BladderlyApp> createState() => _BladderlyAppState();
@@ -65,6 +73,12 @@ class _BladderlyAppState extends State<BladderlyApp> {
   @override
   void initState() {
     super.initState();
+
+    widget.notificationService.initialize(
+      onReceiveNotification: (message) {},
+      onTapNotification: (message) {},
+      onReceiveBackgroundNotification: _firebaseMessagingBackgroundHandler,
+    );
 
     FlutterLocalization.instance.init(
       initLanguageCode: AppLocaleCubit().state.name,
@@ -178,4 +192,12 @@ class _BladderlyAppState extends State<BladderlyApp> {
       ),
     );
   }
+}
+
+/// 별도의 쓰레드에서 Flutter Engine이 호출되어서 별도의 의존성 관리가 필요함
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(
+  RemoteMessage notification,
+) async {
+  final notificationModel = NotificationModel.fromRemoteMessage(notification);
 }

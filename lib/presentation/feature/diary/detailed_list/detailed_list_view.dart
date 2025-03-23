@@ -162,7 +162,6 @@ class _DetailedListViewState extends State<DetailedListView> {
                 );
               }
 
-              /// TODO: 성능 이슈 발생시 위젯 크기 계산 로직 적용 필욘
               return SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 32),
                 child: Column(

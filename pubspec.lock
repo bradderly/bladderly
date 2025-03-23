@@ -37,10 +37,10 @@ packages:
     dependency: "direct main"
     description:
       name: app_settings
-      sha256: "476df1d85cec143c3d27dd1c7451629a59c0c5ccf70a0adcbfa92a0a2d928705"
+      sha256: "09bc7fe0313a507087bec1a3baf555f0576e816a760cbb31813a88890a09d9e5"
       url: "https://pub.dev"
     source: hosted
-    version: "5.2.0"
+    version: "5.1.1"
   archive:
     dependency: transitive
     description:
@@ -393,6 +393,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.1"
+  firebase_analytics:
+    dependency: "direct main"
+    description:
+      name: firebase_analytics
+      sha256: "81a582e9348216fcf6b30878487369325bf78b8ddd752ed176949c8e4fd4aaac"
+      url: "https://pub.dev"
+    source: hosted
+    version: "11.4.4"
+  firebase_analytics_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_analytics_platform_interface
+      sha256: "5ae7bd4a551b67009cd0676f5407331b202eaf16e0a80dcf7b40cd0a34a18746"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.3.4"
+  firebase_analytics_web:
+    dependency: transitive
+    description:
+      name: firebase_analytics_web
+      sha256: "15fd7459fea2a00958dbf9b86cd8ad14d3ce2db13950308af7c7717e89ccc5c2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.10+10"
   firebase_core:
     dependency: "direct main"
     description:
@@ -1037,6 +1061,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.11"
+  logger:
+    dependency: transitive
+    description:
+      name: logger
+      sha256: "7ad7215c15420a102ec687bb320a7312afd449bac63bfb1c60d9787c27b9767f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.0"
   logging:
     dependency: "direct main"
     description:
@@ -1133,6 +1165,46 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.2"
+  notifly_flutter:
+    dependency: "direct main"
+    description:
+      name: notifly_flutter
+      sha256: "897b2eb020438c0cee10e6ea0f30eb0f37265efefe6bd5356838b7e8fb612cc3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.10.0"
+  notifly_flutter_android:
+    dependency: transitive
+    description:
+      name: notifly_flutter_android
+      sha256: "0cf25f6a28a895d43cd172385f9fa8aeaeb9cc1016e2d2455b08e174fd8ac4e7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.10.0"
+  notifly_flutter_ios:
+    dependency: transitive
+    description:
+      name: notifly_flutter_ios
+      sha256: "56f3308b0768738cf54f2723cbdb4023610a51d700f85e078614cbdcc0fadebe"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.10.0"
+  notifly_flutter_platform_interface:
+    dependency: transitive
+    description:
+      name: notifly_flutter_platform_interface
+      sha256: "2b5143509438a1eda625fd97eb19424bd1ec94356e46845c41a17c9f7503ed48"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.10.0"
+  notifly_flutter_web:
+    dependency: transitive
+    description:
+      name: notifly_flutter_web
+      sha256: "1e6bfaa2000881fce7d1b03ac4bf8d2f093b5a88b867d8c75ea089d089031a5c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.10.0"
   package_config:
     dependency: transitive
     description:

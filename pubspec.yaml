@@ -73,7 +73,9 @@ dependencies:
   modal_bottom_sheet: 3.0.0
   url_launcher: 6.3.1
   rate_my_app: 2.3.1
-  app_settings: 5.2.0
+  app_settings: 5.1.1
+  notifly_flutter: 1.10.0
+  firebase_analytics: 11.4.4
 
 dev_dependencies:
   flutter_test:

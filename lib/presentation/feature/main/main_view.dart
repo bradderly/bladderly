@@ -2,16 +2,21 @@
 
 // Project imports:
 
+import 'package:bladderly/core/event_analyzer/event_analyzer.dart';
 import 'package:bladderly/core/recorder/recorder_module.dart';
 import 'package:bladderly/domain/exception/get_history_result_failure_exception.dart';
 import 'package:bladderly/domain/exception/network_not_connected_exception.dart';
+import 'package:bladderly/domain/model/membership.dart';
 import 'package:bladderly/presentation/common/bloc/history_result_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/membership_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/diary_date_cubit.dart';
+import 'package:bladderly/presentation/common/cubit/locale_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/main_tab_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/pending_upload_file_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/timer_cubit.dart';
+import 'package:bladderly/presentation/common/locale/app_locale.dart';
+import 'package:bladderly/presentation/common/model/user_model.dart';
 import 'package:bladderly/presentation/common/widget/common_message_modal.dart';
 import 'package:bladderly/presentation/feature/diary/diary/diary_builder.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_tab_scroll_section_model.dart';
@@ -27,14 +32,17 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rxdart/rxdart.dart';
 
 class MainView extends StatefulWidget {
   const MainView({
     super.key,
     required this.recorderFileLoader,
+    required this.eventAnalyzer,
   });
 
   final RecorderFileLoader recorderFileLoader;
+  final EventAnalyzer eventAnalyzer;
 
   @override
   State<MainView> createState() => _MainViewState();
@@ -42,6 +50,17 @@ class MainView extends StatefulWidget {
 
 class _MainViewState extends State<MainView> {
   late final pageController = PageController();
+  late final userPropertyStream = CombineLatestStream.combine3(
+    context.read<UserBloc>().stream.map<UserModel?>((state) => state.userModelOrThrowException).onErrorReturn(null),
+    context.read<AppLocaleCubit>().stream,
+    context.read<MembershipBloc>().stream.map((state) => state.membership),
+    (user, lang, membership) => (user: user, lang: lang, membership: membership),
+  ).listen(
+    (data) => switch (data.user) {
+      final UserModel user => initializeEventAnalyzer(user: user, lang: data.lang, membership: data.membership),
+      _ => widget.eventAnalyzer.clearUser(),
+    },
+  );
 
   @override
   void initState() {
@@ -50,12 +69,20 @@ class _MainViewState extends State<MainView> {
     initializeHistories();
     initializePurchaseHandler();
     initilizeMembership();
+    initializeEventAnalyzer(
+      user: context.read<UserBloc>().state.userModelOrThrowException,
+      lang: context.read<AppLocaleCubit>().state,
+      membership: context.read<MembershipBloc>().state.membership,
+    );
 
     WidgetsBinding.instance.addPostFrameCallback((_) => checkPendingUploadFile());
   }
 
   @override
   void dispose() {
+    userPropertyStream.cancel();
+    widget.eventAnalyzer.clearUser();
+
     pageController.dispose();
     super.dispose();
   }
@@ -124,6 +151,21 @@ class _MainViewState extends State<MainView> {
         ),
       _ => null,
     };
+  }
+
+  void initializeEventAnalyzer({
+    required UserModel user,
+    required AppLocale lang,
+    required Membership? membership,
+  }) {
+    widget.eventAnalyzer.initializeUser(
+      userId: user.id,
+      userProperties: {
+        'lang': lang.name,
+        // TODO(신중석) : 멤버쉽 정보 추가
+        // 'membership': membership?.subscription?.name,
+      },
+    );
   }
 
   void onMembershipInitializeFailure(BuildContext context, MembershipInitializeFailure state) {

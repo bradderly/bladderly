@@ -1,26 +1,20 @@
 import 'dart:io';
 
-import 'package:collection/collection.dart';
 import 'package:in_app_purchase_android/billing_client_wrappers.dart';
 
-/// TODO: 서버에서 받아오는 offer code에 따라 product를 결정하는 로직이 필요함
 enum Product {
-  threeDaysPass(type: ProductType.nonRenewalSubscription, offerCodes: []),
-  annualSubscription(type: ProductType.renewalSubscription, offerCodes: []),
-  monthlySubscription(type: ProductType.renewalSubscription, offerCodes: ['one-month-free']),
-  oneTimeExport(type: ProductType.consumable, offerCodes: []),
-  oneDayFreeTrial(type: ProductType.freeTrial, offerCodes: []),
+  threeDaysPass(type: ProductType.nonRenewalSubscription),
+  annualSubscription(type: ProductType.renewalSubscription),
+  monthlySubscription(type: ProductType.renewalSubscription),
+  oneTimeExport(type: ProductType.consumable),
+  oneDayFreeTrial(type: ProductType.freeTrial),
   ;
 
-  const Product({required this.type, required this.offerCodes});
+  const Product({required this.type});
 
   factory Product.fromId(String id) => Product.values.firstWhere((product) => product.id == id);
 
-  static Product? fromOfferCode(String offerCode) =>
-      Product.values.firstWhereOrNull((product) => product.offerCodes.contains(offerCode));
-
   final ProductType type;
-  final List<String> offerCodes;
 
   String get id {
     return switch (this) {

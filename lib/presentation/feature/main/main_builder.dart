@@ -2,6 +2,7 @@
 
 // Project imports:
 import 'package:bladderly/core/di/di.dart';
+import 'package:bladderly/core/event_analyzer/event_analyzer.dart';
 import 'package:bladderly/core/recorder/recorder_module.dart';
 import 'package:bladderly/domain/usecase/get_history_results_usecase.dart';
 import 'package:bladderly/domain/usecase/upload_pending_histories_usecase.dart';
@@ -34,6 +35,7 @@ class MainBuilder extends StatelessWidget {
       ],
       child: MainView(
         recorderFileLoader: getIt<RecorderFileLoader>(),
+        eventAnalyzer: getIt<EventAnalyzer>(),
       ),
     );
   }

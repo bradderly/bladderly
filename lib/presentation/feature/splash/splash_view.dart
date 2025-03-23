@@ -18,7 +18,6 @@ import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/intro_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:bladderly/presentation/router/route/passcode_auth_route.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,7 +49,7 @@ class _SplashViewState extends State<SplashView> {
     context.read<AppConfigBloc>().add(const AppConfigLoad());
 
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => Future.wait([Firebase.initializeApp(), Translation().initialize()]).then(
+      (_) => initilize().then(
         (_) => Future<void>.delayed(
           const Duration(seconds: 1),
           () => subject.value = subject.value.copyWith(splashTime: true),
@@ -65,6 +64,14 @@ class _SplashViewState extends State<SplashView> {
   void dispose() {
     subject.close();
     super.dispose();
+  }
+
+  Future<void> initilize() {
+    return Future.wait(
+      [
+        Translation().initialize(),
+      ],
+    );
   }
 
   Future<void> onInitialized() async {

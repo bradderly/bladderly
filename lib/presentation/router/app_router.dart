@@ -1,6 +1,7 @@
 // Flutter imports:
 
 // Project imports:
+import 'package:bladderly/core/di/di.dart';
 import 'package:bladderly/presentation/router/route/intro_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 // Flutter imports:
@@ -18,6 +19,9 @@ class AppRouter {
   static final goRouter = GoRouter(
     initialLocation: const SplashRoute().location,
     navigatorKey: navigatorKey,
+    observers: [
+      getIt<RouteObserver>(),
+    ],
     routes: [
       $introRoute,
       $mainRoute,

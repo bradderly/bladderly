@@ -34,7 +34,7 @@ class RatingHelper {
         }
     }
 
-    if (showRate) {
+    if (showRate && context.mounted) {
       await _rateMyApp.showRateDialog(
         context,
         onDismissed: () {

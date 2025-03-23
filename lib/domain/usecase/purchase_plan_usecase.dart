@@ -109,7 +109,7 @@ class _AndroidPurchasePlanUsecase extends PurchasePlanUsecase {
       return product.id == productId && subscriptionOfferDetails?.offerId == offerCode;
     });
 
-    /// TODO:쿼리에 없는 제품을 구매하려고 할때 대응 필요
+    /// TODO(신중석): 쿼리에 없는 제품을 구매하려고 할때 대응 필요.
     if (productDetails == null) {
       return false;
     }
