@@ -66,6 +66,18 @@ class ExportCalendarView extends StatefulWidget {
 class _ExportCalendarViewState extends State<ExportCalendarView> {
   final today = DateUtils.dateOnly(DateTime.now());
 
+  Future<void> onContinue(BuildContext context) async {
+    if (!context.read<MembershipBloc>().state.isValidMembership) {
+      return context.read<PlanBloc>().add(const PlanGetPlans.onlyConsumable());
+    }
+
+    if (!mounted) return;
+
+    await ExportReportRoute(
+      $extra: ExportReportRouteExtra(selectedDates: context.read<ExportDatesCubit>().state.selectedDates),
+    ).push<void>(context);
+  }
+
   Future<void> onGetPlansSuccess(BuildContext context, PlanGetPlansSuccess state) async {
     final oneTimeExportPlan = state.plans.firstWhereOrNull((plan) => plan.product == Product.oneTimeExport);
 
@@ -133,9 +145,7 @@ class _ExportCalendarViewState extends State<ExportCalendarView> {
                 child: BlocSelector<ExportDatesCubit, ExportDatesState, List<DateTime>>(
                   selector: (state) => state.selectedDates,
                   builder: (context, selectedDates) => ExportStickeyButton(
-                    onTap: selectedDates.isEmpty
-                        ? null
-                        : () => context.read<PlanBloc>().add(const PlanGetPlans.onlyConsumable()),
+                    onTap: selectedDates.isEmpty ? null : () => onContinue(context),
                     text: 'Continue'.tr(context),
                     header: RichText(
                       text: TextSpan(
