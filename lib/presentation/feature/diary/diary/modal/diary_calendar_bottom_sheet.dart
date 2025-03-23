@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 enum _DiaryCalendarModalType {
   calendar,
@@ -39,9 +38,10 @@ class DiaryCalendarBottomSheet extends StatefulWidget {
     required DateTime selectedDate,
     required List<DateTime> highlightedDates,
   }) {
-    return showMaterialModalBottomSheet<DateTime>(
+    return showModalBottomSheet<DateTime>(
       context: context,
       backgroundColor: Colors.transparent,
+      isScrollControlled: true,
       builder: (context) => DiaryCalendarBottomSheet._(
         minDate: minDate,
         maxDate: maxDate,
@@ -334,6 +334,7 @@ class _DiaryCalendarBottomSheetState extends State<DiaryCalendarBottomSheet> {
                           ? () => setState(() {
                                 calendarDate = date;
                                 selectedDate = null;
+                                _diaryCalendarModalType = _DiaryCalendarModalType.calendar;
                               })
                           : null,
                       behavior: HitTestBehavior.translucent,
