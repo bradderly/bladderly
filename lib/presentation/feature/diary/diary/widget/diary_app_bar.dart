@@ -8,7 +8,7 @@ import 'package:bladderly/presentation/common/extension/build_context_extension.
 import 'package:bladderly/presentation/common/extension/datetime_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/diary/diary/cubit/diary_history_dates_cubit.dart';
-import 'package:bladderly/presentation/feature/diary/diary/modal/diary_calendar_modal.dart';
+import 'package:bladderly/presentation/feature/diary/diary/modal/diary_calendar_bottom_sheet.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';

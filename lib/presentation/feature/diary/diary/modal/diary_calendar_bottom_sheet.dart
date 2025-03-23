@@ -3,6 +3,7 @@
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/datetime_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:flutter/material.dart';
 // Package imports:
@@ -60,7 +61,7 @@ class _DiaryCalendarBottomSheetState extends State<DiaryCalendarBottomSheet> {
   late final maxCalendarDate = DateTime(widget.maxDate.year, widget.maxDate.month);
 
   late DateTime calendarDate = DateTime(widget.selectedDate.year, widget.selectedDate.month);
-  late DateTime selectedDate = widget.selectedDate;
+  late DateTime? selectedDate = widget.selectedDate;
 
   _DiaryCalendarModalType _diaryCalendarModalType = _DiaryCalendarModalType.calendar;
 
@@ -68,14 +69,15 @@ class _DiaryCalendarBottomSheetState extends State<DiaryCalendarBottomSheet> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: SafeArea(
-        child: Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            decoration: BoxDecoration(
-              color: context.colorTheme.neutral.shade0,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-            ),
+      body: Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          decoration: BoxDecoration(
+            color: context.colorTheme.neutral.shade0,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+          ),
+          child: SafeArea(
+            top: false,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -123,28 +125,20 @@ class _DiaryCalendarBottomSheetState extends State<DiaryCalendarBottomSheet> {
                         Builder(
                           builder: (context) {
                             final isDisabled = switch (_diaryCalendarModalType) {
-                              _DiaryCalendarModalType.calendar => false,
-                              _DiaryCalendarModalType.month => true,
+                              _DiaryCalendarModalType.calendar when selectedDate != null => false,
+                              _ => true,
                             };
 
-                            return GestureDetector(
-                              onTap: isDisabled ? null : () => context.pop<DateTime>(selectedDate),
-                              behavior: HitTestBehavior.translucent,
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                                decoration: BoxDecoration(
-                                  color: isDisabled
-                                      ? context.colorTheme.neutral.shade5
-                                      : context.colorTheme.vermilion.primary.shade50,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Text(
-                                  'Done'.tr(context),
-                                  style: context.textStyleTheme.b16SemiBold.copyWith(
-                                    color: context.colorTheme.neutral.shade0,
-                                  ),
-                                ),
-                              ),
+                            return PrimaryButton.filled(
+                              onPressed: isDisabled ? null : () => context.pop<DateTime>(selectedDate),
+                              backgroundColor: isDisabled
+                                  ? context.colorTheme.neutral.shade5
+                                  : context.colorTheme.vermilion.primary.shade50,
+                              borderRadius: 8,
+                              shape: BoxShape.rectangle,
+                              text: 'Done'.tr(context),
+                              textColor: context.colorTheme.neutral.shade0,
+                              size: const Size(81, 41),
                             );
                           },
                         ),
@@ -336,7 +330,12 @@ class _DiaryCalendarBottomSheetState extends State<DiaryCalendarBottomSheet> {
                 return Expanded(
                   child: LayoutBuilder(
                     builder: (context, constraints) => GestureDetector(
-                      onTap: isSelectable ? () => setState(() => calendarDate = date) : null,
+                      onTap: isSelectable
+                          ? () => setState(() {
+                                calendarDate = date;
+                                selectedDate = null;
+                              })
+                          : null,
                       behavior: HitTestBehavior.translucent,
                       child: Container(
                         alignment: Alignment.center,
