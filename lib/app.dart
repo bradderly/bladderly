@@ -3,6 +3,7 @@
 import 'package:bladderly/core/di/di.dart';
 import 'package:bladderly/core/notification/notification.dart';
 import 'package:bladderly/core/notification/notification_module.dart';
+import 'package:bladderly/core/package_device_info/src/model/device_info_model.dart';
 import 'package:bladderly/domain/usecase/check_supported_device_usecase.dart';
 import 'package:bladderly/domain/usecase/get_history_result_usecase.dart';
 import 'package:bladderly/domain/usecase/get_membership_stream_usecase.dart';
@@ -91,7 +92,7 @@ class _BladderlyAppState extends State<BladderlyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider<UnitCubit>(
-          create: (_) => UnitCubit(),
+          create: (_) => UnitCubit(useMetric: getIt<DeviceInfoModel>().useMetric),
         ),
         BlocProvider<UserBloc>(
           create: (_) => UserBloc(

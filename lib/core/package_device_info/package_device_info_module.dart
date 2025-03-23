@@ -7,6 +7,7 @@ import 'package:bladderly/core/package_device_info/src/model/device_info_model.d
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:device_region/device_region.dart';
 import 'package:injectable/injectable.dart';
+import 'package:locale_plus/locale_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 @module
@@ -16,6 +17,7 @@ abstract class PackageDeviceInfoModule {
   Future<DeviceInfoModel> get deviceInfo async {
     final deviceInfoPlugin = DeviceInfoPlugin();
     final region = await DeviceRegion.getSIMCountryCode().catchError((_) => null);
+    final useMetric = await LocalePlus().usesMetricSystem().then((value) => value ?? true).catchError((_) => true);
 
     late final String deviceName;
     late final String os;
@@ -34,6 +36,7 @@ abstract class PackageDeviceInfoModule {
       name: deviceName.replaceAll(RegExp('[^a-zA-Z0-9_]'), ''),
       region: region ?? '',
       os: os,
+      useMetric: useMetric,
     );
   }
 

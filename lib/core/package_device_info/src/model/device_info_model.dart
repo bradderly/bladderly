@@ -6,16 +6,19 @@ class DeviceInfoModel extends Equatable {
     required this.name,
     required this.region,
     required this.os,
+    required this.useMetric,
   });
 
   final String name;
   final String region;
   final String os;
+  final bool useMetric;
 
   @override
   List<Object?> get props => [
         name,
         region,
         os,
+        useMetric,
       ];
 }
