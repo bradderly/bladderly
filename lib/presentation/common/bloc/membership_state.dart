@@ -11,6 +11,8 @@ sealed class MembershipState extends Equatable {
 
   bool get isValidMembership => membership?.isValid ?? false;
 
+  bool validate(DateTime dateTime) => membership?.subscription?.validate(dateTime) ?? false;
+
   @override
   List<Object?> get props => [
         membership,

@@ -23,14 +23,17 @@ class CommonModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Material(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.white,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
-          width: MediaQuery.sizeOf(context).width - 48,
-          child: child,
+    return PopScope(
+      canPop: false,
+      child: Center(
+        child: Material(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.white,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
+            width: MediaQuery.sizeOf(context).width - 48,
+            child: child,
+          ),
         ),
       ),
     );
