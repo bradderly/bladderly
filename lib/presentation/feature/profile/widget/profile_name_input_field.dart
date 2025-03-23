@@ -1,7 +1,10 @@
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
+import 'package:bladderly/presentation/common/model/user_model.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
 class ProfileNameInputField extends StatefulWidget {
@@ -59,14 +62,18 @@ class _ProfileNameInputFieldState extends State<ProfileNameInputField> {
             child: Row(
               children: [
                 Expanded(
-                  child: TextFormField(
-                    onChanged: (value) => this.value = value,
-                    controller: _textEditingController,
-                    focusNode: _focusNode,
-                    style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade10),
-                    decoration: const InputDecoration(
-                      isDense: true,
-                      border: InputBorder.none,
+                  child: BlocSelector<UserBloc, UserState, bool>(
+                    selector: (state) => state.userModelOrThrowException is GuestUserModel,
+                    builder: (context, isGuest) => TextFormField(
+                      onChanged: (value) => this.value = value,
+                      controller: _textEditingController,
+                      focusNode: _focusNode,
+                      style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade10),
+                      readOnly: isGuest,
+                      decoration: const InputDecoration(
+                        isDense: true,
+                        border: InputBorder.none,
+                      ),
                     ),
                   ),
                 ),
