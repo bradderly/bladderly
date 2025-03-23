@@ -11,13 +11,15 @@ class ResetSocialUserPasswordException extends DomainException {
 
   const ResetSocialUserPasswordException.apple()
       : super(
-          title: 'No Password Reset Needed',
-          message: 'You signed up with Apple. Try "Continue with Apple" to log in.',
+          title: 'Apple PW title',
+          message: 'Apple PW body',
+          button: 'Apple PW button',
         );
 
   const ResetSocialUserPasswordException.google()
       : super(
-          title: 'No Password Reset Needed',
-          message: 'You signed up with Google. Try "Continue with Google" to log in.',
+          title: 'Google PW title',
+          message: 'Google PW body',
+          button: 'Google PW button',
         );
 }

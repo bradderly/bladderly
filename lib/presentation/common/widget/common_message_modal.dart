@@ -43,7 +43,6 @@ class CommonMessageModal extends StatelessWidget {
     BuildContext context, {
     required VoidCallback onTap,
     required DomainException exception,
-    String? buttonText,
     bool barrierDismissible = false,
   }) {
     return show<T>(
@@ -51,7 +50,7 @@ class CommonMessageModal extends StatelessWidget {
       onTap: onTap,
       title: exception.title,
       content: exception.message,
-      buttonText: buttonText,
+      buttonText: exception.button,
       barrierDismissible: barrierDismissible,
     );
   }

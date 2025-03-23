@@ -1,24 +1,21 @@
 // Package imports:
 import 'package:equatable/equatable.dart';
 
-abstract class DomainException implements Exception {
+abstract class DomainException extends Equatable implements Exception {
   const DomainException({
     required this.message,
     this.title,
+    this.button = 'OK',
   });
 
   final String? title;
   final String message;
+  final String button;
 
-  String _mapPropsToString(Type runtimeType, List<Object?> props) {
-    return '$runtimeType(${props.map((prop) => prop.toString()).join(', ')})';
-  }
-
+  @override
   List<Object?> get props => [
         title,
         message,
+        button,
       ];
-
-  @override
-  String toString() => EquatableConfig.stringify ? _mapPropsToString(runtimeType, props) : '$runtimeType';
 }

@@ -3,6 +3,7 @@
 // Project imports:
 import 'package:bladderly/domain/model/sex.dart';
 import 'package:bladderly/domain/model/sign_up_method.dart';
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/sign_up/social/bloc/sign_up_social_bloc.dart';
 import 'package:bladderly/presentation/feature/sign_up/widget/sign_up_additional_info_builder.dart';
@@ -40,13 +41,23 @@ class _SignUpSocialViewState extends State<SignUpSocialView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SignUpSocialBloc, SignUpSocialState>(
-      listener: (context, state) => switch (state) {
-        SignUpSocialSubmitInProgress() => ProgressIndicatorModal.show(context),
-        SignUpSocialSubmitSuccess() => const MainRoute().go(context),
-        SignUpSocialSubmitFailure() => context.pop(),
-        _ => null,
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<SignUpSocialBloc, SignUpSocialState>(
+          listener: (context, state) => switch (state) {
+            SignUpSocialSubmitInProgress() => ProgressIndicatorModal.show(context),
+            SignUpSocialSubmitSuccess() => context.pop(),
+            SignUpSocialSubmitFailure() => context.pop(),
+            _ => null,
+          },
+        ),
+        BlocListener<UserBloc, UserState>(
+          listener: (context, state) => switch (state) {
+            UserLoadSuccess() => const MainRoute().go(context),
+            _ => null,
+          },
+        ),
+      ],
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: 77,
