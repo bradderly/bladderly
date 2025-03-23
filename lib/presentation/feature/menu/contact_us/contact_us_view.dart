@@ -2,6 +2,7 @@ import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/model/user_model.dart';
+import 'package:bladderly/presentation/common/widget/common_message_modal.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/menu/contact_us/bloc/contact_us_bloc.dart';
@@ -63,15 +64,26 @@ class _ContactUsViewState extends State<ContactUsView> {
     });
   }
 
+  void _onSubmitSuccess(BuildContext context, ContactUsSubmitSuccess state) {
+    context.pop();
+
+    CommonMessageModal.show<void>(
+      context,
+      onTap: () => context
+        ..pop()
+        ..pop(),
+      content: 'Your inquiry has been successfully received. We will replay via email after review.',
+      buttonText: 'Okay',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<ContactUsBloc, ContactUsState>(
-      listener: (context, state) {
-        if (state is ContactUsInitial) {
-          ProgressIndicatorModal.show(context);
-        } else if (state is ContactUsSubmitSuccess) {
-          context.pop();
-        }
+      listener: (context, state) => switch (state) {
+        ContactUsSubmitInProgress() => ProgressIndicatorModal.show(context),
+        ContactUsSubmitSuccess() => _onSubmitSuccess(context, state),
+        _ => null,
       },
       child: Scaffold(
         appBar: ModalAppBar(

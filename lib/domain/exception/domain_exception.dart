@@ -5,7 +5,7 @@ abstract class DomainException extends Equatable implements Exception {
   const DomainException({
     required this.message,
     this.title,
-    this.button = 'OK',
+    this.button = 'Okay',
   });
 
   final String? title;
