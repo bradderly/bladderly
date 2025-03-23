@@ -112,6 +112,7 @@ class _SignUpRequiredInfoViewState extends State<SignUpRequiredInfoView> with Au
             border: InputBorder.none,
             contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14.5),
             isDense: false,
+            counter: SizedBox.shrink(),
           ),
           style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade10),
           keyboardType: TextInputType.number,
@@ -126,6 +127,7 @@ class _SignUpRequiredInfoViewState extends State<SignUpRequiredInfoView> with Au
               return newValue;
             }),
           ],
+          maxLength: 4,
         ),
       ),
     );

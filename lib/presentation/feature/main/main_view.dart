@@ -2,6 +2,8 @@
 
 // Project imports:
 
+import 'dart:async';
+
 import 'package:bladderly/core/event_analyzer/event_analyzer.dart';
 import 'package:bladderly/core/recorder/recorder_module.dart';
 import 'package:bladderly/domain/exception/get_history_result_failure_exception.dart';
@@ -55,17 +57,19 @@ class _MainViewState extends State<MainView> {
     context.read<AppLocaleCubit>().stream,
     context.read<MembershipBloc>().stream.map((state) => state.membership),
     (user, lang, membership) => (user: user, lang: lang, membership: membership),
-  ).listen(
-    (data) => switch (data.user) {
-      final UserModel user => initializeEventAnalyzer(user: user, lang: data.lang, membership: data.membership),
-      _ => widget.eventAnalyzer.clearUser(),
-    },
   );
+
+  late final StreamSubscription<({AppLocale lang, Membership? membership, UserModel? user})> userPropertySubscription;
 
   @override
   void initState() {
     super.initState();
-
+    userPropertySubscription = userPropertyStream.listen(
+      (data) => switch (data.user) {
+        final UserModel user => initializeEventAnalyzer(user: user, lang: data.lang, membership: data.membership),
+        _ => widget.eventAnalyzer.clearUser(),
+      },
+    );
     initializeHistories();
     initializePurchaseHandler();
     initilizeMembership();
@@ -80,9 +84,8 @@ class _MainViewState extends State<MainView> {
 
   @override
   void dispose() {
-    userPropertyStream.cancel();
+    userPropertySubscription.cancel();
     widget.eventAnalyzer.clearUser();
-
     pageController.dispose();
     super.dispose();
   }

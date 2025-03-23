@@ -22,6 +22,8 @@ class SignUpRequiredInfoFormState extends Equatable {
 
     if (yearOfBirth == null) return false;
 
+    if (_yearOfBirth.length != 4) return false;
+
     return true;
   }
 

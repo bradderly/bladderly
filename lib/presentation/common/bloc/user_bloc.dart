@@ -32,20 +32,20 @@ class UserBloc extends HydratedBloc<UserEvent, UserState> {
 
   void _onLoad(UserLoad event, Emitter<UserState> emit) {
     return _getUserStreamUsecase().fold(
-      (exception) => emit(UserLoadFailure(exception: exception, userModel: state._userModel)),
+      (exception) => emit(UserLoadFailure(exception: exception, userModel: state.userModel)),
       (stream) => emit.forEach<User?>(
         stream,
         onData: (user) => user == null ? const UserInitial() : UserLoadSuccess(userModel: UserModel.fromDomain(user)),
         onError: (exception, stackTrace) => UserLoadFailure(
           exception: exception is Exception ? exception : Exception(exception.toString()),
-          userModel: state._userModel,
+          userModel: state.userModel,
         ),
       ),
     );
   }
 
   void _onSignOut(UserSignOut event, Emitter<UserState> emit) {
-    if (state._userModel case final UserModel userModel) {
+    if (state.userModel case final UserModel userModel) {
       return _signOutUsecase(userId: userModel.id).fold(
         (exception) => state,
         (_) => emit(const UserInitial()),
@@ -68,7 +68,7 @@ class UserBloc extends HydratedBloc<UserEvent, UserState> {
   @override
   Map<String, dynamic>? toJson(UserState state) {
     return {
-      'user_id': state._userModel?.id,
+      'user_id': state.userModel?.id,
     };
   }
 }

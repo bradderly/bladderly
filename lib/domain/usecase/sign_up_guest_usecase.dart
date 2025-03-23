@@ -25,7 +25,7 @@ class SignUpGuestUsecase {
   }) async {
     try {
       final thisYear = DateTime.now().year;
-      final age = thisYear - yearOfBirth;
+      final age = yearOfBirth - thisYear;
 
       if (age < 18) return const Left(AgeRestrictionException());
 

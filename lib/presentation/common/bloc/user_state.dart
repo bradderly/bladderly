@@ -2,16 +2,16 @@ part of 'user_bloc.dart';
 
 sealed class UserState extends Equatable {
   const UserState({
-    required UserModel? userModel,
-  }) : _userModel = userModel;
+    this.userModel,
+  });
 
-  final UserModel? _userModel;
+  final UserModel? userModel;
 
-  UserModel get userModelOrThrowException => _userModel ?? (throw Exception('UserModel is null'));
+  UserModel get userModelOrThrowException => userModel ?? (throw Exception('UserModel is null'));
 
   @override
   List<Object?> get props => [
-        _userModel,
+        userModel,
       ];
 }
 

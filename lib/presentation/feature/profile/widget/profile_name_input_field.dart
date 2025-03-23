@@ -63,7 +63,7 @@ class _ProfileNameInputFieldState extends State<ProfileNameInputField> {
               children: [
                 Expanded(
                   child: BlocSelector<UserBloc, UserState, bool>(
-                    selector: (state) => state.userModelOrThrowException is GuestUserModel,
+                    selector: (state) => state.userModel is! RegularUserModel,
                     builder: (context, isGuest) => TextFormField(
                       onChanged: (value) => this.value = value,
                       controller: _textEditingController,
