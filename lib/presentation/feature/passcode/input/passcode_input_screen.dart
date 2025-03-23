@@ -14,6 +14,7 @@ class PasscodeInputScreen extends StatefulWidget {
 
 class _PasscodeInputScreenState extends State<PasscodeInputScreen> {
   final _controller = TextEditingController();
+  final _focusNode = FocusNode();
   bool isFirstAttempt = true;
   bool isUncorrect = false;
   String firstInput = '';
@@ -21,6 +22,7 @@ class _PasscodeInputScreenState extends State<PasscodeInputScreen> {
 
   @override
   void dispose() {
+    _focusNode.dispose();
     _controller.dispose();
     super.dispose();
   }
@@ -88,49 +90,56 @@ class _PasscodeInputScreenState extends State<PasscodeInputScreen> {
             child: Scaffold(
               backgroundColor: Colors.transparent,
               appBar: ModalAppBar(title: 'Passcode'.tr(context)),
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    isFirstAttempt ? 'Set your passcode below'.tr(context) : 'Confirm your passcode'.tr(context),
-                    style: context.textStyleTheme.b16Medium.copyWith(
-                      color: context.colorTheme.neutral.shade6,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  buildPasscodeDots(_controller.text.length), // 클릭 가능한 점 UI
-                  const SizedBox(height: 20),
-                  if (isUncorrect)
-                    Text(
-                      'The passcode you entered is incorrect.\nPlease try again.'.tr(context),
-                      style: context.textStyleTheme.b14Medium.copyWith(
-                        color: context.colorTheme.warning,
+              body: SafeArea(
+                child: GestureDetector(
+                  onTap: _focusNode.requestFocus,
+                  behavior: HitTestBehavior.translucent,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        isFirstAttempt ? 'Set your passcode below'.tr(context) : 'Confirm your passcode'.tr(context),
+                        style: context.textStyleTheme.b16Medium.copyWith(
+                          color: context.colorTheme.neutral.shade6,
+                        ),
                       ),
-                    ),
-                  // 👇 텍스트 필드를 완전히 숨김
-                  Opacity(
-                    opacity: 0,
-                    child: SizedBox(
-                      width: 0,
-                      height: 0,
-                      child: TextField(
-                        onChanged: (value) {
-                          setState(() {}); // 입력값 변화 감지
-                          if (value.length == 4) {
-                            Future.delayed(const Duration(milliseconds: 300), () {
-                              onPasscodeEntered(value);
-                            });
-                          }
-                        },
-                        autofocus: true,
-                        controller: _controller,
-                        obscureText: true,
-                        maxLength: 4,
-                        keyboardType: TextInputType.number,
+                      const SizedBox(height: 20),
+                      buildPasscodeDots(_controller.text.length), // 클릭 가능한 점 UI
+                      const SizedBox(height: 20),
+                      if (isUncorrect)
+                        Text(
+                          'The passcode you entered is incorrect.\nPlease try again.'.tr(context),
+                          style: context.textStyleTheme.b14Medium.copyWith(
+                            color: context.colorTheme.warning,
+                          ),
+                        ),
+                      // 👇 텍스트 필드를 완전히 숨김
+                      Opacity(
+                        opacity: 0,
+                        child: SizedBox(
+                          width: 0,
+                          height: 0,
+                          child: TextField(
+                            onChanged: (value) {
+                              setState(() {}); // 입력값 변화 감지
+                              if (value.length == 4) {
+                                Future.delayed(const Duration(milliseconds: 300), () {
+                                  onPasscodeEntered(value);
+                                });
+                              }
+                            },
+                            focusNode: _focusNode,
+                            autofocus: true,
+                            controller: _controller,
+                            obscureText: true,
+                            maxLength: 4,
+                            keyboardType: TextInputType.number,
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),

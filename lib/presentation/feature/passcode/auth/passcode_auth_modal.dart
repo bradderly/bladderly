@@ -18,6 +18,7 @@ class PasscodeAuthView extends StatefulWidget {
 
 class _PasscodeAuthViewState extends State<PasscodeAuthView> {
   final _controller = TextEditingController();
+  final _focusNode = FocusNode();
 
   bool isUncorrect = false;
 
@@ -26,6 +27,7 @@ class _PasscodeAuthViewState extends State<PasscodeAuthView> {
   @override
   void dispose() {
     _controller.dispose();
+    _focusNode.dispose();
 
     super.dispose();
   }
@@ -90,55 +92,62 @@ class _PasscodeAuthViewState extends State<PasscodeAuthView> {
               ),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-            child: Column(
-              children: [
-                Text(
-                  'Passcode'.tr(context),
-                  style: context.textStyleTheme.b16SemiBold.copyWith(
-                    color: context.colorTheme.neutral.shade10,
+            child: SafeArea(
+              child: Column(
+                children: [
+                  Text(
+                    'Passcode'.tr(context),
+                    style: context.textStyleTheme.b16SemiBold.copyWith(
+                      color: context.colorTheme.neutral.shade10,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 173),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Set your passcode below'.tr(context),
-                        style: context.textStyleTheme.b16Medium.copyWith(
-                          color: context.colorTheme.neutral.shade6,
+                  const SizedBox(height: 173),
+                  Expanded(
+                    child: Center(
+                      child: GestureDetector(
+                        onTap: _focusNode.requestFocus,
+                        behavior: HitTestBehavior.translucent,
+                        child: Column(
+                          children: [
+                            Text(
+                              'Set your passcode below'.tr(context),
+                              style: context.textStyleTheme.b16Medium.copyWith(
+                                color: context.colorTheme.neutral.shade6,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            ListenableBuilder(
+                              listenable: _controller,
+                              builder: (context, _) => buildPasscodeDots(_controller.text.length),
+                            ),
+                            const SizedBox(height: 20),
+                            if (isUncorrect)
+                              Text(
+                                'The passcode you entered is incorrect.\nPlease try again.'.tr(context),
+                                style: context.textStyleTheme.b14Medium.copyWith(
+                                  color: context.colorTheme.warning,
+                                ),
+                              ),
+                            Opacity(
+                              opacity: 0,
+                              child: SizedBox.shrink(
+                                child: TextField(
+                                  onChanged: onChangedPasscode,
+                                  controller: _controller,
+                                  autofocus: true,
+                                  obscureText: true,
+                                  maxLength: 4,
+                                  keyboardType: TextInputType.number,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 20),
-                      ListenableBuilder(
-                        listenable: _controller,
-                        builder: (context, _) => buildPasscodeDots(_controller.text.length),
-                      ),
-                      const SizedBox(height: 20),
-                      if (isUncorrect)
-                        Text(
-                          'The passcode you entered is incorrect.\nPlease try again.'.tr(context),
-                          style: context.textStyleTheme.b14Medium.copyWith(
-                            color: context.colorTheme.warning,
-                          ),
-                        ),
-                      Opacity(
-                        opacity: 0,
-                        child: SizedBox.shrink(
-                          child: TextField(
-                            onChanged: onChangedPasscode,
-                            controller: _controller,
-                            autofocus: true,
-                            obscureText: true,
-                            maxLength: 4,
-                            keyboardType: TextInputType.number,
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
