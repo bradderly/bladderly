@@ -10,8 +10,8 @@ enum SymptomSurveyResultModel {
         'Your score currently indicates no symptoms. Continue to take IPSS questionnaire monthly to monitor any changes.',
     ipssMin: 0,
     ipssMax: 0,
-    oabssMin: 0,
-    oabssMax: 0,
+    oabssMin: 999,
+    oabssMax: 999,
   ),
   mild(
     text: 'Mild',
