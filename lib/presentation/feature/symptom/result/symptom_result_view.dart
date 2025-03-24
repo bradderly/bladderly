@@ -1,7 +1,3 @@
-// ignore: library_prefixes
-
-// ignore_for_file: deprecated_member_use
-
 // Dart imports:
 import 'dart:math';
 
@@ -239,9 +235,9 @@ class GaugePainter extends CustomPainter {
     final backgroundPaint = Paint()
       ..shader = LinearGradient(
         colors: [
-          const Color(0xFF94A22F).withOpacity(0.3),
-          const Color(0xFFD97A3B).withOpacity(0.3),
-          const Color(0xFFFF6442).withOpacity(0.3),
+          const Color(0xFF94A22F).withValues(alpha: 0.3),
+          const Color(0xFFD97A3B).withValues(alpha: 0.3),
+          const Color(0xFFFF6442).withValues(alpha: 0.3),
         ],
         stops: const [0.0, 0.2, 1.0],
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height))

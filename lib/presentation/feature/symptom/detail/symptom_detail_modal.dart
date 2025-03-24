@@ -1,6 +1,4 @@
 // Flutter imports:
-// ignore_for_file: lines_longer_than_80_chars, avoid_dynamic_calls
-
 import 'package:bladderly/domain/model/score.dart';
 // Project imports:
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';

@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:bladderly/core/bio_auth/bio_auth.dart';
 import 'package:bladderly/presentation/common/cubit/passcode_cubit.dart';
 // PasscodeCubit 가져오기
@@ -14,8 +12,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-class PasscodeModal extends StatelessWidget {
-  const PasscodeModal({super.key});
+class PasscodeView extends StatelessWidget {
+  const PasscodeView({super.key});
 
   Future<void> _authenticate(BuildContext context) async {
     final canBioAuthenticate = await BioAuth().canAuthenticate();
@@ -70,7 +68,7 @@ class PasscodeModal extends StatelessWidget {
                                 GestureDetector(
                                   behavior: HitTestBehavior.translucent,
                                   onTap: () => context.read<PasscodeCubit>().state.isLocked
-                                      ? context.read<PasscodeCubit>().unlock()
+                                      ? const PasscodeResetRoute().go(context)
                                       : _authenticate(context),
                                   child: Container(
                                     width: 51,

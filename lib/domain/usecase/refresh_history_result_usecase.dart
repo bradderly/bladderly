@@ -14,13 +14,13 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class RefreshHistoryResultUsecase with HistoryResultUsecaseMixin {
-  const RefreshHistoryResultUsecase(
-      {required HistoryRepository historyRepository,
-      required NetworkChecker networkChecker,
-      required UserRepository userRepository,
-      required RecorderFileLoader recorderFileLoader,
-      required RecordedFileUtil recordedFileUtil})
-      : _historyRepository = historyRepository,
+  const RefreshHistoryResultUsecase({
+    required HistoryRepository historyRepository,
+    required NetworkChecker networkChecker,
+    required UserRepository userRepository,
+    required RecorderFileLoader recorderFileLoader,
+    required RecordedFileUtil recordedFileUtil,
+  })  : _historyRepository = historyRepository,
         _networkChecker = networkChecker,
         _userRepository = userRepository,
         _recorderFileLoader = recorderFileLoader,

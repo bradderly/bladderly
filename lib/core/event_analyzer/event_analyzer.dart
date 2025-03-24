@@ -72,7 +72,7 @@ class _EventAnalyzer implements EventAnalyzer {
           (e) => _firebaseAnalytics.setUserProperty(name: e.key, value: e.value.toString()),
         ),
       ),
-      NotiflyPlugin.setUserProperties(userProperties)
+      NotiflyPlugin.setUserProperties(userProperties),
     ]);
   }
 
@@ -86,7 +86,7 @@ class _EventAnalyzer implements EventAnalyzer {
       NotiflyPlugin.trackEvent(
         eventName: eventName,
         eventParams: eventParams,
-      )
+      ),
     ]);
   }
 }

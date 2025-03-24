@@ -76,13 +76,11 @@ class _PasscodeChangeViewState extends State<PasscodeChangeView> {
 
     setState(() => isIncorrect = !isCorrect);
 
-    if (isCorrect) {
-      context
-        ..read<PasscodeCubit>().lock(passcode: newPasscode)
-        ..pop();
-    }
+    if (!isCorrect) return passcodeController.clear();
 
-    passcodeController.clear();
+    context
+      ..read<PasscodeCubit>().lock(passcode: newPasscode)
+      ..pop();
   }
 
   @override

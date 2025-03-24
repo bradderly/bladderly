@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
@@ -65,22 +63,22 @@ class _PromoContactUsViewState extends State<PromoContactUsView> {
           BlocBuilder<ContactUsFormCubit, ContactUsFormState>(
             builder: (context, state) => Column(
               children: [
-                InputTextBorderForm('Bladderly ID', state.id, 1, context, isModified: true),
-                InputTextBorderForm(
+                _inputTextBorderForm('Bladderly ID', state.id, 1, context, isModified: true),
+                _inputTextBorderForm(
                   'Preferred Name',
                   state.name,
                   1,
                   context,
                   onChanged: contactUsFormCubit.setName,
                 ),
-                InputTextBorderForm(
+                _inputTextBorderForm(
                   'Email Address',
                   state.email,
                   1,
                   context,
                   onChanged: contactUsFormCubit.setEmail,
                 ),
-                InputTextBorderForm(
+                _inputTextBorderForm(
                   'Message',
                   state.message,
                   3,
@@ -132,7 +130,7 @@ class _PromoContactUsViewState extends State<PromoContactUsView> {
     );
   }
 
-  Widget InputTextBorderForm(
+  Widget _inputTextBorderForm(
     String title,
     String value,
     int maxlines,

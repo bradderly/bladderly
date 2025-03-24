@@ -19,6 +19,7 @@ import 'package:bladderly/presentation/feature/menu/faq/faq_view.dart';
 import 'package:bladderly/presentation/feature/menu/language/language_view.dart';
 import 'package:bladderly/presentation/feature/menu/menu_builder.dart';
 import 'package:bladderly/presentation/feature/passcode/change/passcode_change_view.dart';
+import 'package:bladderly/presentation/feature/passcode/reset/passcode_reset_view.dart';
 import 'package:bladderly/presentation/feature/passcode/set/passcode_set_view.dart';
 import 'package:bladderly/presentation/feature/sign_up/consent/sign_up_consent_builder.dart';
 import 'package:bladderly/presentation/feature/sign_up/method/sign_up_method_builder.dart';
@@ -185,6 +186,10 @@ enum MainRouteTab {
                     TypedGoRoute<PasscodeChangeRoute>(
                       name: 'passcode-change',
                       path: 'change',
+                    ),
+                    TypedGoRoute<PasscodeResetRoute>(
+                      name: 'passcode-reset',
+                      path: 'reset',
                     ),
                   ],
                 ),
@@ -553,6 +558,18 @@ class PasscodeSetRoute extends GoRouteData {
     return ModalBottomSheetPage<void>(
       key: state.pageKey,
       builder: (context) => const PasscodeSetView(),
+    );
+  }
+}
+
+class PasscodeResetRoute extends GoRouteData {
+  const PasscodeResetRoute();
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return ModalBottomSheetPage<void>(
+      key: state.pageKey,
+      builder: (context) => const PasscodeResetView(),
     );
   }
 }

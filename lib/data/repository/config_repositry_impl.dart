@@ -34,7 +34,7 @@ class ConfigRepositryImpl implements ConfigRepository {
         build = buildNumber.toString();
       } catch (e) {
         build = _packageInfo.buildNumber;
-        print("Failed to get build number: '$e'.");
+        if (kDebugMode) print("Failed to get build number: '$e'.");
       }
     }
 
