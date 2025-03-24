@@ -19,7 +19,7 @@ class User extends Equatable {
 
   final Gender gender;
 
-  final int yearOfBirth;
+  final int? yearOfBirth;
 
   final SignUpMethod signUpMethod;
 
