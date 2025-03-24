@@ -34,9 +34,10 @@ extension BuildContextExtension on BuildContext {
   String formatCurrency(num number) => select<AppLocaleCubit, String>((cubit) => cubit.state.formatCurrency(number));
 
   void signOut() {
-    read<PendingUploadFileCubit>().clear();
+    PendingUploadFileCubit().clear();
+    HomeCubit().clear();
+
     read<PasscodeCubit>().clear();
-    read<HomeCubit>().clear();
     read<AppLocaleCubit>().clear();
     read<MainTabCubit>().showHome();
     read<UserBloc>().add(const UserSignOut());

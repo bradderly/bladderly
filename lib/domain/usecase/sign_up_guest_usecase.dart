@@ -25,9 +25,11 @@ class SignUpGuestUsecase {
   }) async {
     try {
       final thisYear = DateTime.now().year;
-      final age = yearOfBirth - thisYear;
+      final age = thisYear - yearOfBirth;
 
-      if (age < 19) return const Left(AgeRestrictionException());
+      if (yearOfBirth < 1901) return const Left(AgeRestrictionException.upperBound());
+
+      if (age <= 19) return const Left(AgeRestrictionException.lowerBound());
 
       final user = await _authRepository.signUpGuest(
         gender: gender,

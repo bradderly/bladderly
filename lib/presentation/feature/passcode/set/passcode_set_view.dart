@@ -65,7 +65,6 @@ class _PasscodeSetViewState extends State<PasscodeSetView> {
         ..read<PasscodeCubit>().lock(passcode: passcode)
         ..pop();
     }
-
     passcodeController.clear();
   }
 
