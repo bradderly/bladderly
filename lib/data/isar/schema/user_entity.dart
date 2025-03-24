@@ -15,7 +15,7 @@ class UserEntity {
   late String gender;
 
   @Name('year_of_birth')
-  late int yearOfBirth;
+  late int? yearOfBirth;
 
   @Name('sign_up_method')
   late String signUpMethod;

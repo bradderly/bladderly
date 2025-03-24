@@ -50,7 +50,7 @@ class SignUpMethodBloc extends Bloc<SignUpMethodEvent, SignUpMethodState> {
       (alreadyExist) => alreadyExist
           ? emit(
               SignUpMethodCheckDuplicateEmailFailure(
-                exception: AlreadyExistUserException(),
+                exception: const AlreadyExistUserException(),
                 method: event.method,
                 email: event.email,
               ),

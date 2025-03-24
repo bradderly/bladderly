@@ -156,28 +156,29 @@ class ProfileView extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.only(bottom: 8),
-                  padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Year of Birth'.tr(context),
-                        style: context.textStyleTheme.b14Medium.copyWith(
-                          color: context.colorTheme.neutral.shade6,
+                if (state.userModel?.yearOfBirth != null)
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Year of Birth'.tr(context),
+                          style: context.textStyleTheme.b14Medium.copyWith(
+                            color: context.colorTheme.neutral.shade6,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        userModel.yearOfBirth.toString(),
-                        style: context.textStyleTheme.b16Medium.copyWith(
-                          color: context.colorTheme.neutral.shade10,
+                        const SizedBox(height: 6),
+                        Text(
+                          userModel.yearOfBirth.toString(),
+                          style: context.textStyleTheme.b16Medium.copyWith(
+                            color: context.colorTheme.neutral.shade10,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
                 const Gap(8),
                 ProfileNameInputField(
                   onSubmit: (name) => context.read<ProfileBloc>().add(

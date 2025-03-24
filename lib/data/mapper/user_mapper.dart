@@ -36,7 +36,7 @@ class UserMapper {
     return User(
       userId: userInfo.id!,
       gender: Gender.values.byName(userInfo.gender!),
-      yearOfBirth: int.parse(userInfo.birthyear!),
+      yearOfBirth: int.tryParse(userInfo.birthyear ?? ''),
       signUpMethod: SignUpMethod.of(userInfo.social!),
       email: email,
       name: userInfo.username,

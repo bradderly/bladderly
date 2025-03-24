@@ -33,7 +33,7 @@ class SignUpRegularBloc extends Bloc<SignUpRegularEvent, SignUpRegularState> {
     return result.fold(
       (exception) => emit(SignUpRegularCheckDuplicateEmailFailure(exception: exception)),
       (alreadyExist) => alreadyExist
-          ? emit(SignUpRegularCheckDuplicateEmailFailure(exception: AlreadyExistUserException()))
+          ? emit(const SignUpRegularCheckDuplicateEmailFailure(exception: AlreadyExistUserException()))
           : emit(
               const SignUpRegularCheckDuplicateEmailSuccess(),
             ),
