@@ -11,6 +11,7 @@ class ExportReportBuilder extends StatelessWidget {
   });
 
   final List<DateTime> selectedDates;
+
   @override
   Widget build(BuildContext context) {
     return ExportReportView(selectedDates: selectedDates);

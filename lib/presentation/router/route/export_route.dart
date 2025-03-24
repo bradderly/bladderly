@@ -4,6 +4,7 @@ import 'package:bladderly/domain/model/plan.dart';
 import 'package:bladderly/presentation/feature/export/calendar/export_calendar_builder.dart';
 import 'package:bladderly/presentation/feature/export/paywall/export_paywall_view.dart';
 import 'package:bladderly/presentation/feature/export/report/export_report_builder.dart';
+import 'package:bladderly/presentation/feature/export/survey/export_survey_builder.dart';
 import 'package:bladderly/presentation/router/page/modal_bottom_sheet_page.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:equatable/equatable.dart';
@@ -107,5 +108,18 @@ class ExportReportRoute extends GoRouteData {
     if ($extra == null) return const ExportCalendarRoute().location;
 
     return super.redirect(context, state);
+  }
+}
+
+class ExportSurveyRoute extends GoRouteData {
+  const ExportSurveyRoute();
+
+  static final $parentNavigatorKey = ExportShellRoute.$navigatorKey;
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return const CupertinoPage<void>(
+      child: ExportSurveyBuilder(),
+    );
   }
 }

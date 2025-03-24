@@ -64,9 +64,13 @@ enum MainRouteTab {
           routes: [
             TypedGoRoute<ExportReportRoute>(
               name: 'export-report',
-              path: 'export-report',
+              path: 'report',
             ),
           ],
+        ),
+        TypedGoRoute<ExportSurveyRoute>(
+          name: 'export-survey',
+          path: 'survey',
         ),
       ],
     ),
