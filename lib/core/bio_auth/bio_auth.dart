@@ -22,7 +22,7 @@ class BioAuth {
       () => LocalAuthentication().authenticate(
         /// TODO: 문구 변경 필요
         localizedReason: 'Please authenticate to show account balance',
-        options: const AuthenticationOptions(biometricOnly: true),
+        options: const AuthenticationOptions(stickyAuth: true, biometricOnly: true),
       ),
     );
   }

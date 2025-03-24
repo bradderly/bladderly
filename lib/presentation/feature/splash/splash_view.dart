@@ -95,7 +95,7 @@ class _SplashViewState extends State<SplashView> {
 
     // 생채 인증 성공할때 까지 무한 반복
     while (true) {
-      final successBioAuth = await BioAuth().authenticate();
+      final successBioAuth = await BioAuth().authenticate().catchError((_, __) => false);
 
       if (successBioAuth && mounted) return const MainRoute().go(context);
     }
