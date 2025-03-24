@@ -39,6 +39,10 @@ class PasscodeState {
     );
   }
 
+  bool verifyPasscode(String passcode) {
+    return this.passcode == passcode;
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'isLocked': isLocked,

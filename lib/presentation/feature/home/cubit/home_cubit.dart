@@ -15,6 +15,13 @@ class HomeCubit extends HydratedCubit<HomeState> {
   }
 
   @override
+  Future<void> clear() {
+    emit(const HomeState());
+
+    return super.clear();
+  }
+
+  @override
   HomeState? fromJson(Map<String, dynamic> json) {
     return HomeState(
       showGuideTour: json['show_guide_tour'] == true,

@@ -18,6 +18,8 @@ import 'package:bladderly/presentation/feature/menu/contact_us/contact_us_builde
 import 'package:bladderly/presentation/feature/menu/faq/faq_view.dart';
 import 'package:bladderly/presentation/feature/menu/language/language_view.dart';
 import 'package:bladderly/presentation/feature/menu/menu_builder.dart';
+import 'package:bladderly/presentation/feature/passcode/change/passcode_change_view.dart';
+import 'package:bladderly/presentation/feature/passcode/set/passcode_set_view.dart';
 import 'package:bladderly/presentation/feature/sign_up/consent/sign_up_consent_builder.dart';
 import 'package:bladderly/presentation/feature/sign_up/method/sign_up_method_builder.dart';
 import 'package:bladderly/presentation/feature/sign_up/regular/sign_up_regular_builder.dart';
@@ -34,6 +36,7 @@ import 'package:bladderly/presentation/router/route/symptom_route.dart';
 import 'package:equatable/equatable.dart';
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 part 'main_route.g.dart';
@@ -174,6 +177,16 @@ enum MainRouteTab {
                 TypedGoRoute<PasscodeRoute>(
                   path: 'passcode',
                   name: 'passcode',
+                  routes: [
+                    TypedGoRoute<PasscodeSetRoute>(
+                      name: 'passcode-set',
+                      path: 'set',
+                    ),
+                    TypedGoRoute<PasscodeChangeRoute>(
+                      name: 'passcode-change',
+                      path: 'change',
+                    ),
+                  ],
                 ),
                 TypedGoRoute<DeleteAccountRoute>(
                   path: 'delete-account',
@@ -402,7 +415,9 @@ class SignUpRegularRoute extends GoRouteData {
   const SignUpRegularRoute({
     this.$extra,
   });
+
   final SignUpRegularRouteExtra? $extra;
+
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
     return CupertinoPage<void>(
@@ -513,6 +528,31 @@ class GuideTourRoute extends GoRouteData {
       barrierDismissible: false,
       barrierColor: const Color(0xFF4F4F4F).withValues(alpha: 0.6),
       child: const GuideTourView(),
+    );
+  }
+}
+
+class PasscodeChangeRoute extends GoRouteData {
+  const PasscodeChangeRoute();
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return ModalBottomSheetPage<void>(
+      key: state.pageKey,
+      modalBarrierColor: Colors.transparent,
+      builder: (context) => const PasscodeChangeView(),
+    );
+  }
+}
+
+class PasscodeSetRoute extends GoRouteData {
+  const PasscodeSetRoute();
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return ModalBottomSheetPage<void>(
+      key: state.pageKey,
+      builder: (context) => const PasscodeSetView(),
     );
   }
 }

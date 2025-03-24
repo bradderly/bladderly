@@ -18,6 +18,13 @@ class PendingUploadFileCubit extends HydratedCubit<PendingUploadFileState> {
   }
 
   @override
+  Future<void> clear() {
+    emit(const PendingUploadFileState());
+
+    return super.clear();
+  }
+
+  @override
   PendingUploadFileState? fromJson(Map<String, dynamic> json) {
     final recordTime = switch (json[_recordTimeKey]) {
       final int recordTime => DateTime.fromMillisecondsSinceEpoch(recordTime),

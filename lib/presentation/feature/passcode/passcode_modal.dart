@@ -6,7 +6,8 @@ import 'package:bladderly/presentation/common/cubit/passcode_cubit.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
-import 'package:bladderly/presentation/feature/passcode/input/passcode_input_screen.dart';
+import 'package:bladderly/presentation/common/widget/primary_button.dart';
+import 'package:bladderly/presentation/router/route/main_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,21 +27,7 @@ class PasscodeModal extends StatelessWidget {
 
     if (!didAuthenticate || !context.mounted) return;
 
-    await _setPasscode(context);
-  }
-
-  Future<void> _setPasscode(BuildContext context) async {
-    final passcode = await showModalBottomSheet<String>(
-      context: context,
-      isScrollControlled: true, // 컨텐츠 크기에 맞춰서 스크롤
-      backgroundColor: Colors.transparent, // 배경 투명 설정
-      useRootNavigator: true,
-      builder: (context) => const PasscodeInputScreen(),
-    );
-
-    if (passcode == null) return;
-
-    context.read<PasscodeCubit>().lock(passcode: passcode);
+    const PasscodeSetRoute().go(context);
   }
 
   @override
@@ -147,29 +134,17 @@ class PasscodeModal extends StatelessWidget {
               ),
               BlocSelector<PasscodeCubit, PasscodeState, bool>(
                 selector: (state) => state.isLocked,
-                builder: (context, isLocked) {
-                  return GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: isLocked ? () => _setPasscode(context) : null,
-                    child: Container(
-                      alignment: Alignment.center,
-                      margin: const EdgeInsets.symmetric(horizontal: 67),
-                      padding: const EdgeInsets.symmetric(vertical: 14.5),
-                      decoration: BoxDecoration(
-                        color: context.read<PasscodeCubit>().state.isLocked
-                            ? context.colorTheme.vermilion.primary.shade50
-                            : context.colorTheme.neutral.shade6,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        'Change passcode'.tr(context),
-                        style: context.textStyleTheme.b16SemiBold.copyWith(
-                          color: context.colorTheme.neutral.shade0,
-                        ),
-                      ),
-                    ),
-                  );
-                },
+                builder: (context, isLocked) => PrimaryButton.filled(
+                  onPressed: isLocked ? () => const PasscodeChangeRoute().go(context) : null,
+                  backgroundColor: context.read<PasscodeCubit>().state.isLocked
+                      ? context.colorTheme.vermilion.primary.shade50
+                      : context.colorTheme.neutral.shade6,
+                  text: 'Change passcode'.tr(context),
+                  borderRadius: 8,
+                  shape: BoxShape.rectangle,
+                  textColor: context.colorTheme.neutral.shade0,
+                  size: const Size(256, 48),
+                ),
               ),
               const Gap(28),
             ],

@@ -17,6 +17,13 @@ class PasscodeCubit extends HydratedCubit<PasscodeState> {
   }
 
   @override
+  Future<void> clear() {
+    emit(PasscodeState(isLocked: false, passcode: ''));
+
+    return super.clear();
+  }
+
+  @override
   PasscodeState? fromJson(Map<String, dynamic> json) {
     return PasscodeState.fromJson(json);
   }
