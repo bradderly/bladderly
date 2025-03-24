@@ -5,6 +5,7 @@ import 'package:bladderly/app.dart';
 import 'package:bladderly/core/di/di.dart';
 import 'package:bladderly/core/notification/notification_module.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
@@ -23,7 +24,7 @@ Future<void> main() async {
       FlutterLocalization.instance.ensureInitialized(),
       Firebase.initializeApp(),
       NotiflyPlugin.initialize(
-        projectId: 'dd000087d726596b9324ef93f982a899',
+        projectId: kDebugMode ? '50b0b535baac5bf1bd3877640f6bdacb' : 'dd000087d726596b9324ef93f982a899',
         username: 'bladderly',
         password: 'bb2c9e132ce148fabeaa3a2abe77889a@A',
       ),

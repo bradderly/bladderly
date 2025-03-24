@@ -30,7 +30,7 @@ class DiaryHistoryModel extends Equatable {
   factory DiaryHistoryModel.fromDomain(History history) {
     final statusModel = switch (history.status) {
       HistoryStatus.processing => DiaryHistoryStatusModel.processing,
-      HistoryStatus.failed => DiaryHistoryStatusModel.failed,
+      HistoryStatus.failed || HistoryStatus.pending => DiaryHistoryStatusModel.failed,
       _ => DiaryHistoryStatusModel.done,
     };
     return switch (history) {

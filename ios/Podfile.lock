@@ -163,6 +163,8 @@ PODS:
   - local_auth_darwin (0.0.1):
     - Flutter
     - FlutterMacOS
+  - locale_plus (1.0.1):
+    - Flutter
   - nanopb (3.30910.0):
     - nanopb/decode (= 3.30910.0)
     - nanopb/encode (= 3.30910.0)
@@ -219,6 +221,7 @@ DEPENDENCIES:
   - in_app_purchase_storekit (from `.symlinks/plugins/in_app_purchase_storekit/darwin`)
   - isar_flutter_libs (from `.symlinks/plugins/isar_flutter_libs/ios`)
   - local_auth_darwin (from `.symlinks/plugins/local_auth_darwin/darwin`)
+  - locale_plus (from `.symlinks/plugins/locale_plus/ios`)
   - notifly_flutter_ios (from `.symlinks/plugins/notifly_flutter_ios/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
@@ -283,6 +286,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/isar_flutter_libs/ios"
   local_auth_darwin:
     :path: ".symlinks/plugins/local_auth_darwin/darwin"
+  locale_plus:
+    :path: ".symlinks/plugins/locale_plus/ios"
   notifly_flutter_ios:
     :path: ".symlinks/plugins/notifly_flutter_ios/ios"
   package_info_plus:
@@ -334,6 +339,7 @@ SPEC CHECKSUMS:
   in_app_purchase_storekit: a1ce04056e23eecc666b086040239da7619cd783
   isar_flutter_libs: b69f437aeab9c521821c3f376198c4371fa21073
   local_auth_darwin: 66e40372f1c29f383a314c738c7446e2f7fdadc3
+  locale_plus: 89c741a60ee3bad68ddbb86c172ed45db98a5ae3
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   notifly_flutter_ios: d6fcfd85b0b7175f34ea947f932b4277c7aa2ad2
   notifly_sdk: 1c7d531c2574b19226157356bd06fbb6efd57885
@@ -351,4 +357,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: a57f30d18f102dd3ce366b1d62a55ecbef2158e5
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2

@@ -20,6 +20,10 @@ abstract class EventAnalyzer {
 
   Future<void> clearUser();
 
+  Future<void> setUserProperties({
+    required Map<String, Object> userProperties,
+  });
+
   Future<void> logEvent({
     required String eventName,
     Map<String, Object>? eventParams,
@@ -59,13 +63,30 @@ class _EventAnalyzer implements EventAnalyzer {
   }
 
   @override
+  Future<void> setUserProperties({
+    required Map<String, Object> userProperties,
+  }) {
+    return Future.wait([
+      Future.wait(
+        userProperties.entries.map(
+          (e) => _firebaseAnalytics.setUserProperty(name: e.key, value: e.value.toString()),
+        ),
+      ),
+      NotiflyPlugin.setUserProperties(userProperties)
+    ]);
+  }
+
+  @override
   Future<void> logEvent({
     required String eventName,
     Map<String, Object>? eventParams,
   }) {
-    return NotiflyPlugin.trackEvent(
-      eventName: eventName,
-      eventParams: eventParams,
-    );
+    return Future.wait([
+      _firebaseAnalytics.logEvent(name: eventName, parameters: eventParams),
+      NotiflyPlugin.trackEvent(
+        eventName: eventName,
+        eventParams: eventParams,
+      )
+    ]);
   }
 }

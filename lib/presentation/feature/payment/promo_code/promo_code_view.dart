@@ -117,7 +117,7 @@ class PromoCodeView extends StatelessWidget {
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide.none,
                             ),
-                            hintText: 'XXX-XXX',
+                            hintText: '',
                             fillColor: context.colorTheme.neutral.shade2,
                             hintStyle:
                                 context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade6),

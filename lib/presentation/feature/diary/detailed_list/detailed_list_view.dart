@@ -70,7 +70,7 @@ class _DetailedListViewState extends State<DetailedListView> {
       if (scrollTargetKey?.currentContext case final BuildContext context when context.mounted) {
         Scrollable.ensureVisible(
           context,
-          duration: const Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 1000),
         );
       }
     });

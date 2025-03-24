@@ -154,6 +154,7 @@ class _DiaryViewState extends State<DiaryView> with AutomaticKeepAliveClientMixi
                             historyId: diaryHistoryModel.id,
                           ),
                         ),
+                    DiaryHistoryStatusModel.processing => () {},
                     _ => DetailedListRoute(historyId: diaryHistoryModel.id, date: state.dateTime).go(context),
                   },
                   diaryHistoryModels: state.diaryHistoryModels,

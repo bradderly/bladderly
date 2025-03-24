@@ -51,7 +51,7 @@ class HistoryResultBloc extends Bloc<HistoryResultEvent, HistoryResultState> {
 
     result.fold(
       (exception) => emit(
-        HistoryResultRefreshFailure(
+        HistoryResultGetFailure(
           exception: exception,
         ),
       ),

@@ -45,6 +45,7 @@ class _RecorderImpl implements Recorder, RecorderFileLoader {
         bitRate: Platform.isAndroid ? 64000 : 128000,
         numChannels: 1,
         androidConfig: const AndroidRecordConfig(audioSource: AndroidAudioSource.mic),
+        iosConfig: const IosRecordConfig(categoryOptions: [IosAudioCategoryOption.defaultToSpeaker]),
       ),
       path: filePath,
     );

@@ -6,6 +6,7 @@ import 'dart:async';
 
 import 'package:bladderly/core/event_analyzer/event_analyzer.dart';
 import 'package:bladderly/core/recorder/recorder_module.dart';
+import 'package:bladderly/domain/exception/domain_exception.dart';
 import 'package:bladderly/domain/exception/get_history_result_failure_exception.dart';
 import 'package:bladderly/domain/exception/network_not_connected_exception.dart';
 import 'package:bladderly/domain/model/membership.dart';
@@ -147,11 +148,7 @@ class _MainViewState extends State<MainView> {
           message: exception.message,
           recordTime: exception.recordTime,
         ),
-      final NetworkNotConnectedException exception => CommonMessageModal.showFromDominException<void>(
-          context,
-          onTap: context.pop,
-          exception: exception,
-        ),
+      final NetworkNotConnectedException exception => showNetworkNotConnectedAlert(exception),
       _ => null,
     };
   }
@@ -176,12 +173,16 @@ class _MainViewState extends State<MainView> {
 
     if (state.exception case final NetworkNotConnectedException exception
         when !state.isValidMembership && !state.isTodayInitialized) {
-      CommonMessageModal.showFromDominException<void>(
-        context,
-        onTap: context.pop,
-        exception: exception,
-      );
+      showNetworkNotConnectedAlert(exception);
     }
+  }
+
+  void showNetworkNotConnectedAlert(DomainException body) {
+    CommonMessageModal.showFromDominException<void>(
+      context,
+      onTap: context.pop,
+      exception: body,
+    );
   }
 
   @override
