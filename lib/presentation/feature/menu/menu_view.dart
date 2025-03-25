@@ -1,6 +1,8 @@
 // Dart imports:
 // Flutter imports:
 // Project imports:
+import 'package:bladderly/core/di/di.dart';
+import 'package:bladderly/core/network_checker/network_checker.dart';
 import 'package:bladderly/domain/model/unit.dart';
 import 'package:bladderly/presentation/common/bloc/app_config_bloc.dart';
 import 'package:bladderly/presentation/common/cubit/locale_cubit.dart';
@@ -21,7 +23,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MenuView extends StatelessWidget {
-  const MenuView({super.key});
+  const MenuView({super.key, required this.networkChecker});
+  final NetworkChecker networkChecker;
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +97,12 @@ class MenuView extends StatelessWidget {
                       SettingsItem(
                         icon: Icons.phone,
                         title: 'Contact Us'.tr(context),
-                        onTap: () => const ContactUsRoute().go(context),
+                        onTap: () async => {
+                          if (!await networkChecker.isConnected)
+                            {networkChecker.showNetworkAlert(context)}
+                          else
+                            {const ContactUsRoute().go(context)}
+                        },
                       ),
                       SettingsItem(
                         icon: Icons.info_outline,

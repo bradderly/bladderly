@@ -1,5 +1,7 @@
 // Flutter imports:
 // Project imports:
+import 'package:bladderly/core/di/di.dart';
+import 'package:bladderly/core/network_checker/network_checker.dart';
 import 'package:bladderly/presentation/feature/menu/cubit/menu_cubit.dart';
 import 'package:bladderly/presentation/feature/menu/menu_view.dart';
 import 'package:flutter/widgets.dart';
@@ -11,13 +13,17 @@ class MenuBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final networkChecker = getIt<NetworkChecker>();
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<MenuFormCubit>(
           create: (_) => MenuFormCubit(),
         ),
       ],
-      child: const MenuView(),
+      child: MenuView(
+        networkChecker: networkChecker,
+      ),
     );
   }
 }

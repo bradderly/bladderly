@@ -1,3 +1,4 @@
+import 'package:bladderly/domain/exception/network_not_connected_exception.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
@@ -77,12 +78,22 @@ class _ContactUsViewState extends State<ContactUsView> {
     );
   }
 
+  Future<void> _onSubmitFail(BuildContext context, ContactUsSubmitFailure state) {
+    context.pop();
+    return CommonMessageModal.showFromDominException<void>(
+      context,
+      onTap: context.pop,
+      exception: const NetworkNotConnectedException(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<ContactUsBloc, ContactUsState>(
       listener: (context, state) => switch (state) {
         ContactUsSubmitInProgress() => ProgressIndicatorModal.show(context),
         ContactUsSubmitSuccess() => _onSubmitSuccess(context, state),
+        ContactUsSubmitFailure() => _onSubmitFail(context, state),
         _ => null,
       },
       child: Scaffold(
