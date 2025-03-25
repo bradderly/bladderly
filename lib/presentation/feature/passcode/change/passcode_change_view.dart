@@ -16,7 +16,7 @@ class PasscodeChangeView extends StatefulWidget {
   State<PasscodeChangeView> createState() => _PasscodeChangeViewState();
 }
 
-class _PasscodeChangeViewState extends State<PasscodeChangeView> {
+class _PasscodeChangeViewState extends State<PasscodeChangeView> with WidgetsBindingObserver {
   late final passcodeController = TextEditingController()..addListener(onTextEditingControllerListener);
   final focusNode = FocusNode();
 
@@ -25,10 +25,26 @@ class _PasscodeChangeViewState extends State<PasscodeChangeView> {
   bool isIncorrect = false;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
   void dispose() {
-    passcodeController.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     focusNode.dispose();
+    passcodeController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    return switch (state) {
+      AppLifecycleState.resumed => focusNode.requestFocus(),
+      AppLifecycleState.paused => focusNode.unfocus(),
+      _ => null,
+    };
   }
 
   void onTextEditingControllerListener() {
@@ -89,30 +105,33 @@ class _PasscodeChangeViewState extends State<PasscodeChangeView> {
       appBar: ModalAppBar(title: 'Passcode'.tr(context)),
       body: SafeArea(
         child: Center(
-          child: GestureDetector(
-            onTap: focusNode.requestFocus,
-            behavior: HitTestBehavior.translucent,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  status.text.tr(context),
-                  style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade6),
-                ),
-                const Gap(20),
-                ListenableBuilder(
-                  listenable: passcodeController,
-                  builder: (_, __) => PasscodeDotWidget(count: passcodeController.text.length),
-                ),
-                const Gap(20),
-                if (isIncorrect)
+          child: Stack(
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
                   Text(
-                    'The passcode you entered is incorrect.\nPlease try again.'.tr(context),
-                    style: context.textStyleTheme.b14Medium.copyWith(
-                      color: context.colorTheme.warning,
-                    ),
+                    status.text.tr(context),
+                    style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade6),
                   ),
-                SizedBox.shrink(
+                  const Gap(20),
+                  ListenableBuilder(
+                    listenable: passcodeController,
+                    builder: (_, __) => PasscodeDotWidget(count: passcodeController.text.length),
+                  ),
+                  const Gap(20),
+                  if (isIncorrect)
+                    Text(
+                      'The passcode you entered is incorrect.\nPlease try again.'.tr(context),
+                      style: context.textStyleTheme.b14Medium.copyWith(
+                        color: context.colorTheme.warning,
+                      ),
+                    ),
+                ],
+              ),
+              Positioned.fill(
+                child: Opacity(
+                  opacity: 0,
                   child: TextField(
                     focusNode: focusNode,
                     autofocus: true,
@@ -122,8 +141,8 @@ class _PasscodeChangeViewState extends State<PasscodeChangeView> {
                     keyboardType: TextInputType.number,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

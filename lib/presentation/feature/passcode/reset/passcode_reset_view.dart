@@ -17,17 +17,33 @@ class PasscodeResetView extends StatefulWidget {
   State<PasscodeResetView> createState() => _PasscodeResetViewState();
 }
 
-class _PasscodeResetViewState extends State<PasscodeResetView> {
+class _PasscodeResetViewState extends State<PasscodeResetView> with WidgetsBindingObserver {
   late final passcodeController = TextEditingController()..addListener(onTextEditingControllerListener);
   final focusNode = FocusNode();
 
   bool isIncorrect = false;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     focusNode.dispose();
     passcodeController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    return switch (state) {
+      AppLifecycleState.resumed => focusNode.requestFocus(),
+      AppLifecycleState.paused => focusNode.unfocus(),
+      _ => null,
+    };
   }
 
   void onTextEditingControllerListener() => onChangePasscode(passcodeController.text);
@@ -54,32 +70,35 @@ class _PasscodeResetViewState extends State<PasscodeResetView> {
       appBar: ModalAppBar(title: 'Passcode'.tr(context)),
       body: SafeArea(
         child: Center(
-          child: GestureDetector(
-            onTap: focusNode.requestFocus,
-            behavior: HitTestBehavior.translucent,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Enter your passcode'.tr(context),
-                  style: context.textStyleTheme.b16Medium.copyWith(
-                    color: context.colorTheme.neutral.shade6,
-                  ),
-                ),
-                const Gap(20),
-                ListenableBuilder(
-                  listenable: passcodeController,
-                  builder: (_, __) => PasscodeDotWidget(count: passcodeController.text.length),
-                ),
-                const Gap(20),
-                if (isIncorrect)
+          child: Stack(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
                   Text(
-                    'The passcode you entered is incorrect.\nPlease try again.'.tr(context),
-                    style: context.textStyleTheme.b14Medium.copyWith(
-                      color: context.colorTheme.warning,
+                    'Enter your passcode'.tr(context),
+                    style: context.textStyleTheme.b16Medium.copyWith(
+                      color: context.colorTheme.neutral.shade6,
                     ),
                   ),
-                SizedBox.shrink(
+                  const Gap(20),
+                  ListenableBuilder(
+                    listenable: passcodeController,
+                    builder: (_, __) => PasscodeDotWidget(count: passcodeController.text.length),
+                  ),
+                  const Gap(20),
+                  if (isIncorrect)
+                    Text(
+                      'The passcode you entered is incorrect.\nPlease try again.'.tr(context),
+                      style: context.textStyleTheme.b14Medium.copyWith(
+                        color: context.colorTheme.warning,
+                      ),
+                    ),
+                ],
+              ),
+              Positioned.fill(
+                child: Opacity(
+                  opacity: 0,
                   child: TextField(
                     focusNode: focusNode,
                     controller: passcodeController,
@@ -89,8 +108,8 @@ class _PasscodeResetViewState extends State<PasscodeResetView> {
                     keyboardType: TextInputType.number,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

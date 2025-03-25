@@ -14,7 +14,7 @@ class PasscodeAuthView extends StatefulWidget {
   State<PasscodeAuthView> createState() => _PasscodeAuthViewState();
 }
 
-class _PasscodeAuthViewState extends State<PasscodeAuthView> {
+class _PasscodeAuthViewState extends State<PasscodeAuthView> with WidgetsBindingObserver {
   final _controller = TextEditingController();
   final _focusNode = FocusNode();
 
@@ -23,11 +23,28 @@ class _PasscodeAuthViewState extends State<PasscodeAuthView> {
   int attemptCount = 0;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+
     _controller.dispose();
     _focusNode.dispose();
 
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    return switch (state) {
+      AppLifecycleState.resumed => _focusNode.requestFocus(),
+      AppLifecycleState.paused => _focusNode.unfocus(),
+      _ => null,
+    };
   }
 
   Future<void> onChangedPasscode(String passcode) async {
@@ -96,45 +113,46 @@ class _PasscodeAuthViewState extends State<PasscodeAuthView> {
               const SizedBox(height: 173),
               Expanded(
                 child: Center(
-                  child: GestureDetector(
-                    onTap: _focusNode.requestFocus,
-                    behavior: HitTestBehavior.translucent,
-                    child: Column(
-                      children: [
-                        Text(
-                          'Set your passcode below'.tr(context),
-                          style: context.textStyleTheme.b16Medium.copyWith(
-                            color: context.colorTheme.neutral.shade6,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        ListenableBuilder(
-                          listenable: _controller,
-                          builder: (context, _) => buildPasscodeDots(_controller.text.length),
-                        ),
-                        const SizedBox(height: 20),
-                        if (isUncorrect)
+                  child: Stack(
+                    children: [
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
                           Text(
-                            'The passcode you entered is incorrect.\nPlease try again.'.tr(context),
-                            style: context.textStyleTheme.b14Medium.copyWith(
-                              color: context.colorTheme.warning,
+                            'Enter your passcode'.tr(context),
+                            style: context.textStyleTheme.b16Medium.copyWith(
+                              color: context.colorTheme.neutral.shade6,
                             ),
                           ),
-                        Opacity(
-                          opacity: 0,
-                          child: SizedBox.shrink(
-                            child: TextField(
-                              onChanged: onChangedPasscode,
-                              controller: _controller,
-                              autofocus: true,
-                              obscureText: true,
-                              maxLength: 4,
-                              keyboardType: TextInputType.number,
+                          const SizedBox(height: 20),
+                          ListenableBuilder(
+                            listenable: _controller,
+                            builder: (context, _) => buildPasscodeDots(_controller.text.length),
+                          ),
+                          const SizedBox(height: 20),
+                          if (isUncorrect)
+                            Text(
+                              'The passcode you entered is incorrect.\nPlease try again.'.tr(context),
+                              style: context.textStyleTheme.b14Medium.copyWith(
+                                color: context.colorTheme.warning,
+                              ),
                             ),
+                        ],
+                      ),
+                      Positioned.fill(
+                        child: Opacity(
+                          opacity: 0,
+                          child: TextField(
+                            onChanged: onChangedPasscode,
+                            controller: _controller,
+                            autofocus: true,
+                            obscureText: true,
+                            maxLength: 4,
+                            keyboardType: TextInputType.number,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),

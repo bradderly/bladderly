@@ -18,7 +18,7 @@ class PasscodeSetView extends StatefulWidget {
   State<PasscodeSetView> createState() => _PasscodeSetViewState();
 }
 
-class _PasscodeSetViewState extends State<PasscodeSetView> {
+class _PasscodeSetViewState extends State<PasscodeSetView> with WidgetsBindingObserver {
   late final passcodeController = TextEditingController()..addListener(onTextEditingControllerListener);
   final focusNode = FocusNode();
 
@@ -27,10 +27,26 @@ class _PasscodeSetViewState extends State<PasscodeSetView> {
   bool isIncorrect = false;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     focusNode.dispose();
     passcodeController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    return switch (state) {
+      AppLifecycleState.resumed => focusNode.requestFocus(),
+      AppLifecycleState.paused => focusNode.unfocus(),
+      _ => null,
+    };
   }
 
   void onTextEditingControllerListener() {
@@ -75,43 +91,47 @@ class _PasscodeSetViewState extends State<PasscodeSetView> {
       appBar: ModalAppBar(title: 'Passcode'.tr(context)),
       body: SafeArea(
         child: Center(
-          child: GestureDetector(
-            onTap: focusNode.requestFocus,
-            behavior: HitTestBehavior.translucent,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  status.text.tr(context),
-                  style: context.textStyleTheme.b16Medium.copyWith(
-                    color: context.colorTheme.neutral.shade6,
-                  ),
-                ),
-                const Gap(20),
-                ListenableBuilder(
-                  listenable: passcodeController,
-                  builder: (_, __) => PasscodeDotWidget(count: passcodeController.text.length),
-                ),
-                const Gap(20),
-                if (isIncorrect)
+          child: Stack(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
                   Text(
-                    'The passcode you entered is incorrect.\nPlease try again.'.tr(context),
-                    style: context.textStyleTheme.b14Medium.copyWith(
-                      color: context.colorTheme.warning,
+                    status.text.tr(context),
+                    style: context.textStyleTheme.b16Medium.copyWith(
+                      color: context.colorTheme.neutral.shade6,
                     ),
                   ),
-                SizedBox.shrink(
+                  const Gap(20),
+                  ListenableBuilder(
+                    listenable: passcodeController,
+                    builder: (_, __) => PasscodeDotWidget(count: passcodeController.text.length),
+                  ),
+                  const Gap(20),
+                  if (isIncorrect)
+                    Text(
+                      'The passcode you entered is incorrect.\nPlease try again.'.tr(context),
+                      style: context.textStyleTheme.b14Medium.copyWith(
+                        color: context.colorTheme.warning,
+                      ),
+                    ),
+                ],
+              ),
+              Positioned.fill(
+                child: Opacity(
+                  opacity: 0,
                   child: TextField(
+                    autofocus: true,
                     focusNode: focusNode,
                     controller: passcodeController,
-                    autofocus: true,
                     obscureText: true,
                     maxLength: 4,
                     keyboardType: TextInputType.number,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
