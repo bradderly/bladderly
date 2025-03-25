@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:bladderly/core/di/di.dart';
 import 'package:bladderly/core/method_channel/bladdery_method_channel.dart';
+import 'package:bladderly/domain/usecase/migrate_user_usecase.dart';
 import 'package:bladderly/presentation/feature/splash/cubit/splash_cubit.dart';
 import 'package:bladderly/presentation/feature/splash/splash_view.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,9 @@ class SplashBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SplashCubit>(
-      create: (_) => SplashCubit(),
+      create: (_) => SplashCubit(
+        migrateUserUsecase: getIt<MigrateUserUsecase>(),
+      ),
       child: SplashView(methodChannel: getIt<BladderyMethodChannel>()),
     );
   }

@@ -70,6 +70,7 @@ class _SplashViewState extends State<SplashView> {
     return Future.wait(
       [
         Translation().initialize(),
+        context.read<SplashCubit>().migrateUser(),
       ],
     );
   }
