@@ -6,7 +6,6 @@ import 'package:bladderly/presentation/common/cubit/diary_date_cubit.dart';
 import 'package:bladderly/presentation/common/cubit/timer_cubit.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/datetime_extension.dart';
-import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/feature/diary/diary/cubit/diary_history_dates_cubit.dart';
 import 'package:bladderly/presentation/feature/diary/diary/modal/diary_calendar_bottom_sheet.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
@@ -105,117 +104,92 @@ class _DiaryAppBarState extends State<DiaryAppBar> {
         value: SystemUiOverlayStyle.dark,
         child: ColoredBox(
           color: context.colorTheme.neutral.shade0,
-          child: BlocBuilder<TimerCubit, DateTime>(
-            buildWhen: (prev, curr) => !DateUtils.isSameDay(prev, curr),
-            builder: (context, _) => BlocBuilder<DiaryDateCubit, DateTime>(
-              builder: (context, selectedDate) => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: onTapCalendar,
-                              child: Assets.icon.icDiaryCalendar.svg(),
+          child: SafeArea(
+            child: BlocBuilder<TimerCubit, DateTime>(
+              buildWhen: (prev, curr) => !DateUtils.isSameDay(prev, curr),
+              builder: (context, _) => BlocBuilder<DiaryDateCubit, DateTime>(
+                builder: (context, selectedDate) => Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                      child: Row(
+                        children: [
+                          Text(
+                            selectedDate.getCalendarHeader(context),
+                            style: context.textStyleTheme.b20Bold.copyWith(
+                              color: context.colorTheme.neutral.shade10,
                             ),
-                            const Gap(8),
-                            Builder(
-                              builder: (context) {
-                                final isTodaySelected = today == selectedDate;
-                                final color = isTodaySelected
-                                    ? context.colorTheme.neutral.shade5
-                                    : context.colorTheme.vermilion.secondary.shade30;
+                          ),
+                          Transform.rotate(
+                            angle: 3.14159 / 2,
+                            child: IconButton(
+                              onPressed: onTapCalendar,
+                              icon: const Icon(
+                                Icons.chevron_right,
+                              ),
+                            ),
+                          ),
+                          const Spacer(),
+                          GestureDetector(
+                            onTap: widget.onTapExport,
+                            child: Assets.icon.icDiaryExport.svg(),
+                          ),
+                          const Gap(8),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 8),
+                      height: 64,
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          Center(
+                            child: Container(
+                              width: 50,
+                              decoration: BoxDecoration(
+                                color: context.colorTheme.neutral.shade3,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
+                          NotificationListener<ScrollNotification>(
+                            onNotification: (notification) {
+                              if (notification is ScrollEndNotification) {
+                                final index = (scrollController.offset / itemExtent).round();
+                                final date = maxDate.subtract(Duration(days: index + 3));
 
-                                return GestureDetector(
-                                  onTap: isTodaySelected ? null : () => onTap(today),
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: color,
-                                        width: 2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(100),
-                                    ),
-                                    child: Text(
-                                      'Today'.tr(context),
-                                      style: context.textStyleTheme.b16SemiBold.copyWith(color: color),
-                                    ),
-                                  ),
-                                );
+                                if (selectedDate != date) {
+                                  context.read<DiaryDateCubit>().changeDate(date);
+                                  widget.onChanged(date);
+                                }
+                              }
+
+                              return true;
+                            },
+                            child: ListView.builder(
+                              physics: _SnapScrollPhysics(itemWidth: itemExtent),
+                              controller: scrollController,
+                              reverse: true,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: maxDate.difference(minDate).inDays + 1,
+                              itemBuilder: (context, index) {
+                                final date = maxDate.subtract(Duration(days: index));
+
+                                final isOutdated = date.isBefore(minDate.add(const Duration(days: 3))) ||
+                                    date.isAfter(maxDate.subtract(const Duration(days: 3)));
+
+                                return _buildDay(context, date: date, isOutdated: isOutdated, isToday: today == date);
                               },
                             ),
-                            const Spacer(),
-                            GestureDetector(
-                              onTap: widget.onTapExport,
-                              child: Assets.icon.icDiaryExport.svg(),
-                            ),
-                          ],
-                        ),
-                        const Gap(8),
-                        Text(
-                          selectedDate.getCalendarHeader(context),
-                          style: context.textStyleTheme.b20Bold.copyWith(
-                            color: context.colorTheme.neutral.shade10,
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                    height: 64,
-                    child: Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        Center(
-                          child: Container(
-                            width: 50,
-                            decoration: BoxDecoration(
-                              color: context.colorTheme.neutral.shade3,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ),
-                        NotificationListener<ScrollNotification>(
-                          onNotification: (notification) {
-                            if (notification is ScrollEndNotification) {
-                              final index = (scrollController.offset / itemExtent).round();
-                              final date = maxDate.subtract(Duration(days: index + 3));
-
-                              if (selectedDate != date) {
-                                context.read<DiaryDateCubit>().changeDate(date);
-                                widget.onChanged(date);
-                              }
-                            }
-
-                            return true;
-                          },
-                          child: ListView.builder(
-                            physics: _SnapScrollPhysics(itemWidth: itemExtent),
-                            controller: scrollController,
-                            reverse: true,
-                            scrollDirection: Axis.horizontal,
-                            itemCount: maxDate.difference(minDate).inDays + 1,
-                            itemBuilder: (context, index) {
-                              final date = maxDate.subtract(Duration(days: index));
-
-                              final isOutdated = date.isBefore(minDate.add(const Duration(days: 3))) ||
-                                  date.isAfter(maxDate.subtract(const Duration(days: 3)));
-
-                              return _buildDay(context, date: date, isOutdated: isOutdated);
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -228,6 +202,7 @@ class _DiaryAppBarState extends State<DiaryAppBar> {
     BuildContext context, {
     required bool isOutdated,
     required DateTime date,
+    required bool isToday,
   }) {
     return GestureDetector(
       key: ValueKey(date),
@@ -245,14 +220,22 @@ class _DiaryAppBarState extends State<DiaryAppBar> {
                   Text(
                     '${date.day}',
                     style: context.textStyleTheme.b18Bold.copyWith(
-                      color: isOutdated ? context.colorTheme.neutral.shade6 : context.colorTheme.neutral.shade10,
+                      color: isToday
+                          ? context.colorTheme.vermilion.primary.shade50
+                          : isOutdated
+                              ? context.colorTheme.neutral.shade6
+                              : context.colorTheme.neutral.shade10,
                     ),
                   ),
                   const Gap(2),
                   Text(
                     date.getDayOfweek(context),
                     style: context.textStyleTheme.b12Medium.copyWith(
-                      color: isOutdated ? context.colorTheme.neutral.shade6 : context.colorTheme.neutral.shade10,
+                      color: isToday
+                          ? context.colorTheme.vermilion.primary.shade50
+                          : isOutdated
+                              ? context.colorTheme.neutral.shade6
+                              : context.colorTheme.neutral.shade10,
                     ),
                   ),
                 ],
