@@ -81,7 +81,7 @@ abstract class PaywallView extends StatelessWidget {
         PaymentPurchaseReadyInProgress() => ProgressIndicatorModal.show(context),
         PaymentPurchaseReadySuccess() => _onReadySuccess(context, state),
         PaymentPurchaseReadyFailure() => context.pop(),
-        PaymentPurchaseSuccess() => context.pop(),
+        PaymentPurchaseSuccess() => context.pop(true),
         PaymentPurchaseFailure() => context.pop(),
         PaymentPurchaseRestored() => context.pop(),
         PaymentPurchaseCanceled() => Platform.isAndroid ? null : context.pop(),

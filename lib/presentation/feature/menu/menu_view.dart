@@ -101,7 +101,7 @@ class MenuView extends StatelessWidget {
                           if (!await networkChecker.isConnected)
                             {networkChecker.showNetworkAlert(context)}
                           else
-                            {const ContactUsRoute().go(context)}
+                            {const ContactUsRoute().go(context)},
                         },
                       ),
                       SettingsItem(

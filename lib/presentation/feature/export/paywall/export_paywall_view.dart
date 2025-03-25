@@ -44,11 +44,23 @@ class ExportPaywallView extends StatelessWidget {
     final completer = Completer<List<Plan>>();
     context.read<PlanBloc>().add(PlanGetPlans.subscription(completer: completer));
 
-    return completer.future
-        .then(
-          (plans) => context.mounted ? PaywallRoute($extra: PaywallRouteExtra(plans: plans)).push<void>(context) : null,
-        )
-        .onError((error, stackTrace) => null);
+    final plans = await completer.future;
+
+    if (!context.mounted || plans.isEmpty) return;
+
+    final paid = await PaywallRoute(
+      $extra: PaywallRouteExtra(plans: plans),
+    ).push<bool>(context);
+
+    if (context.mounted && (paid ?? false)) {
+      // Delay to ensure previous context.pop done
+      Future.delayed(const Duration(milliseconds: 300), () => context.pop(true));
+    }
+    // completer.future
+    //     .then(
+    //       (plans) => context.mounted ? PaywallRoute($extra: PaywallRouteExtra(plans: plans)).push<void>(context) : null,
+    //     )
+    //     .onError((error, stackTrace) => null);
   }
 
   @override
