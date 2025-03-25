@@ -52,9 +52,9 @@ class ExportPaywallView extends StatelessWidget {
       $extra: PaywallRouteExtra(plans: plans),
     ).push<bool>(context);
 
-    if (context.mounted && (paid ?? false)) {
+    if (paid ?? false) {
       // Delay to ensure previous context.pop done
-      Future.delayed(const Duration(milliseconds: 300), () => context.pop(true));
+      Future.delayed(const Duration(milliseconds: 300), () => context.mounted ? context.pop(true) : null);
     }
     // completer.future
     //     .then(
