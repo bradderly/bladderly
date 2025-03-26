@@ -87,7 +87,7 @@ class MenuView extends StatelessWidget {
                         },
                         icon: Icons.language,
                         title: 'Language'.tr(context),
-                        subtitle: context.locale.text.tr(context),
+                        subtitle: context.locale.text,
                       ),
                       SettingsItem(
                         icon: Icons.help_outline,

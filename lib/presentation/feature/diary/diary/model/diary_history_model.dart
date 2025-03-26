@@ -28,16 +28,17 @@ class DiaryHistoryModel extends Equatable {
         _recordVolume = recordVolume;
 
   factory DiaryHistoryModel.fromDomain(History history) {
-    final statusModel = switch (history.status) {
+    final recordingStatusModel = switch (history.status) {
       HistoryStatus.processing => DiaryHistoryStatusModel.processing,
       HistoryStatus.failed || HistoryStatus.pending => DiaryHistoryStatusModel.failed,
       _ => DiaryHistoryStatusModel.done,
     };
+
     return switch (history) {
       VoidingHistory() => DiaryHistoryModel(
           id: history.id!,
           type: DiaryHistoryTypeModel.voiding,
-          status: statusModel,
+          status: history.isManual ? DiaryHistoryStatusModel.done : recordingStatusModel,
           recordTime: history.recordTime,
           recordVolume: history.recordVolume.toRoundVolume(),
           isNocturia: history.isNocturia,
@@ -53,7 +54,7 @@ class DiaryHistoryModel extends Equatable {
       IntakeHistory() => DiaryHistoryModel(
           id: history.id!,
           type: DiaryHistoryTypeModel.intake,
-          status: statusModel,
+          status: DiaryHistoryStatusModel.done,
           recordTime: history.recordTime,
           isNocturia: false,
           recordVolume: history.recordVolume.toRoundVolume(),
@@ -64,7 +65,7 @@ class DiaryHistoryModel extends Equatable {
       LeakageHistory() => DiaryHistoryModel(
           id: history.id!,
           type: DiaryHistoryTypeModel.leakage,
-          status: statusModel,
+          status: DiaryHistoryStatusModel.done,
           recordTime: history.recordTime,
           isNocturia: false,
           recordVolume: null,

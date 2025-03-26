@@ -68,7 +68,9 @@ class ChangePasswordView extends StatelessWidget {
     return BlocListener<ChangePasswordBloc, ChangePasswordState>(
       listener: (context, state) => switch (state) {
         ChangePasswordInProgress() => ProgressIndicatorModal.show(context),
-        ChangePasswordSuccess() => context.pop(),
+        ChangePasswordSuccess() => context
+          ..pop()
+          ..pop(),
         ChangePasswordFailure() => _onChangeFailure(context, state),
         _ => null,
       },

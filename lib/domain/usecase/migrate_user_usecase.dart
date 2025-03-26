@@ -25,6 +25,7 @@ class MigrateUserUsecase {
     try {
       final user = switch (defaultTargetPlatform) {
         TargetPlatform.android => await _migrateAndroidUser(),
+        TargetPlatform.iOS => await _migrateIosUser(),
         _ => throw UnsupportedError('Unsupported platform'),
       };
 
@@ -62,24 +63,21 @@ class MigrateUserUsecase {
       _ => throw Exception('Invalid string'),
     };
 
-    final yearOfBirth = switch (data['birthday']) {
-      final String birthday => int.tryParse(birthday.split('-').first),
-      _ => throw Exception('Invalid birthday'),
-    };
-
-    final name = switch (data['firstName']) {
-      final String firstName => firstName,
-      _ => throw Exception('Invalid firstName'),
-    };
-
-    final gender = switch (data['gender']) {
-      final String gender => Gender.values.byName(gender),
-      _ => throw Exception('Invalid Gender'),
-    };
-
     final email = switch (data['email']) {
       final String email => email,
       _ => throw Exception('Invalid email'),
+    };
+
+    final yearOfBirth = switch (data['birthday']) {
+      final String birthday => int.tryParse(birthday.split('-').first),
+      _ => 1900,
+    };
+
+    final name = data['firstName'];
+
+    final gender = switch (data['gender']) {
+      final String gender => gender.toLowerCase() == 'male' ? Gender.male : Gender.female,
+      _ => Gender.female,
     };
 
     final userId = sha1.convert(utf8.encode(email)).toString();
@@ -103,10 +101,28 @@ class MigrateUserUsecase {
   Future<User> _migrateIosUser() async {
     final prefs = await SharedPreferences.getInstance();
 
-    final data = prefs.getString('shUDUserEmail');
+    const emailKey = 'shUDUserEmail';
 
-    throw UnimplementedError('Not implemented yet');
+    final email = prefs.getString(emailKey);
+    if (email == null) throw Exception('Invalid email');
 
-    /// TODO(신중석): iOS 데이터 읽어서 User 객체로 변환
+    final birthYear = int.tryParse(prefs.getString('shUDUserBirthYear')?.split('-').first ?? '1900');
+
+    final gender = prefs.getString('shUDUserGender') == 'male' ? Gender.male : Gender.female;
+    final name = prefs.getString('shUDUserFirstName');
+
+    final user = _userRepository.saveUser(
+      User(
+        userId: sha1.convert(utf8.encode(email)).toString(),
+        yearOfBirth: birthYear,
+        name: name,
+        gender: gender,
+        signUpMethod: SignUpMethod.E,
+        email: email,
+      ),
+    );
+
+    await prefs.remove(emailKey);
+    return user;
   }
 }

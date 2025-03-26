@@ -3,7 +3,7 @@
   "info": {
     "title": "Bladderly for Flutter",
     "contact": {},
-    "version": "0.0.11"
+    "version": "0.0.13"
   },
   "servers": [
     {
@@ -507,6 +507,10 @@
                   "username": {
                     "type": "string",
                     "description": "preferred username"
+                  },
+                  "country": {
+                    "type": "string",
+                    "description": "country infomation"
                   }
                 }
               }
@@ -890,6 +894,20 @@
                         }
                       },
                       "description": "payment information"
+                    },
+                    "consumable_info": {
+                      "required": ["export_remain_count"],
+                      "type": "object",
+                      "properties": {
+                        "export_remain_count": {
+                          "type": "string"
+                        },
+                        "product_id": {
+                          "type": "string",
+                          "description": "purchased product id"
+                        }
+                      },
+                      "description": "one time payment information"
                     }
                   }
                 }
@@ -1733,6 +1751,19 @@
           }
         }
       },
+      "SimpleResultResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "success or fail"
+          },
+          "result": {
+            "type": "string",
+            "description": "no sign up or email sign up or A or G"
+          }
+        }
+      },
       "SignUpResponse": {
         "type": "object",
         "properties": {
@@ -1743,23 +1774,6 @@
           "id": {
             "type": "string",
             "description": "guest mode uuid"
-          }
-        }
-      },
-      "ResultResponse": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "description": "success or fail"
-          },
-          "result": {
-            "type": "string",
-            "description": "return value"
-          },
-          "error_type": {
-            "type": "string",
-            "description": "error type when result is '0'"
           }
         }
       },
@@ -1799,6 +1813,23 @@
           "access_token": {
             "type": "string",
             "description": "not use (token for authorization)"
+          }
+        }
+      },
+      "ResultResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "success or fail"
+          },
+          "result": {
+            "type": "string",
+            "description": "return value"
+          },
+          "error_type": {
+            "type": "string",
+            "description": "error type when result is '0'"
           }
         }
       },
@@ -2066,6 +2097,20 @@
               }
             },
             "description": "payment information"
+          },
+          "consumable_info": {
+            "required": ["export_remain_count"],
+            "type": "object",
+            "properties": {
+              "export_remain_count": {
+                "type": "string"
+              },
+              "product_id": {
+                "type": "string",
+                "description": "purchased product id"
+              }
+            },
+            "description": "one time payment information"
           }
         }
       },
@@ -2197,6 +2242,10 @@
           "username": {
             "type": "string",
             "description": "preferred username"
+          },
+          "country": {
+            "type": "string",
+            "description": "country infomation"
           }
         }
       },
@@ -2634,7 +2683,21 @@
         },
         "description": "payment information"
       },
-      "PromoReponse": {
+      "GetPayResponsePayInfoConsumable": {
+        "required": ["export_remain_count"],
+        "type": "object",
+        "properties": {
+          "export_remain_count": {
+            "type": "string"
+          },
+          "product_id": {
+            "type": "string",
+            "description": "purchased product id"
+          }
+        },
+        "description": "one time payment information"
+      },
+      "PromoResponse": {
         "type": "object",
         "properties": {
           "message": {

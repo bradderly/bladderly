@@ -10,8 +10,8 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 enum AppLocale {
-  ko(text: 'Korean'),
-  en(text: 'English (United States)'),
+  ko(text: '한국어'),
+  en(text: 'English (US)'),
   ;
 
   const AppLocale({required this.text});

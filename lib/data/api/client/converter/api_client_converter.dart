@@ -84,5 +84,5 @@ final _jsonDecoder = _CustomJsonDecoder({
   GetPayResponse: GetPayResponse.fromJsonFactory,
   PostPayResponse: PostPayResponse.fromJsonFactory,
   SignUpResponse: SignUpResponse.fromJsonFactory,
-  PromoReponse: PromoReponse.fromJsonFactory,
+  PromoResponse: PromoResponse.fromJsonFactory,
 });

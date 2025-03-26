@@ -40,6 +40,7 @@ class MembershipMapper {
     return MembershipEntity()
       ..userId = localUserId
       ..remainCount = membership.remainCount
+      ..exportRemainCount = membership.exportRemainCount
       ..subscription = switch (membership.subscription) {
         final MembershipSubscription subscription => MembershipSubscriptionEntity()
           ..productId = subscription.product.id
