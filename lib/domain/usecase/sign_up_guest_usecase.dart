@@ -29,7 +29,7 @@ class SignUpGuestUsecase {
 
       if (yearOfBirth < 1901) return const Left(AgeRestrictionException.upperBound());
 
-      if (age <= 19) return const Left(AgeRestrictionException.lowerBound());
+      if (age < 19) return const Left(AgeRestrictionException.lowerBound());
 
       final user = await _authRepository.signUpGuest(
         gender: gender,
