@@ -2,7 +2,7 @@
 // Project imports:
 import 'package:bladderly/data/api/client/api_client.dart';
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
-import 'package:bladderly/data/isar/isar_client.dart';
+import 'package:bladderly/data/local/local_storage_client.dart';
 import 'package:bladderly/data/mapper/score_mapper.dart';
 import 'package:bladderly/domain/model/score.dart';
 import 'package:bladderly/domain/model/scores.dart';
@@ -14,17 +14,17 @@ import 'package:intl/intl.dart';
 @LazySingleton(as: ScoreRepository)
 class ScoreRepositoryImpl implements ScoreRepository {
   ScoreRepositoryImpl({
-    required IsarClient isarClient,
+    required LocalStorageClient localStorageClient,
     required ApiClient apiClient,
-  })  : _isarClient = isarClient,
+  })  : _localStorageClient = localStorageClient,
         _apiClient = apiClient;
 
-  final IsarClient _isarClient;
+  final LocalStorageClient _localStorageClient;
   final ApiClient _apiClient;
 
   @override
   Future<void> saveScores(Scores scores) {
-    return _isarClient
+    return _localStorageClient
         .saveScores(scores.map(ScoreMapper.toScoreEntity).toList())
         .then((histories) => Scores(list: histories.map(ScoreMapper.fromScoreEntity).toList()));
   }
@@ -57,13 +57,13 @@ class ScoreRepositoryImpl implements ScoreRepository {
 
   @override
   Stream<Scores> getScoresStream() {
-    return _isarClient
+    return _localStorageClient
         .getScoresStream()
         .map((scoreEntities) => Scores(list: scoreEntities.map(ScoreMapper.fromScoreEntity).toList()));
   }
 
   @override
   Future<Score> saveScore(Score score) {
-    return _isarClient.saveScore(ScoreMapper.toScoreEntity(score)).then(ScoreMapper.fromScoreEntity);
+    return _localStorageClient.saveScore(ScoreMapper.toScoreEntity(score)).then(ScoreMapper.fromScoreEntity);
   }
 }

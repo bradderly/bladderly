@@ -41,60 +41,60 @@ abstract class ApiClient extends ChopperService {
     );
   }
 
-  @Post(path: '/change-pw')
+  @POST(path: '/change-pw')
   Future<Response<SimpleResponse>> changePassword({
     @Body() required ChagePwRequest request,
   });
 
-  @Post(path: '/confirm-pw')
+  @POST(path: '/confirm-pw')
   Future<Response<SimpleResponse>> confirmPassword({
     @Body() required ConfirmPwRequest request,
   });
 
-  @Post(path: '/delete-account')
+  @POST(path: '/delete-account')
   Future<Response<SimpleResponse>> deleteAccount({
     @Body() required PostEmailRequest request,
   });
 
-  @Post(path: '/forgot-pw')
+  @POST(path: '/forgot-pw')
   Future<Response<SimpleResponse>> forgotPassword({
     @Body() required PostEmailRequest request,
   });
 
-  @Post(path: '/log-in')
+  @POST(path: '/log-in')
   Future<Response<LoginResponse>> logIn({
     @Body() required LoginRequest request,
   });
 
-  @Post(path: '/log-out')
+  @POST(path: '/log-out')
   Future<Response<SimpleResponse>> logOut({
     @Body() required Map<String, dynamic> request,
   });
 
-  @Post(path: '/sign-up')
+  @POST(path: '/sign-up')
   Future<Response<SignUpResponse>> signUp({
     @Body() required SignUpRequest request,
   });
 
-  @Get(path: '/check-promo')
+  @GET(path: '/check-promo')
   Future<Response<PromoResponse>> checkPromo({
     @Query('user_id') required String userId,
     @Query('code') required String code,
     @Query('device') required String os,
   });
 
-  @Get(path: '/get-pay-info')
+  @GET(path: '/get-pay-info')
   Future<Response<GetPayResponse>> getPayInfo({
     @Query('user_id') required String userId,
     @Query('device') required String device,
   });
 
-  @Post(path: '/post-pay-info')
+  @POST(path: '/post-pay-info')
   Future<Response<PostPayResponse>> checkPayment({
     @Body() required PaymentCheckRequest request,
   });
 
-  @Post(
+  @POST(
     path: '/audio-upload',
     headers: {'Content-Type': 'audio/m4a'},
   )
@@ -103,58 +103,58 @@ abstract class ApiClient extends ChopperService {
     @Body() required List<int> audioBytes,
   });
 
-  @Post(path: '/contact-us')
+  @POST(path: '/contact-us')
   Future<Response<SimpleResponse>> contactUs({
     @Body() required ContactUsRequest request,
   });
 
-  @Post(path: '/export-record')
+  @POST(path: '/export-record')
   Future<Response<SimpleResponse>> exportRecord({
     @Body() required ExportReportRequest request,
   });
 
-  @Get(path: '/get-all-records')
+  @GET(path: '/get-all-records')
   Future<Response<GetAllResultResponse>> getAllRecords({
     @Query('user_id') required String userId,
   });
 
-  @Get(path: '/get-result')
+  @GET(path: '/get-result')
   Future<Response<ResultResponse>> getResult({
     @Query('user_id') required String userId,
     @Query('rec_date') required String recDate,
   });
 
-  @Get(path: '/get-version')
+  @GET(path: '/get-version')
   Future<Response<GetVersionResponse>> getVersion({
     @Query('device') required String device,
   });
 
-  @Post(path: '/migrate-record')
+  @POST(path: '/migrate-record')
   Future<Response<SimpleResponse>> migrateRecord({
     @Body() required DataMigrationRequest request,
   });
 
-  @Post(path: '/report-purpose')
+  @POST(path: '/report-purpose')
   Future<Response<SimpleResponse>> reportPurpose({
     @Body() required DataExportSurveyRequest request,
   });
 
-  @Post(path: '/save-score')
+  @POST(path: '/save-score')
   Future<Response<SimpleResponse>> saveScore({
     @Body() required SaveSurveyRequest request,
   });
 
-  @Post(path: '/update-record')
+  @POST(path: '/update-record')
   Future<Response<SimpleResponse>> updateRecord({
     @Body() required RecordUpdateRequest request,
   });
 
-  @Post(path: '/update-user-info')
+  @POST(path: '/update-user-info')
   Future<Response<SimpleResponse>> updateUserName({
     @Body() required UpdateUserInfoRequest request,
   });
 
-  @Get(path: '/support-models')
+  @GET(path: '/support-models')
   Future<Response<GetSupportModelsResponse>> getSupportModels({
     @Query('device') required String os,
   });

@@ -1,16 +1,19 @@
 // Package imports:
+import 'dart:async';
+
 import 'package:chopper/chopper.dart';
 
-class ApiRequestInterceptor implements RequestInterceptor {
+class ApiRequestInterceptor implements Interceptor {
   const ApiRequestInterceptor();
+
   @override
-  Future<Request> onRequest(Request request) {
-    return Future.value(
-      request.copyWith(
+  FutureOr<Response<BodyType>> intercept<BodyType>(Chain<BodyType> chain) {
+    return chain.proceed(
+      chain.request.copyWith(
         headers: {
-          ...request.headers,
+          ...chain.request.headers,
           'x-api-key': '3rXDcDwBhc18isTzhlsZd8JnmYU4Plkp3pGf5hiN',
-          if (!request.uri.path.contains('audio-upload')) 'Content-Type': 'application/json',
+          if (!chain.request.uri.path.contains('audio-upload')) 'Content-Type': 'application/json',
         },
       ),
     );

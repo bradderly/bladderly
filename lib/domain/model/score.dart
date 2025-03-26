@@ -15,6 +15,8 @@ class Score extends Equatable {
   final ScoreStatus status;
   final List<int> answers;
 
+  String get key => '${type.name}-${date.millisecondsSinceEpoch}';
+
   int getScoreByAnswerIndex(int index) {
     if (type == ScoreType.IPSS && index == 7) return 0;
 

@@ -34,5 +34,6 @@ class SplashInitializationModel extends Equatable {
         splashTime,
         appConfig,
         device,
+        liveListen,
       ];
 }

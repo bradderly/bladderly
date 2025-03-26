@@ -1,6 +1,6 @@
 // Project imports:
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
-import 'package:bladderly/data/isar/schema/history_entity.dart';
+import 'package:bladderly/data/local/schema/history_entity.dart';
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/history_status.dart';
 import 'package:bladderly/domain/model/leakage_volume.dart';
@@ -9,6 +9,8 @@ class HistoryMapper {
   const HistoryMapper._();
 
   static History fromHistoryEntity(HistoryEntity entity) {
+    final status = HistoryStatus.values.byName(entity.status);
+
     if (entity.isIntake == true) {
       return IntakeHistory(
         id: entity.id,
@@ -16,7 +18,7 @@ class HistoryMapper {
         beverageType: entity.beverageType!,
         recordVolume: entity.recordVolume.toInt(),
         memo: entity.leakageMemo,
-        status: entity.status,
+        status: status,
         deletedAt: entity.deletedAt,
       );
     }
@@ -25,9 +27,9 @@ class HistoryMapper {
       return LeakageHistory(
         id: entity.id,
         recordTime: entity.recordTime,
-        leakageVolume: entity.leakageVolume!,
+        leakageVolume: LeakageVolume.values.byName(entity.leakageVolume!),
         memo: entity.leakageMemo,
-        status: entity.status,
+        status: status,
         deletedAt: entity.deletedAt,
       );
     }
@@ -40,9 +42,12 @@ class HistoryMapper {
       isManual: entity.isManual ?? false,
       isNocturia: entity.isNocturia ?? false,
       isLeakage: entity.isLeakage ?? false,
-      leakageVolume: entity.leakageVolume,
+      leakageVolume: switch (entity.leakageVolume) {
+        final String leakageVolume => LeakageVolume.values.byName(leakageVolume),
+        null => null,
+      },
       memo: entity.leakageMemo,
-      status: entity.status,
+      status: status,
       deletedAt: entity.deletedAt,
     );
   }
@@ -113,8 +118,8 @@ class HistoryMapper {
       ..isManual = history.isManual
       ..isNocturia = history.isNocturia
       ..isLeakage = history.isLeakage
-      ..leakageVolume = history.leakageVolume
-      ..status = history.status
+      ..leakageVolume = history.leakageVolume?.name
+      ..status = history.status.name
       ..deletedAt = history.deletedAt;
   }
 
@@ -125,7 +130,7 @@ class HistoryMapper {
       ..leakageMemo = history.memo
       ..beverageType = history.beverageType
       ..recordVolume = history.recordVolume.toDouble()
-      ..status = history.status
+      ..status = history.status.name
       ..isIntake = true
       ..deletedAt = history.deletedAt;
   }
@@ -136,8 +141,8 @@ class HistoryMapper {
       ..recordTime = history.recordTime
       ..leakageMemo = history.memo
       ..isLeakage = true
-      ..leakageVolume = history.leakageVolume
-      ..status = history.status
+      ..leakageVolume = history.leakageVolume.name
+      ..status = history.status.name
       ..recordVolume = 0.1
       ..deletedAt = history.deletedAt;
   }

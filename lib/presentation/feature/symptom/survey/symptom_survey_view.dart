@@ -33,7 +33,8 @@ class SymptomSurveyView extends StatefulWidget {
 class _SymptomSurveyViewState extends State<SymptomSurveyView> {
   void onPreviousQuestion() {
     if (context.read<SymptomSurveyFormCubit>().state.index < 1) {
-      return context.pop();
+      context.canPop();
+      return;
     }
 
     context.read<SymptomSurveyFormCubit>().previousQuestion();

@@ -1,7 +1,8 @@
 // Dart imports:
 // Flutter imports:
 // Project imports:
-import 'package:bladderly/core/di/di.dart';
+import 'dart:async';
+
 import 'package:bladderly/core/network_checker/network_checker.dart';
 import 'package:bladderly/domain/model/unit.dart';
 import 'package:bladderly/presentation/common/bloc/app_config_bloc.dart';
@@ -97,11 +98,16 @@ class MenuView extends StatelessWidget {
                       SettingsItem(
                         icon: Icons.phone,
                         title: 'Contact Us'.tr(context),
-                        onTap: () async => {
-                          if (!await networkChecker.isConnected)
-                            {networkChecker.showNetworkAlert(context)}
-                          else
-                            {const ContactUsRoute().go(context)},
+                        onTap: () async {
+                          final isConnected = await networkChecker.isConnected;
+
+                          if (!context.mounted) return;
+
+                          if (!isConnected) {
+                            unawaited(networkChecker.showNetworkAlert(context));
+                          } else {
+                            const ContactUsRoute().go(context);
+                          }
                         },
                       ),
                       SettingsItem(

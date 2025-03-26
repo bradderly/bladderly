@@ -5,8 +5,8 @@ import 'dart:convert';
 import 'package:bladderly/core/package_device_info/src/model/device_info_model.dart';
 import 'package:bladderly/data/api/client/api_client.dart';
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
-import 'package:bladderly/data/isar/isar_client.dart';
-import 'package:bladderly/data/isar/schema/apple_credential_entity.dart';
+import 'package:bladderly/data/local/local_storage_client.dart';
+import 'package:bladderly/data/local/schema/apple_credential_entity.dart';
 import 'package:bladderly/data/mapper/user_mapper.dart';
 import 'package:bladderly/domain/exception/invalid_user_exception.dart';
 import 'package:bladderly/domain/exception/not_found_apple_credential_exception.dart';
@@ -28,14 +28,14 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl({
     required DeviceInfoModel deviceInfoModel,
-    required IsarClient isarClient,
+    required LocalStorageClient localStorageClient,
     required ApiClient apiClient,
   })  : _deviceInfoModel = deviceInfoModel,
-        _isarClient = isarClient,
+        _localStorageClient = localStorageClient,
         _apiClient = apiClient;
 
   final DeviceInfoModel _deviceInfoModel;
-  final IsarClient _isarClient;
+  final LocalStorageClient _localStorageClient;
   final ApiClient _apiClient;
 
   @override
@@ -179,7 +179,7 @@ class AuthRepositoryImpl implements AuthRepository {
     final isFirstSignin = email != null;
 
     if (isFirstSignin) {
-      return _isarClient
+      return _localStorageClient
           .saveAppleCredential(
             AppleCredentialEntity()
               ..userIdentifier = userIdentifier
@@ -188,7 +188,7 @@ class AuthRepositoryImpl implements AuthRepository {
           .email;
     }
 
-    final entity = _isarClient.getAppleCredentialOrNullByUserIdentifier(userIdentifier);
+    final entity = _localStorageClient.getAppleCredentialOrNullByUserIdentifier(userIdentifier);
 
     return entity?.email ?? (throw const NotFoundAppleCredentialException(message: 'Apple Credential not found'));
   }
@@ -244,7 +244,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   void _clearUserFromLocal() {
-    _isarClient.clearAll();
+    _localStorageClient.clearAll();
   }
 
   @override

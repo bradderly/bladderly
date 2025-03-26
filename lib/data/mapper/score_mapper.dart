@@ -1,6 +1,6 @@
 // Project imports:
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
-import 'package:bladderly/data/isar/schema/score_entity.dart';
+import 'package:bladderly/data/local/schema/score_entity.dart';
 import 'package:bladderly/domain/model/score.dart';
 import 'package:bladderly/domain/model/score_status.dart';
 import 'package:bladderly/domain/model/score_type.dart';
@@ -21,8 +21,9 @@ class ScoreMapper {
     return ScoreEntity()
       ..date = score.date
       ..name = score.type.name
+      ..uniqueKey = score.key
       ..scorevalue = score.answers
-      ..status = score.status;
+      ..status = score.status.name;
   }
 
   static Score fromScoreEntity(ScoreEntity entity) {
@@ -30,7 +31,7 @@ class ScoreMapper {
       date: entity.date,
       type: ScoreType.values.byName(entity.name),
       answers: entity.scorevalue,
-      status: entity.status,
+      status: ScoreStatus.values.byName(entity.status),
     );
   }
 }

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:bladderly/data/api/client/api_client.dart';
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
-import 'package:bladderly/data/isar/isar_client.dart';
+import 'package:bladderly/data/local/local_storage_client.dart';
 import 'package:bladderly/data/mapper/membership_mapper.dart';
 import 'package:bladderly/data/mapper/user_mapper.dart';
 import 'package:bladderly/domain/model/membership.dart';
@@ -14,12 +14,12 @@ import 'package:injectable/injectable.dart';
 class UserRepositoryImpl implements UserRepository {
   UserRepositoryImpl({
     required ApiClient apiClient,
-    required IsarClient isarClient,
+    required LocalStorageClient localStorageClient,
   })  : _apiClient = apiClient,
-        _isarClient = isarClient;
+        _localStorageClient = localStorageClient;
 
   final ApiClient _apiClient;
-  final IsarClient _isarClient;
+  final LocalStorageClient _localStorageClient;
 
   @override
   Future<String> changeName({
@@ -40,20 +40,20 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   User? getUserOrNullByUserId(String userId) {
-    final entity = _isarClient.getUserOrNullByUserId(userId);
+    final entity = _localStorageClient.getUserOrNullByUserId(userId);
     return entity == null ? null : UserMapper.fromUserEntity(entity);
   }
 
   @override
   User saveUser(User user) {
-    final entity = _isarClient.saveUser(UserMapper.toUserEntity(user));
+    final entity = _localStorageClient.saveUser(UserMapper.toUserEntity(user));
 
     return UserMapper.fromUserEntity(entity);
   }
 
   @override
   Stream<User?> get userStream {
-    return _isarClient.userStream.map((entity) => entity == null ? null : UserMapper.fromUserEntity(entity));
+    return _localStorageClient.userStream.map((entity) => entity == null ? null : UserMapper.fromUserEntity(entity));
   }
 
   @override
@@ -77,7 +77,7 @@ class UserRepositoryImpl implements UserRepository {
       membership: membership,
     );
 
-    return MembershipMapper.fromMembershipEntity(_isarClient.saveMembership(entity));
+    return MembershipMapper.fromMembershipEntity(_localStorageClient.saveMembership(entity));
   }
 
   @override
@@ -85,24 +85,24 @@ class UserRepositoryImpl implements UserRepository {
     required String userId,
     required User user,
   }) {
-    return UserMapper.fromUserEntity(_isarClient.migrateUser(userId, UserMapper.toUserEntity(user)));
+    return UserMapper.fromUserEntity(_localStorageClient.migrateUser(userId, UserMapper.toUserEntity(user)));
   }
 
   @override
   Stream<Membership?> getMembershipStream({
     required int localUserId,
   }) {
-    return _isarClient
+    return _localStorageClient
         .getMembershipStreamByUserId(localUserId)
         .map((entity) => entity == null ? null : MembershipMapper.fromMembershipEntity(entity));
   }
 
   @override
-  int? getLocalUserIdByUserId(String userId) => _isarClient.getUserOrNullByUserId(userId)?.id;
+  int? getLocalUserIdByUserId(String userId) => _localStorageClient.getUserOrNullByUserId(userId)?.id;
 
   @override
   Membership? getMembershipOrNullByLocalUserId(int localUserId) {
-    final entity = _isarClient.getMembershipOrNullByUserId(localUserId);
+    final entity = _localStorageClient.getMembershipOrNullByUserId(localUserId);
     return entity == null ? null : MembershipMapper.fromMembershipEntity(entity);
   }
 

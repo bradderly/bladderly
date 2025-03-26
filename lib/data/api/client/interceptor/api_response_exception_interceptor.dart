@@ -12,31 +12,8 @@ import 'package:bladderly/domain/exception/reset_social_user_password_exception.
 import 'package:chopper/chopper.dart';
 import 'package:http/http.dart' as http;
 
-class ApiResponseExceptionInterceptor implements ResponseInterceptor {
+class ApiResponseExceptionInterceptor implements Interceptor {
   const ApiResponseExceptionInterceptor();
-  @override
-  FutureOr<Response> onResponse(Response response) {
-    if (response.base.request?.url.path.contains('confirm-pw') == true &&
-        response.bodyString.contains('${const CodeMismatchException().runtimeType}')) {
-      throw const CodeMismatchException();
-    }
-
-    if (response.base.request?.url.path.contains('forgot-pw') == true && response.statusCode != 200) {
-      final message = SimpleResponse.fromJson(jsonDecode(response.bodyString) as Map<String, dynamic>).message;
-      throw ResetSocialUserPasswordException.fromMessage(message!);
-    }
-
-    if (response.base.request?.url.path.contains('change-pw') == true && response.statusCode == 401) {
-      throw const InvalidUserException.fromChangePw();
-    }
-
-    if (response.body == null && response is! Response<LoginResponse>) {
-      _logResponse(response);
-      throw const ApiResponseBodyEmptyException();
-    }
-
-    return response;
-  }
 
   void _logResponse(Response response) {
     final base = response.base;
@@ -78,5 +55,31 @@ class ApiResponseExceptionInterceptor implements ResponseInterceptor {
     }
 
     chopperLogger.info(ChopperLogRecord('<-- END HTTP', response: response));
+  }
+
+  @override
+  FutureOr<Response<BodyType>> intercept<BodyType>(Chain<BodyType> chain) async {
+    final response = await chain.proceed(chain.request);
+
+    if (response.base.request?.url.path.contains('confirm-pw') == true &&
+        response.bodyString.contains('${const CodeMismatchException().runtimeType}')) {
+      throw const CodeMismatchException();
+    }
+
+    if (response.base.request?.url.path.contains('forgot-pw') == true && response.statusCode != 200) {
+      final message = SimpleResponse.fromJson(jsonDecode(response.bodyString) as Map<String, dynamic>).message;
+      throw ResetSocialUserPasswordException.fromMessage(message!);
+    }
+
+    if (response.base.request?.url.path.contains('change-pw') == true && response.statusCode == 401) {
+      throw const InvalidUserException.fromChangePw();
+    }
+
+    if (response.body == null && response is! Response<LoginResponse>) {
+      _logResponse(response);
+      throw const ApiResponseBodyEmptyException();
+    }
+
+    return response;
   }
 }

@@ -4,8 +4,8 @@ import 'dart:io';
 // Project imports:
 import 'package:bladderly/data/api/client/api_client.dart';
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
-import 'package:bladderly/data/isar/isar_client.dart';
-import 'package:bladderly/data/isar/schema/history_entity.dart';
+import 'package:bladderly/data/local/local_storage_client.dart';
+import 'package:bladderly/data/local/schema/history_entity.dart';
 import 'package:bladderly/data/mapper/history_mapper.dart';
 import 'package:bladderly/domain/exception/get_history_result_failure_exception.dart';
 import 'package:bladderly/domain/model/histories.dart';
@@ -19,40 +19,41 @@ import 'package:intl/intl.dart';
 @LazySingleton(as: HistoryRepository)
 class HistoryRepositoryImpl implements HistoryRepository {
   const HistoryRepositoryImpl({
-    required IsarClient isarClient,
+    required LocalStorageClient localStorageClient,
     required ApiClient apiClient,
-  })  : _isarClient = isarClient,
+  })  : _localStorageClient = localStorageClient,
         _apiClient = apiClient;
 
-  final IsarClient _isarClient;
+  final LocalStorageClient _localStorageClient;
   final ApiClient _apiClient;
 
   @override
   Stream<Histories> getHistoriesStream({
     required DateTime recordDate,
   }) {
-    return _isarClient
+    return _localStorageClient
         .getHistoriesStreamByRecordDate(recordDate: recordDate)
         .map((entities) => Histories(list: entities.map(HistoryMapper.fromHistoryEntity).toList()));
   }
 
   @override
   Future<T> saveHistory<T extends History>(T history) async {
-    final id = await _isarClient.saveHistory(HistoryMapper.toHistoryEntity(history)).then((entity) => entity.id);
+    final id =
+        await _localStorageClient.saveHistory(HistoryMapper.toHistoryEntity(history)).then((entity) => entity.id);
 
     return history.setId(id) as T;
   }
 
   @override
   Future<Histories> saveHistories(Histories<History> histories) {
-    return _isarClient
+    return _localStorageClient
         .saveHistories(histories.map(HistoryMapper.toHistoryEntity).toList())
         .then((histories) => Histories(list: histories.map(HistoryMapper.fromHistoryEntity).toList()));
   }
 
   @override
   Stream<List<DateTime>> getHistoryDatesStream() {
-    return _isarClient.getHistoryDatesStream();
+    return _localStorageClient.getHistoryDatesStream();
   }
 
   @override
@@ -101,7 +102,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
 
   @override
   History? getHistoryById(int id) {
-    if (_isarClient.getHistoryOrNullById(id) case final HistoryEntity historyEntity) {
+    if (_localStorageClient.getHistoryOrNullById(id) case final HistoryEntity historyEntity) {
       return HistoryMapper.fromHistoryEntity(historyEntity);
     }
 
@@ -110,11 +111,11 @@ class HistoryRepositoryImpl implements HistoryRepository {
 
   @override
   Future<void> deleteHistoryById(int id) async {
-    final history = _isarClient.getHistoryOrNullById(id);
+    final history = _localStorageClient.getHistoryOrNullById(id);
 
     if (history == null) return;
 
-    return _isarClient.removeHistoryByRecordTime(recordTime: history.recordTime);
+    return _localStorageClient.removeHistoryByRecordTime(recordTime: history.recordTime);
   }
 
   @override
@@ -180,7 +181,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
 
   @override
   Future<Histories<History>> getPendingHistories() {
-    return _isarClient
+    return _localStorageClient
         .getPendingHistories()
         .then((histories) => Histories(list: histories.map(HistoryMapper.fromHistoryEntity).toList()));
   }
@@ -214,14 +215,14 @@ class HistoryRepositoryImpl implements HistoryRepository {
 
   @override
   Future<Histories<VoidingHistory>> getProcessingHistories() async {
-    final entities = await _isarClient.getProcessingHistories();
+    final entities = await _localStorageClient.getProcessingHistories();
 
     return Histories(list: entities.map(HistoryMapper.fromHistoryEntity).whereType<VoidingHistory>().toList());
   }
 
   @override
   History? getHistoryByRecordTime(DateTime recordTime) {
-    if (_isarClient.getHistoryOrNullByRecordTime(recordTime) case final HistoryEntity historyEntity) {
+    if (_localStorageClient.getHistoryOrNullByRecordTime(recordTime) case final HistoryEntity historyEntity) {
       return HistoryMapper.fromHistoryEntity(historyEntity);
     }
 

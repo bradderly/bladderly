@@ -85,7 +85,7 @@ class _ExportSurveyViewState extends State<ExportSurveyView> {
                         const Gap(24),
                         ExportSurveyCheckBoxWidget(
                           onTap: () => context.read<ExportSurveyBloc>().add(
-                              const ExportSurveySelectReason(reasonModel: ExportReportReasonModel.useForPersonal())),
+                              const ExportSurveySelectReason(reasonModel: ExportReportReasonModel.useForPersonal()),),
                           isChecked: reasonModel is ExportReportUseForPersonalReason,
                           child: Container(
                             alignment: Alignment.centerLeft,

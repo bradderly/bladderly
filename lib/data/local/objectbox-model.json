@@ -1,0 +1,317 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:8187010401029400856",
+      "lastPropertyId": "3:7596665728490060672",
+      "name": "AppleCredentialEntity",
+      "properties": [
+        {
+          "id": "1:3275655956266439951",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7817461375169328328",
+          "name": "userIdentifier",
+          "type": 9,
+          "flags": 34848,
+          "indexId": "1:6342267478977368781"
+        },
+        {
+          "id": "3:7596665728490060672",
+          "name": "email",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:6826576045611876309",
+      "lastPropertyId": "13:5339312238848644353",
+      "name": "HistoryEntity",
+      "properties": [
+        {
+          "id": "1:6916395767582167205",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8350173086271798239",
+          "name": "recordTime",
+          "type": 10,
+          "flags": 32808,
+          "indexId": "2:6453949884165940002"
+        },
+        {
+          "id": "3:3866370083558852430",
+          "name": "isIntake",
+          "type": 1
+        },
+        {
+          "id": "4:6658301710498696105",
+          "name": "recordUrgency",
+          "type": 6
+        },
+        {
+          "id": "5:6566623900341738204",
+          "name": "isManual",
+          "type": 1
+        },
+        {
+          "id": "6:2692859902708698601",
+          "name": "recordVolume",
+          "type": 8
+        },
+        {
+          "id": "7:1768687941915719323",
+          "name": "isNocturia",
+          "type": 1
+        },
+        {
+          "id": "8:4769211292398366842",
+          "name": "isLeakage",
+          "type": 1
+        },
+        {
+          "id": "9:442115518293817648",
+          "name": "leakageVolume",
+          "type": 9
+        },
+        {
+          "id": "10:1524142773617342068",
+          "name": "beverageType",
+          "type": 9
+        },
+        {
+          "id": "11:3913089244636869845",
+          "name": "leakageMemo",
+          "type": 9
+        },
+        {
+          "id": "12:6030780866378675944",
+          "name": "status",
+          "type": 9
+        },
+        {
+          "id": "13:5339312238848644353",
+          "name": "deletedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:5832742523961373315",
+      "lastPropertyId": "10:4713086816465214604",
+      "name": "MembershipEntity",
+      "properties": [
+        {
+          "id": "1:7636995319120159579",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "3:4728916509051331088",
+          "name": "remainCount",
+          "type": 6
+        },
+        {
+          "id": "4:7620069142420024903",
+          "name": "exportRemainCount",
+          "type": 6
+        },
+        {
+          "id": "5:1117321873479669219",
+          "name": "productId",
+          "type": 9
+        },
+        {
+          "id": "6:1877174592170163085",
+          "name": "startDate",
+          "type": 10
+        },
+        {
+          "id": "7:8693716805262557628",
+          "name": "endDate",
+          "type": 10
+        },
+        {
+          "id": "8:4828228869891638730",
+          "name": "autoRenewal",
+          "type": 1
+        },
+        {
+          "id": "10:4713086816465214604",
+          "name": "userId",
+          "type": 6,
+          "flags": 32808,
+          "indexId": "8:4827861051501959664"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:702256331310547055",
+      "lastPropertyId": "3:6145926072116098059",
+      "name": "RateTriggerEntity",
+      "properties": [
+        {
+          "id": "1:3361790928751870951",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7115856287255081257",
+          "name": "count",
+          "type": 6
+        },
+        {
+          "id": "3:6145926072116098059",
+          "name": "attemptNumber",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:8911905433211763167",
+      "lastPropertyId": "6:3909448771994869207",
+      "name": "ScoreEntity",
+      "properties": [
+        {
+          "id": "1:7282992225013591915",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2147735174614827951",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:8697259098861891029",
+          "name": "date",
+          "type": 10
+        },
+        {
+          "id": "4:4870117198374241813",
+          "name": "scorevalue",
+          "type": 27
+        },
+        {
+          "id": "5:568264093759627464",
+          "name": "status",
+          "type": 9
+        },
+        {
+          "id": "6:3909448771994869207",
+          "name": "uniqueKey",
+          "type": 9,
+          "flags": 34848,
+          "indexId": "6:4871551848323713691"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "7:3042580355393526555",
+      "lastPropertyId": "7:2383857418707488353",
+      "name": "UserEntity",
+      "properties": [
+        {
+          "id": "1:4538169825680139664",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4247926405744122967",
+          "name": "userId",
+          "type": 9,
+          "flags": 34848,
+          "indexId": "5:5611543721426468383"
+        },
+        {
+          "id": "3:2893497583786877616",
+          "name": "gender",
+          "type": 9
+        },
+        {
+          "id": "4:4991821490148203237",
+          "name": "yearOfBirth",
+          "type": 6
+        },
+        {
+          "id": "5:2900562404440978726",
+          "name": "signUpMethod",
+          "type": 9
+        },
+        {
+          "id": "6:7837517356714864445",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "7:2383857418707488353",
+          "name": "email",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "8:7643709872489903864",
+      "lastPropertyId": "2:8661641125913901747",
+      "name": "HistoryDateEntity",
+      "properties": [
+        {
+          "id": "1:7024781726475174657",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8661641125913901747",
+          "name": "recordDate",
+          "type": 10,
+          "flags": 32808,
+          "indexId": "9:7543630939029296865"
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "8:7643709872489903864",
+  "lastIndexId": "9:7543630939029296865",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [
+    6762742270446030271
+  ],
+  "retiredIndexUids": [
+    1896153556408754866,
+    6258933298753504587,
+    5361533954515592141
+  ],
+  "retiredPropertyUids": [
+    4507617763909658175,
+    9058077705891357348,
+    1777485192179477397,
+    3018187468679669760,
+    7454861509650008240,
+    3086776235000141836,
+    5232047253113638988
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}

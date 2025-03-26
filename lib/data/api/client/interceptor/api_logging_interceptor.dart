@@ -11,12 +11,13 @@ class ApiLoggingInterceptor extends HttpLoggingInterceptor {
   });
 
   @override
-  FutureOr<Request> onRequest(Request request) {
+  @override
+  FutureOr<Response<BodyType>> intercept<BodyType>(Chain<BodyType> chain) {
     // 파일 업로드 요청 시 로그 출력 제외
-    if (request.uri.path.contains('audio-upload')) {
-      return request;
+    if (chain.request.uri.path.contains('audio-upload')) {
+      return chain.proceed(chain.request);
     }
 
-    return super.onRequest(request);
+    return super.intercept(chain);
   }
 }

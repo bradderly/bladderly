@@ -1,8 +1,11 @@
 // Flutter imports:
 
 // Project imports:
+import 'package:bladderly/core/di/di.dart';
+import 'package:bladderly/core/rate_checker/rating_helper.dart';
 import 'package:bladderly/presentation/common/bloc/history_result_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
+import 'package:bladderly/presentation/common/cubit/diary_date_cubit.dart';
 import 'package:bladderly/presentation/feature/diary/diary/cubit/diary_cubit.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_history_status_model.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_tab_scroll_section_model.dart';
@@ -22,9 +25,11 @@ class DiaryView extends StatefulWidget {
   const DiaryView({
     super.key,
     required this.diaryTabScrollSectionModel,
+    required this.checkRate,
   });
 
   final DiaryTabScrollSectionModel? diaryTabScrollSectionModel;
+  final bool checkRate;
 
   @override
   State<DiaryView> createState() => _DiaryViewState();
@@ -45,6 +50,10 @@ class _DiaryViewState extends State<DiaryView> with AutomaticKeepAliveClientMixi
 
     WidgetsBinding.instance.addObserver(this);
 
+    if (widget.checkRate) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => getIt<RatingHelper>().checkAndShowRateDialog(context));
+    }
+
     if (widget.diaryTabScrollSectionModel case final DiaryTabScrollSectionModel diaryTabScrollSectionModel) {
       scrollToSection(diaryTabScrollSectionModel);
     }
@@ -57,6 +66,10 @@ class _DiaryViewState extends State<DiaryView> with AutomaticKeepAliveClientMixi
     if (widget.diaryTabScrollSectionModel case final DiaryTabScrollSectionModel diaryTabScrollSectionModel
         when widget.diaryTabScrollSectionModel != oldWidget.diaryTabScrollSectionModel) {
       scrollToSection(diaryTabScrollSectionModel);
+    }
+
+    if (widget.checkRate) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => getIt<RatingHelper>().checkAndShowRateDialog(context));
     }
   }
 
@@ -115,52 +128,54 @@ class _DiaryViewState extends State<DiaryView> with AutomaticKeepAliveClientMixi
   Widget build(BuildContext context) {
     super.build(context);
 
-    return ScrollsToTop(
-      onScrollsToTop: (_) => scrollController.animateTo(
-        0,
-        duration: const Duration(milliseconds: 1000),
-        curve: Curves.easeOutCirc,
-      ),
-      child: Scaffold(
-        appBar: DiaryAppBar(
-          onTapExport: () => const ExportCalendarRoute().push<void>(context),
-          onChanged: onDateChanged,
+    return BlocListener<DiaryDateCubit, DateTime>(
+      listener: (_, state) => onDateChanged(state),
+      child: ScrollsToTop(
+        onScrollsToTop: (_) => scrollController.animateTo(
+          0,
+          duration: const Duration(milliseconds: 1000),
+          curve: Curves.easeOutCirc,
         ),
-        body: SafeArea(
-          child: ListView(
-            controller: scrollController,
-            padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 61),
-            children: [
-              BlocBuilder<DiaryCubit, DiaryState>(
-                buildWhen: (prev, curr) =>
-                    prev.diaryIntakeSummaryModel != curr.diaryIntakeSummaryModel ||
-                    prev.diaryVoidingSummaryModel != curr.diaryVoidingSummaryModel,
-                builder: (context, state) => DiaryTodaySummaryWidget(
-                  voidingSummaryKey: voidingSummaryKey,
-                  voidingSummaryExpandController: voidingSummaryExpandController,
-                  diaryVoidingSummaryModel: state.diaryVoidingSummaryModel,
-                  intakeSummaryKey: intakeSummaryKey,
-                  intakeSummaryExpandController: intakeSummaryExpandController,
-                  diaryIntakeSummaryModel: state.diaryIntakeSummaryModel,
+        child: Scaffold(
+          appBar: DiaryAppBar(
+            onTapExport: () => const ExportCalendarRoute().push<void>(context),
+          ),
+          body: SafeArea(
+            child: ListView(
+              controller: scrollController,
+              padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 61),
+              children: [
+                BlocBuilder<DiaryCubit, DiaryState>(
+                  buildWhen: (prev, curr) =>
+                      prev.diaryIntakeSummaryModel != curr.diaryIntakeSummaryModel ||
+                      prev.diaryVoidingSummaryModel != curr.diaryVoidingSummaryModel,
+                  builder: (context, state) => DiaryTodaySummaryWidget(
+                    voidingSummaryKey: voidingSummaryKey,
+                    voidingSummaryExpandController: voidingSummaryExpandController,
+                    diaryVoidingSummaryModel: state.diaryVoidingSummaryModel,
+                    intakeSummaryKey: intakeSummaryKey,
+                    intakeSummaryExpandController: intakeSummaryExpandController,
+                    diaryIntakeSummaryModel: state.diaryIntakeSummaryModel,
+                  ),
                 ),
-              ),
-              const Gap(37),
-              BlocBuilder<DiaryCubit, DiaryState>(
-                builder: (context, state) => DiaryHistoriesWidget(
-                  onTapHistory: (diaryHistoryModel) => switch (diaryHistoryModel.status) {
-                    DiaryHistoryStatusModel.failed => context.read<HistoryResultBloc>().add(
-                          HistoryResultRefresh(
-                            userId: context.read<UserBloc>().state.userModelOrThrowException.id,
-                            historyId: diaryHistoryModel.id,
+                const Gap(37),
+                BlocBuilder<DiaryCubit, DiaryState>(
+                  builder: (context, state) => DiaryHistoriesWidget(
+                    onTapHistory: (diaryHistoryModel) => switch (diaryHistoryModel.status) {
+                      DiaryHistoryStatusModel.failed => context.read<HistoryResultBloc>().add(
+                            HistoryResultRefresh(
+                              userId: context.read<UserBloc>().state.userModelOrThrowException.id,
+                              historyId: diaryHistoryModel.id,
+                            ),
                           ),
-                        ),
-                    DiaryHistoryStatusModel.processing => () {},
-                    _ => DetailedListRoute(historyId: diaryHistoryModel.id, date: state.dateTime).go(context),
-                  },
-                  diaryHistoryModels: state.diaryHistoryModels,
+                      DiaryHistoryStatusModel.processing => () {},
+                      _ => DetailedListRoute(historyId: diaryHistoryModel.id, date: state.dateTime).go(context),
+                    },
+                    diaryHistoryModels: state.diaryHistoryModels,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

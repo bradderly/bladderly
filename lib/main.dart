@@ -19,7 +19,8 @@ Future<void> main() async {
   await Future.wait(
     [
       configureDependencies(),
-      HydratedStorage.build(storageDirectory: await getApplicationDocumentsDirectory())
+      getApplicationDocumentsDirectory()
+          .then((directory) => HydratedStorage.build(storageDirectory: HydratedStorageDirectory(directory.path)))
           .then((value) => HydratedBloc.storage = value),
       FlutterLocalization.instance.ensureInitialized(),
       Firebase.initializeApp(),

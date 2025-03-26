@@ -21,11 +21,9 @@ class DiaryAppBar extends StatefulWidget implements PreferredSizeWidget {
   const DiaryAppBar({
     super.key,
     required this.onTapExport,
-    required this.onChanged,
   });
 
   final VoidCallback onTapExport;
-  final void Function(DateTime) onChanged;
 
   @override
   State<DiaryAppBar> createState() => _DiaryAppBarState();
@@ -48,11 +46,6 @@ class _DiaryAppBarState extends State<DiaryAppBar> {
   void dispose() {
     scrollController.dispose();
     super.dispose();
-  }
-
-  void onTap(DateTime date) {
-    context.read<DiaryDateCubit>().changeDate(date);
-    widget.onChanged(date);
   }
 
   void scrollToIndex(int index, {bool jumpTo = false}) {
@@ -163,7 +156,6 @@ class _DiaryAppBarState extends State<DiaryAppBar> {
 
                                 if (selectedDate != date) {
                                   context.read<DiaryDateCubit>().changeDate(date);
-                                  widget.onChanged(date);
                                 }
                               }
 
@@ -206,7 +198,7 @@ class _DiaryAppBarState extends State<DiaryAppBar> {
   }) {
     return GestureDetector(
       key: ValueKey(date),
-      onTap: isOutdated ? null : () => onTap(date),
+      onTap: isOutdated ? null : () => context.read<DiaryDateCubit>().changeDate(date),
       child: Container(
         width: itemExtent,
         color: Colors.transparent,

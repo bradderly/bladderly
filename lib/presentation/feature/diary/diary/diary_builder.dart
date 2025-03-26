@@ -1,10 +1,4 @@
 // Flutter imports:
-import 'package:bladderly/core/rate_checker/rating_helper.dart';
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 // Project imports:
 import 'package:bladderly/core/di/di.dart';
 import 'package:bladderly/domain/usecase/get_histories_stream_usecase.dart';
@@ -13,6 +7,9 @@ import 'package:bladderly/presentation/feature/diary/diary/cubit/diary_cubit.dar
 import 'package:bladderly/presentation/feature/diary/diary/cubit/diary_history_dates_cubit.dart';
 import 'package:bladderly/presentation/feature/diary/diary/diary_view.dart';
 import 'package:bladderly/presentation/feature/diary/diary/model/diary_tab_scroll_section_model.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DiaryBuilder extends StatelessWidget {
   const DiaryBuilder({
@@ -26,10 +23,6 @@ class DiaryBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (checkRate) {
-      getIt<RatingHelper>().checkAndShowRateDialog(context);
-    }
-
     return MultiBlocProvider(
       providers: [
         BlocProvider<DiaryCubit>(
@@ -43,7 +36,10 @@ class DiaryBuilder extends StatelessWidget {
               DiaryHistoryDatesCubit(getHistoryDatesStreamUsecase: getIt<GetHistoryDatesStreamUsecase>())..subscribe(),
         ),
       ],
-      child: DiaryView(diaryTabScrollSectionModel: diaryTabScrollSectionModel),
+      child: DiaryView(
+        diaryTabScrollSectionModel: diaryTabScrollSectionModel,
+        checkRate: checkRate,
+      ),
     );
   }
 }

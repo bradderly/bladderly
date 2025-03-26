@@ -1,19 +1,31 @@
 import 'package:bladderly/core/di/di.dart';
-import 'package:bladderly/data/isar/isar_client.dart';
+import 'package:bladderly/data/local/local_storage_client.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 
-@lazySingleton
+@module
+abstract class RatingHelperModule {
+  @lazySingleton
+  @preResolve
+  Future<RatingHelper> getRatingHelper() => RatingHelper._create();
+}
+
 class RatingHelper {
-  void init() {
-    _rateMyApp.init();
+  const RatingHelper({
+    required RateMyApp rateMyApp,
+  }) : _rateMyApp = rateMyApp;
+
+  final RateMyApp _rateMyApp;
+
+  static Future<RatingHelper> _create() {
+    final rateMyApp = RateMyApp(minDays: 0, minLaunches: 2, remindDays: 2, remindLaunches: 0);
+
+    return rateMyApp.init().then((_) => RatingHelper(rateMyApp: rateMyApp));
   }
 
-  static final RateMyApp _rateMyApp = RateMyApp(minDays: 0, minLaunches: 2, remindDays: 2, remindLaunches: 0);
-
   Future<void> checkAndShowRateDialog(BuildContext context) async {
-    final isar = getIt<IsarClient>();
+    final isar = getIt<LocalStorageClient>();
     final rateTrigger = await isar.getRateTrigger();
     rateTrigger.count++;
 

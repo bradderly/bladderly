@@ -32,8 +32,10 @@ class _NetworkCheckerImpl implements NetworkChecker {
       .catchError((_) => false);
 
   @override
-  Future<void> showNetworkAlert(BuildContext context,
-      [DomainException exception = const NetworkNotConnectedException()]) {
+  Future<void> showNetworkAlert(
+    BuildContext context, [
+    DomainException exception = const NetworkNotConnectedException(),
+  ]) {
     return CommonMessageModal.showFromDominException<void>(
       context,
       onTap: context.pop,
