@@ -52,38 +52,42 @@ class _ProfileNameInputFieldState extends State<ProfileNameInputField> {
               color: context.colorTheme.neutral.shade6,
             ),
           ),
-          Container(
-            padding: const EdgeInsets.only(bottom: 5),
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(color: context.colorTheme.neutral.shade5),
+          BlocSelector<UserBloc, UserState, bool>(
+            selector: (state) => state.userModel is! RegularUserModel,
+            builder: (context, isGuest) => Container(
+              padding: const EdgeInsets.only(bottom: 5),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: isGuest ? Colors.transparent : context.colorTheme.neutral.shade5,
+                  ),
+                ),
               ),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: BlocSelector<UserBloc, UserState, bool>(
-                    selector: (state) => state.userModel is! RegularUserModel,
-                    builder: (context, isGuest) => TextFormField(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
                       onChanged: (value) => this.value = value,
                       controller: _textEditingController,
                       focusNode: _focusNode,
+                      enabled: !isGuest,
                       style: context.textStyleTheme.b16Medium.copyWith(color: context.colorTheme.neutral.shade10),
-                      readOnly: isGuest,
                       decoration: const InputDecoration(
                         isDense: true,
                         border: InputBorder.none,
                       ),
                     ),
                   ),
-                ),
-                const Gap(16),
-                GestureDetector(
-                  onTap: () => _textEditingController.text = '',
-                  child: Assets.icon.icExportClose
-                      .svg(colorFilter: ColorFilter.mode(context.colorTheme.neutral.shade6, BlendMode.srcIn)),
-                ),
-              ],
+                  if (!isGuest) ...[
+                    const Gap(16),
+                    GestureDetector(
+                      onTap: () => _textEditingController.text = '',
+                      child: Assets.icon.icExportClose
+                          .svg(colorFilter: ColorFilter.mode(context.colorTheme.neutral.shade6, BlendMode.srcIn)),
+                    ),
+                  ],
+                ],
+              ),
             ),
           ),
         ],

@@ -181,12 +181,8 @@ class ProfileView extends StatelessWidget {
                   ),
                 const Gap(8),
                 ProfileNameInputField(
-                  onSubmit: (name) => context.read<ProfileBloc>().add(
-                        ProfileChangeName(
-                          userId: userModel.id,
-                          userName: name,
-                        ),
-                      ),
+                  onSubmit: (name) =>
+                      context.read<ProfileBloc>().add(ProfileChangeName(userId: userModel.id, userName: name)),
                   value: nameText,
                 ),
                 const SizedBox(height: 32),
