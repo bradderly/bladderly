@@ -8,27 +8,29 @@ class MembershipMapper {
 
   static Membership fromMembershipEntity(MembershipEntity entity) {
     return Membership(
-      subscription: switch (entity.subscription) {
-        final MembershipSubscriptionEntity subscription => MembershipSubscription(
-            product: Product.fromId(subscription.productId),
-            startDate: subscription.startDate,
-            endDate: subscription.endDate,
-            autoRenewal: subscription.autoRenewal,
-          ),
-        _ => null,
-      },
-      remainCount: entity.remainCount,
-    );
+        subscription: switch (entity.subscription) {
+          final MembershipSubscriptionEntity subscription => MembershipSubscription(
+              product: Product.fromId(subscription.productId),
+              startDate: subscription.startDate,
+              endDate: subscription.endDate,
+              autoRenewal: subscription.autoRenewal,
+            ),
+          _ => null,
+        },
+        remainCount: entity.remainCount,
+        exportRemainCount: entity.exportRemainCount);
   }
 
   static Membership? fromGetPayResponse(GetPayResponse response) {
     final payInfo = response.payInfo;
     final subscription = payInfo == null ? null : _fromGetPayResponsePayInfo(payInfo);
 
+    final consumableInfo = response.consumableInfo;
+
     return Membership(
-      subscription: subscription,
-      remainCount: int.tryParse(payInfo?.remainCount ?? '0') ?? 0,
-    );
+        subscription: subscription,
+        remainCount: int.parse(payInfo?.remainCount ?? '0'),
+        exportRemainCount: int.parse(consumableInfo?.exportRemainCount ?? '0'));
   }
 
   static MembershipEntity toMembershipEntity({

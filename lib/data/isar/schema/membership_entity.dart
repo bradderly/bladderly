@@ -12,6 +12,8 @@ class MembershipEntity {
   MembershipSubscriptionEntity? subscription;
 
   late int remainCount;
+
+  late int exportRemainCount;
 }
 
 @Embedded()

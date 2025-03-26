@@ -7,11 +7,13 @@ class Membership extends Equatable {
   const Membership({
     this.subscription,
     this.remainCount = 0,
+    this.exportRemainCount = 0,
   });
 
   final MembershipSubscription? subscription;
 
   final int remainCount;
+  final int exportRemainCount;
 
   bool get isValid => subscription?.isValid == true || remainCount > 0;
 
@@ -19,14 +21,20 @@ class Membership extends Equatable {
     return Membership(
       subscription: subscription,
       remainCount: max(0, remainCount - 1),
+      exportRemainCount: exportRemainCount,
+    );
+  }
+
+  Membership useExport() {
+    return Membership(
+      subscription: subscription,
+      remainCount: remainCount,
+      exportRemainCount: max(0, exportRemainCount - 1),
     );
   }
 
   @override
-  List<Object?> get props => [
-        subscription,
-        remainCount,
-      ];
+  List<Object?> get props => [subscription, remainCount, exportRemainCount];
 }
 
 class MembershipSubscription extends Equatable {

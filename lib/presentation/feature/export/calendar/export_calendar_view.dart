@@ -81,11 +81,11 @@ class _ExportCalendarViewState extends State<ExportCalendarView> {
   Future<void> onGetPlansSuccess(BuildContext context, PlanGetPlansSuccess state) async {
     final oneTimeExportPlan = state.plans.firstWhereOrNull((plan) => plan.product == Product.oneTimeExport);
 
-    final isValidMembership = context.read<MembershipBloc>().state.isValidMembership;
+    final membershipState = context.read<MembershipBloc>().state;
 
     if (oneTimeExportPlan == null) return;
 
-    if (!isValidMembership) {
+    if (!membershipState.isExportAvailable) {
       final shouldExport =
           await ExportPayWallRoute($extra: ExportPayWallRouteExtra(plan: oneTimeExportPlan)).push<bool>(context);
 
