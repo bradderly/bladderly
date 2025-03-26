@@ -10,6 +10,11 @@ abstract class UserRepository {
     String? userEmail,
   });
 
+  Future<String> changeContry({
+    required String userId,
+    required String country,
+  });
+
   Stream<User?> get userStream;
 
   User? getUserOrNullByUserId(String userId);

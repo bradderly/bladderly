@@ -2,9 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bladderly/core/package_device_info/src/model/device_info_model.dart';
 import 'package:bladderly/domain/model/sex.dart';
 import 'package:bladderly/domain/model/sign_up_method.dart';
 import 'package:bladderly/domain/model/user.dart';
+import 'package:bladderly/domain/repository/history_repository.dart';
+import 'package:bladderly/domain/repository/score_repository.dart';
 import 'package:bladderly/domain/repository/user_repository.dart';
 import 'package:crypto/crypto.dart';
 import 'package:dartz/dartz.dart';
@@ -17,9 +20,18 @@ import 'package:xml2json/xml2json.dart';
 class MigrateUserUsecase {
   const MigrateUserUsecase({
     required UserRepository userRepository,
-  }) : _userRepository = userRepository;
+    required HistoryRepository historyRepository,
+    required ScoreRepository scoreRepository,
+    required DeviceInfoModel deviceInfoModel,
+  })  : _userRepository = userRepository,
+        _historyRepository = historyRepository,
+        _scoreRepository = scoreRepository,
+        _deviceInfoModel = deviceInfoModel;
 
   final UserRepository _userRepository;
+  final HistoryRepository _historyRepository;
+  final ScoreRepository _scoreRepository;
+  final DeviceInfoModel _deviceInfoModel;
 
   Future<Either<Exception, User>> call() async {
     try {
@@ -29,6 +41,20 @@ class MigrateUserUsecase {
         _ => throw UnsupportedError('Unsupported platform'),
       };
 
+      final localUserId = _userRepository.getLocalUserIdByUserId(user.userId)!;
+
+      await Future.wait(
+        [
+          _userRepository.changeContry(userId: user.userId, country: _deviceInfoModel.region),
+          _historyRepository.getAllHistoriesFromServer(user.userId).then(_historyRepository.saveHistories),
+          _scoreRepository.getAllScoreHistoriesFromServer(user.userId).then(_scoreRepository.saveScores),
+          _userRepository.getMembershipFromServer(userId: user.userId).then(
+                (value) =>
+                    value == null ? null : _userRepository.saveMembership(localUserId: localUserId, membership: value),
+              ),
+        ],
+      ).catchError((_) => <void>[]);
+
       return Right(user);
     } catch (e) {
       return Left(e is Exception ? e : Exception(e.toString()));
@@ -36,12 +62,10 @@ class MigrateUserUsecase {
   }
 
   Future<User> _migrateAndroidUser() async {
-    const filePath =
-        '/data/data/com.soundable.diaryandroid.us/shared_prefs/com.soundable.diaryandroid.us_preferences.xml';
+    final file =
+        File('/data/data/com.soundable.diaryandroid.us/shared_prefs/com.soundable.diaryandroid.us_preferences.xml');
 
-    final file = File(filePath);
-
-    if (!file.existsSync()) throw Exception('File not found: $filePath');
+    if (!file.existsSync()) throw Exception('File not found: ${file.path}');
 
     final fileContent = file.readAsStringSync();
 
@@ -93,7 +117,7 @@ class MigrateUserUsecase {
       ),
     );
 
-    unawaited(file.delete().then((_) => null).catchError((_) => null));
+    // unawaited(file.delete().then((_) => null).catchError((_) => null));
 
     return user;
   }
@@ -104,6 +128,7 @@ class MigrateUserUsecase {
     const emailKey = 'shUDUserEmail';
 
     final email = prefs.getString(emailKey);
+
     if (email == null) throw Exception('Invalid email');
 
     final birthYear = int.tryParse(prefs.getString('shUDUserBirthYear')?.split('-').first ?? '1900');
@@ -122,7 +147,8 @@ class MigrateUserUsecase {
       ),
     );
 
-    await prefs.remove(emailKey);
+    unawaited(prefs.remove(emailKey));
+
     return user;
   }
 }

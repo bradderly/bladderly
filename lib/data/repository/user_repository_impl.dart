@@ -105,4 +105,14 @@ class UserRepositoryImpl implements UserRepository {
     final entity = _isarClient.getMembershipOrNullByUserId(localUserId);
     return entity == null ? null : MembershipMapper.fromMembershipEntity(entity);
   }
+
+  @override
+  Future<String> changeContry({
+    required String userId,
+    required String country,
+  }) {
+    return _apiClient
+        .updateUserName(request: UpdateUserInfoRequest(id: userId, country: country))
+        .then((response) => country);
+  }
 }

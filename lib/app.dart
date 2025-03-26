@@ -100,6 +100,7 @@ class _BladderlyAppState extends State<BladderlyApp> {
             getUserStreamUsecase: getIt<GetUserStreamUsecase>(),
             signOutUsecase: getIt<SignOutUsecase>(),
           )..add(const UserLoad()),
+          lazy: false,
         ),
         BlocProvider<AppLocaleCubit>(
           create: (_) => AppLocaleCubit(),
