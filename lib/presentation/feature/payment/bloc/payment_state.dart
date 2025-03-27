@@ -100,3 +100,27 @@ final class PaymentPurchaseFailure extends PaymentState {
         ...super.props,
       ];
 }
+
+final class PaymentRestoreInProgress extends PaymentState {
+  const PaymentRestoreInProgress();
+}
+
+final class PaymentRestoreSuccess extends PaymentState {
+  const PaymentRestoreSuccess();
+
+  @override
+  List<Object> get props => [];
+}
+
+final class PaymentRestoreFailure extends PaymentState {
+  const PaymentRestoreFailure({
+    required this.exception,
+  });
+
+  final Exception exception;
+
+  @override
+  List<Object> get props => [
+        exception,
+      ];
+}

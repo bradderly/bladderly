@@ -16,6 +16,7 @@ import 'package:bladderly/domain/usecase/initialize_purchase_handler_usecase.dar
 import 'package:bladderly/domain/usecase/load_app_config_usecase.dart';
 import 'package:bladderly/domain/usecase/purchase_plan_usecase.dart';
 import 'package:bladderly/domain/usecase/refresh_history_result_usecase.dart';
+import 'package:bladderly/domain/usecase/restore_plan_usecase.dart';
 import 'package:bladderly/domain/usecase/sign_out_usecase.dart';
 import 'package:bladderly/presentation/common/bloc/app_config_bloc.dart';
 import 'package:bladderly/presentation/common/bloc/device_bloc.dart';
@@ -121,6 +122,7 @@ class _BladderlyAppState extends State<BladderlyApp> {
           create: (_) => PaymentBloc(
             initializePurchaseHandlerUsecase: getIt<InitializePurchaseHandlerUsecase>(),
             purchasePlanUsecase: getIt<PurchasePlanUsecase>(instanceName: defaultTargetPlatform.name),
+            restorePlanUsecase: getIt<RestorePlanUsecase>(),
           ),
         ),
         BlocProvider<DeviceBloc>(

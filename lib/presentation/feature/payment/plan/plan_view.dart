@@ -11,7 +11,9 @@ import 'package:bladderly/presentation/common/cubit/timer_cubit.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
+import 'package:bladderly/presentation/common/widget/primary_button.dart';
 import 'package:bladderly/presentation/feature/menu/widget/text_arrow_form.dart';
+import 'package:bladderly/presentation/feature/payment/bloc/payment_bloc.dart';
 import 'package:bladderly/presentation/feature/payment/plan/widget/plan_non_subscription_widget.dart';
 import 'package:bladderly/presentation/feature/payment/plan/widget/plan_subscription_widget.dart';
 import 'package:bladderly/presentation/feature/payment/plan_cancel/plan_cancel_modal.dart';
@@ -102,19 +104,14 @@ class PlanView extends StatelessWidget {
                 bottom: 40,
                 left: 16,
                 right: 16,
-                child: Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  decoration: BoxDecoration(
-                    color: context.colorTheme.neutral.shade6,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    'Retrieve purchase data'.tr(context),
-                    style: context.textStyleTheme.b16SemiBold.copyWith(
-                      color: context.colorTheme.neutral.shade0,
-                    ),
-                  ),
+                child: PrimaryButton.filled(
+                  onPressed: () => context.read<PaymentBloc>().add(const PaymentRestorePlan()),
+                  backgroundColor: context.colorTheme.vermilion.primary.shade50,
+                  borderRadius: 8,
+                  shape: BoxShape.rectangle,
+                  text: 'Retrieve purchase data'.tr(context),
+                  textColor: context.colorTheme.neutral.shade0,
+                  size: const Size.fromHeight(43),
                 ),
               ),
             ],
