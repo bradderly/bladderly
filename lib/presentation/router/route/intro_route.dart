@@ -2,6 +2,8 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:bladderly/core/di/di.dart';
+import 'package:bladderly/core/event_analyzer/event_analyzer.dart';
 import 'package:bladderly/presentation/feature/forgot_password/forgot_password_builder.dart';
 // Project imports:
 import 'package:bladderly/presentation/feature/intro/intro_view.dart';
@@ -40,7 +42,9 @@ class IntroRoute extends GoRouteData {
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) => CupertinoPage<void>(
         key: state.pageKey,
-        child: const IntroView(),
+        child: IntroView(
+          eventAnalyzerModule: getIt<EventAnalyzerModule>(),
+        ),
       );
 }
 

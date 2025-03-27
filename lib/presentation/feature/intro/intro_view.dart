@@ -1,5 +1,6 @@
 // Flutter imports:
 // Project imports:
+import 'package:bladderly/core/event_analyzer/event_analyzer.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
@@ -14,10 +15,14 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class IntroView extends StatelessWidget {
-  const IntroView({super.key});
+  const IntroView({super.key, required EventAnalyzerModule eventAnalyzerModule})
+      : _eventAnalyzerModule = eventAnalyzerModule;
+  final EventAnalyzerModule _eventAnalyzerModule;
 
   @override
   Widget build(BuildContext context) {
+    _eventAnalyzerModule.eventAnalyzer.logEvent(eventName: 'internal_test', eventParams: {'testKey': 'testBody'});
+
     TextSpan getLinkText(String text, bool isToU) {
       return TextSpan(
         text: text,
