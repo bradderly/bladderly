@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Project imports:
+import 'package:bladderly/core/package_device_info/src/model/device_info_model.dart';
 import 'package:bladderly/data/api/client/api_client.dart';
 import 'package:bladderly/data/api/model/swagger_json.models.swagger.dart';
 import 'package:bladderly/data/local/local_storage_client.dart';
@@ -21,11 +22,14 @@ class HistoryRepositoryImpl implements HistoryRepository {
   const HistoryRepositoryImpl({
     required LocalStorageClient localStorageClient,
     required ApiClient apiClient,
+    required DeviceInfoModel deviceInfoModel,
   })  : _localStorageClient = localStorageClient,
-        _apiClient = apiClient;
+        _apiClient = apiClient,
+        _deviceInfoModel = deviceInfoModel;
 
   final LocalStorageClient _localStorageClient;
   final ApiClient _apiClient;
+  final DeviceInfoModel _deviceInfoModel;
 
   @override
   Stream<Histories> getHistoriesStream({
@@ -69,6 +73,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
         exportDate: [
           for (final date in dates) DateFormat('yyyyMMdd').format(date),
         ],
+        device: _deviceInfoModel.os,
       ),
     );
   }

@@ -29,8 +29,13 @@ class ExportHistoriesUsecase {
       );
       final localUserId = _userRepository.getLocalUserIdByUserId(userId)!;
       final membership = _userRepository.getMembershipOrNullByLocalUserId(localUserId);
-      final usedMembership = membership?.useExport();
-      if (usedMembership != null) _userRepository.saveMembership(localUserId: localUserId, membership: usedMembership);
+      if (membership != null) {
+        if (!membership.isValid) {
+          // only non-subscription user count
+          final usedMembership = membership.useExport();
+          _userRepository.saveMembership(localUserId: localUserId, membership: usedMembership);
+        }
+      }
 
       return Right(result);
     } on Exception catch (e) {

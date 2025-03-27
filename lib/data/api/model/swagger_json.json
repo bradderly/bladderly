@@ -3,7 +3,7 @@
   "info": {
     "title": "Bladderly for Flutter",
     "contact": {},
-    "version": "0.0.13"
+    "version": "0.0.14"
   },
   "servers": [
     {
@@ -579,6 +579,10 @@
                   },
                   "language": {
                     "type": "string"
+                  },
+                  "device": {
+                    "type": "string",
+                    "description": "iphone or android"
                   }
                 }
               }
@@ -1594,7 +1598,7 @@
                   },
                   "device": {
                     "type": "string",
-                    "description": "Android or iPhone"
+                    "description": "android or iphone"
                   },
                   "region": {
                     "type": "string",
@@ -2269,6 +2273,10 @@
           },
           "language": {
             "type": "string"
+          },
+          "device": {
+            "type": "string",
+            "description": "iphone or android"
           }
         }
       },
@@ -2392,7 +2400,7 @@
           },
           "device": {
             "type": "string",
-            "description": "Android or iPhone"
+            "description": "android or iphone"
           },
           "region": {
             "type": "string",
