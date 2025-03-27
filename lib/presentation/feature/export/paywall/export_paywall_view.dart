@@ -2,12 +2,15 @@ import 'dart:async';
 
 import 'package:bladderly/domain/model/plan.dart';
 import 'package:bladderly/presentation/common/bloc/plan_bloc.dart';
+import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/common_message_modal.dart';
 import 'package:bladderly/presentation/common/widget/modal_app_bar.dart';
 import 'package:bladderly/presentation/common/widget/primary_button.dart';
+import 'package:bladderly/presentation/common/widget/progress_indicator_modal.dart';
 import 'package:bladderly/presentation/feature/export/paywall/model/export_plan_model.dart';
+import 'package:bladderly/presentation/feature/payment/bloc/payment_bloc.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 import 'package:bladderly/presentation/router/route/about_route.dart';
 import 'package:bladderly/presentation/router/route/main_route.dart';
@@ -29,7 +32,15 @@ class ExportPaywallView extends StatelessWidget {
   ExportPlanModel get plan => ExportPlanModel.fromDomain(_plan);
 
   Future<void> _onNext(BuildContext context) async {
-    // TODO: purchase export
+    // TODO: replace for purchase
+    // final userId = context.read<UserBloc>().state.userModelOrThrowException.id;
+
+    // context.read<PaymentBloc>().add(
+    //       PaymentPurchasePlan(
+    //         userId: userId,
+    //         planId: plan.product.id,
+    //       ),
+    //     );
 
     await CommonMessageModal.show<bool>(
       context,
@@ -58,20 +69,31 @@ class ExportPaywallView extends StatelessWidget {
       // Delay to ensure previous context.pop done
       Future.delayed(const Duration(milliseconds: 300), () => context.mounted ? context.pop(true) : null);
     }
-    // completer.future
-    //     .then(
-    //       (plans) => context.mounted ? PaywallRoute($extra: PaywallRouteExtra(plans: plans)).push<void>(context) : null,
-    //     )
-    //     .onError((error, stackTrace) => null);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PlanBloc, PlanState>(
-      listener: (context, state) => switch (state) {
-        // PlanGetPlansSuccess() => PaywallRoute($extra: PaywallRouteExtra(plans: state.plans)).push<void>(context),
-        _ => null,
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<PlanBloc, PlanState>(
+          listener: (context, state) => switch (state) {
+            // PlanGetPlansSuccess() => PaywallRoute($extra: PaywallRouteExtra(plans: state.plans)).push<void>(context),
+            _ => null,
+          },
+        ),
+        BlocListener<PaymentBloc, PaymentState>(
+          listener: (context, state) => switch (state) {
+            PaymentPurchaseReadyInProgress() => ProgressIndicatorModal.show(context),
+            PaymentPurchaseReadySuccess() => context.pop(),
+            PaymentPurchaseReadyFailure() => context.pop(),
+            PaymentPurchaseSuccess() => context.pop(true),
+            PaymentPurchaseFailure() => context.pop(),
+            PaymentPurchaseRestored() => context.pop(),
+            // PaymentPurchaseCanceled() => Platform.isAndroid ? null : context.pop(),
+            _ => null,
+          },
+        ),
+      ],
       child: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(

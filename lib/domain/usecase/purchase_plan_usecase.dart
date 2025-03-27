@@ -53,7 +53,8 @@ abstract class PurchasePlanUsecase {
       if (productId == Product.threeDaysPass.id) {
         await _purchaseWithoutIap(productId: productId, userId: userId);
       } else {
-        await _purchaseWithIap(productId: productId, offerCode: offerCode);
+        await _purchaseWithIap(
+            productId: productId, offerCode: offerCode, isConsumable: productId == Product.oneTimeExport.id);
       }
 
       return const Right(true);
@@ -75,7 +76,7 @@ abstract class PurchasePlanUsecase {
     if (membership != null) _userRepository.saveMembership(localUserId: localUserId, membership: membership);
   }
 
-  Future<bool> _purchaseWithIap({required String productId, String? offerCode});
+  Future<bool> _purchaseWithIap({required String productId, String? offerCode, bool isConsumable = false});
 }
 
 class _AndroidPurchasePlanUsecase extends PurchasePlanUsecase {
@@ -97,6 +98,7 @@ class _AndroidPurchasePlanUsecase extends PurchasePlanUsecase {
   Future<bool> _purchaseWithIap({
     required String productId,
     String? offerCode,
+    bool isConsumable = false,
   }) async {
     final platformAdditional = _inAppPurchase.getPlatformAddition<InAppPurchaseAndroidPlatformAddition>();
     final products = await _inAppPurchase
@@ -112,6 +114,10 @@ class _AndroidPurchasePlanUsecase extends PurchasePlanUsecase {
     /// TODO(신중석): 쿼리에 없는 제품을 구매하려고 할때 대응 필요.
     if (productDetails == null) {
       return false;
+    }
+
+    if (isConsumable) {
+      return _inAppPurchase.buyConsumable(purchaseParam: GooglePlayPurchaseParam(productDetails: productDetails));
     }
 
     final pastPurchase = await platformAdditional.queryPastPurchases().then(
@@ -153,7 +159,7 @@ class _IosPurchasePlanUsecase extends PurchasePlanUsecase {
   final InAppPurchase _inAppPurchase;
 
   @override
-  Future<bool> _purchaseWithIap({required String productId, String? offerCode}) async {
+  Future<bool> _purchaseWithIap({required String productId, String? offerCode, bool isConsumable = false}) async {
     final productDetails = await _inAppPurchase.queryProductDetails(Product.ids).then(
           (response) => response.productDetails.firstWhereOrNull((product) => product.id == productId),
         );

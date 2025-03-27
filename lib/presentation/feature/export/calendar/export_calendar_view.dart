@@ -67,7 +67,7 @@ class _ExportCalendarViewState extends State<ExportCalendarView> {
   final today = DateUtils.dateOnly(DateTime.now());
 
   Future<void> onContinue(BuildContext context) async {
-    if (!context.read<MembershipBloc>().state.isValidMembership) {
+    if (!context.read<MembershipBloc>().state.isExportAvailable) {
       return context.read<PlanBloc>().add(const PlanGetPlans.onlyConsumable());
     }
 
