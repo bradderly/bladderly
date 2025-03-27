@@ -240,6 +240,7 @@ class _UnlockedHomeSoundInputWidget extends HomeSoundInputWidget {
         onTap: context.pop,
         title: 'Microphone permission title',
         content: 'Microphone permission body',
+        buttonText: 'Microphone permission button',
       );
     }
 

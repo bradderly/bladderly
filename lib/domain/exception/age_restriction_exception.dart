@@ -7,5 +7,5 @@ class AgeRestrictionException extends DomainException {
           message: 'Sorry, but you need to be at least 18 to sign up. We hope to see you again in the future!',
         );
 
-  const AgeRestrictionException.upperBound() : super(message: 'Please check your year or birth.');
+  const AgeRestrictionException.upperBound() : super(message: 'Invalid year of birth body');
 }
