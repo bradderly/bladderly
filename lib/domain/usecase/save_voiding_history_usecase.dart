@@ -45,7 +45,7 @@ class SaveVoidingHistoryUsecase {
           isNocturia: isNocutria,
           isLeakage: isLeakage,
           status: HistoryStatus.pending,
-          leakageVolume: leakageVolume,
+          leakageVolume: leakageVolume?.name,
           memo: switch (memo) {
             final String memo when memo.trim().isNotEmpty => memo,
             _ => null,

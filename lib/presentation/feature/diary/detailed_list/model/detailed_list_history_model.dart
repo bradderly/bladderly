@@ -2,8 +2,8 @@
 
 // Project imports:
 import 'package:bladderly/domain/model/history.dart';
-import 'package:bladderly/domain/model/leakage_volume.dart';
 import 'package:bladderly/presentation/common/extension/num_extension.dart';
+import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/model/beverage_type_model.dart';
 import 'package:bladderly/presentation/generated/assets/assets.gen.dart';
 // Package imports:
@@ -25,18 +25,13 @@ sealed class DetailedListHistoryModel extends Equatable {
           recordVolume: history.recordVolume.toRoundVolume(),
           recordUrgency: history.recordUrgency,
           isNocutria: history.isNocturia,
-          leakageVolume: switch (history.leakageVolume) {
-            LeakageVolume.Small => 'S',
-            LeakageVolume.Medium => 'M',
-            LeakageVolume.Large => 'L',
-            null => null,
-          },
+          leakageVolume: history.leakageVolume?.parseLeakageVolume(),
         ),
       final LeakageHistory history => DetailedListLeakageHistoryModel._(
           id: history.id!,
           recordTime: history.recordTime,
           memo: history.memo,
-          leakageVolume: history.leakageVolume.name,
+          leakageVolume: history.leakageVolume,
         ),
       final IntakeHistory history => DetailedListIntakeHistoryModel._(
           id: history.id!,

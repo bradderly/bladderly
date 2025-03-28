@@ -1,7 +1,9 @@
 // Flutter imports:
 // Project imports:
+import 'package:bladderly/domain/model/leakage_volume.dart';
 import 'package:bladderly/presentation/common/cubit/locale_cubit.dart';
 import 'package:bladderly/presentation/common/locale/app_locale.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,4 +27,11 @@ extension StringExtension on String {
   bool get checkHasLeastOneSpecialCharacter {
     return RegExp(r'''[!"#$%&\'()*+,\-./:;<=>?@\[\\\]^_`{|}~]''').hasMatch(this);
   }
+
+  String parseLeakageVolume() => switch (LeakageVolume.values.firstWhereOrNull((volume) => this == volume.name)) {
+        LeakageVolume.Small => 'S',
+        LeakageVolume.Medium => 'M',
+        LeakageVolume.Large => 'L',
+        _ => this
+      };
 }

@@ -21,7 +21,7 @@ class ManualInputLeakageFormState extends Equatable {
     return ManualInputLeakageFormState(
       id: history.id,
       recordTime: history.recordTime,
-      leakageVolume: history.leakageVolume,
+      leakageVolume: LeakageVolume.findOneOrNullByName(history.leakageVolume),
       memo: history.memo ?? '',
     );
   }

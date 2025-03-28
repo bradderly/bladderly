@@ -143,7 +143,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
               isLeakage: history.isLeakage,
               isNocturia: history.isNocturia,
               recordVolume: '${history.recordVolume}',
-              leakageVolume: history.leakageVolume?.name,
+              leakageVolume: history.leakageVolume,
               recordUrgency: '${history.recordUrgency}',
               leakageMemo: history.memo,
               isManual: history.isManual,
@@ -160,7 +160,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
               deleteTime: deleteTime,
             ),
           LeakageHistory() => RecordUpdateRequest$Record(
-              leakageVolume: history.leakageVolume.name,
+              leakageVolume: history.leakageVolume,
               leakageMemo: history.memo,
               isLeakage: true,
               isManual: true,

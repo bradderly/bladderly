@@ -36,7 +36,7 @@ class SaveLeakageHistoryUsecase {
         LeakageHistory(
           id: id,
           recordTime: recordTime,
-          leakageVolume: leakageVolume,
+          leakageVolume: leakageVolume.name,
           status: HistoryStatus.pending,
           memo: switch (memo) {
             final String memo when memo.trim().isNotEmpty => memo,

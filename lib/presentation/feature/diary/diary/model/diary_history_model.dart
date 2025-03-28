@@ -2,7 +2,6 @@
 // Project imports:
 import 'package:bladderly/domain/model/history.dart';
 import 'package:bladderly/domain/model/history_status.dart';
-import 'package:bladderly/domain/model/leakage_volume.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/num_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
@@ -43,12 +42,7 @@ class DiaryHistoryModel extends Equatable {
           recordVolume: history.recordVolume.toRoundVolume(),
           isNocturia: history.isNocturia,
           recordUrgency: history.recordUrgency,
-          leakageVolume: switch (history.leakageVolume) {
-            LeakageVolume.Small => 'S',
-            LeakageVolume.Medium => 'M',
-            LeakageVolume.Large => 'L',
-            null => '',
-          },
+          leakageVolume: history.leakageVolume?.parseLeakageVolume(),
           beverageType: null,
         ),
       IntakeHistory() => DiaryHistoryModel(
@@ -70,11 +64,7 @@ class DiaryHistoryModel extends Equatable {
           isNocturia: false,
           recordVolume: null,
           recordUrgency: null,
-          leakageVolume: switch (history.leakageVolume) {
-            LeakageVolume.Small => 'S',
-            LeakageVolume.Medium => 'M',
-            LeakageVolume.Large => 'L',
-          },
+          leakageVolume: history.leakageVolume.parseLeakageVolume(),
           beverageType: null,
         ),
     };

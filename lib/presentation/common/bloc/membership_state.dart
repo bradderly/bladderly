@@ -11,8 +11,6 @@ sealed class MembershipState extends Equatable {
 
   bool get isValidMembership => membership?.isValid ?? false;
 
-  bool validate(DateTime dateTime) => membership?.subscription?.validate(dateTime) ?? false;
-
   bool get isExportAvailable => isValidMembership || (membership?.exportRemainCount ?? 0) > 0;
 
   @override

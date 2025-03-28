@@ -64,7 +64,7 @@ class SaveVoidingHistoryWithFileUsecase {
           memo: memo,
           isManual: false,
           recordVolume: 0,
-          leakageVolume: leakageVolume,
+          leakageVolume: leakageVolume?.name,
           status: HistoryStatus.pending,
         ),
       );

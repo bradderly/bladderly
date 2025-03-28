@@ -38,7 +38,7 @@ class ManualInputVoidingFormState extends Equatable {
       recordUrgency: history.recordUrgency,
       isNocutria: history.isNocturia,
       isLeakage: history.isLeakage,
-      leakageVolume: history.leakageVolume,
+      leakageVolume: LeakageVolume.findOneOrNullByName(history.leakageVolume ?? ''),
       memo: history.memo ?? '',
     );
   }

@@ -1,11 +1,9 @@
 // Package imports:
+import 'package:bladderly/domain/model/leakage_volume.dart';
+import 'package:bladderly/domain/usecase/save_leakage_history_usecase.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-// Project imports:
-import 'package:bladderly/domain/model/leakage_volume.dart';
-import 'package:bladderly/domain/usecase/save_leakage_history_usecase.dart';
 
 part 'manual_input_leakage_event.dart';
 part 'manual_input_leakage_state.dart';

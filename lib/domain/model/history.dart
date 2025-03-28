@@ -2,7 +2,6 @@
 
 // Project imports:
 import 'package:bladderly/domain/model/history_status.dart';
-import 'package:bladderly/domain/model/leakage_volume.dart';
 // Package imports:
 import 'package:equatable/equatable.dart';
 
@@ -73,7 +72,7 @@ class VoidingHistory extends History {
   final bool isLeakage;
 
   /// 요실금 발생 양
-  final LeakageVolume? leakageVolume;
+  final String? leakageVolume;
 
   @override
   VoidingHistory setId(int id) {
@@ -228,7 +227,7 @@ class LeakageHistory extends History {
     required this.leakageVolume,
   }) : super._();
 
-  final LeakageVolume leakageVolume;
+  final String leakageVolume;
 
   @override
   LeakageHistory setId(int id) {

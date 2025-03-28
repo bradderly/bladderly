@@ -57,7 +57,7 @@ class HomeVoidingWidget extends StatelessWidget {
             selector: (state) => state.showHowToUse,
             builder: (context, showHowToUse) => BlocBuilder<TimerCubit, DateTime>(
               builder: (context, now) => HomeSoundInputWidget(
-                isActivated: context.select<MembershipBloc, bool>((bloc) => bloc.state.validate(now)),
+                isActivated: context.select<MembershipBloc, bool>((bloc) => bloc.state.isValidMembership),
                 showHowToUse: showHowToUse,
                 recorder: recorder,
               ),
