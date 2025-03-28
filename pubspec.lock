@@ -42,10 +42,10 @@ packages:
     dependency: transitive
     description:
       name: archive
-      sha256: "0c64e928dcbefddecd234205422bcfc2b5e6d31be0b86fef0d0dd48d7b4c9742"
+      sha256: "7dcbd0f87fe5f61cb28da39a1a8b70dbc106e2fe0516f7836eb7bb2948481a12"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.4"
+    version: "4.0.5"
   args:
     dependency: transitive
     description:
@@ -90,10 +90,10 @@ packages:
     dependency: transitive
     description:
       name: build
-      sha256: "80184af8b6cb3e5c1c4ec6d8544d27711700bc3e6d2efad04238c7b5290889f0"
+      sha256: cef23f1eda9b57566c81e2133d196f8e3df48f244b317368d65c5943d91148f0
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.1"
+    version: "2.4.2"
   build_config:
     dependency: transitive
     description:
@@ -370,10 +370,10 @@ packages:
     dependency: transitive
     description:
       name: ffi
-      sha256: "16ed7b077ef01ad6170a3d0c57caa4a112a38d7a2ed5602e0aca9ca6f3d98da6"
+      sha256: "289279317b4b16eb2bb7e271abccd4bf84ec9bdcbe999e278a94b804f5630418"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.3"
+    version: "2.1.4"
   file:
     dependency: transitive
     description:
@@ -926,10 +926,10 @@ packages:
     dependency: "direct dev"
     description:
       name: json_serializable
-      sha256: ea1432d167339ea9b5bb153f0571d0039607a873d6e04e0117af043f14a1fd4b
+      sha256: c2fcb3920cf2b6ae6845954186420fca40bc0a8abcc84903b7801f17d7050d7c
       url: "https://pub.dev"
     source: hosted
-    version: "6.8.0"
+    version: "6.9.0"
   keyboard_actions:
     dependency: "direct main"
     description:
@@ -1014,10 +1014,10 @@ packages:
     dependency: "direct main"
     description:
       name: locale_plus
-      sha256: f679f38c871c30b23e13e1a401623b6a922537ff33a5904325a45eeae1ed59f5
+      sha256: "1e0a3aaf0dfebe5c8ec1e763b377a26168fdca2bcecf4bbeac0ec420adcb8777"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
+    version: "1.6.0+1"
   logger:
     dependency: transitive
     description:
@@ -1334,10 +1334,10 @@ packages:
     dependency: transitive
     description:
       name: petitparser
-      sha256: c15605cd28af66339f8eb6fbe0e541bfe2d1b72d5825efc6598f3e0a31b9ad27
+      sha256: "07c8f0b1913bcde1ff0d26e57ace2f3012ccbf2b204e070290dad3bb22797646"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.2"
+    version: "6.1.0"
   platform:
     dependency: transitive
     description:
@@ -1590,10 +1590,10 @@ packages:
     dependency: transitive
     description:
       name: shelf_web_socket
-      sha256: cc36c297b52866d203dbf9332263c94becc2fe0ceaa9681d07b6ef9807023b67
+      sha256: "3632775c8e90d6c9712f883e633716432a27758216dfb61bd86a8321c0580925"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.1"
+    version: "3.0.0"
   sign_in_with_apple:
     dependency: "direct main"
     description:
@@ -1979,10 +1979,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: daf97c9d80197ed7b619040e86c8ab9a9dad285e7671ee7390f9180cc828a51e
+      sha256: dc6ecaa00a7c708e5b4d10ee7bec8c270e9276dfcab1783f57e9962d7884305f
       url: "https://pub.dev"
     source: hosted
-    version: "5.10.1"
+    version: "5.12.0"
   win32_registry:
     dependency: transitive
     description:
@@ -2024,5 +2024,5 @@ packages:
     source: hosted
     version: "3.1.3"
 sdks:
-  dart: ">=3.7.0-0 <4.0.0"
+  dart: ">=3.7.0 <4.0.0"
   flutter: ">=3.27.0"

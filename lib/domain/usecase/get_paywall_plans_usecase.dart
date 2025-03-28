@@ -28,8 +28,7 @@ class GetPaywallPlansUsecase {
       final response = await _inAppPurchase.queryProductDetails(Product.ids);
 
       final productDetails = switch (defaultTargetPlatform) {
-        TargetPlatform.android =>
-          response.productDetails.cast<GooglePlayProductDetails>().where((details) => details.rawPrice != 0.0).toList(),
+        TargetPlatform.android => response.productDetails.cast<GooglePlayProductDetails>().where(isBasePlan).toList(),
         _ => response.productDetails,
       };
 
@@ -42,6 +41,16 @@ class GetPaywallPlansUsecase {
     } catch (e) {
       return Left(e is Exception ? e : Exception(e.toString()));
     }
+  }
+
+  bool isBasePlan(GooglePlayProductDetails details) {
+    final subscriptionIndex = details.subscriptionIndex;
+    if (subscriptionIndex == null) {
+      // not subscription
+      return false;
+    }
+    final offerId = details.productDetails.subscriptionOfferDetails?[subscriptionIndex].offerId;
+    return offerId == null;
   }
 
   Plan _toPlan(ProductDetails productDetails) {
