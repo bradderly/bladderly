@@ -105,7 +105,7 @@ class _MainViewState extends State<MainView> {
 
   void initializeHistories() {
     uploadPendingHistories();
-    getProcessingHistoryResults();
+    // getProcessingHistoryResults(); call after upload pending done
   }
 
   void uploadPendingHistories() {
@@ -189,6 +189,14 @@ class _MainViewState extends State<MainView> {
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
+        BlocListener<MainHistoryBloc, MainHistoryState>(
+          listener: (context, state) => switch (state) {
+            MainHistoryUploadPendingHistoriesSuccess() ||
+            MainHistoryUploadPendingHistoriesFailure() =>
+              getProcessingHistoryResults(),
+            _ => null,
+          },
+        ),
         BlocListener<MainTabCubit, MainTabState>(
           listenWhen: (prev, curr) => prev.index != curr.index,
           listener: (context, state) => pageController.jumpToPage(state.index),
