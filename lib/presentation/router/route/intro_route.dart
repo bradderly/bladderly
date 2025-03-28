@@ -43,7 +43,7 @@ class IntroRoute extends GoRouteData {
   Page<void> buildPage(BuildContext context, GoRouterState state) => CupertinoPage<void>(
         key: state.pageKey,
         child: IntroView(
-          eventAnalyzerModule: getIt<EventAnalyzerModule>(),
+          eventAnalyzer: getIt<EventAnalyzer>(),
         ),
       );
 }

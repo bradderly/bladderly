@@ -15,13 +15,12 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class IntroView extends StatelessWidget {
-  const IntroView({super.key, required EventAnalyzerModule eventAnalyzerModule})
-      : _eventAnalyzerModule = eventAnalyzerModule;
-  final EventAnalyzerModule _eventAnalyzerModule;
+  const IntroView({super.key, required EventAnalyzer eventAnalyzer}) : _eventAnalyzer = eventAnalyzer;
+  final EventAnalyzer _eventAnalyzer;
 
   @override
   Widget build(BuildContext context) {
-    _eventAnalyzerModule.eventAnalyzer.logEvent(eventName: 'internal_test', eventParams: {'testKey': 'testBody'});
+    _eventAnalyzer.logEvent(eventName: 'internal_test', eventParams: {'testKey': 'intro'});
 
     TextSpan getLinkText(String text, bool isToU) {
       return TextSpan(
