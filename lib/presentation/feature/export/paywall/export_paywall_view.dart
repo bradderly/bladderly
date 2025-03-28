@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bladderly/domain/model/plan.dart';
 import 'package:bladderly/presentation/common/bloc/plan_bloc.dart';
-import 'package:bladderly/presentation/common/bloc/user_bloc.dart';
 import 'package:bladderly/presentation/common/extension/build_context_extension.dart';
 import 'package:bladderly/presentation/common/extension/string_extension.dart';
 import 'package:bladderly/presentation/common/widget/common_message_modal.dart';
@@ -75,12 +74,6 @@ class ExportPaywallView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
-        BlocListener<PlanBloc, PlanState>(
-          listener: (context, state) => switch (state) {
-            // PlanGetPlansSuccess() => PaywallRoute($extra: PaywallRouteExtra(plans: state.plans)).push<void>(context),
-            _ => null,
-          },
-        ),
         BlocListener<PaymentBloc, PaymentState>(
           listener: (context, state) => switch (state) {
             PaymentPurchaseReadyInProgress() => ProgressIndicatorModal.show(context),

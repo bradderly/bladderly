@@ -38,3 +38,10 @@ class PaymentPurchasePlan extends PaymentEvent {
         offerToken,
       ];
 }
+
+class PaymentRestorePlan extends PaymentEvent {
+  const PaymentRestorePlan();
+
+  @override
+  List<Object> get props => [];
+}

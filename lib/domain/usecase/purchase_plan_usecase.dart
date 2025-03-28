@@ -122,7 +122,9 @@ class _AndroidPurchasePlanUsecase extends PurchasePlanUsecase {
 
     final pastPurchase = await platformAdditional.queryPastPurchases().then(
           (response) => response.pastPurchases.firstWhereOrNull(
-            (e) => e.billingClientPurchase.isAutoRenewing && e.status == PurchaseStatus.purchased,
+            (e) =>
+                Product.findOneOrNullById(e.productID)?.type == ProductType.renewalSubscription &&
+                e.status == PurchaseStatus.purchased,
           ),
         );
 

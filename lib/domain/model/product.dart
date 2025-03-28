@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:in_app_purchase_android/billing_client_wrappers.dart';
 
 enum Product {
@@ -13,6 +14,8 @@ enum Product {
   const Product({required this.type});
 
   factory Product.fromId(String id) => Product.values.firstWhere((product) => product.id == id);
+
+  static Product? findOneOrNullById(String id) => Product.values.firstWhereOrNull((product) => product.id == id);
 
   final ProductType type;
 
